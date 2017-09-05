@@ -61,8 +61,10 @@ Customer specific environments should be added to the `environments.json` file, 
                    ]
    }
 ]
-
 ```
+
+Any environments specified in the `environments.json` file will be loaded by the *Reference App* on startup.
+
 ### Carthage
 The *Reference App* uses  [Carthage](https://github.com/Carthage/Carthage) for dependency management. Carthage is a decentralized dependency manager that builds your dependency graph without interfering with your `Xcode` project setup. `CI` integration through [fastlane](https://github.com/fastlane/fastlane) is also available.
 
@@ -75,6 +77,7 @@ No formalised roadmap has yet been established but an extensive backlog of possi
 - [ ] Carousel integration
 - [ ] Content search
 - [ ] User playback history
+- [ ] Better customization of selected `Environment`s.
 
 ## Contributing
 
