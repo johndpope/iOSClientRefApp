@@ -1,0 +1,6 @@
+github "EricssonBroadcastServices/iOSClientExposure" "development"
+github "EricssonBroadcastServices/iOSClientUtilities" "development"
+github "EricssonBroadcastServices/iOSClientAnalytics" "development"
+github "Quick/Quick" "v1.1.0"
+github "Quick/Nimble" "v6.1.0"
+github "onevcat/Kingfisher" ~> 3.0

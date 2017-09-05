@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Environment Name",
+    "exposureUrl": "ExposureURL",
+    "customers": [
+      {
+        "name": "Customer Name",
+        "customer": "Customer",
+        "businessUnit": "BusinessUnit",
+        "defaultUsername": "Username",
+        "defaultPassword": "Password",
+        "samples": [
+                    {
+                      "name": "Asset Name",
+                      "assetId": "Asset Id",
+                      "live": false
+                    }
+                   ]
+      }
+    ]
+  }
+]

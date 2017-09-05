@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>app_name</key>
+	<string>EMP Player</string>
+	<key>environment</key>
+	<string>Environment</string>
+	<key>customer</key>
+	<string>Customer</string>
+	<key>error</key>
+	<string>Error</string>
+	<key>error_invalid_environment</key>
+	<string>Invalid environment</string>
+	<key>error_invalid_customer</key>
+	<string>Invalid customer</string>
+	<key>error_invalid_username</key>
+	<string>Invalid username</string>
+	<key>error_invalid_password</key>
+	<string>Invalid password</string>
+</dict>
+</plist>
