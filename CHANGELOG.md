@@ -21,6 +21,7 @@ Released 6 Sep 2017
 * `EMP-10057` Exposure based `AnalyticsProvider` implemented.
 * `EMP-10095` Multi Device Session Shift.
 * `EMP-10263` Localization should fallback on *any* locale before defaulting to *assetId*
+* `EMP-10277` General documentation.
 
 #### Bug fixes
 * `EMP-10244` Workaround: Fetching *live* entitlements now falls back on asset endpoint if no *EPG* is available.
