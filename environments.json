@@ -9,6 +9,7 @@
         "businessUnit": "BusinessUnit",
         "defaultUsername": "Username",
         "defaultPassword": "Password",
+        "mfa": false,
         "samples": [
                     {
                       "name": "Asset Name",

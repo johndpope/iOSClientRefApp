@@ -32,13 +32,39 @@
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientRefApp/blob/master/Cartfile)
 
 ## Installation
-Clone the *Reference App* repo.
+Cloning the repo should be enough to be able to build and run the *Reference App*.
 
+### Environment.json
+Customer specific environments should be added to the `environments.json` file, following the specified format.
 
+```json
+[
+    {
+        "name": "Environment Name",
+        "exposureUrl": "ExposureURL",
+        "customers": [
+                        {
+                            "name": "Customer Name",
+                            "customer": "Customer",
+                            "businessUnit": "BusinessUnit",
+                            "defaultUsername": "Username",
+                            "defaultPassword": "Password",
+                            "mfa": false,
+                            "samples": [
+                                        {
+                                            "name": "Asset Name",
+                                            "assetId": "Asset Id",
+                                            "live": false
+                                        }
+                                       ]
+                       }
+                   ]
+   }
+]
+
+```
 ### Carthage
 The *Reference App* uses  [Carthage](https://github.com/Carthage/Carthage) for dependency management. Carthage is a decentralized dependency manager that builds your dependency graph without interfering with your `Xcode` project setup. `CI` integration through [fastlane](https://github.com/fastlane/fastlane) is also available.
-
-Cloning the repo should be enough to be able to build and run the *Reference App*.
 
 ## Release Notes
 Release specific changes can be found in the [CHANGELOG](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/CHANGELOG.md).
