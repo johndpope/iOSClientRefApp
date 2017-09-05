@@ -70,13 +70,13 @@ Any environments specified in the `environments.json` file will be loaded by the
 The following git commands have been applied to `environments.json`
 
 ```sh
-git update-index --assume-unchanged environments.json
+git update-index --skip-worktree environments.json
 ```
 
 Reverse the untracked status by
  
  ```sh
- git update-index --no-assume-unchanged environments.json
+ git update-index --no-skip-worktree environments.json
  ```
 
 ### Carthage
