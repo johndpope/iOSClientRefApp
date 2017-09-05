@@ -65,6 +65,20 @@ Customer specific environments should be added to the `environments.json` file, 
 
 Any environments specified in the `environments.json` file will be loaded by the *Reference App* on startup.
 
+*NOTE:* Changes to `environments.json` is *not* tracked by git. The file exists as a template for local development and should be replaced with actual environments.
+
+The following git commands have been applied to `environments.json`
+
+```sh
+git update-index --assume-unchanged environments.json
+```
+
+Reverse the untracked status by
+ 
+ ```sh
+ git update-index --no-assume-unchanged environments.json
+ ```
+
 ### Carthage
 The *Reference App* uses  [Carthage](https://github.com/Carthage/Carthage) for dependency management. Carthage is a decentralized dependency manager that builds your dependency graph without interfering with your `Xcode` project setup. `CI` integration through [fastlane](https://github.com/fastlane/fastlane) is also available.
 
