@@ -24,9 +24,9 @@ Released 6 Sep 2017
 * `EMP-10277` General documentation.
 
 #### Bug fixes
-* `EMP-10244` Workaround: Fetching *live* entitlements now falls back on asset endpoint if no *EPG* is available.
 * `EMP-10047` Airplay stops on screen lock.
 * `EMP-10053` Fixed some layout issues in landscape mode.
+* `EMP-10244` Workaround: Fetching *live* entitlements now falls back on asset endpoint if no *EPG* is available.
 
 ## 0.1.6
 Released 12 Jun 2017
