@@ -63,21 +63,19 @@ Customer specific environments should be added to the `environments.json` file, 
 ]
 ```
 
-Any environments specified in the `environments.json` file will be loaded by the *Reference App* on startup.
+Any environments specified in the `environments.json` file will be loaded by the *Reference App* on startup. The file exists as a template for local development and should be replaced with actual environments.
 
-*NOTE:* Changes to `environments.json` is *not* tracked by git. The file exists as a template for local development and should be replaced with actual environments.
-
-The following git commands have been applied to `environments.json`
+Applying the following commands will ignore local changes to `environments.json`, thus avoiding git conflicts. The template should never contain *actual* environment variables.
 
 ```sh
 git update-index --skip-worktree environments.json
 ```
 
-Reverse the untracked status by
- 
- ```sh
- git update-index --no-skip-worktree environments.json
- ```
+This could possibly be combined with pulling a local dev environment through `curl`
+
+```sh
+curl -O http://path.to.your/environment.json
+```
 
 ### Carthage
 The *Reference App* uses  [Carthage](https://github.com/Carthage/Carthage) for dependency management. Carthage is a decentralized dependency manager that builds your dependency graph without interfering with your `Xcode` project setup. `CI` integration through [fastlane](https://github.com/fastlane/fastlane) is also available.
@@ -91,7 +89,7 @@ No formalised roadmap has yet been established but an extensive backlog of possi
 - [ ] Carousel integration
 - [ ] Content search
 - [ ] User playback history
-- [ ] Better customization of selected `Environment`s.
+- [ ] Better customization and loading of selected `Environment`s.
 
 ## Contributing
 
