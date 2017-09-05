@@ -17,7 +17,7 @@ class LoginViewModel {
     fileprivate var selectedCustomerIndex: Int = 0
     
     init() {
-        environments = EnvironmentConfig.preconfigured(files:["enigma","environments"])
+        environments = EnvironmentConfig.preconfigured(files:["environments"])
         
         loadData()
     }
