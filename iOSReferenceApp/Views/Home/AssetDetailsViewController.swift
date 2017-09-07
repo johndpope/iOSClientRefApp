@@ -73,12 +73,16 @@ class AssetDetailsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        if let imageUrl = viewModel.validImageUrls(locale: "en").first {
-            mainImageView.kf.setImage(with: imageUrl) { (_, error, _, _) in
-                if let error = error {
-                    print("Kingfisher error: ",error)
+        if let imageUrl = viewModel
+            .images(locale: "en")
+            .prefere(orientation: .landscape)
+            .validImageUrls()
+            .first {
+                mainImageView.kf.setImage(with: imageUrl) { (_, error, _, _) in
+                    if let error = error {
+                        print("Kingfisher error: ",error)
+                    }
                 }
-            }
         }
         
         titleLabel.text = viewModel.anyTitle(locale: "en")
