@@ -73,7 +73,12 @@ extension HorizontalScrollRow: UICollectionViewDelegate {
     }
     
     fileprivate func imageUrl(for indexPath: IndexPath) -> URL? {
-        return viewModel.content[indexPath.row].validImageUrls(locale: "en").first
+        return viewModel
+            .content[indexPath.row]
+            .images(locale: "en")
+            .prefere(orientation: .landscape)
+            .validImageUrls()
+            .first
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

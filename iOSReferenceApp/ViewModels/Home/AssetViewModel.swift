@@ -93,7 +93,10 @@ extension LocalizedEntity {
     
     
     func images(locale: String) -> [Image] {
-        return localizedData(locale: locale)?.images ?? []
+        if let result = localizedData(locale: locale)?.images {
+            return result
+        }
+        return localizations().flatMap{ $0.images ?? [] }
     }
     
     func descriptions(locale: String) -> [String] {
@@ -112,11 +115,28 @@ extension LocalizedEntity {
     func longestDescription(locale: String) -> String? {
         return descriptions(locale: locale).last
     }
-    
-    func validImageUrls(locale: String) -> [URL] {
-        return images(locale: locale)
+}
+
+
+extension Sequence where Self.Iterator.Element == Image {
+    func validImageUrls() -> [URL] {
+        return self
             .flatMap{ $0.url }
             .filter{ $0.hasPrefix("http") }
             .flatMap{ URL(string: $0) }
+    }
+    
+    func prefere(orientation: Image.Orientation) -> [Image] {
+        return sorted{ l, r -> Bool in
+            if let lo = l.orientation, lo == orientation {
+                return true
+            }
+            else if let ro = r.orientation, ro == orientation {
+                return false
+            }
+            else {
+                return true
+            }
+        }
     }
 }

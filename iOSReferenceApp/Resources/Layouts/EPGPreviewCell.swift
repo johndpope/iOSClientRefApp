@@ -45,7 +45,11 @@ class EPGPreviewCell: UITableViewCell {
             markAs(upcoming: true)
         }
         
-        if let url = viewModel.validImageUrls(locale: "en").first {
+        if let url = viewModel
+            .images(locale: "en")
+            .prefere(orientation: .landscape)
+            .validImageUrls()
+            .first {
             thumbnailView.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "assetPlaceholder")) { (image, error, _, url) in
                 if let error = error {
                     print("Kingfisher: ",error)
