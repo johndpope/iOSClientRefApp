@@ -9,6 +9,9 @@ NO RELEASE DATE SET
 #### Features
 * `EMP-10322` Fetching cover art exhausts all options for images before displaying generic thumbnail.
 
+#### Changes
+* `EMP-10293` Remove EntitlementRequester.
+
 ## 0.2.0
 Released 5 Sep 2017
 

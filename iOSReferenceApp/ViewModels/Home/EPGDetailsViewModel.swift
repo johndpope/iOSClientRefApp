@@ -9,7 +9,7 @@
 import UIKit
 import Exposure
 
-class EPGDetailsViewModel: EntitlementRequester {
+class EPGDetailsViewModel {
     fileprivate(set) var content: [ProgramViewModel] = []
     
     let environment: Environment

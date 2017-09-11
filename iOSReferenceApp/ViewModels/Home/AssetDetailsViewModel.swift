@@ -9,7 +9,7 @@
 import Foundation
 import Exposure
 
-class AssetDetailsViewModel: EntitlementRequester {
+class AssetDetailsViewModel {
     fileprivate(set) var asset: Asset
     fileprivate(set) var environment: Environment
     fileprivate(set) var sessionToken: SessionToken
