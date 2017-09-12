@@ -55,10 +55,10 @@ class LoginViewController: UIViewController {
     
     // MARK: Anonymous
     fileprivate func handleAnonymousLogin() {
-        PROGRESS_INDICATOR_UTIL.show(parentView: self.view)
+        ProgressIndicatorUtil.shared.show(parentView: self.view)
         viewmodel.anonymous(callback: { (response) in
             defer {
-                PROGRESS_INDICATOR_UTIL.hide()
+                ProgressIndicatorUtil.shared.hide()
             }
             
             if let error = response.error {
@@ -75,13 +75,13 @@ class LoginViewController: UIViewController {
     
     @IBAction func anonymousSwitchClick(_ sender: UISwitch) {
         if sender.isOn {
-            if self.environmentButton.titleLabel?.text != STRINGS_UTIL.getString(key: Constants.Strings.environment) {
+            if self.environmentButton.titleLabel?.text != StringsUtil.shared.getString(key: Constants.Strings.environment) {
                 self.toggleLoginButton(enabled: true)
             } else {
                 self.toggleLoginButton(enabled: false)
             }
         } else {
-            if self.environmentButton.titleLabel?.text == STRINGS_UTIL.getString(key: Constants.Strings.environment) || self.customerButton.titleLabel?.text == STRINGS_UTIL.getString(key: Constants.Strings.customer) {
+            if self.environmentButton.titleLabel?.text == StringsUtil.shared.getString(key: Constants.Strings.environment) || self.customerButton.titleLabel?.text == StringsUtil.shared.getString(key: Constants.Strings.customer) {
                 self.toggleLoginButton(enabled: false)
             }
         }
@@ -89,10 +89,10 @@ class LoginViewController: UIViewController {
     
     // MARK: Login
     fileprivate func handleLogin() {
-        PROGRESS_INDICATOR_UTIL.show(parentView: self.view)
+        ProgressIndicatorUtil.shared.show(parentView: self.view)
         viewmodel.login(exposureUsername: usernameTextField.text!, exposurePassword: passwordTextField.text!, callback: { (response) in
             defer {
-                PROGRESS_INDICATOR_UTIL.hide()
+                ProgressIndicatorUtil.shared.hide()
             }
             
             if let error = response.error {
@@ -114,14 +114,14 @@ class LoginViewController: UIViewController {
         
         // Confirm
         let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [unowned self] action in
-            PROGRESS_INDICATOR_UTIL.show(parentView: self.view)
+            ProgressIndicatorUtil.shared.show(parentView: self.view)
             if let mfa = alertController.textFields?.first?.text {
                 self.viewmodel
                     .twoFactor(exposureUsername: self.usernameTextField.text!,
                                exposurePassword: self.passwordTextField.text!,
                                mfa: mfa) { response in
                                 defer {
-                                    PROGRESS_INDICATOR_UTIL.hide()
+                                    ProgressIndicatorUtil.shared.hide()
                                 }
                                 
                                 if let error = response.error {
@@ -215,7 +215,7 @@ extension LoginViewController {
                             self.handlePresets(customer: self.viewmodel.getSelectedCustomerConfig())
                         }
                     } else {
-                        self.customerButton.setTitle(STRINGS_UTIL.getString(key: Constants.Strings.customer), for: .normal)
+                        self.customerButton.setTitle(StringsUtil.shared.getString(key: Constants.Strings.customer), for: .normal)
                         self.customerButton.isEnabled = false
                         self.toggleLoginButton(enabled: false)
                         self.usernameTextField.text = ""
@@ -257,7 +257,7 @@ extension LoginViewController {
                     
                     self.handlePresets(customer: self.viewmodel.getSelectedCustomerConfig())
                 } else {
-                    self.customerButton.setTitle(STRINGS_UTIL.getString(key: Constants.Strings.customer), for: .normal)
+                    self.customerButton.setTitle(StringsUtil.shared.getString(key: Constants.Strings.customer), for: .normal)
                     self.toggleLoginButton(enabled: false)
                     self.usernameTextField.text = ""
                     self.passwordTextField.text = ""
@@ -287,23 +287,23 @@ extension LoginViewController {
     func isValidInfo() -> Bool {
         
         if self.viewmodel.selectedExposureEnvironment() == nil {
-            self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.error), message: STRINGS_UTIL.getString(key: Constants.Strings.Error.invalidEnvironment))
+            self.showMessage(title: StringsUtil.shared.getString(key: Constants.Strings.error), message: StringsUtil.shared.getString(key: Constants.Strings.Error.invalidEnvironment))
             return false
         }
         
         if self.viewmodel.getSelectedCustomerConfig() == nil {
-            self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.error), message: STRINGS_UTIL.getString(key: Constants.Strings.Error.invalidCustomer))
+            self.showMessage(title: StringsUtil.shared.getString(key: Constants.Strings.error), message: StringsUtil.shared.getString(key: Constants.Strings.Error.invalidCustomer))
             return false
         }
         
         if !anonymousSwitch.isOn {
             if usernameTextField.text!.isEmpty {
-                self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.error), message: STRINGS_UTIL.getString(key: Constants.Strings.Error.invalidUsername))
+                self.showMessage(title: StringsUtil.shared.getString(key: Constants.Strings.error), message: StringsUtil.shared.getString(key: Constants.Strings.Error.invalidUsername))
                 return false
             }
             
             if passwordTextField.text!.isEmpty {
-                self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.error), message: STRINGS_UTIL.getString(key: Constants.Strings.Error.invalidPassword))
+                self.showMessage(title: StringsUtil.shared.getString(key: Constants.Strings.error), message: StringsUtil.shared.getString(key: Constants.Strings.Error.invalidPassword))
                 return false
             }
         }

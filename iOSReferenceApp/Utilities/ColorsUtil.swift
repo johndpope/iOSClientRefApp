@@ -2,16 +2,9 @@ import Foundation
 import UIKit
 
 class ColorsUtil {
-    //    Global: let COLORS_UTIL = ColorsUtil.sharedInstance
-    
     var mDictionary: NSDictionary?
     
-    class var sharedInstance : ColorsUtil {
-        struct Static {
-            static let instance : ColorsUtil = ColorsUtil()
-        }
-        return Static.instance
-    }
+    static let shared = ColorsUtil()
     
     init(){
         let path = Bundle.main.path(forResource: "colors.plist", ofType: nil)

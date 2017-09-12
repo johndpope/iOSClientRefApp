@@ -9,11 +9,7 @@
 import UIKit
 import Utilities
 
-let LOGGING = Logging.sharedInstance
 let TINY_DB = TinyDB.sharedInstance()!
-let COLORS_UTIL = ColorsUtil.sharedInstance
-let STRINGS_UTIL = StringsUtil.sharedInstance
-let PROGRESS_INDICATOR_UTIL = ProgressIndicatorUtil.sharedInstance
 
 import AVFoundation
 

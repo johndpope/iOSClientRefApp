@@ -66,7 +66,7 @@ extension UIViewController {
             rect.size.height += 80
         } else {
             rect.origin.y += 80;
-            rect.size.height -= 80;
+            rect.size.height -= 80
         }
         self.view.frame = rect
         UIView.commitAnimations()
@@ -98,10 +98,10 @@ extension String {
 
 extension UIColor {
     static var ericssonBlue: UIColor {
-        return ColorsUtil.sharedInstance.getColor(key: Constants.Colors.Ericsson.blue)
+        return ColorsUtil.shared.getColor(key: Constants.Colors.Ericsson.blue)
     }
     
     static var ericssonBlack: UIColor {
-        return ColorsUtil.sharedInstance.getColor(key: Constants.Colors.Ericsson.black)
+        return ColorsUtil.shared.getColor(key: Constants.Colors.Ericsson.black)
     }
 }

@@ -2,16 +2,10 @@ import Foundation
 import UIKit
 
 class StringsUtil {
-    //    Global: let STRINGS_UTIL = StringsUtil.sharedInstance
     
     var mDictionary: NSDictionary?
-    
-    class var sharedInstance : StringsUtil {
-        struct Static {
-            static let instance : StringsUtil = StringsUtil()
-        }
-        return Static.instance
-    }
+
+    static let shared = StringsUtil()
     
     init(){
         initDictionary()
