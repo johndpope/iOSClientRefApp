@@ -68,20 +68,20 @@ class LoginViewController: UIViewController {
             
             if let sessionToken = response.value {
                 UserInfo.update(sessionToken: sessionToken)
-                self.performSegue(withIdentifier: Constants.Storyboard.HOME_TBC_SEGUE, sender: sessionToken)
+                self.performSegue(withIdentifier: Constants.Storyboard.homeSegue, sender: sessionToken)
             }
         })
     }
     
     @IBAction func anonymousSwitchClick(_ sender: UISwitch) {
         if sender.isOn {
-            if self.environmentButton.titleLabel?.text != STRINGS_UTIL.getString(key: Constants.Strings.ENVIRONMENT) {
+            if self.environmentButton.titleLabel?.text != STRINGS_UTIL.getString(key: Constants.Strings.environment) {
                 self.toggleLoginButton(enabled: true)
             } else {
                 self.toggleLoginButton(enabled: false)
             }
         } else {
-            if self.environmentButton.titleLabel?.text == STRINGS_UTIL.getString(key: Constants.Strings.ENVIRONMENT) || self.customerButton.titleLabel?.text == STRINGS_UTIL.getString(key: Constants.Strings.CUSTOMER) {
+            if self.environmentButton.titleLabel?.text == STRINGS_UTIL.getString(key: Constants.Strings.environment) || self.customerButton.titleLabel?.text == STRINGS_UTIL.getString(key: Constants.Strings.customer) {
                 self.toggleLoginButton(enabled: false)
             }
         }
@@ -102,7 +102,7 @@ class LoginViewController: UIViewController {
             
             if let credentials = response.value {
                 UserInfo.update(credentials: credentials)
-                self.performSegue(withIdentifier: Constants.Storyboard.HOME_TBC_SEGUE, sender: credentials)
+                self.performSegue(withIdentifier: Constants.Storyboard.homeSegue, sender: credentials)
             }
         })
     }
@@ -131,7 +131,7 @@ class LoginViewController: UIViewController {
                                 
                                 if let credentials = response.value {
                                     UserInfo.update(credentials: credentials)
-                                    self.performSegue(withIdentifier: Constants.Storyboard.HOME_TBC_SEGUE, sender: credentials)
+                                    self.performSegue(withIdentifier: Constants.Storyboard.homeSegue, sender: credentials)
                                 }
                 }
             }
@@ -215,7 +215,7 @@ extension LoginViewController {
                             self.handlePresets(customer: self.viewmodel.getSelectedCustomerConfig())
                         }
                     } else {
-                        self.customerButton.setTitle(STRINGS_UTIL.getString(key: Constants.Strings.CUSTOMER), for: .normal)
+                        self.customerButton.setTitle(STRINGS_UTIL.getString(key: Constants.Strings.customer), for: .normal)
                         self.customerButton.isEnabled = false
                         self.toggleLoginButton(enabled: false)
                         self.usernameTextField.text = ""
@@ -257,7 +257,7 @@ extension LoginViewController {
                     
                     self.handlePresets(customer: self.viewmodel.getSelectedCustomerConfig())
                 } else {
-                    self.customerButton.setTitle(STRINGS_UTIL.getString(key: Constants.Strings.CUSTOMER), for: .normal)
+                    self.customerButton.setTitle(STRINGS_UTIL.getString(key: Constants.Strings.customer), for: .normal)
                     self.toggleLoginButton(enabled: false)
                     self.usernameTextField.text = ""
                     self.passwordTextField.text = ""
@@ -287,23 +287,23 @@ extension LoginViewController {
     func isValidInfo() -> Bool {
         
         if self.viewmodel.selectedExposureEnvironment() == nil {
-            self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.ERROR), message: STRINGS_UTIL.getString(key: Constants.Strings.ERROR_INVALID_ENVIRONMENT))
+            self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.error), message: STRINGS_UTIL.getString(key: Constants.Strings.Error.invalidEnvironment))
             return false
         }
         
         if self.viewmodel.getSelectedCustomerConfig() == nil {
-            self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.ERROR), message: STRINGS_UTIL.getString(key: Constants.Strings.ERROR_INVALID_CUSTOMER))
+            self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.error), message: STRINGS_UTIL.getString(key: Constants.Strings.Error.invalidCustomer))
             return false
         }
         
         if !anonymousSwitch.isOn {
             if usernameTextField.text!.isEmpty {
-                self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.ERROR), message: STRINGS_UTIL.getString(key: Constants.Strings.ERROR_INVALID_USERNAME))
+                self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.error), message: STRINGS_UTIL.getString(key: Constants.Strings.Error.invalidUsername))
                 return false
             }
             
             if passwordTextField.text!.isEmpty {
-                self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.ERROR), message: STRINGS_UTIL.getString(key: Constants.Strings.ERROR_INVALID_PASSWORD))
+                self.showMessage(title: STRINGS_UTIL.getString(key: Constants.Strings.error), message: STRINGS_UTIL.getString(key: Constants.Strings.Error.invalidPassword))
                 return false
             }
         }

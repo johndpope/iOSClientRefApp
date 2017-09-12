@@ -98,10 +98,10 @@ extension String {
 
 extension UIColor {
     static var ericssonBlue: UIColor {
-        return ColorsUtil.sharedInstance.getColor(key: Constants.Colors.ERICSSON_BLUE)
+        return ColorsUtil.sharedInstance.getColor(key: Constants.Colors.Ericsson.blue)
     }
     
     static var ericssonBlack: UIColor {
-        return ColorsUtil.sharedInstance.getColor(key: Constants.Colors.ERICSSON_BLACK)
+        return ColorsUtil.sharedInstance.getColor(key: Constants.Colors.Ericsson.black)
     }
 }

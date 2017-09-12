@@ -34,7 +34,6 @@
 		76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417221EE1518800677A46 /* AssetViewModel.swift */; };
 		76A44C9E1F1637A7008992E9 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A44C9D1F1637A7008992E9 /* MoreViewController.swift */; };
 		76A843AB1EA7856C00BDAF2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A843AA1EA7856C00BDAF2C /* AppDelegate.swift */; };
-		76A843AD1EA7856C00BDAF2C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A843AC1EA7856C00BDAF2C /* ViewController.swift */; };
 		76A843B01EA7856C00BDAF2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76A843AE1EA7856C00BDAF2C /* Main.storyboard */; };
 		76A843B21EA7856C00BDAF2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76A843B11EA7856C00BDAF2C /* Assets.xcassets */; };
 		76A843B51EA7856C00BDAF2C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76A843B31EA7856C00BDAF2C /* LaunchScreen.storyboard */; };
@@ -154,7 +153,6 @@
 		76A44C9D1F1637A7008992E9 /* MoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		76A843A71EA7856C00BDAF2C /* iOSReferenceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSReferenceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A843AA1EA7856C00BDAF2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		76A843AC1EA7856C00BDAF2C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		76A843AF1EA7856C00BDAF2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		76A843B11EA7856C00BDAF2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76A843B41EA7856C00BDAF2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -310,7 +308,6 @@
 				76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */,
 				76A843AA1EA7856C00BDAF2C /* AppDelegate.swift */,
 				F7061C601EC5BFAF0041E271 /* Constants.swift */,
-				76A843AC1EA7856C00BDAF2C /* ViewController.swift */,
 				76A843B11EA7856C00BDAF2C /* Assets.xcassets */,
 				F793A8421EC516A500DF7626 /* Dependencies */,
 				76A843B31EA7856C00BDAF2C /* LaunchScreen.storyboard */,
@@ -730,7 +727,6 @@
 				3E9882281F66E46E003467B3 /* AuthorizedEnvironment.swift in Sources */,
 				76A844011EA7886400BDAF2C /* KeyboardAnimationFrame.swift in Sources */,
 				76AF2F041F139D040014F007 /* EPGDetailsViewController.swift in Sources */,
-				76A843AD1EA7856C00BDAF2C /* ViewController.swift in Sources */,
 				764EDC4F1F5EB6E400569D5B /* CHANGELOG.md in Sources */,
 				F793A8451EC516BC00DF7626 /* LazyScrollView.swift in Sources */,
 				F7061C5F1EC5AF760041E271 /* McPicker.swift in Sources */,

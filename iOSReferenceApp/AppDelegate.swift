@@ -19,10 +19,6 @@ import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    struct Lets {
-        static var MAIN_VC: UIViewController?
-    }
 
     var window: UIWindow?
 
@@ -62,10 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let rootNavigationController = self.window?.rootViewController as? UINavigationController
         
-        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.LOGIN_VC_ID) as UIViewController
+        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loginId) as UIViewController
         
         // Check user validation
-        let stack = UserInfo.isValidSession() ? [loginViewController, uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.HOME_TBC_ID) as UIViewController] : [loginViewController]
+        let stack = UserInfo.isValidSession() ? [loginViewController, uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.homeId) as UIViewController] : [loginViewController]
         
         rootNavigationController?.setViewControllers(stack, animated: false)
     }
