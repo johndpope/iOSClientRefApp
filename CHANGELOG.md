@@ -11,6 +11,7 @@ NO RELEASE DATE SET
 
 #### Changes
 * `EMP-10293` Remove EntitlementRequester.
+* Listen to onScrubbing event.
 * Cleanup Constants naming (#9)
 
 ## 0.2.0

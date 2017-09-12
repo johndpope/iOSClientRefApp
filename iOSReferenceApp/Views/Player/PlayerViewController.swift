@@ -83,6 +83,10 @@ class PlayerViewController: UIViewController {
         player.onDurationChanged{ player in
             print("onDurationChanged",player.duration)
         }
+
+        player.onPlaybackScrubbed { player, toTime in
+            print("onPlaybackScrubbed", toTime)
+        }
         
         if let playRequest = viewModel.playRequest {
             stream(playRequest: playRequest)
