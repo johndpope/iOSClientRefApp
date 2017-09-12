@@ -9,14 +9,7 @@
 import UIKit
 
 class ProgressIndicatorUtil {
-    //    Global: let PROGRESS_INDICATOR_UTIL = ProgressIndicatorUtil.sharedInstance
-    
-    class var sharedInstance : ProgressIndicatorUtil {
-        struct Static {
-            static let instance : ProgressIndicatorUtil = ProgressIndicatorUtil()
-        }
-        return Static.instance
-    }
+    static let shared = ProgressIndicatorUtil()
     
     init(){
     }
