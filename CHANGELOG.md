@@ -11,6 +11,7 @@ NO RELEASE DATE SET
 
 #### Changes
 * `EMP-10293` Remove EntitlementRequester.
+* Listen to onScrubbing event.
 
 ## 0.2.0
 Released 5 Sep 2017
