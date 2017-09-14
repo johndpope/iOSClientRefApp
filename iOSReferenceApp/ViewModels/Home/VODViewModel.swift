@@ -1,31 +1,30 @@
 //
-//  ExposureListViewModel.swift
+//  VODViewModel.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-06-01.
+//  Created by Fredrik Sjöberg on 2017-05-30.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import Foundation
 import Exposure
 
-class ExposureListViewModel: AuthorizedEnvironment {
+class VODViewModel: AuthorizedEnvironment {
     // MARK: Basics
     let credentials: Credentials
     
-    fileprivate(set) var categories: [CategoryViewModel]
-
-    typealias AssetType = Asset.AssetType
+    fileprivate(set) var categories: [CategoryViewModel] = []
     
     init(credentials: Credentials, environment: Environment) {
         self.credentials = credentials
         self.environment = environment
-        
+
         self.categories = [
-            .tvChannel,
-            .movie
-            ]
-            .map{ CategoryViewModel(type: $0, environment: environment) }
+            .movie,
+            .clip,
+            .episode,
+            .ad
+            ].map { CategoryViewModel(type: $0, environment: environment) }
     }
     
     convenience init(sessionToken: SessionToken, environment: Environment) {
@@ -38,17 +37,12 @@ class ExposureListViewModel: AuthorizedEnvironment {
         self.init(credentials: cred,
                   environment: environment)
     }
-    
+
     func loadCategories(callback: @escaping (Int?, ExposureError?) -> Void) {
-        (0..<categories.count).forEach{ index in
-            let vm = categories[index]
-            vm.fetchMetadata(batch: 1) { error in
-                if let error = error {
-                    callback(nil,error)
-                }
-                else {
-                    callback(index,nil)
-                }
+        for (index, category) in categories.enumerated() {
+            category.fetchMetadata(batch: 1) { error in
+                guard error == nil else { callback(nil, error); return }
+                callback(index, nil)
             }
         }
     }
@@ -61,21 +55,17 @@ class ExposureListViewModel: AuthorizedEnvironment {
 }
 
 // MARK: PreviewAssetCellConfig
-extension ExposureListViewModel: PreviewAssetCellConfig {
+extension VODViewModel: PreviewAssetCellConfig {
     func rowHeight(index: Int) -> CGFloat {
         let category = categories[index]
-        guard category.content.count > 0 else { return 0 }
         return (category.preferredCellSize.height + 2*category.previewCellPadding)
     }
 }
 
-
-extension ExposureListViewModel {
-    func category(for type: AssetType) -> CategoryViewModel {
-        return categories.filter{ $0.type == type }.first!
-    }
-    
-    func assetType(index: Int) -> AssetType {
-        return categories[index].type
-    }
+// MARK: - Fetch Metadata
+extension VODViewModel {
+    // MARK: Exposure Assets
 }
+
+
+

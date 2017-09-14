@@ -44,6 +44,18 @@ extension AssetViewModel {
     }
 }
 
+extension AssetViewModel: Hashable {
+    var hashValue: Int {
+        return asset.assetId?.hashValue ?? -1
+    }
+}
+
+extension AssetViewModel: Equatable {
+    public static func == (lhs: AssetViewModel, rhs: AssetViewModel) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+}
+
 extension AssetViewModel {
     var publicationDate: String? {
         return asset.publications?.first?.publicationDate

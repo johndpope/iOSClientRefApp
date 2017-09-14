@@ -9,7 +9,7 @@
 import Foundation
 import Exposure
 
-class PresetViewModel: AuthorizedEnvironment {
+class VODViewModel: AuthorizedEnvironment {
     // MARK: Basics
     let credentials: Credentials
     
@@ -43,7 +43,7 @@ class PresetViewModel: AuthorizedEnvironment {
 }
 
 // MARK: PreviewAssetCellConfig
-extension PresetViewModel: PreviewAssetCellConfig {
+extension VODViewModel: PreviewAssetCellConfig {
     func rowHeight(index: Int) -> CGFloat {
         let category = categories[index]
         return (category.preferredCellSize.height + 2*category.previewCellPadding)
@@ -51,14 +51,12 @@ extension PresetViewModel: PreviewAssetCellConfig {
 }
 
 // MARK: - Fetch Metadata
-extension PresetViewModel {
+extension VODViewModel {
     // MARK: Exposure Assets
     func fetchMetadata(callback: @escaping (ExposureError?) -> Void) {
         FetchAsset(environment: environment)
             .list()
-            //.elasticSearch(query: "medias.drm:FAIRPLAY AND medias.format:HLS")
-            .filter(onlyAssetIds: sampleAssets.map{ $0.assetId })
-            .show(page: 1, spanning: sampleAssets.count)
+            .show(page: 1, spanning: 100)
             .request()
             .response{ [unowned self] (exposure: ExposureResponse<AssetList>) in
                 if let success = exposure.value {

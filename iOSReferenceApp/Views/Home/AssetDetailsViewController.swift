@@ -11,6 +11,7 @@ import Exposure
 import Kingfisher
 import Player
 import AVKit
+import Download
 
 protocol AssetDetailsPresenter: class, AuthorizedEnvironment {
     var assetDetailsPresenter: UIViewController { get }
@@ -62,7 +63,8 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var ratingsView: UIView!
     @IBOutlet weak var descriptionTextLabel: UILabel!
     @IBOutlet weak var footerTextLabel: UILabel!
-    
+    @IBOutlet weak var downloadButton: UIButton!
+
     fileprivate(set) var viewModel: AssetDetailsViewModel!
     
     @IBOutlet weak var closeButton: UIButton!
@@ -87,7 +89,13 @@ class AssetDetailsViewController: UIViewController {
         
         titleLabel.text = viewModel.anyTitle(locale: "en")
         descriptionTextLabel.text = viewModel.longestDescription(locale: "en")
-        
+
+        // Check if asset download state
+        if viewModel.asset.isDownloaded {
+            downloadButton.setTitle("Remove from downloads", for: .normal)
+        } else {
+            downloadButton.setTitle("Download", for: .normal)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -111,7 +119,52 @@ class AssetDetailsViewController: UIViewController {
         
         self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
     }
+
+    var downloader: DownloadTask!
     
+    @IBAction func downloadAction(_ sender: UIButton) {
+        guard !viewModel.asset.isDownloaded, let assetId = viewModel.asset.assetId else {
+            return
+        }
+        Entitlement(environment: viewModel.environment,
+                    sessionToken: viewModel.sessionToken)
+            .download(assetId: assetId)
+            .request()
+            .response { (res: ExposureResponse<PlaybackEntitlement>) in
+                guard let response = res.value else {
+                    print(res.error!)
+                    return
+                }
+                guard let mediaLocatorString = response.mediaLocator, let mediaLocator = URL(string: mediaLocatorString) else {
+                    print("No mediaLocator")
+                    return
+                }
+
+                if #available(iOS 10.0, *) {
+                    self.downloader = Downloader.download(mediaLocator: mediaLocator)
+                } else {
+                    let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as! URL
+                    let destinationUrl = documentsUrl.appendingPathComponent("\(assetId).m3u8")
+
+                    self.downloader = Downloader.download(mediaLocator: mediaLocator, to: destinationUrl)
+                }
+
+                self.downloader
+                    .onError { (task, error) in
+                        print("Error", error)
+                    }
+                    .onStarted { task in
+                        print("Task started: ", task)
+                    }
+                    .onProgress { (task, progress) in
+                        print("Progress: ", progress.size, progress.total)
+                    }
+                    .onCompleted { (task, url) in
+                        print("Completed: ", url)
+                    }
+                    .resume()
+        }
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -137,5 +190,13 @@ extension AssetDetailsViewController: AuthorizedEnvironment {
     
     var sessionToken: SessionToken {
         return viewModel.sessionToken
+    }
+}
+
+extension Asset {
+    var isDownloaded: Bool {
+        get {
+            return false
+        }
     }
 }

@@ -28,8 +28,10 @@ extension LoginViewModel {
     
     func loadData() {
         environmentsTitleArray.removeAll()
-        
+
+        print(environments)
         for environment in environments {
+            print(environment)
             environmentsTitleArray.append(environment.pickerModelTitle)
         }
     }

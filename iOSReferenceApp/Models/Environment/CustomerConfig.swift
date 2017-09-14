@@ -14,14 +14,12 @@ struct CustomerConfig {
     let customer: String
     let businessUnit: String
     let presetMethod: PresetMethod?
-    let sampleAssets: [SampleAssetConfig]?
     
-    init(name: String, customer: String, businessUnit: String, presetMethod: PresetMethod? = nil, sampleAssets: [SampleAssetConfig]? = nil) {
+    init(name: String, customer: String, businessUnit: String, presetMethod: PresetMethod? = nil) {
         self.name = name
         self.customer = customer
         self.businessUnit = businessUnit
         self.presetMethod = presetMethod
-        self.sampleAssets = sampleAssets
     }
     
     enum PresetMethod {
@@ -71,12 +69,5 @@ extension CustomerConfig {
         self.customer = customer
         self.businessUnit = businessUnit
         presetMethod = PresetMethod(json: json)
-        
-        if let payload = json["samples"].array {
-            sampleAssets = payload.flatMap{ SampleAssetConfig(json: $0) }
-        }
-        else {
-            sampleAssets = []
-        }
     }
 }

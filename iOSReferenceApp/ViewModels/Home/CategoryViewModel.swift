@@ -12,14 +12,19 @@ import Exposure
 class CategoryViewModel {
     typealias AssetType = Asset.AssetType
     
-    fileprivate(set) var content: [AssetViewModel] = []
+    var content: [AssetViewModel] {
+        get {
+            return Array(assets)
+        }
+    }
+    fileprivate(set) var assets: Set<AssetViewModel> = Set()
     let type: AssetType
     let environment: Environment
     
     init(type: Asset.AssetType, environment: Environment, list: [AssetViewModel] = []) {
         self.type = type
         self.environment = environment
-        content = list.filter{ $0.type == type }
+        assets = Set(list)
     }
     
     lazy fileprivate var request: FetchAssetList = { [unowned self] in
@@ -33,12 +38,9 @@ class CategoryViewModel {
 }
 
 extension CategoryViewModel {
-    func append(assets: [AssetViewModel]) {
-        content.append(contentsOf: assets)
-    }
     
     var batchSize: Int {
-        return 50
+        return 2
     }
     
     func fetchMetadata(batch: Int, callback: @escaping (ExposureError?) -> Void) {
@@ -74,11 +76,13 @@ extension CategoryViewModel {
             return
         }
         
-        let assets = items
+        let itemsArray = items
             .flatMap{ AssetViewModel(asset: $0 ) }
             .filter{ $0.type == type }
-        
-        content.append(contentsOf: assets)
+
+        itemsArray.forEach {
+            assets.insert($0)
+        }
     }
 }
 

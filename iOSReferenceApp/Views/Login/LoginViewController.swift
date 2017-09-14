@@ -205,13 +205,11 @@ extension LoginViewController {
                 self.viewmodel.selectedEnvironment(title: title)
                 if let pickerTitle = self.viewmodel.getSelectedEnvironmentConfig()?.pickerModelTitle {
                     self.environmentButton.setTitle(pickerTitle, for: .normal)
-                    
                     if ((self.viewmodel.getSelectedEnvironmentConfig()?.customers.count)! > 0) {
                         if let customerPickerTitle = self.viewmodel.getSelectedCustomerConfig()?.pickerModelTitle {
                             self.customerButton.setTitle(customerPickerTitle, for: .normal)
                             self.customerButton.isEnabled = true
                             self.toggleLoginButton(enabled: true)
-                            
                             self.handlePresets(customer: self.viewmodel.getSelectedCustomerConfig())
                         }
                     } else {

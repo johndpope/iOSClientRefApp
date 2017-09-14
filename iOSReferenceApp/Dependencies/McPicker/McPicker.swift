@@ -133,8 +133,8 @@ open class McPicker: UIView {
     // Foks modify -END-
     
     private func setup() {
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cancel)))
-        
+//        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cancel)))
+
         setToolbarItems(items: [cancelBarButton, flexibleSpace, doneBarButton])
         
         self.backgroundColor = UIColor.black.withAlphaComponent(BACKGROUND_ALPHA)
