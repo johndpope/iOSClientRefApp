@@ -135,7 +135,7 @@ class AssetDetailsViewController: UIViewController {
                     print(res.error!)
                     return
                 }
-                guard let mediaLocatorString = response.mediaLocator, let mediaLocator = URL(string: mediaLocatorString) else {
+                guard let mediaLocator = URL(string: response.mediaLocator) else {
                     print("No mediaLocator")
                     return
                 }
