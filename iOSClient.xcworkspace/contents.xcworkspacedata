@@ -11,6 +11,9 @@
       location = "group:Carthage/Checkouts/iOSClientAnalytics/Analytics.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Carthage/Checkouts/iOSClientDownload/Download.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Carthage/Checkouts/iOSClientExposure/Exposure.xcodeproj">
    </FileRef>
    <FileRef
