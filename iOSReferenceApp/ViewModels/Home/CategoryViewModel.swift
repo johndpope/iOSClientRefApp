@@ -30,6 +30,7 @@ class CategoryViewModel {
     lazy fileprivate var request: FetchAssetList = { [unowned self] in
         return FetchAsset(environment: self.environment)
             .list()
+//            .elasticSearch(query: "medias.drm:UNENCRYPTED AND medias.format:HLS")
             .elasticSearch(query: "(medias.drm:FAIRPLAY OR medias.drm:UNENCRYPTED) AND medias.format:HLS")
     }()
     

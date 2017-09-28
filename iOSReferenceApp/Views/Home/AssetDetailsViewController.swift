@@ -130,39 +130,43 @@ class AssetDetailsViewController: UIViewController {
                     sessionToken: viewModel.sessionToken)
             .download(assetId: assetId)
             .request()
+            .validate()
             .response { (res: ExposureResponse<PlaybackEntitlement>) in
                 guard let response = res.value else {
-                    print(res.error!)
+                    print("Entitlement", res.error!)
                     return
                 }
-                guard let mediaLocator = URL(string: response.mediaLocator) else {
-                    print("No mediaLocator")
-                    return
+                
+                do {
+                    if #available(iOS 10.0, *) {
+                        self.downloader = try Downloader.download(entitlement: response)
+                    } else {
+                        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as! URL
+                        let destinationUrl = documentsUrl.appendingPathComponent("\(assetId).m3u8")
+                        
+                        self.downloader = try Downloader.download(entitlement: response, to: destinationUrl)
+                    }
+                    
+                    self.downloader
+                        .onError { (task, error) in
+                            print("Error", error)
+                            task.cancel()
+                        }
+                        .onStarted { task in
+                            print("Task started: ", task)
+                        }
+                        .onProgress { (task, progress) in
+                            print("Progress: ", progress.size, progress.total)
+                        }
+                        .onCompleted { (task, url) in
+                            print("Completed: ", url)
+                        }
+                        .resume()
+                    
                 }
-
-                if #available(iOS 10.0, *) {
-                    self.downloader = Downloader.download(mediaLocator: mediaLocator)
-                } else {
-                    let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as! URL
-                    let destinationUrl = documentsUrl.appendingPathComponent("\(assetId).m3u8")
-
-                    self.downloader = Downloader.download(mediaLocator: mediaLocator, to: destinationUrl)
+                catch {
+                    print("Download Error",error)
                 }
-
-                self.downloader
-                    .onError { (task, error) in
-                        print("Error", error)
-                    }
-                    .onStarted { task in
-                        print("Task started: ", task)
-                    }
-                    .onProgress { (task, progress) in
-                        print("Progress: ", progress.size, progress.total)
-                    }
-                    .onCompleted { (task, url) in
-                        print("Completed: ", url)
-                    }
-                    .resume()
         }
     }
     // MARK: - Navigation
