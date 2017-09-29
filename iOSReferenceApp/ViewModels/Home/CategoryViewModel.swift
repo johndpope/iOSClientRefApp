@@ -41,7 +41,7 @@ class CategoryViewModel {
 extension CategoryViewModel {
     
     var batchSize: Int {
-        return 2
+        return 50
     }
     
     func fetchMetadata(batch: Int, callback: @escaping (ExposureError?) -> Void) {
@@ -55,6 +55,7 @@ extension CategoryViewModel {
             .show(page: batch, spanning: batchSize)
             .filter(on: type)
             .filter(onlyPublished: false)
+            .sort(on: ["-assetId"])
             .request()
             .response{ [unowned self] (exposure: ExposureResponse<AssetList>) in
                 if let success = exposure.value {

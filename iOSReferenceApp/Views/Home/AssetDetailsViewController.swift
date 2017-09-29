@@ -128,7 +128,8 @@ class AssetDetailsViewController: UIViewController {
         }
         Entitlement(environment: viewModel.environment,
                     sessionToken: viewModel.sessionToken)
-            .download(assetId: assetId)
+            .download(assetId: assetId)//"QA_REFASSET_FVOD_V2_qwerty")
+            .use(drm: .fairplay)
             .request()
             .validate()
             .response { (res: ExposureResponse<PlaybackEntitlement>) in
@@ -156,7 +157,7 @@ class AssetDetailsViewController: UIViewController {
                             print("Task started: ", task)
                         }
                         .onProgress { (task, progress) in
-                            print("Progress: ", progress.size, progress.total)
+                            print("Progress: ", progress.percentage, "%")
                         }
                         .onCompleted { (task, url) in
                             print("Completed: ", url)
