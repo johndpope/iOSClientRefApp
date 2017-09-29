@@ -78,6 +78,14 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var downloadQualityLabel: UILabel!
     @IBOutlet weak var downloadSizeLabel: UILabel!
     
+    @IBOutlet weak var downloadProgressStackView: UIStackView!
+    @IBOutlet weak var downloadPauseResumeLabel: UILabel!
+    @IBOutlet weak var downloadProgress: UIProgressView!
+    
+    @IBOutlet weak var downloadedSizeLabel: UILabel!
+    
+    
+    
     fileprivate(set) var viewModel: AssetDetailsViewModel!
     
     @IBOutlet weak var closeButton: UIButton!
@@ -176,7 +184,7 @@ class AssetDetailsViewController: UIViewController {
                 
                 do {
                     if #available(iOS 10.0, *) {
-                        self.downloader = try Downloader.download(entitlement: response)
+                        self.downloader = try Downloader.download(entitlement: response, named: assetId)
                     } else {
                         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as! URL
                         let destinationUrl = documentsUrl.appendingPathComponent("\(assetId).m3u8")
@@ -205,6 +213,13 @@ class AssetDetailsViewController: UIViewController {
                     print("Download Error",error)
                 }
         }
+    }
+    
+    @IBAction func pauseResumeDownloadAction(_ sender: UIButton) {
+        
+    }
+    @IBAction func cancelDownloadAction(_ sender: UIButton) {
+        
     }
     // MARK: - Navigation
 

@@ -8,6 +8,14 @@
 
 import Foundation
 import Exposure
+import Download
+
+class DownloadAssetViewModel {
+    fileprivate var task: DownloadTask?
+    
+}
+
+
 
 class AssetDetailsViewModel {
     fileprivate(set) var asset: Asset
@@ -101,8 +109,7 @@ extension AssetDetailsViewModel {
                 if let result = exposure.value {
                     if case .success = result.status {
                         // Temporary hack to filter out 0/0 Bitrate entries
-                        let t = result.bitrates?.filter{ $0.bitrate != nil && $0.bitrate! > 0 && $0.size != nil && $0.size! > 0 }
-                        self?.availableBitrates = t
+                        self?.availableBitrates = result.bitrates?.filter{ $0.bitrate != nil && $0.bitrate! > 0 && $0.size != nil && $0.size! > 0 }
                         callback(true)
                         return
                     }

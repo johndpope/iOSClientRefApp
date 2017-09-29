@@ -395,8 +395,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yx3-UM-ftn" userLabel="contentView">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="706"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="psu-p7-emi">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="406.66666666666669"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="psu-p7-emi">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="462.33333333333331"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rU-5y-AQk" userLabel="Playback">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
@@ -430,13 +430,13 @@
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pGp-GJ-CnU">
-                                                        <rect key="frame" x="0.0" y="215" width="374" height="29.333333333333314"/>
+                                                        <rect key="frame" x="0.0" y="216" width="374" height="29.333333333333314"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="w1H-fQ-VRf" userLabel="Progress">
-                                                        <rect key="frame" x="0.0" y="249.33333333333331" width="374" height="14"/>
+                                                        <rect key="frame" x="0.0" y="251.33333333333331" width="374" height="14"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFh-Om-zcq">
                                                                 <rect key="frame" x="0.0" y="0.0" width="29.666666666666664" height="14"/>
@@ -458,7 +458,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OCj-b0-Y5r" userLabel="Ratings">
-                                                        <rect key="frame" x="0.0" y="268.33333333333331" width="374" height="40"/>
+                                                        <rect key="frame" x="0.0" y="271.33333333333331" width="374" height="40"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YHb-34-xyC">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -494,7 +494,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="viz-UV-rxK" userLabel="Download">
-                                                        <rect key="frame" x="0.0" y="313.33333333333326" width="374" height="43.666666666666686"/>
+                                                        <rect key="frame" x="0.0" y="317.33333333333326" width="374" height="43.666666666666686"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0ea-LT-UYZ">
                                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="43.666666666666686"/>
@@ -559,8 +559,77 @@
                                                             </stackView>
                                                         </subviews>
                                                     </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="VM5-A0-jUv" userLabel="DownloadProgress">
+                                                        <rect key="frame" x="0.0" y="367" width="374" height="43.666666666666686"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2bN-pk-EIJ" userLabel="Pause">
+                                                                <rect key="frame" x="0.0" y="0.0" width="60" height="43.666666666666686"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QfR-86-dEb">
+                                                                        <rect key="frame" x="14" y="0.0" width="32" height="32"/>
+                                                                        <state key="normal" image="download-pause"/>
+                                                                        <connections>
+                                                                            <action selector="pauseResumeDownloadAction:" destination="aUa-uP-O3V" eventType="touchUpInside" id="8LA-TZ-NOw"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Pause" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZv-lT-gCs">
+                                                                        <rect key="frame" x="16" y="32" width="28" height="11.666666666666686"/>
+                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="60" id="W9w-KY-HD3"/>
+                                                                </constraints>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="69R-mz-3L5">
+                                                                <rect key="frame" x="65" y="11.333333333333314" width="244" height="21"/>
+                                                                <subviews>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="fk4-Zr-IfH">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="244" height="14"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="349 Mb" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JOl-4l-Ba3">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="244" height="14"/>
+                                                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hll-aX-a2Q">
+                                                                        <rect key="frame" x="0.0" y="19" width="244" height="2"/>
+                                                                    </progressView>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="fk4-Zr-IfH" firstAttribute="width" secondItem="69R-mz-3L5" secondAttribute="width" id="WkC-cv-apv"/>
+                                                                </constraints>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TO0-LB-hYh" userLabel="Cancel">
+                                                                <rect key="frame" x="314" y="0.0" width="60" height="43.666666666666686"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7j-D2-Gtd">
+                                                                        <rect key="frame" x="14" y="0.0" width="32" height="32"/>
+                                                                        <state key="normal" image="download-cancel"/>
+                                                                        <connections>
+                                                                            <action selector="cancelDownloadAction:" destination="aUa-uP-O3V" eventType="touchUpInside" id="Ids-7C-QJC"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Cancel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkv-LQ-pzf">
+                                                                        <rect key="frame" x="14.333333333333314" y="32" width="31.333333333333371" height="11.666666666666686"/>
+                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="60" id="aIK-yD-8lm"/>
+                                                                </constraints>
+                                                            </stackView>
+                                                        </subviews>
+                                                    </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VAD-uv-HgA" userLabel="Description">
-                                                        <rect key="frame" x="0.0" y="362" width="374" height="21"/>
+                                                        <rect key="frame" x="0.0" y="416.66666666666669" width="374" height="21"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uct-ZE-Jgl">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="21"/>
@@ -571,10 +640,10 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mSb-L8-RVr" userLabel="Footer">
-                                                        <rect key="frame" x="0.0" y="388" width="374" height="18.666666666666686"/>
+                                                        <rect key="frame" x="0.0" y="443.66666666666669" width="374" height="18.666666666666629"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVg-YO-CUW">
-                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="18.666666666666686"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="18.666666666666629"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -588,6 +657,7 @@
                                                     <constraint firstItem="w1H-fQ-VRf" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="MND-hh-p1V"/>
                                                     <constraint firstItem="OCj-b0-Y5r" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="UqF-pe-cCo"/>
                                                     <constraint firstItem="7rU-5y-AQk" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="bPy-Aw-4iZ"/>
+                                                    <constraint firstItem="VM5-A0-jUv" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="odI-eA-O7M"/>
                                                     <constraint firstItem="mSb-L8-RVr" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="r3B-lF-HaQ"/>
                                                 </constraints>
                                             </stackView>
@@ -634,10 +704,14 @@
                         <outlet property="closeButton" destination="gcy-Ix-XQh" id="zg1-s2-AxO"/>
                         <outlet property="descriptionTextLabel" destination="Uct-ZE-Jgl" id="k2G-qv-GFh"/>
                         <outlet property="downloadButton" destination="gwA-WH-KX7" id="Wke-bS-ruI"/>
+                        <outlet property="downloadPauseResumeLabel" destination="UZv-lT-gCs" id="iRe-um-Daq"/>
+                        <outlet property="downloadProgress" destination="hll-aX-a2Q" id="cVz-WQ-MHZ"/>
+                        <outlet property="downloadProgressStackView" destination="VM5-A0-jUv" id="DBN-wh-LM3"/>
                         <outlet property="downloadQualityLabel" destination="sbG-jf-Bhd" id="4xD-xL-UGf"/>
                         <outlet property="downloadQualitySelector" destination="dHe-iE-2bw" id="Kp4-KC-QBA"/>
                         <outlet property="downloadSizeLabel" destination="ruc-iD-0w5" id="FvE-iE-nS2"/>
                         <outlet property="downloadStackView" destination="viz-UV-rxK" id="FBO-VU-xe6"/>
+                        <outlet property="downloadedSizeLabel" destination="JOl-4l-Ba3" id="bHa-DK-b2N"/>
                         <outlet property="durationLabel" destination="avJ-E4-2ey" id="S1Z-px-XGB"/>
                         <outlet property="footerTextLabel" destination="OVg-YO-CUW" id="NyT-el-TMr"/>
                         <outlet property="mainImageView" destination="lGr-qZ-Uwm" id="GMk-JO-xgT"/>
@@ -1283,6 +1357,8 @@
     <resources>
         <image name="close" width="32" height="32"/>
         <image name="download" width="32" height="32"/>
+        <image name="download-cancel" width="32" height="32"/>
+        <image name="download-pause" width="32" height="32"/>
         <image name="overlay-back" width="32" height="32"/>
         <image name="overlay-ff-10" width="32" height="32"/>
         <image name="overlay-play" width="32" height="32"/>
