@@ -70,8 +70,14 @@ class AssetDetailsViewController: UIViewController {
     
     @IBOutlet weak var descriptionTextLabel: UILabel!
     @IBOutlet weak var footerTextLabel: UILabel!
+    
+    
+    @IBOutlet weak var downloadStackView: UIStackView!
     @IBOutlet weak var downloadButton: UIButton!
-
+    @IBOutlet weak var downloadQualitySelector: UISlider!
+    @IBOutlet weak var downloadQualityLabel: UILabel!
+    @IBOutlet weak var downloadSizeLabel: UILabel!
+    
     fileprivate(set) var viewModel: AssetDetailsViewModel!
     
     @IBOutlet weak var closeButton: UIButton!
@@ -80,7 +86,10 @@ class AssetDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
+        viewModel.refreshDownloadMetadata{ [weak self] success in
+            self?.configureDownload(available: success)
+        }
         
         refreshUI()
     }
@@ -111,13 +120,6 @@ class AssetDetailsViewController: UIViewController {
         
         // Update last viewed progress
         update(lastViewedOffset: viewModel.lastViewedOffset)
-        
-        // Check if asset download state
-        if viewModel.asset.isDownloaded {
-            downloadButton.setTitle("Remove from downloads", for: .normal)
-        } else {
-            downloadButton.setTitle("Download", for: .normal)
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -143,6 +145,18 @@ class AssetDetailsViewController: UIViewController {
     }
 
     var downloader: DownloadTask!
+    
+    
+    @IBAction func selectBitrate(_ sender: UISlider) {
+        viewModel.select(downloadQuality: Int(sender.value))
+    }
+    
+    @IBAction func bitrateSelectionChanged(_ sender: UISlider) {
+        let discreteValue = Int(sender.value)
+        downloadQualitySelector.setValue(Float(discreteValue), animated: true)
+        
+        update(downloadQuality: viewModel.downloadQuality(for: discreteValue))
+    }
     
     @IBAction func downloadAction(_ sender: UIButton) {
         guard !viewModel.asset.isDownloaded, let assetId = viewModel.asset.assetId else {
@@ -219,6 +233,26 @@ extension AssetDetailsViewController {
         progressLabel.text = lastViewedOffset?.currentOffset
         progressBar.setProgress(lastViewedOffset?.progress ?? 0, animated: false)
         durationLabel.text = lastViewedOffset?.duration
+    }
+}
+
+extension AssetDetailsViewController {
+    func configureDownload(available: Bool) {
+        if available {
+            downloadQualitySelector.minimumValue = 0
+            downloadQualitySelector.maximumValue = Float(viewModel.downloadQualityOptions-1)
+            downloadQualitySelector.setValue(0, animated: true)
+            
+            // Configure Slider
+            update(downloadQuality: viewModel.downloadQuality(for: 0))
+        }
+        else {
+            downloadStackView.isHidden = true
+        }
+    }
+    func update(downloadQuality: AssetDetailsViewModel.DownloadQuality) {
+        downloadSizeLabel.text = downloadQuality.size
+        downloadQualityLabel.text = downloadQuality.bitrate
     }
 }
 
