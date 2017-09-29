@@ -29,6 +29,34 @@ extension AssetDetailsViewModel {
         let duration: String
     }
     
+    func refreshAssetMetaData(callback: @escaping (Bool) -> Void) {
+        guard let assetId = asset.assetId else {
+            callback(false)
+            return
+        }
+        FetchAsset(environment: environment)
+            .filter(assetId: assetId)
+            .includeUserData(for: sessionToken)
+            .request()
+            .response{ [weak self] (exposure: ExposureResponse<Asset>) in
+                guard let weakSelf = self else {
+                    callback(false)
+                    return
+                }
+                
+                if let success = exposure.value {
+                    weakSelf.asset = success
+                    callback(true)
+                    return
+                }
+                
+                if let error = exposure.error {
+                    callback(false)
+                    return
+                }
+        }
+    }
+    
     var lastViewedOffset: LastViewedOffset? {
         if let playHistory = asset.userData?.playHistory, let duration = asset.medias?.first?.durationMillis {
             let progress = Float(playHistory.lastViewedOffset)/Float(duration)

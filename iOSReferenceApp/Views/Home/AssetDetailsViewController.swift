@@ -82,21 +82,33 @@ class AssetDetailsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        refreshUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.refreshAssetMetaData{ [weak self] success in
+            if success {
+                self?.refreshUI()
+            }
+        }
+    }
+    
+    func refreshUI() {
         if let imageUrl = viewModel
             .images(locale: "en")
             .prefere(orientation: .landscape)
             .validImageUrls()
             .first {
-                mainImageView.kf.setImage(with: imageUrl) { (_, error, _, _) in
-                    if let error = error {
-                        print("Kingfisher error: ",error)
-                    }
+            mainImageView.kf.setImage(with: imageUrl) { (_, error, _, _) in
+                if let error = error {
+                    print("Kingfisher error: ",error)
                 }
+            }
         }
         
         titleLabel.text = viewModel.anyTitle(locale: "en")
         descriptionTextLabel.text = viewModel.longestDescription(locale: "en")
-
+        
         // Update last viewed progress
         update(lastViewedOffset: viewModel.lastViewedOffset)
         
@@ -189,6 +201,9 @@ class AssetDetailsViewController: UIViewController {
                 destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
                                                         environment: viewModel.environment,
                                                         playRequest: .vod(assetId: assetId))
+                destination.onDismissed = { [weak self] in
+                    self?.refreshUI()
+                }
             }
         }
     }
