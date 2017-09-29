@@ -167,51 +167,24 @@ class AssetDetailsViewController: UIViewController {
     }
     
     @IBAction func downloadAction(_ sender: UIButton) {
-        guard !viewModel.asset.isDownloaded, let assetId = viewModel.asset.assetId else {
-            return
-        }
-        Entitlement(environment: viewModel.environment,
-                    sessionToken: viewModel.sessionToken)
-            .download(assetId: assetId)//"QA_REFASSET_FVOD_V2_qwerty")
-            .use(drm: .fairplay)
-            .request()
-            .validate()
-            .response { (res: ExposureResponse<PlaybackEntitlement>) in
-                guard let response = res.value else {
-                    print("Entitlement", res.error!)
-                    return
+        guard let assetId = viewModel.asset.assetId else { return }
+        
+        viewModel.downloadViewModel.download(assetId: assetId) { downloadTask, entitlement, error in
+            downloadTask?
+                .onError { (task, error) in
+                    print("Error", error)
+                    task.cancel()
                 }
-                
-                do {
-                    if #available(iOS 10.0, *) {
-                        self.downloader = try Downloader.download(entitlement: response, named: assetId)
-                    } else {
-                        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as! URL
-                        let destinationUrl = documentsUrl.appendingPathComponent("\(assetId).m3u8")
-                        
-                        self.downloader = try Downloader.download(entitlement: response, to: destinationUrl)
-                    }
-                    
-                    self.downloader
-                        .onError { (task, error) in
-                            print("Error", error)
-                            task.cancel()
-                        }
-                        .onStarted { task in
-                            print("Task started: ", task)
-                        }
-                        .onProgress { (task, progress) in
-                            print("Progress: ", progress.percentage, "%")
-                        }
-                        .onCompleted { (task, url) in
-                            print("Completed: ", url)
-                        }
-                        .resume()
-                    
+                .onStarted { task in
+                    print("Task started: ", task)
                 }
-                catch {
-                    print("Download Error",error)
+                .onProgress { (task, progress) in
+                    print("Progress: ", progress.percentage, "%")
                 }
+                .onCompleted { (task, url) in
+                    print("Completed: ", url)
+                }
+                .resume()
         }
     }
     
@@ -271,6 +244,12 @@ extension AssetDetailsViewController {
     }
 }
 
+extension AssetDetailsViewController {
+    func update(downloadProgress progress: DownloadTask.Progress) {
+        downloadProgress.setProgress(Float(progress.percentage), animated: true)
+    }
+}
+
 extension AssetDetailsViewController: AuthorizedEnvironment {
     var environment: Environment {
         return viewModel.environment
@@ -278,13 +257,5 @@ extension AssetDetailsViewController: AuthorizedEnvironment {
     
     var sessionToken: SessionToken {
         return viewModel.sessionToken
-    }
-}
-
-extension Asset {
-    var isDownloaded: Bool {
-        get {
-            return false
-        }
     }
 }

@@ -10,14 +10,67 @@ import Foundation
 import Exposure
 import Download
 
-class DownloadAssetViewModel {
+class DownloadAssetViewModel: AuthorizedEnvironment {
     fileprivate var task: DownloadTask?
     
+    fileprivate(set) var environment: Environment
+    fileprivate(set) var sessionToken: SessionToken
+    
+    fileprivate var availableBitrates: [DownloadValidation.Bitrate]?
+    fileprivate var selectedBitrate: DownloadValidation.Bitrate?
+    
+    init(environment: Environment, sessionToken: SessionToken) {
+        self.environment = environment
+        self.sessionToken = sessionToken
+    }
+}
+
+extension DownloadAssetViewModel {
+    enum DownloadAssetError: Error {
+        case exposure(error: ExposureError)
+        case download(error: DownloadError)
+    }
+    
+    func download(assetId: String, callback: @escaping (DownloadTask?, PlaybackEntitlement?, DownloadAssetError?) -> Void) {
+        Entitlement(environment: environment,
+                    sessionToken: sessionToken)
+            .download(assetId: assetId)
+            .use(drm: .fairplay)
+            .request()
+            .validate()
+            .response{ [weak self] (res: ExposureResponse<PlaybackEntitlement>) in
+                guard let entitlement = res.value else {
+                    callback(nil, nil, .exposure(error: res.error!))
+                    return
+                }
+                
+                self?.handle(entitlement: entitlement, named: assetId) { task, error in
+                    callback(task, entitlement, error)
+                }
+        }
+    }
+    
+    fileprivate func handle(entitlement: PlaybackEntitlement, named name: String, callback: (DownloadTask?, DownloadAssetError?) -> Void) {
+        do {
+            if #available(iOS 10.0, *) {
+                task = try Downloader.download(entitlement: entitlement, named: name)
+                callback(task, nil)
+            } else {
+                let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as! URL
+                let destinationUrl = documentsUrl.appendingPathComponent("\(name).m3u8")
+
+                task = try Downloader.download(entitlement: entitlement, to: destinationUrl)
+            }
+        }
+        catch {
+            callback(nil, .download(error: error as! DownloadError))
+        }
+    }
 }
 
 
 
-class AssetDetailsViewModel {
+class AssetDetailsViewModel: AuthorizedEnvironment {
     fileprivate(set) var asset: Asset
     fileprivate(set) var environment: Environment
     fileprivate(set) var sessionToken: SessionToken
@@ -25,10 +78,14 @@ class AssetDetailsViewModel {
     fileprivate var availableBitrates: [DownloadValidation.Bitrate]?
     fileprivate var selectedBitrate: DownloadValidation.Bitrate?
     
+    internal let downloadViewModel: DownloadAssetViewModel
+    
     init(asset: Asset, environment: Environment, sessionToken: SessionToken) {
         self.asset = asset
         self.environment = environment
         self.sessionToken = sessionToken
+        self.downloadViewModel = DownloadAssetViewModel(environment: environment,
+                                                        sessionToken: sessionToken)
     }
     
 }
