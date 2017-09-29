@@ -9,7 +9,7 @@
 import Foundation
 import Exposure
 
-class CategoryViewModel {
+class CategoryViewModel: AuthorizedEnvironment {
     typealias AssetType = Asset.AssetType
     
     var content: [AssetViewModel] {
@@ -20,16 +20,19 @@ class CategoryViewModel {
     fileprivate(set) var assets: Set<AssetViewModel> = Set()
     let type: AssetType
     let environment: Environment
+    let sessionToken: SessionToken
     
-    init(type: Asset.AssetType, environment: Environment, list: [AssetViewModel] = []) {
+    init(type: Asset.AssetType, environment: Environment, sessionToken: SessionToken, list: [AssetViewModel] = []) {
         self.type = type
         self.environment = environment
+        self.sessionToken = sessionToken
         assets = Set(list)
     }
     
     lazy fileprivate var request: FetchAssetList = { [unowned self] in
         return FetchAsset(environment: self.environment)
             .list()
+            .includeUserData(for: self.sessionToken)
 //            .elasticSearch(query: "medias.drm:UNENCRYPTED AND medias.format:HLS")
             .elasticSearch(query: "(medias.drm:FAIRPLAY OR medias.drm:UNENCRYPTED) AND medias.format:HLS")
     }()

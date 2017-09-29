@@ -25,7 +25,7 @@ class LiveListViewModel: AuthorizedEnvironment {
             .tvChannel,
             .liveEvent,
             ]
-            .map{ CategoryViewModel(type: $0, environment: environment) }
+            .map{ CategoryViewModel(type: $0, environment: environment, sessionToken: credentials.sessionToken) }
     }
     
     convenience init(sessionToken: SessionToken, environment: Environment) {

@@ -61,6 +61,13 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsView: UIView!
+    
+    @IBOutlet weak var progressStackView: UIStackView!
+    @IBOutlet weak var progressLabel: UILabel!
+    @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var durationLabel: UILabel!
+    
+    
     @IBOutlet weak var descriptionTextLabel: UILabel!
     @IBOutlet weak var footerTextLabel: UILabel!
     @IBOutlet weak var downloadButton: UIButton!
@@ -90,6 +97,9 @@ class AssetDetailsViewController: UIViewController {
         titleLabel.text = viewModel.anyTitle(locale: "en")
         descriptionTextLabel.text = viewModel.longestDescription(locale: "en")
 
+        // Update last viewed progress
+        update(lastViewedOffset: viewModel.lastViewedOffset)
+        
         // Check if asset download state
         if viewModel.asset.isDownloaded {
             downloadButton.setTitle("Remove from downloads", for: .normal)
@@ -185,6 +195,15 @@ class AssetDetailsViewController: UIViewController {
     
     fileprivate enum Segue: String {
         case segueDetailsToPlayer = "segueDetailsToPlayer"
+    }
+}
+
+extension AssetDetailsViewController {
+    func update(lastViewedOffset: AssetDetailsViewModel.LastViewedOffset?) {
+        progressStackView.isHidden = lastViewedOffset == nil
+        progressLabel.text = lastViewedOffset?.currentOffset
+        progressBar.setProgress(lastViewedOffset?.progress ?? 0, animated: false)
+        durationLabel.text = lastViewedOffset?.duration
     }
 }
 

@@ -24,7 +24,7 @@ class VODViewModel: AuthorizedEnvironment {
             .clip,
             .episode,
             .ad
-            ].map { CategoryViewModel(type: $0, environment: environment) }
+            ].map { CategoryViewModel(type: $0, environment: environment, sessionToken: sessionToken) }
     }
     
     convenience init(sessionToken: SessionToken, environment: Environment) {
