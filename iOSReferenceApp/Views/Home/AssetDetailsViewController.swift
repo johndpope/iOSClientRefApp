@@ -36,6 +36,8 @@ extension AssetDetailsPresenter {
             vc.bind(viewModel: AssetDetailsViewModel(asset: asset,
                                                      environment: environment,
                                                      sessionToken: sessionToken))
+            vc.bind(downloadViewModel: DownloadAssetViewModel(environment: environment,
+                                                              sessionToken: sessionToken))
             assetDetailsPresenter.present(vc, animated: true) { }
         }
     }
@@ -87,6 +89,7 @@ class AssetDetailsViewController: UIViewController {
     
     
     fileprivate(set) var viewModel: AssetDetailsViewModel!
+    fileprivate(set) var downloadViewModel: DownloadAssetViewModel!
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
@@ -94,12 +97,12 @@ class AssetDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        defer { refreshUI() }
         
-        viewModel.refreshDownloadMetadata{ [weak self] success in
+        guard let assetId = viewModel.asset.assetId else { return }
+        downloadViewModel.refreshDownloadMetadata(for: assetId) { [weak self] success in
             self?.configureDownload(available: success)
         }
-        
-        refreshUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,6 +141,10 @@ class AssetDetailsViewController: UIViewController {
     func bind(viewModel: AssetDetailsViewModel) {
         self.viewModel = viewModel
     }
+    
+    func bind(downloadViewModel: DownloadAssetViewModel) {
+        self.downloadViewModel = downloadViewModel
+    }
 
     @IBAction func closeAction(_ sender: UIButton) {
         dismiss(animated: true)
@@ -156,20 +163,20 @@ class AssetDetailsViewController: UIViewController {
     
     
     @IBAction func selectBitrate(_ sender: UISlider) {
-        viewModel.select(downloadQuality: Int(sender.value))
+        downloadViewModel.select(downloadQuality: Int(sender.value))
     }
     
     @IBAction func bitrateSelectionChanged(_ sender: UISlider) {
         let discreteValue = Int(sender.value)
         downloadQualitySelector.setValue(Float(discreteValue), animated: true)
         
-        update(downloadQuality: viewModel.downloadQuality(for: discreteValue))
+        update(downloadQuality: downloadViewModel.downloadQuality(for: discreteValue))
     }
     
     @IBAction func downloadAction(_ sender: UIButton) {
         guard let assetId = viewModel.asset.assetId else { return }
         
-        viewModel.downloadViewModel.download(assetId: assetId) { downloadTask, entitlement, error in
+        downloadViewModel.download(assetId: assetId) { downloadTask, entitlement, error in
             downloadTask?
                 .onError { (task, error) in
                     print("Error", error)
@@ -228,17 +235,17 @@ extension AssetDetailsViewController {
     func configureDownload(available: Bool) {
         if available {
             downloadQualitySelector.minimumValue = 0
-            downloadQualitySelector.maximumValue = Float(viewModel.downloadQualityOptions-1)
+            downloadQualitySelector.maximumValue = Float(downloadViewModel.downloadQualityOptions-1)
             downloadQualitySelector.setValue(0, animated: true)
             
             // Configure Slider
-            update(downloadQuality: viewModel.downloadQuality(for: 0))
+            update(downloadQuality: downloadViewModel.downloadQuality(for: 0))
         }
         else {
             downloadStackView.isHidden = true
         }
     }
-    func update(downloadQuality: AssetDetailsViewModel.DownloadQuality) {
+    func update(downloadQuality: DownloadAssetViewModel.DownloadQuality) {
         downloadSizeLabel.text = downloadQuality.size
         downloadQualityLabel.text = downloadQuality.bitrate
     }
