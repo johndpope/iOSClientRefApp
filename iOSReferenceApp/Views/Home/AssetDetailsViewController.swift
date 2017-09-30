@@ -82,6 +82,7 @@ class AssetDetailsViewController: UIViewController {
     
     @IBOutlet weak var downloadProgressStackView: UIStackView!
     @IBOutlet weak var downloadPauseResumeLabel: UILabel!
+    @IBOutlet weak var downloadPauseResumeButton: UIButton!
     @IBOutlet weak var downloadProgress: UIProgressView!
     
     @IBOutlet weak var downloadedSizeLabel: UILabel!
@@ -158,9 +159,6 @@ class AssetDetailsViewController: UIViewController {
         
         self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
     }
-
-    var downloader: DownloadTask!
-    
     
     @IBAction func selectBitrate(_ sender: UISlider) {
         downloadViewModel.select(downloadQuality: Int(sender.value))
@@ -176,31 +174,95 @@ class AssetDetailsViewController: UIViewController {
     @IBAction func downloadAction(_ sender: UIButton) {
         guard let assetId = viewModel.asset.assetId else { return }
         
+        // TODO: "Disable/Freeze" download UI when the download action is taken. This ensures multiple downloads are not started at the same time. NOTE: This needs to be "un-frozen" in case of errors etc.
+        freezeStartDownloadUI(frozen: true)
+        
         downloadViewModel.download(assetId: assetId) { downloadTask, entitlement, error in
+            // TODO: Store entitlement?
+            
             downloadTask?
-                .onError { (task, error) in
-                    print("Error", error)
-                    task.cancel()
+                .onStarted { [weak self] task in
+                    self?.displayDownloadInProgressUI()
                 }
-                .onStarted { task in
-                    print("Task started: ", task)
+                .onSuspended { [weak self] task in
+                    self?.togglePauseResumeDownload(paused: true)
                 }
-                .onProgress { (task, progress) in
-                    print("Progress: ", progress.percentage, "%")
+                .onResumed { [weak self] task in
+                    self?.togglePauseResumeDownload(paused: false)
                 }
-                .onCompleted { (task, url) in
-                    print("Completed: ", url)
+                .onProgress { [weak self] (task, progress) in
+                    self?.update(downloadProgress: progress)
+                }
+                .onCanceled { [weak self] task in
+                    // TODO: Clean up downloaded media
+                    self?.displayStartDownloadUI()
+                }
+                .onError { [weak self] (task, error) in
+                    // TODO: Clean up downloaded media
+                    // TODO: Display error
+                    self?.displayStartDownloadUI()
+                }
+                .onCompleted { [weak self] (task, url) in
+                    // TODO: Store URL somewhere
+                    self?.displayAssetDownloadedUI()
                 }
                 .resume()
         }
     }
     
-    @IBAction func pauseResumeDownloadAction(_ sender: UIButton) {
-        
-    }
+    
     @IBAction func cancelDownloadAction(_ sender: UIButton) {
+        switch downloadViewModel.state {
+        case .running: downloadViewModel.cancel()
+        case .suspended: downloadViewModel.cancel()
+        default: return
+        }
+    }
+    
+    @IBAction func pauseResumeDownloadAction(_ sender: UIButton) {
+        switch downloadViewModel.state {
+        case .running: downloadViewModel.pause()
+        case .suspended: downloadViewModel.resume()
+        default: return
+        }
+    }
+    
+    func togglePauseResumeDownload(paused: Bool) {
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            if paused {
+                self?.downloadPauseResumeLabel.text = "Resume"
+                self?.downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download"), for: [])
+            }
+            else {
+                self?.downloadPauseResumeLabel.text = "Pause"
+                self?.downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download-pause"), for: [])
+            }
+        }
+    }
+    
+    func displayStartDownloadUI() {
+        freezeStartDownloadUI(frozen: false)
+        
+        downloadStackView.isHidden = false
+        downloadProgressStackView.isHidden = true
+        // TODO: Hide AssetDownloaded UI
+    }
+    
+    func freezeStartDownloadUI(frozen: Bool) {
+        downloadButton.isEnabled = !frozen
+        downloadQualitySelector.isEnabled = !frozen
+    }
+    
+    func displayDownloadInProgressUI() {
+        downloadStackView.isHidden = true
+        downloadProgressStackView.isHidden = false
+        // TODO: Hide AssetDownloaded UI
+    }
+    
+    func displayAssetDownloadedUI() {
         
     }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

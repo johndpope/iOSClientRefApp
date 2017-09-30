@@ -71,6 +71,11 @@ extension DownloadAssetViewModel {
 }
 
 extension DownloadAssetViewModel {
+    var state: DownloadTask.State {
+        guard let task = task else { return .notStarted }
+        return task.state
+    }
+    
     func resume() {
         task?.resume()
     }
@@ -79,6 +84,9 @@ extension DownloadAssetViewModel {
         task?.suspend()
     }
     
+    func cancel() {
+        task?.cancel()
+    }
 }
 
 extension DownloadAssetViewModel {
