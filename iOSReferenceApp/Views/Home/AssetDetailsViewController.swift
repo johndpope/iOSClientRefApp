@@ -98,40 +98,43 @@ class AssetDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        defer { refreshUI() }
+        defer { refreshUserDataUI() }
         
-        guard let assetId = viewModel.asset.assetId else { return }
-        downloadViewModel.refreshDownloadMetadata(for: assetId) { [weak self] success in
-            self?.configureDownload(available: success)
-        }
+        determineDownloadUIForAsset()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.refreshAssetMetaData{ [weak self] success in
             if success {
-                self?.refreshUI()
+                self?.refreshUserDataUI()
             }
         }
     }
     
-    func refreshUI() {
-        if let imageUrl = viewModel
-            .images(locale: "en")
-            .prefere(orientation: .landscape)
-            .validImageUrls()
-            .first {
-            mainImageView.kf.setImage(with: imageUrl) { (_, error, _, _) in
-                if let error = error {
-                    print("Kingfisher error: ",error)
-                }
-            }
+    func determineDownloadUIForAsset() {
+        // 1. Check if available locally
+        let notDownloaded = true
+        let downloadInProgress = false
+        let downloaded = false
+        //
+        // 2. Not downloaded
+        //      2.1 displayStartDownloadUI()
+        //
+        // 3. Download in progress
+        //      3.1 displayDownloadInProgressUI()
+        //
+        // 4. Downloaded
+        //      4.1 displayAssetDownloadedUI()
+        
+        if notDownloaded {
+            displayStartDownloadUI()
         }
-        
-        titleLabel.text = viewModel.anyTitle(locale: "en")
-        descriptionTextLabel.text = viewModel.longestDescription(locale: "en")
-        
-        // Update last viewed progress
-        update(lastViewedOffset: viewModel.lastViewedOffset)
+        else if downloadInProgress {
+            displayDownloadInProgressUI()
+        }
+        else if downloaded {
+            displayAssetDownloadedUI()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -159,7 +162,60 @@ class AssetDetailsViewController: UIViewController {
         
         self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
     }
+}
+
+extension AssetDetailsViewController {
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Segue.segueDetailsToPlayer.rawValue {
+            if let destination = segue.destination as? PlayerViewController, let assetId = sender as? String {
+                destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
+                                                        environment: viewModel.environment,
+                                                        playRequest: .vod(assetId: assetId))
+                destination.onDismissed = { [weak self] in
+                    self?.refreshUserDataUI()
+                }
+            }
+        }
+    }
     
+    fileprivate enum Segue: String {
+        case segueDetailsToPlayer = "segueDetailsToPlayer"
+    }
+}
+
+// MARK: - User Data
+extension AssetDetailsViewController {
+    func refreshUserDataUI() {
+        if let imageUrl = viewModel
+            .images(locale: "en")
+            .prefere(orientation: .landscape)
+            .validImageUrls()
+            .first {
+            mainImageView.kf.setImage(with: imageUrl) { (_, error, _, _) in
+                if let error = error {
+                    print("Kingfisher error: ",error)
+                }
+            }
+        }
+        
+        titleLabel.text = viewModel.anyTitle(locale: "en")
+        descriptionTextLabel.text = viewModel.longestDescription(locale: "en")
+        
+        // Update last viewed progress
+        update(lastViewedOffset: viewModel.lastViewedOffset)
+    }
+    
+    func update(lastViewedOffset: AssetDetailsViewModel.LastViewedOffset?) {
+        progressStackView.isHidden = lastViewedOffset == nil
+        progressLabel.text = lastViewedOffset?.currentOffset
+        progressBar.setProgress(lastViewedOffset?.progress ?? 0, animated: false)
+        durationLabel.text = lastViewedOffset?.duration
+    }
+}
+
+// MARK: - Download available
+extension AssetDetailsViewController {
     @IBAction func selectBitrate(_ sender: UISlider) {
         downloadViewModel.select(downloadQuality: Int(sender.value))
     }
@@ -210,7 +266,47 @@ class AssetDetailsViewController: UIViewController {
         }
     }
     
+    func displayStartDownloadUI() {
+        downloadStackView.isHidden = true
+        
+        // Hide other ui
+        downloadProgressStackView.isHidden = true
+        // TODO: Hide AssetDownloaded UI
+        
+        guard let assetId = viewModel.asset.assetId else { return }
+        downloadViewModel.refreshDownloadMetadata(for: assetId) { [weak self] success in
+            if success {
+                self?.resetStartDownloadUI()
+            }
+        }
+    }
     
+    func freezeStartDownloadUI(frozen: Bool) {
+        downloadButton.isEnabled = !frozen
+        downloadQualitySelector.isEnabled = !frozen
+    }
+    
+    private func resetStartDownloadUI() {
+        freezeStartDownloadUI(frozen: false)
+        
+        downloadStackView.isHidden = false
+        
+        downloadQualitySelector.minimumValue = 0
+        downloadQualitySelector.maximumValue = Float(downloadViewModel.downloadQualityOptions-1)
+        downloadQualitySelector.setValue(0, animated: true)
+        
+        // Configure Slider
+        update(downloadQuality: downloadViewModel.downloadQuality(for: 0))
+    }
+    
+    func update(downloadQuality: DownloadAssetViewModel.DownloadQuality) {
+        downloadSizeLabel.text = downloadQuality.size
+        downloadQualityLabel.text = downloadQuality.bitrate
+    }
+}
+
+// MARK: - Download in progress
+extension AssetDetailsViewController {
     @IBAction func cancelDownloadAction(_ sender: UIButton) {
         switch downloadViewModel.state {
         case .running: downloadViewModel.cancel()
@@ -239,86 +335,25 @@ class AssetDetailsViewController: UIViewController {
             }
         }
     }
-    
-    func displayStartDownloadUI() {
-        freezeStartDownloadUI(frozen: false)
-        
-        downloadStackView.isHidden = false
-        downloadProgressStackView.isHidden = true
-        // TODO: Hide AssetDownloaded UI
-    }
-    
-    func freezeStartDownloadUI(frozen: Bool) {
-        downloadButton.isEnabled = !frozen
-        downloadQualitySelector.isEnabled = !frozen
-    }
-    
     func displayDownloadInProgressUI() {
         downloadStackView.isHidden = true
         downloadProgressStackView.isHidden = false
         // TODO: Hide AssetDownloaded UI
     }
     
-    func displayAssetDownloadedUI() {
-        
-    }
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Segue.segueDetailsToPlayer.rawValue {
-            if let destination = segue.destination as? PlayerViewController, let assetId = sender as? String {
-                destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
-                                                        environment: viewModel.environment,
-                                                        playRequest: .vod(assetId: assetId))
-                destination.onDismissed = { [weak self] in
-                    self?.refreshUI()
-                }
-            }
-        }
-    }
-    
-    fileprivate enum Segue: String {
-        case segueDetailsToPlayer = "segueDetailsToPlayer"
-    }
-}
-
-extension AssetDetailsViewController {
-    func update(lastViewedOffset: AssetDetailsViewModel.LastViewedOffset?) {
-        progressStackView.isHidden = lastViewedOffset == nil
-        progressLabel.text = lastViewedOffset?.currentOffset
-        progressBar.setProgress(lastViewedOffset?.progress ?? 0, animated: false)
-        durationLabel.text = lastViewedOffset?.duration
-    }
-}
-
-extension AssetDetailsViewController {
-    func configureDownload(available: Bool) {
-        if available {
-            downloadQualitySelector.minimumValue = 0
-            downloadQualitySelector.maximumValue = Float(downloadViewModel.downloadQualityOptions-1)
-            downloadQualitySelector.setValue(0, animated: true)
-            
-            // Configure Slider
-            update(downloadQuality: downloadViewModel.downloadQuality(for: 0))
-        }
-        else {
-            downloadStackView.isHidden = true
-        }
-    }
-    func update(downloadQuality: DownloadAssetViewModel.DownloadQuality) {
-        downloadSizeLabel.text = downloadQuality.size
-        downloadQualityLabel.text = downloadQuality.bitrate
-    }
-}
-
-extension AssetDetailsViewController {
     func update(downloadProgress progress: DownloadTask.Progress) {
         downloadProgress.setProgress(Float(progress.percentage), animated: true)
     }
 }
 
+// MARK: - Downloaded Asset
+extension AssetDetailsViewController {
+    func displayAssetDownloadedUI() {
+        
+    }
+}
+
+// MARK: - AuthorizedEnvironment
 extension AssetDetailsViewController: AuthorizedEnvironment {
     var environment: Environment {
         return viewModel.environment
