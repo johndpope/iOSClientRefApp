@@ -335,6 +335,7 @@ extension AssetDetailsViewController {
             }
         }
     }
+    
     func displayDownloadInProgressUI() {
         downloadStackView.isHidden = true
         downloadProgressStackView.isHidden = false

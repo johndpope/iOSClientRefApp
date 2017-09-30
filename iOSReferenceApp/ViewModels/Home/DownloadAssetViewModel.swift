@@ -62,6 +62,7 @@ extension DownloadAssetViewModel {
                 let destinationUrl = documentsUrl.appendingPathComponent("\(name).m3u8")
                 
                 task = try Downloader.download(entitlement: entitlement, to: destinationUrl)
+                callback(task, nil)
             }
         }
         catch {

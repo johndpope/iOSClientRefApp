@@ -599,6 +599,8 @@
                                                                     </stackView>
                                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hll-aX-a2Q">
                                                                         <rect key="frame" x="0.0" y="19" width="244" height="2"/>
+                                                                        <color key="progressTintColor" red="0.0" green="0.40000000000000002" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="trackTintColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                                                     </progressView>
                                                                 </subviews>
                                                                 <constraints>
