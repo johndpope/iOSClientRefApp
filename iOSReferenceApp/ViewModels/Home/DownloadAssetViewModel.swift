@@ -55,8 +55,8 @@ extension DownloadAssetViewModel {
     fileprivate func handle(entitlement: PlaybackEntitlement, named name: String, callback: (DownloadTask?, DownloadAssetError?) -> Void) {
         do {
             if #available(iOS 10.0, *) {
-//                task = try Downloader.download(entitlement: entitlement, named: name)
-                task = try Downloader.download(mediaLocator: "http://example.com/master.m3u8")
+                task = try Downloader.download(entitlement: entitlement, named: name)
+//                task = try Downloader.download(mediaLocator: "http://example.com/master.m3u8")
 //                task = try Downloader.download(mediaLocator: "https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8")
                 callback(task, nil)
             } else {
@@ -130,7 +130,6 @@ extension DownloadAssetViewModel {
     }
     
     func downloadQuality(for index: Int) -> DownloadQuality {
-        print("downloadQuality",index)
         return downloadQuality(from: availableBitrates?[index])
     }
     

@@ -44,7 +44,7 @@ class CategoryViewModel: AuthorizedEnvironment {
 extension CategoryViewModel {
     
     var batchSize: Int {
-        return 50
+        return 2
     }
     
     func fetchMetadata(batch: Int, callback: @escaping (ExposureError?) -> Void) {
