@@ -246,8 +246,16 @@ extension AssetDetailsViewController {
                 .onResumed { [weak self] task in
                     self?.togglePauseResumeDownload(paused: false)
                 }
-                .onProgress { [weak self] (task, progress) in
+                .onProgress { [weak self] task, progress in
+                    print("Percent",progress.percentage,"%")
                     self?.update(downloadProgress: progress)
+                }
+                .onShouldDownloadMediaOption{ task, options in
+                    print("Select media option")
+                    return nil
+                }
+                .onDownloadingMediaOption{ task, option in
+                    print("Downloading media option")
                 }
                 .onCanceled { [weak self] task in
                     // TODO: Clean up downloaded media
@@ -257,6 +265,7 @@ extension AssetDetailsViewController {
                     // TODO: Clean up downloaded media
                     // TODO: Display error
                     self?.displayStartDownloadUI()
+                    self?.showMessage(title: "Download Error", message: error.localizedDescription)
                 }
                 .onCompleted { [weak self] (task, url) in
                     // TODO: Store URL somewhere
