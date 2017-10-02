@@ -298,12 +298,15 @@ extension AssetDetailsViewController {
     private func resetStartDownloadUI() {
         freezeStartDownloadUI(frozen: false)
         
+        togglePauseResumeDownload(paused: false)
+        
         downloadStackView.isHidden = false
         
         if downloadViewModel.hasQualityOptions, let availableOptions = downloadViewModel.downloadQualityOptions {
             downloadQualityStackView.isHidden = false
             downloadQualitySelector.minimumValue = 0
             downloadQualitySelector.maximumValue = Float(availableOptions-1)
+            downloadedSizeLabel.text = " "
             
             let selectedQualityIndex = downloadViewModel.selectedQualityIndex ?? 0
             
@@ -343,15 +346,13 @@ extension AssetDetailsViewController {
     }
     
     func togglePauseResumeDownload(paused: Bool) {
-        UIView.animate(withDuration: 0.2) { [weak self] in
-            if paused {
-                self?.downloadPauseResumeLabel.text = "Resume"
-                self?.downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download"), for: [])
-            }
-            else {
-                self?.downloadPauseResumeLabel.text = "Pause"
-                self?.downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download-pause"), for: [])
-            }
+        if paused {
+            downloadPauseResumeLabel.text = "Resume"
+            downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download"), for: [])
+        }
+        else {
+            downloadPauseResumeLabel.text = "Pause"
+            downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download-pause"), for: [])
         }
     }
     
