@@ -53,12 +53,12 @@ extension DownloadAssetViewModel {
     }
     
     fileprivate func handle(entitlement: PlaybackEntitlement, named name: String, callback: (DownloadTask?, DownloadAssetError?) -> Void) {
+        let bps = selectedBitrate?.bitrate != nil ? selectedBitrate!.bitrate!*1000 : nil
         do {
             if #available(iOS 10.0, *) {
                 task = try Downloader
                     .download(entitlement: entitlement, named: name)
-                    .use(bitrate: selectedBitrate?.bitrate)
-//                task = try Downloader.download(mediaLocator: "https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8")
+                    .use(bitrate: bps)
                 callback(task, nil)
             } else {
                 let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as! URL
@@ -66,7 +66,7 @@ extension DownloadAssetViewModel {
                 
                 task = try Downloader
                     .download(entitlement: entitlement, to: destinationUrl)
-                    .use(bitrate: selectedBitrate?.bitrate)
+                    .use(bitrate: bps)
                 callback(task, nil)
             }
         }
@@ -122,6 +122,13 @@ extension DownloadAssetViewModel {
     func select(downloadQuality index: Int) {
         guard let bitrates = availableBitrates, !bitrates.isEmpty else { return }
         selectedBitrate = bitrates[index]
+    }
+    
+    var selectedQualityIndex: Int? {
+        guard let selectedBitrate = selectedBitrate else { return nil }
+        guard let availableBitrates = availableBitrates else { return nil }
+        return availableBitrates.index(of: selectedBitrate)
+        
     }
     
     var downloadQualityOptions: Int? {

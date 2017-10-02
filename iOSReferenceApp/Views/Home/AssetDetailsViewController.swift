@@ -304,10 +304,14 @@ extension AssetDetailsViewController {
             downloadQualityStackView.isHidden = false
             downloadQualitySelector.minimumValue = 0
             downloadQualitySelector.maximumValue = Float(availableOptions-1)
-            downloadQualitySelector.setValue(0, animated: true)
+            
+            let selectedQualityIndex = downloadViewModel.selectedQualityIndex ?? 0
+            
+            
+            downloadQualitySelector.setValue(Float(selectedQualityIndex), animated: true)
             
             // Configure Slider
-            update(downloadQuality: downloadViewModel.downloadQuality(for: 0))
+            update(downloadQuality: downloadViewModel.downloadQuality(for: selectedQualityIndex))
         }
         else {
             downloadQualityStackView.isHidden = true
