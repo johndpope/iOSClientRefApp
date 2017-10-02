@@ -247,7 +247,7 @@ extension AssetDetailsViewController {
                     self?.togglePauseResumeDownload(paused: false)
                 }
                 .onProgress { [weak self] task, progress in
-                    print("Percent",progress.percentage,"%")
+                    print("Percent",progress.current*100,"%")
                     self?.update(downloadProgress: progress)
                 }
                 .onShouldDownloadMediaOption{ task, options in
@@ -352,7 +352,7 @@ extension AssetDetailsViewController {
     }
     
     func update(downloadProgress progress: DownloadTask.Progress) {
-        downloadProgress.setProgress(Float(progress.percentage), animated: true)
+        downloadProgress.setProgress(Float(progress.current), animated: true)
     }
 }
 
