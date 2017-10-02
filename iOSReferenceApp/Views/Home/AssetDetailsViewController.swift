@@ -278,7 +278,7 @@ extension AssetDetailsViewController {
     func displayStartDownloadUI() {
         togglePauseResumeDownload(paused: false)
         
-        downloadQualityStackView.isHidden = false
+        downloadQualityStackView.alpha = 0
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.downloadStackView.isHidden = false
             // Hide other ui
@@ -315,7 +315,7 @@ extension AssetDetailsViewController {
             update(downloadQuality: downloadViewModel.downloadQuality(for: selectedQualityIndex))
             
             UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.downloadQualityStackView.isHidden = false
+                self?.downloadQualityStackView.alpha = 1
             }
         }
     }
