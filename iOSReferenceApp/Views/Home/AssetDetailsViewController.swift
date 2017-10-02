@@ -76,6 +76,7 @@ class AssetDetailsViewController: UIViewController {
     
     @IBOutlet weak var downloadStackView: UIStackView!
     @IBOutlet weak var downloadButton: UIButton!
+    @IBOutlet weak var downloadQualityStackView: UIStackView!
     @IBOutlet weak var downloadQualitySelector: UISlider!
     @IBOutlet weak var downloadQualityLabel: UILabel!
     @IBOutlet weak var downloadSizeLabel: UILabel!
@@ -300,12 +301,18 @@ extension AssetDetailsViewController {
         
         downloadStackView.isHidden = false
         
-        downloadQualitySelector.minimumValue = 0
-        downloadQualitySelector.maximumValue = Float(downloadViewModel.downloadQualityOptions-1)
-        downloadQualitySelector.setValue(0, animated: true)
-        
-        // Configure Slider
-        update(downloadQuality: downloadViewModel.downloadQuality(for: 0))
+        if downloadViewModel.hasQualityOptions, let availableOptions = downloadViewModel.downloadQualityOptions {
+            downloadQualityStackView.isHidden = false
+            downloadQualitySelector.minimumValue = 0
+            downloadQualitySelector.maximumValue = Float(availableOptions)
+            downloadQualitySelector.setValue(0, animated: true)
+            
+            // Configure Slider
+            update(downloadQuality: downloadViewModel.downloadQuality(for: 0))
+        }
+        else {
+            downloadQualityStackView.isHidden = true
+        }
     }
     
     func update(downloadQuality: DownloadAssetViewModel.DownloadQuality) {

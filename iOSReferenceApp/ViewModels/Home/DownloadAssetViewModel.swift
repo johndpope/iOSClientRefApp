@@ -120,11 +120,16 @@ extension DownloadAssetViewModel {
     }
     
     func select(downloadQuality index: Int) {
-        selectedBitrate = availableBitrates?[index]
+        guard let bitrates = availableBitrates, !bitrates.isEmpty else { return }
+        selectedBitrate = bitrates[index]
     }
     
-    var downloadQualityOptions: Int {
-        return availableBitrates?.count ?? 0
+    var downloadQualityOptions: Int? {
+        return availableBitrates?.count
+    }
+    
+    var hasQualityOptions: Bool {
+        return availableBitrates != nil ? !availableBitrates!.isEmpty : false
     }
     
     struct DownloadQuality {
@@ -133,12 +138,15 @@ extension DownloadAssetViewModel {
     }
     
     func downloadQuality(for index: Int) -> DownloadQuality {
-        return downloadQuality(from: availableBitrates?[index])
+        guard let bitrates = availableBitrates, !bitrates.isEmpty else {
+            return DownloadQuality(bitrate: "n/a", size: "n/a")
+        }
+        return downloadQuality(from: bitrates[index])
     }
     
-    private func downloadQuality(from downloadBitrate: DownloadValidation.Bitrate?) -> DownloadQuality {
-        return DownloadQuality(bitrate: bitrate(for: downloadBitrate?.bitrate),
-                               size: size(for: downloadBitrate?.size))
+    private func downloadQuality(from downloadBitrate: DownloadValidation.Bitrate) -> DownloadQuality {
+        return DownloadQuality(bitrate: bitrate(for: downloadBitrate.bitrate),
+                               size: size(for: downloadBitrate.size))
     }
     
     private func size(for bytes: Int64?) -> String {
