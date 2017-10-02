@@ -16,9 +16,6 @@
 [submodule "Carthage/Checkouts/Quick"]
 	path = Carthage/Checkouts/Quick
 	url = ssh://git@github.com/Quick/Quick.git
-[submodule "Carthage/Checkouts/SwiftyJSON"]
-	path = Carthage/Checkouts/SwiftyJSON
-	url = ssh://git@github.com/SwiftyJSON/SwiftyJSON.git
 [submodule "Carthage/Checkouts/iOSClientExposure"]
 	path = Carthage/Checkouts/iOSClientExposure
 	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientExposure.git
