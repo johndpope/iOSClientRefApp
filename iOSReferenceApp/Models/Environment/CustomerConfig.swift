@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-struct CustomerConfig {
+struct CustomerConfig: Decodable {
     let name: String
     let customer: String
     let businessUnit: String
@@ -33,41 +32,41 @@ struct CustomerConfig {
             }
         }
         
-        init?(json: JSON) {
-            if json["anonymous"].bool != nil {
-                self = .anonymous
-            }
-            else if let username = json["defaultUsername"].string,
-                let password = json["defaultPassword"].string {
-                if let mfa = json["mfa"].bool {
-                    self = .login(username: username, password: password, mfa: mfa)
-                }
-                else {
-                    self = .login(username: username, password: password, mfa: false)
-                }
-            }
-            else {
-                return nil
-            }
+        
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        name = try container.decode(String.self, forKey: .name)
+        customer = try container.decode(String.self, forKey: .customer)
+        businessUnit = try container.decode(String.self, forKey: .businessUnit)
+        
+        if let anonymous = try container.decodeIfPresent(Bool.self, forKey: .anonymous), anonymous {
+            presetMethod = .anonymous
         }
+        else if let username = try container.decodeIfPresent(String.self, forKey: .defaultUsername), let password = try container.decodeIfPresent(String.self, forKey: .defaultPassword) {
+            let mfa = try container.decodeIfPresent(Bool.self, forKey: .mfa) ?? false
+            presetMethod = .login(username: username, password: password, mfa: mfa)
+        }
+        else {
+            presetMethod = nil
+        }
+    }
+    
+    internal enum CodingKeys: String, CodingKey {
+        case name
+        case customer
+        case businessUnit
+        case anonymous
+        case defaultUsername
+        case defaultPassword
+        case mfa
     }
 }
 
 extension CustomerConfig {
     var pickerModelTitle: String {
         return name + " - " + (presetMethod?.pickerModelTitle ?? "")
-    }
-}
-
-extension CustomerConfig {
-    init?(json: JSON) {
-        guard let name = json["name"].string,
-            let customer = json["customer"].string,
-            let businessUnit = json["businessUnit"].string else { return nil }
-        
-        self.name = name
-        self.customer = customer
-        self.businessUnit = businessUnit
-        presetMethod = PresetMethod(json: json)
     }
 }
