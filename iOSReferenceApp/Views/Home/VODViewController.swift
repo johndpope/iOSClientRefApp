@@ -9,29 +9,14 @@
 import UIKit
 import Exposure
 
-class PresetViewController: UIViewController {
-    var viewModel: PresetViewModel!
+class VODViewController: UIViewController {
+    var viewModel: VODViewModel!
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        // Do any additional setup after loading the view.
-        self.navigationItem.hidesBackButton = true
-        
-        UITabBarItem.appearance().titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -15)
-        UITabBarItem.appearance().setTitleTextAttributes(
-            [NSFontAttributeName: UIFont(name: "Helvetica", size: 12)!,
-             //             NSForegroundColorAttributeName: UIColor.white
-            ],
-            for: UIControlState.normal)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
+
         tableView.register(UINib(nibName: "HorizontalScrollRow", bundle: nil),
                            forCellReuseIdentifier: "HorizontalScrollRow")
         
@@ -40,20 +25,10 @@ class PresetViewController: UIViewController {
         
         
         setupViewModel()
-        viewModel.fetchMetadata{ [unowned self] error in
-            if error == nil {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 
-extension PresetViewController: UITableViewDelegate {
+extension VODViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return tableView.dequeueReusableHeaderFooterView(withIdentifier: "AssetPreviewHeaderView")
     }
@@ -74,7 +49,7 @@ extension PresetViewController: UITableViewDelegate {
     }
 }
 
-extension PresetViewController: UITableViewDataSource {
+extension VODViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.categories.count
     }
@@ -94,7 +69,7 @@ extension PresetViewController: UITableViewDataSource {
     }
 }
 
-extension PresetViewController: AuthorizedEnvironment {
+extension VODViewController: AuthorizedEnvironment {
     var environment: Environment {
         return viewModel.environment
     }
@@ -104,35 +79,35 @@ extension PresetViewController: AuthorizedEnvironment {
     }
 }
 
-extension PresetViewController: AssetDetailsPresenter {
+extension VODViewController: AssetDetailsPresenter {
     var assetDetailsPresenter: UIViewController {
         return self
     }
 }
 
-extension PresetViewController {
+extension VODViewController {
     fileprivate func setupViewModel() {
         guard let env = UserInfo.environment else {
             // TODO: Fail gracefully
             fatalError("Unable to proceed without valid environment")
         }
         
-        let sampleAssets = EnvironmentConfig
-            .sampleAssets(environment: env)
-        
         if let credentials = UserInfo.credentials {
-            viewModel = PresetViewModel(credentials: credentials,
-                                        environment: env,
-                                        sampleAssets: sampleAssets)
+            viewModel = VODViewModel(credentials: credentials,
+                                     environment: env)
         }
         else if let sessionToken = UserInfo.sessionToken {
-            viewModel = PresetViewModel(sessionToken: sessionToken,
-                                        environment: env,
-                                        sampleAssets: sampleAssets)
+            viewModel = VODViewModel(sessionToken: sessionToken,
+                                     environment: env)
         }
         else {
             // TODO: Fail gracefully
             fatalError("Unable to proceed without valid sessionToken")
+        }
+
+        viewModel.loadCategories { [unowned self] (section, error) in
+            guard let section = section else { return }
+            self.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
         }
     }
 }

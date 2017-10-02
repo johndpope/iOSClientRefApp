@@ -58,16 +58,13 @@ extension HorizontalScrollRow: UICollectionViewDelegate {
             let vm = viewModel.content[indexPath.row]
             
             preview.reset()
+            preview.thumbnail(title: vm.anyTitle(locale: "en"))
             if let url = imageUrl(for: indexPath) {
                 preview.thumbnailView.kf.setImage(with: url) { (image, error, _, url) in
                     if let error = error {
                         print("Kingfisher: ",error)
-                        preview.thumbnail(title: vm.anyTitle(locale: "en"))
                     }
                 }
-            }
-            else {
-                preview.thumbnail(title: vm.anyTitle(locale: "en"))
             }
         }
     }

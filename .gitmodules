@@ -25,3 +25,6 @@
 [submodule "Carthage/Checkouts/iOSClientAnalytics"]
 	path = Carthage/Checkouts/iOSClientAnalytics
 	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientAnalytics.git
+[submodule "Carthage/Checkouts/iOSClientDownload"]
+	path = Carthage/Checkouts/iOSClientDownload
+	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientDownload.git

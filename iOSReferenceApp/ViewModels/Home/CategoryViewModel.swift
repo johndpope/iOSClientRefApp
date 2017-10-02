@@ -9,22 +9,31 @@
 import Foundation
 import Exposure
 
-class CategoryViewModel {
+class CategoryViewModel: AuthorizedEnvironment {
     typealias AssetType = Asset.AssetType
     
-    fileprivate(set) var content: [AssetViewModel] = []
+    var content: [AssetViewModel] {
+        get {
+            return Array(assets)
+        }
+    }
+    fileprivate(set) var assets: Set<AssetViewModel> = Set()
     let type: AssetType
     let environment: Environment
+    let sessionToken: SessionToken
     
-    init(type: Asset.AssetType, environment: Environment, list: [AssetViewModel] = []) {
+    init(type: Asset.AssetType, environment: Environment, sessionToken: SessionToken, list: [AssetViewModel] = []) {
         self.type = type
         self.environment = environment
-        content = list.filter{ $0.type == type }
+        self.sessionToken = sessionToken
+        assets = Set(list)
     }
     
     lazy fileprivate var request: FetchAssetList = { [unowned self] in
         return FetchAsset(environment: self.environment)
             .list()
+            .includeUserData(for: self.sessionToken)
+//            .elasticSearch(query: "medias.drm:UNENCRYPTED AND medias.format:HLS")
             .elasticSearch(query: "(medias.drm:FAIRPLAY OR medias.drm:UNENCRYPTED) AND medias.format:HLS")
     }()
     
@@ -33,9 +42,6 @@ class CategoryViewModel {
 }
 
 extension CategoryViewModel {
-    func append(assets: [AssetViewModel]) {
-        content.append(contentsOf: assets)
-    }
     
     var batchSize: Int {
         return 50
@@ -52,6 +58,7 @@ extension CategoryViewModel {
             .show(page: batch, spanning: batchSize)
             .filter(on: type)
             .filter(onlyPublished: false)
+            .sort(on: ["-assetId"])
             .request()
             .response{ [unowned self] (exposure: ExposureResponse<AssetList>) in
                 if let success = exposure.value {
@@ -74,11 +81,13 @@ extension CategoryViewModel {
             return
         }
         
-        let assets = items
+        let itemsArray = items
             .flatMap{ AssetViewModel(asset: $0 ) }
             .filter{ $0.type == type }
-        
-        content.append(contentsOf: assets)
+
+        itemsArray.forEach {
+            assets.insert($0)
+        }
     }
 }
 

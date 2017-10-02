@@ -60,14 +60,4 @@ extension EnvironmentConfig {
     static func preconfigured(files: [String]) -> [EnvironmentConfig] {
         return files.flatMap{ preconfigured(file: $0) }
     }
-    
-    static func sampleAssets(environment: Environment) -> [SampleAssetConfig] {
-        // TODO: This will not account for any possible future "sample assets" from Enigma
-        return preconfigured(file: "environments")
-            .filter{ $0.url == environment.baseUrl }
-            .flatMap{ $0.customers }
-            .filter{ $0.businessUnit == environment.businessUnit && $0.customer == environment.customer }
-            .flatMap{ $0.sampleAssets }
-            .flatMap{ $0 }
-    }
 }

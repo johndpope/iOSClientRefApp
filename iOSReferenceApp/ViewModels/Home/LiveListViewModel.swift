@@ -1,5 +1,5 @@
 //
-//  ExposureListViewModel.swift
+//  LiveListViewModel.swift
 //  iOSReferenceApp
 //
 //  Created by Fredrik Sjöberg on 2017-06-01.
@@ -9,12 +9,12 @@
 import Foundation
 import Exposure
 
-class ExposureListViewModel: AuthorizedEnvironment {
+class LiveListViewModel: AuthorizedEnvironment {
     // MARK: Basics
     let credentials: Credentials
     
     fileprivate(set) var categories: [CategoryViewModel]
-
+    
     typealias AssetType = Asset.AssetType
     
     init(credentials: Credentials, environment: Environment) {
@@ -23,9 +23,9 @@ class ExposureListViewModel: AuthorizedEnvironment {
         
         self.categories = [
             .tvChannel,
-            .movie
+            .liveEvent,
             ]
-            .map{ CategoryViewModel(type: $0, environment: environment) }
+            .map{ CategoryViewModel(type: $0, environment: environment, sessionToken: credentials.sessionToken) }
     }
     
     convenience init(sessionToken: SessionToken, environment: Environment) {
@@ -61,7 +61,7 @@ class ExposureListViewModel: AuthorizedEnvironment {
 }
 
 // MARK: PreviewAssetCellConfig
-extension ExposureListViewModel: PreviewAssetCellConfig {
+extension LiveListViewModel: PreviewAssetCellConfig {
     func rowHeight(index: Int) -> CGFloat {
         let category = categories[index]
         guard category.content.count > 0 else { return 0 }
@@ -70,7 +70,7 @@ extension ExposureListViewModel: PreviewAssetCellConfig {
 }
 
 
-extension ExposureListViewModel {
+extension LiveListViewModel {
     func category(for type: AssetType) -> CategoryViewModel {
         return categories.filter{ $0.type == type }.first!
     }

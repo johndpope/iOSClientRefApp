@@ -49,14 +49,7 @@ Customer specific environments should be added to the `environments.json` file, 
                             "businessUnit": "BusinessUnit",
                             "defaultUsername": "Username",
                             "defaultPassword": "Password",
-                            "mfa": false,
-                            "samples": [
-                                        {
-                                            "name": "Asset Name",
-                                            "assetId": "Asset Id",
-                                            "live": false
-                                        }
-                                       ]
+                            "mfa": false
                        }
                    ]
    }

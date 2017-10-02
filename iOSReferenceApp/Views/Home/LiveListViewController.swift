@@ -1,5 +1,5 @@
 //
-//  ExposureViewController.swift
+//  LiveListViewController.swift
 //  iOSReferenceApp
 //
 //  Created by Hui Wang on 2017-05-29.
@@ -9,25 +9,13 @@
 import UIKit
 import Exposure
 
-class ExposureViewController: UIViewController {
-    var viewModel: ExposureListViewModel!
+class LiveListViewController: UIViewController {
+    var viewModel: LiveListViewModel!
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        // Do any additional setup after loading the view.
-        self.navigationItem.hidesBackButton = true
-        
-        UITabBarItem.appearance().titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -15)
-        UITabBarItem.appearance().setTitleTextAttributes(
-            [NSFontAttributeName: UIFont(name: "Helvetica", size: 12)!,
-             //             NSForegroundColorAttributeName: UIColor.white
-            ],
-            for: UIControlState.normal)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -38,17 +26,11 @@ class ExposureViewController: UIViewController {
         tableView.register(UINib(nibName: "AssetPreviewHeaderView", bundle: nil),
                            forHeaderFooterViewReuseIdentifier: "AssetPreviewHeaderView")
         
-        
         setupViewModel()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 
-extension ExposureViewController: UITableViewDelegate {
+extension LiveListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return tableView.dequeueReusableHeaderFooterView(withIdentifier: "AssetPreviewHeaderView")
     }
@@ -68,7 +50,7 @@ extension ExposureViewController: UITableViewDelegate {
     }
 }
 
-extension ExposureViewController: UITableViewDataSource {
+extension LiveListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.categories.count
     }
@@ -88,7 +70,7 @@ extension ExposureViewController: UITableViewDataSource {
     }
 }
 
-extension ExposureViewController: AuthorizedEnvironment {
+extension LiveListViewController: AuthorizedEnvironment {
     var environment: Environment {
         return viewModel.environment
     }
@@ -98,13 +80,13 @@ extension ExposureViewController: AuthorizedEnvironment {
     }
 }
 
-extension ExposureViewController: AssetDetailsPresenter {
+extension LiveListViewController: AssetDetailsPresenter {
     var assetDetailsPresenter: UIViewController {
         return self
     }
 }
 
-extension ExposureViewController {
+extension LiveListViewController {
     fileprivate func setupViewModel() {
         guard let env = UserInfo.environment else {
             // TODO: Fail gracefully
@@ -112,13 +94,13 @@ extension ExposureViewController {
         }
         
         if let credentials = UserInfo.credentials {
-            viewModel = ExposureListViewModel(credentials: credentials,
-                                              environment: env)
+            viewModel = LiveListViewModel(credentials: credentials,
+                                          environment: env)
             
         }
         else if let sessionToken = UserInfo.sessionToken {
-            viewModel = ExposureListViewModel(sessionToken: sessionToken,
-                                              environment: env)
+            viewModel = LiveListViewModel(sessionToken: sessionToken,
+                                          environment: env)
         }
         else {
             // TODO: Fail gracefully

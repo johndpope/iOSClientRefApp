@@ -31,6 +31,8 @@ class PlayerViewController: UIViewController {
     
     fileprivate var timelineUpdater: Timer?
     
+    var onDismissed: () -> Void = { _ in }
+    
     override func viewDidLoad() {
         player.onError{ [unowned self] player, error in
             self.showMessage(title: "Player Error", message: error.localizedDescription)
@@ -117,7 +119,9 @@ class PlayerViewController: UIViewController {
     // MARK: Actions
     @IBAction func actionBack(_ sender: UIButton) {
         player.stop()
-        dismiss(animated: true)
+        dismiss(animated: true) { [weak self] in
+            self?.onDismissed()
+        }
     }
     
     @IBAction func actionPausePlay(_ sender: UIButton) {
