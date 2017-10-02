@@ -149,12 +149,18 @@ extension DownloadAssetViewModel {
                                size: size(for: downloadBitrate.size))
     }
     
-    private func size(for bytes: Int64?) -> String {
+    internal func downloadedSize(for progress: Double) -> String {
+        guard let bytes = selectedBitrate?.size else { return "n/a" }
+        let progressBytes = Int64(Double(bytes)*progress)
+        return size(for: progressBytes)
+    }
+    
+    internal func size(for bytes: Int64?) -> String {
         guard let bytes = bytes else { return "n/a" }
         return ByteCountFormatter.string(fromByteCount: bytes, countStyle: ByteCountFormatter.CountStyle.file)
     }
     
-    private func bitrate(for kbps: Int64?) -> String {
+    internal func bitrate(for kbps: Int64?) -> String {
         // LD 240p 3G Mobile @ H.264 baseline profile 350 kbps (3 MB/minute)
         // LD 360p 4G Mobile @ H.264 main profile 700 kbps (6 MB/minute)
         // SD 480p WiFi @ H.264 main profile 1200 kbps (10 MB/minute)

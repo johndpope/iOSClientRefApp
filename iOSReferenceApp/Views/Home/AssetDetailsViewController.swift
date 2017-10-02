@@ -85,7 +85,6 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var downloadPauseResumeLabel: UILabel!
     @IBOutlet weak var downloadPauseResumeButton: UIButton!
     @IBOutlet weak var downloadProgress: UIProgressView!
-    
     @IBOutlet weak var downloadedSizeLabel: UILabel!
     
     
@@ -353,12 +352,15 @@ extension AssetDetailsViewController {
     }
     
     func displayDownloadInProgressUI() {
+        downloadProgress.setProgress(0, animated: false)
+        
         downloadStackView.isHidden = true
         downloadProgressStackView.isHidden = false
         // TODO: Hide AssetDownloaded UI
     }
     
     func update(downloadProgress progress: DownloadTask.Progress) {
+        downloadedSizeLabel.text = downloadViewModel.downloadedSize(for: progress.current)
         downloadProgress.setProgress(Float(progress.current), animated: true)
     }
 }

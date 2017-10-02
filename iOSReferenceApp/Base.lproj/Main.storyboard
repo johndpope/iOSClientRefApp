@@ -602,7 +602,7 @@
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
-                                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hll-aX-a2Q">
+                                                                    <progressView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="751" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hll-aX-a2Q">
                                                                         <rect key="frame" x="0.0" y="19" width="244" height="2"/>
                                                                         <color key="progressTintColor" red="0.0" green="0.40000000000000002" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <color key="trackTintColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -610,6 +610,7 @@
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="fk4-Zr-IfH" firstAttribute="width" secondItem="69R-mz-3L5" secondAttribute="width" id="WkC-cv-apv"/>
+                                                                    <constraint firstItem="hll-aX-a2Q" firstAttribute="width" secondItem="fk4-Zr-IfH" secondAttribute="width" id="ceG-Gg-ktD"/>
                                                                 </constraints>
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TO0-LB-hYh" userLabel="Cancel">
@@ -1255,13 +1256,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPO-8j-jce" customClass="LazyScrollView" customModule="iOSReferenceApp" customModuleProvider="target">
-                                <rect key="frame" x="20" y="20" width="374" height="603"/>
+                                <rect key="frame" x="20" y="0.0" width="374" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JUJ-bK-1dG">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="603"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="623"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="5vX-vJ-waR">
-                                                <rect key="frame" x="0.0" y="247" width="374" height="110"/>
+                                                <rect key="frame" x="0.0" y="257" width="374" height="110"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="R4p-9I-G7R" userLabel="m3u8PathTextField" customClass="SkyFloatingLabelTextField" customModule="iOSReferenceApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
