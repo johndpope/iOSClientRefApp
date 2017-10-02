@@ -276,11 +276,14 @@ extension AssetDetailsViewController {
     }
     
     func displayStartDownloadUI() {
-        downloadStackView.isHidden = true
+        togglePauseResumeDownload(paused: false)
         
-        // Hide other ui
-        downloadProgressStackView.isHidden = true
-        // TODO: Hide AssetDownloaded UI
+        downloadQualityStackView.isHidden = false
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.downloadStackView.isHidden = false
+            // Hide other ui
+            self?.downloadProgressStackView.isHidden = true
+        }
         
         guard let assetId = viewModel.asset.assetId else { return }
         downloadViewModel.refreshDownloadMetadata(for: assetId) { [weak self] success in
@@ -298,12 +301,7 @@ extension AssetDetailsViewController {
     private func resetStartDownloadUI() {
         freezeStartDownloadUI(frozen: false)
         
-        togglePauseResumeDownload(paused: false)
-        
-        downloadStackView.isHidden = false
-        
         if downloadViewModel.hasQualityOptions, let availableOptions = downloadViewModel.downloadQualityOptions {
-            downloadQualityStackView.isHidden = false
             downloadQualitySelector.minimumValue = 0
             downloadQualitySelector.maximumValue = Float(availableOptions-1)
             downloadedSizeLabel.text = " "
@@ -315,9 +313,10 @@ extension AssetDetailsViewController {
             
             // Configure Slider
             update(downloadQuality: downloadViewModel.downloadQuality(for: selectedQualityIndex))
-        }
-        else {
-            downloadQualityStackView.isHidden = true
+            
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.downloadQualityStackView.isHidden = false
+            }
         }
     }
     
@@ -358,10 +357,12 @@ extension AssetDetailsViewController {
     
     func displayDownloadInProgressUI() {
         downloadProgress.setProgress(0, animated: false)
-        
-        downloadStackView.isHidden = true
-        downloadProgressStackView.isHidden = false
-        // TODO: Hide AssetDownloaded UI
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.downloadStackView.isHidden = true
+            // Hide other ui
+            self?.downloadProgressStackView.isHidden = false
+            // TODO: Hide AssetDownloaded UI
+        }
     }
     
     func update(downloadProgress progress: DownloadTask.Progress) {
