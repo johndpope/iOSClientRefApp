@@ -57,8 +57,6 @@
 		76A844831EA7A23700BDAF2C /* Exposure.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844811EA7A23700BDAF2C /* Exposure.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A844851EA7A23700BDAF2C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844841EA7A23700BDAF2C /* Alamofire.framework */; };
 		76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844841EA7A23700BDAF2C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		76A844881EA7A23700BDAF2C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844871EA7A23700BDAF2C /* SwiftyJSON.framework */; };
-		76A844891EA7A23700BDAF2C /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844871EA7A23700BDAF2C /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76AF2F041F139D040014F007 /* EPGDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F031F139D040014F007 /* EPGDetailsViewController.swift */; };
 		76AF2F061F13A0A00014F007 /* EPGDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F051F13A0A00014F007 /* EPGDetailsViewModel.swift */; };
 		76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */; };
@@ -121,7 +119,6 @@
 				76A844801EA7A23700BDAF2C /* Utilities.framework in Embed Frameworks */,
 				76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */,
 				76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */,
-				76A844891EA7A23700BDAF2C /* SwiftyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,7 +221,6 @@
 				76A8447F1EA7A23700BDAF2C /* Utilities.framework in Frameworks */,
 				76A844851EA7A23700BDAF2C /* Alamofire.framework in Frameworks */,
 				76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */,
-				76A844881EA7A23700BDAF2C /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
