@@ -12,8 +12,6 @@
 		76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; };
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		764EDC491F5EADFB00569D5B /* environments.json in Resources */ = {isa = PBXBuildFile; fileRef = 764EDC481F5EADFB00569D5B /* environments.json */; };
-		764EDC4D1F5EB6B100569D5B /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 764EDC4C1F5EB6B100569D5B /* README.md */; };
-		764EDC4F1F5EB6E400569D5B /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = 764EDC4E1F5EB6E400569D5B /* CHANGELOG.md */; };
 		7667AECC1EC5E21200C308FC /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 7667AECA1EC5E21200C308FC /* Appfile */; };
 		7667AECD1EC5E21200C308FC /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 7667AECB1EC5E21200C308FC /* Fastfile */; };
 		7667AECF1EC5E29400C308FC /* .env in Resources */ = {isa = PBXBuildFile; fileRef = 7667AECE1EC5E29400C308FC /* .env */; };
@@ -57,8 +55,6 @@
 		76A844831EA7A23700BDAF2C /* Exposure.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844811EA7A23700BDAF2C /* Exposure.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A844851EA7A23700BDAF2C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844841EA7A23700BDAF2C /* Alamofire.framework */; };
 		76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844841EA7A23700BDAF2C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		76A844881EA7A23700BDAF2C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844871EA7A23700BDAF2C /* SwiftyJSON.framework */; };
-		76A844891EA7A23700BDAF2C /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844871EA7A23700BDAF2C /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76AF2F041F139D040014F007 /* EPGDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F031F139D040014F007 /* EPGDetailsViewController.swift */; };
 		76AF2F061F13A0A00014F007 /* EPGDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F051F13A0A00014F007 /* EPGDetailsViewModel.swift */; };
 		76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */; };
@@ -121,7 +117,6 @@
 				76A844801EA7A23700BDAF2C /* Utilities.framework in Embed Frameworks */,
 				76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */,
 				76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */,
-				76A844891EA7A23700BDAF2C /* SwiftyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,7 +219,6 @@
 				76A8447F1EA7A23700BDAF2C /* Utilities.framework in Frameworks */,
 				76A844851EA7A23700BDAF2C /* Alamofire.framework in Frameworks */,
 				76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */,
-				76A844881EA7A23700BDAF2C /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,12 +722,10 @@
 				76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */,
 				76A844051EA7886400BDAF2C /* LoginViewController.swift in Sources */,
 				F7061C711EC5CF460041E271 /* UIColorExtension.swift in Sources */,
-				764EDC4D1F5EB6B100569D5B /* README.md in Sources */,
 				F7A6A15F1ECEDF4600C145E8 /* HomeTabBarController.swift in Sources */,
 				3E9882281F66E46E003467B3 /* AuthorizedEnvironment.swift in Sources */,
 				76A844011EA7886400BDAF2C /* KeyboardAnimationFrame.swift in Sources */,
 				76AF2F041F139D040014F007 /* EPGDetailsViewController.swift in Sources */,
-				764EDC4F1F5EB6E400569D5B /* CHANGELOG.md in Sources */,
 				F793A8451EC516BC00DF7626 /* LazyScrollView.swift in Sources */,
 				F7061C5F1EC5AF760041E271 /* McPicker.swift in Sources */,
 				7633A9FE1F7F7B5C00580002 /* DownloadAssetViewModel.swift in Sources */,
@@ -921,10 +913,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iOSReferenceApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -945,10 +934,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iOSReferenceApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

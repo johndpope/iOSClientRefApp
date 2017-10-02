@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import SwiftyJSON
 import Exposure
 
-struct EnvironmentConfig {
+struct EnvironmentConfig: Decodable {
     let name: String
     let url: String
     let customers: [CustomerConfig]
@@ -20,25 +19,18 @@ struct EnvironmentConfig {
         self.url = url
         self.customers = customers
     }
+    
+    
+    internal enum CodingKeys: String, CodingKey {
+        case name
+        case url = "exposureUrl"
+        case customers
+    }
 }
 
 extension EnvironmentConfig {
     var pickerModelTitle: String {
         return name
-    }
-    
-    init?(json: JSON) {
-        guard let name = json["name"].string,
-            let url = json["exposureUrl"].string else { return nil }
-        
-        self.name = name
-        self.url = url
-        if let payload = json["customers"].array {
-            customers = payload.flatMap{ CustomerConfig(json: $0) }
-        }
-        else {
-            customers = []
-        }
     }
 }
 
@@ -47,10 +39,8 @@ extension EnvironmentConfig {
         guard let path = Bundle.main.path(forResource: file, ofType: "json") else { return [] }
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
-            let json = JSON(data: data)
             
-            guard let payload = json.array else { return [] }
-            return payload.flatMap{ EnvironmentConfig(json: $0) }
+            return try JSONDecoder().decode([EnvironmentConfig].self, from: data)
         }
         catch {
             return []
