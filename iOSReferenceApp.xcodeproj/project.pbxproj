@@ -929,7 +929,7 @@
 				INFOPLIST_FILE = iOSReferenceApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = se.gardart.iOSReferenceApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.emp.iOSReferenceApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -950,7 +950,7 @@
 				INFOPLIST_FILE = iOSReferenceApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = se.gardart.iOSReferenceApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.emp.iOSReferenceApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;

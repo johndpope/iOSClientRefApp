@@ -117,28 +117,17 @@ class AssetDetailsViewController: UIViewController {
     }
     
     func determineDownloadUIForAsset() {
-        // 1. Check if available locally
-        let notDownloaded = true
-        let downloadInProgress = false
-        let downloaded = false
-        //
-        // 2. Not downloaded
-        //      2.1 displayStartDownloadUI()
-        //
-        // 3. Download in progress
-        //      3.1 displayDownloadInProgressUI()
-        //
-        // 4. Downloaded
-        //      4.1 displayAssetDownloadedUI()
-        
-        if notDownloaded {
-            displayStartDownloadUI()
+        if let assetId = viewModel.asset.assetId, let offline = Downloader.offline(assetId: assetId) {
+            switch offline.state {
+            case .completed: startWithDownloadCompleteUI()
+            case .inProgress: startWithDownloadInProgressUI()
+            case .notFound: // TODO: Remove item and show StartDownloadUI
+                print("Asset [\(assetId)] not found locally")
+                return
+            }
         }
-        else if downloadInProgress {
-            displayDownloadInProgressUI()
-        }
-        else if downloaded {
-            displayAssetDownloadedUI()
+        else {
+            startWithDownloadUI()
         }
     }
 
@@ -205,6 +194,7 @@ extension AssetDetailsViewController {
             }
         }
         
+        
         titleLabel.text = viewModel.anyTitle(locale: locale)
         descriptionTextLabel.text = viewModel.longestDescription(locale: locale)
         
@@ -248,7 +238,7 @@ extension AssetDetailsViewController {
 
             downloadTask?
                 .onStarted { [weak self] task in
-                    self?.displayDownloadInProgressUI()
+                    self?.transitionToDownloadProgressUI(from: self?.downloadStackView)
                 }
                 .onSuspended { [weak self] task in
                     self?.togglePauseResumeDownload(paused: true)
@@ -269,30 +259,45 @@ extension AssetDetailsViewController {
                 }
                 .onCanceled { [weak self] task in
                     // TODO: Clean up downloaded media
-                    self?.displayStartDownloadUI()
+                    self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
                 }
                 .onError { [weak self] (task, error) in
                     // TODO: Clean up downloaded media
                     // TODO: Display error
-                    self?.displayStartDownloadUI()
+                    self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
                     self?.showMessage(title: "Download Error", message: error.localizedDescription)
                 }
                 .onCompleted { [weak self] (task, url) in
                     // TODO: Store URL somewhere
-                    self?.displayAssetDownloadedUI()
+                    self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
                 }
                 .resume()
         }
     }
     
-    func displayStartDownloadUI() {
+    func startWithDownloadUI() {
         togglePauseResumeDownload(paused: false)
-        
         downloadQualityStackView.alpha = 0
+       
+        downloadStackView.isHidden = false
+        downloadProgressStackView.isHidden = true
+        offlineStackView.isHidden = true
+        
+        guard let assetId = viewModel.asset.assetId else { return }
+        downloadViewModel.refreshDownloadMetadata(for: assetId) { [weak self] success in
+            if success {
+                self?.resetStartDownloadUI()
+            }
+        }
+    }
+    
+    func transitionToDownloadUI(from otherView: UIStackView?) {
+        togglePauseResumeDownload(paused: false)
+        downloadQualityStackView.alpha = 0
+        
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.downloadStackView.isHidden = false
-            self?.downloadProgressStackView.isHidden = true
-            self?.offlineStackView.isHidden = true
+            otherView?.isHidden = true
         }
         
         guard let assetId = viewModel.asset.assetId else { return }
@@ -366,13 +371,19 @@ extension AssetDetailsViewController {
         }
     }
     
-    func displayDownloadInProgressUI() {
+    func transitionToDownloadProgressUI(from otherView: UIStackView?) {
         downloadProgress.setProgress(0, animated: false)
         UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.downloadStackView.isHidden = true
             self?.downloadProgressStackView.isHidden = false
-//            self?.offlineStackView.isHidden = true
+            otherView?.isHidden = true
         }
+    }
+    
+    func startWithDownloadInProgressUI() {
+        downloadProgress.setProgress(0, animated: false)
+        downloadProgressStackView.isHidden = false
+        downloadStackView.isHidden = true
+        offlineStackView.isHidden = true
     }
     
     func update(downloadProgress progress: DownloadTask.Progress) {
@@ -384,19 +395,19 @@ extension AssetDetailsViewController {
 // MARK: - Offline Asset
 extension AssetDetailsViewController {
     @IBAction func playOfflineAction(_ sender: UIButton) {
-        displayStartDownloadUI()
+        
     }
     
-    func displayAssetDownloadedUI() {
-        print(offlineStackView.isHidden)
-        UIView.animate(withDuration: 0.3, animations: {
-            self.downloadProgressStackView.isHidden = true
-            self.offlineStackView.isHidden = false
-            
-            // BUG? Animating on completion dpes not show offlie stackview
-//            self.downloadStackView.isHidden = true
-        }) { _ in
-            print(self.offlineStackView.isHidden)
+    func startWithDownloadCompleteUI() {
+        self.offlineStackView.isHidden = false
+        self.downloadProgressStackView.isHidden = true
+        self.downloadStackView.isHidden = true
+    }
+    
+    func transitionToDownloadCompletedUI(from otherView: UIStackView?) {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.offlineStackView.isHidden = false
+            otherView?.isHidden = true
         }
     }
 }
