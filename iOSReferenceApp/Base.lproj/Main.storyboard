@@ -457,31 +457,34 @@
                                                             </label>
                                                         </subviews>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OCj-b0-Y5r" userLabel="Ratings">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="OCj-b0-Y5r" userLabel="Ratings">
                                                         <rect key="frame" x="0.0" y="271.33333333333331" width="374" height="40"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YHb-34-xyC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="40"/>
                                                                 <subviews>
-                                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Udj-Uv-EvL">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="118" height="40"/>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Udj-Uv-EvL">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="130" height="40"/>
                                                                         <subviews>
                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-filled" translatesAutoresizingMaskIntoConstraints="NO" id="nRG-47-Wyw">
                                                                                 <rect key="frame" x="0.0" y="9" width="22" height="22"/>
                                                                             </imageView>
                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-filled" translatesAutoresizingMaskIntoConstraints="NO" id="3N0-KL-xLb">
-                                                                                <rect key="frame" x="24" y="9" width="22" height="22"/>
+                                                                                <rect key="frame" x="27" y="9" width="22" height="22"/>
                                                                             </imageView>
                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-filled" translatesAutoresizingMaskIntoConstraints="NO" id="uum-PE-AVU">
-                                                                                <rect key="frame" x="48" y="9" width="22" height="22"/>
+                                                                                <rect key="frame" x="54" y="9" width="22" height="22"/>
                                                                             </imageView>
                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-filled" translatesAutoresizingMaskIntoConstraints="NO" id="PyU-DN-PAB">
-                                                                                <rect key="frame" x="72" y="9" width="22" height="22"/>
+                                                                                <rect key="frame" x="81" y="9" width="22" height="22"/>
                                                                             </imageView>
                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-unfilled" translatesAutoresizingMaskIntoConstraints="NO" id="qlx-YT-0y8">
-                                                                                <rect key="frame" x="96" y="9" width="22" height="22"/>
+                                                                                <rect key="frame" x="108" y="9" width="22" height="22"/>
                                                                             </imageView>
                                                                         </subviews>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="130" id="Ugn-vx-POc"/>
+                                                                        </constraints>
                                                                     </stackView>
                                                                 </subviews>
                                                                 <constraints>
@@ -489,8 +492,26 @@
                                                                     <constraint firstItem="Udj-Uv-EvL" firstAttribute="leading" secondItem="YHb-34-xyC" secondAttribute="leading" id="Li5-tz-aIo"/>
                                                                     <constraint firstItem="Udj-Uv-EvL" firstAttribute="top" secondItem="YHb-34-xyC" secondAttribute="top" id="OCj-NN-xkQ"/>
                                                                     <constraint firstAttribute="height" constant="40" id="eDS-Ex-TvU"/>
+                                                                    <constraint firstAttribute="width" constant="130" id="eya-GS-KFH"/>
                                                                 </constraints>
                                                             </view>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7Gg-T6-MK7">
+                                                                <rect key="frame" x="135" y="0.0" width="239" height="40"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7f-de-xiI">
+                                                                        <rect key="frame" x="0.0" y="12" width="119.66666666666669" height="16.333333333333371"/>
+                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nw9-dP-IJE">
+                                                                        <rect key="frame" x="119.66666666666669" y="12" width="119.33333333333331" height="16.333333333333371"/>
+                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="viz-UV-rxK" userLabel="Download">
@@ -725,11 +746,13 @@
                         <outlet property="durationLabel" destination="avJ-E4-2ey" id="S1Z-px-XGB"/>
                         <outlet property="footerTextLabel" destination="OVg-YO-CUW" id="NyT-el-TMr"/>
                         <outlet property="mainImageView" destination="lGr-qZ-Uwm" id="GMk-JO-xgT"/>
+                        <outlet property="parentalRatingLabel" destination="nw9-dP-IJE" id="K7y-hJ-L9u"/>
                         <outlet property="playButton" destination="nEJ-s3-73e" id="5LK-Ai-Sdr"/>
+                        <outlet property="productionYearLabel" destination="U7f-de-xiI" id="QAM-1S-hS4"/>
                         <outlet property="progressBar" destination="B1e-62-QwW" id="kpR-he-7gk"/>
                         <outlet property="progressLabel" destination="mFh-Om-zcq" id="8tT-Ws-qa0"/>
                         <outlet property="progressStackView" destination="w1H-fQ-VRf" id="9Bh-BY-DhD"/>
-                        <outlet property="ratingsView" destination="YHb-34-xyC" id="ls4-GG-hxK"/>
+                        <outlet property="ratingStarStackView" destination="Udj-Uv-EvL" id="ZfT-a1-u9I"/>
                         <outlet property="titleLabel" destination="pGp-GJ-CnU" id="A65-6S-UUz"/>
                         <segue destination="rhs-OU-IKm" kind="presentation" identifier="segueDetailsToPlayer" id="G3d-4d-mII"/>
                     </connections>

@@ -62,7 +62,11 @@ class AssetDetailsViewController: UIViewController {
 
     @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var ratingsView: UIView!
+    
+    @IBOutlet weak var ratingStarStackView: UIStackView!
+    @IBOutlet weak var productionYearLabel: UILabel!
+    @IBOutlet weak var parentalRatingLabel: UILabel!
+    
     
     @IBOutlet weak var progressStackView: UIStackView!
     @IBOutlet weak var progressLabel: UILabel!
@@ -187,8 +191,9 @@ extension AssetDetailsViewController {
 // MARK: - User Data
 extension AssetDetailsViewController {
     func refreshUserDataUI() {
+        let locale = "en"
         if let imageUrl = viewModel
-            .images(locale: "en")
+            .images(locale: locale)
             .prefere(orientation: .landscape)
             .validImageUrls()
             .first {
@@ -199,8 +204,12 @@ extension AssetDetailsViewController {
             }
         }
         
-        titleLabel.text = viewModel.anyTitle(locale: "en")
-        descriptionTextLabel.text = viewModel.longestDescription(locale: "en")
+        titleLabel.text = viewModel.anyTitle(locale: locale)
+        descriptionTextLabel.text = viewModel.longestDescription(locale: locale)
+        
+        productionYearLabel.text = viewModel.productionYear
+        
+        parentalRatingLabel.text = viewModel.anyParentalRating(locale: locale)
         
         // Update last viewed progress
         update(lastViewedOffset: viewModel.lastViewedOffset)
@@ -306,8 +315,9 @@ extension AssetDetailsViewController {
             downloadQualitySelector.maximumValue = Float(availableOptions-1)
             downloadedSizeLabel.text = " "
             
-            let selectedQualityIndex = downloadViewModel.selectedQualityIndex ?? 0
             
+            if downloadViewModel.selectedQualityIndex == nil { downloadViewModel.select(downloadQuality: 0) }
+            let selectedQualityIndex = downloadViewModel.selectedQualityIndex!
             
             downloadQualitySelector.setValue(Float(selectedQualityIndex), animated: true)
             

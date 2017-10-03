@@ -81,6 +81,28 @@ extension AssetDetailsViewModel {
     }
 }
 
+extension AssetDetailsViewModel {
+    var productionYear: String {
+        return asset.productionYear != nil ? "\(asset.productionYear!)" : " "
+    }
+}
+
+extension AssetDetailsViewModel {
+    func anyParentalRating(locale: String) -> String? {
+        if let localizedRating = localizedParentalRating(locale: locale), let rating = localizedRating.rating {
+            return rating
+        }
+        return asset.parentalRatings?.first?.rating ?? " "
+    }
+    
+    fileprivate func localizedParentalRating(locale: String) -> ParentalRating? {
+        return asset
+            .parentalRatings?
+            .filter{ $0.country != nil ? $0.country! == locale : false }
+            .first
+    }
+}
+
 extension AssetDetailsViewModel: LocalizedEntity {
     var locales: [String] {
         return asset.localized?.flatMap{ $0.locale } ?? []
