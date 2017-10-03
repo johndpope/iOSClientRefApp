@@ -91,6 +91,7 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var downloadProgress: UIProgressView!
     @IBOutlet weak var downloadedSizeLabel: UILabel!
     
+    @IBOutlet weak var offlineStackView: UIStackView!
     
     
     fileprivate(set) var viewModel: AssetDetailsViewModel!
@@ -238,13 +239,13 @@ extension AssetDetailsViewController {
     
     @IBAction func downloadAction(_ sender: UIButton) {
         guard let assetId = viewModel.asset.assetId else { return }
-        
+
         // TODO: "Disable/Freeze" download UI when the download action is taken. This ensures multiple downloads are not started at the same time. NOTE: This needs to be "un-frozen" in case of errors etc.
         freezeStartDownloadUI(frozen: true)
-        
+
         downloadViewModel.download(assetId: assetId) { downloadTask, entitlement, error in
             // TODO: Store entitlement?
-            
+
             downloadTask?
                 .onStarted { [weak self] task in
                     self?.displayDownloadInProgressUI()
@@ -290,8 +291,8 @@ extension AssetDetailsViewController {
         downloadQualityStackView.alpha = 0
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.downloadStackView.isHidden = false
-            // Hide other ui
             self?.downloadProgressStackView.isHidden = true
+            self?.offlineStackView.isHidden = true
         }
         
         guard let assetId = viewModel.asset.assetId else { return }
@@ -369,9 +370,8 @@ extension AssetDetailsViewController {
         downloadProgress.setProgress(0, animated: false)
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.downloadStackView.isHidden = true
-            // Hide other ui
             self?.downloadProgressStackView.isHidden = false
-            // TODO: Hide AssetDownloaded UI
+//            self?.offlineStackView.isHidden = true
         }
     }
     
@@ -381,10 +381,23 @@ extension AssetDetailsViewController {
     }
 }
 
-// MARK: - Downloaded Asset
+// MARK: - Offline Asset
 extension AssetDetailsViewController {
+    @IBAction func playOfflineAction(_ sender: UIButton) {
+        displayStartDownloadUI()
+    }
+    
     func displayAssetDownloadedUI() {
-        
+        print(offlineStackView.isHidden)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.downloadProgressStackView.isHidden = true
+            self.offlineStackView.isHidden = false
+            
+            // BUG? Animating on completion dpes not show offlie stackview
+//            self.downloadStackView.isHidden = true
+        }) { _ in
+            print(self.offlineStackView.isHidden)
+        }
     }
 }
 

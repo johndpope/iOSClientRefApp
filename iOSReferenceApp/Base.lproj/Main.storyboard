@@ -396,7 +396,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="706"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="psu-p7-emi">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="462.33333333333331"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="512"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rU-5y-AQk" userLabel="Playback">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="210"/>
@@ -498,13 +498,13 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7Gg-T6-MK7">
                                                                 <rect key="frame" x="135" y="0.0" width="239" height="40"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7f-de-xiI">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="2017" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7f-de-xiI">
                                                                         <rect key="frame" x="0.0" y="12" width="119.66666666666669" height="16.333333333333371"/>
                                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nw9-dP-IJE">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PG13" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nw9-dP-IJE">
                                                                         <rect key="frame" x="119.66666666666669" y="12" width="119.33333333333331" height="16.333333333333371"/>
                                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -657,11 +657,78 @@
                                                             </stackView>
                                                         </subviews>
                                                     </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="WTE-qc-a7g" userLabel="Offline">
+                                                        <rect key="frame" x="0.0" y="416.66666666666669" width="374" height="43.666666666666629"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kwf-0i-CZp" userLabel="Play">
+                                                                <rect key="frame" x="0.0" y="0.0" width="60" height="43.666666666666629"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyB-v4-X0d">
+                                                                        <rect key="frame" x="14" y="0.0" width="32" height="32"/>
+                                                                        <state key="normal" image="download-play"/>
+                                                                        <connections>
+                                                                            <action selector="playOfflineAction:" destination="aUa-uP-O3V" eventType="touchUpInside" id="ihu-Tw-B9W"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Play" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0u-6i-tbQ">
+                                                                        <rect key="frame" x="20.333333333333336" y="32" width="19.333333333333329" height="11.666666666666629"/>
+                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="60" id="6LR-mD-eyk"/>
+                                                                </constraints>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CmO-p5-v7B" userLabel="Remove">
+                                                                <rect key="frame" x="65" y="0.0" width="60" height="43.666666666666629"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kuF-q7-6h3">
+                                                                        <rect key="frame" x="14" y="0.0" width="32" height="32"/>
+                                                                        <state key="normal" image="download-remove"/>
+                                                                    </button>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Remove" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiO-9h-G7O">
+                                                                        <rect key="frame" x="11.666666666666671" y="32" width="36.999999999999986" height="11.666666666666629"/>
+                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="60" id="Un6-9z-jt2"/>
+                                                                </constraints>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="MkC-Ha-tvT">
+                                                                <rect key="frame" x="130" y="0.0" width="244" height="43.666666666666629"/>
+                                                                <subviews>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Qsr-GS-Vnf" userLabel="List">
+                                                                        <rect key="frame" x="184" y="0.0" width="60" height="43.666666666666629"/>
+                                                                        <subviews>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9kK-rt-ehG">
+                                                                                <rect key="frame" x="14" y="0.0" width="32" height="32"/>
+                                                                                <state key="normal" image="download-list"/>
+                                                                            </button>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gab-Wm-Rof">
+                                                                                <rect key="frame" x="22" y="32" width="16" height="11.666666666666629"/>
+                                                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="60" id="ZZ5-3P-z2f"/>
+                                                                        </constraints>
+                                                                    </stackView>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                    </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VAD-uv-HgA" userLabel="Description">
-                                                        <rect key="frame" x="0.0" y="416.66666666666669" width="374" height="21"/>
+                                                        <rect key="frame" x="0.0" y="466.33333333333337" width="374" height="21.000000000000057"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uct-ZE-Jgl">
-                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="21"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="21.000000000000057"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <nil key="highlightedColor"/>
@@ -669,7 +736,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mSb-L8-RVr" userLabel="Footer">
-                                                        <rect key="frame" x="0.0" y="443.66666666666669" width="374" height="18.666666666666629"/>
+                                                        <rect key="frame" x="0.0" y="493.33333333333337" width="374" height="18.666666666666629"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVg-YO-CUW">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="18.666666666666629"/>
@@ -686,6 +753,7 @@
                                                     <constraint firstItem="w1H-fQ-VRf" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="MND-hh-p1V"/>
                                                     <constraint firstItem="OCj-b0-Y5r" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="UqF-pe-cCo"/>
                                                     <constraint firstItem="7rU-5y-AQk" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="bPy-Aw-4iZ"/>
+                                                    <constraint firstItem="WTE-qc-a7g" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="hHD-gy-8Rs"/>
                                                     <constraint firstItem="VM5-A0-jUv" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="odI-eA-O7M"/>
                                                     <constraint firstItem="mSb-L8-RVr" firstAttribute="width" secondItem="psu-p7-emi" secondAttribute="width" id="r3B-lF-HaQ"/>
                                                 </constraints>
@@ -746,6 +814,7 @@
                         <outlet property="durationLabel" destination="avJ-E4-2ey" id="S1Z-px-XGB"/>
                         <outlet property="footerTextLabel" destination="OVg-YO-CUW" id="NyT-el-TMr"/>
                         <outlet property="mainImageView" destination="lGr-qZ-Uwm" id="GMk-JO-xgT"/>
+                        <outlet property="offlineStackView" destination="WTE-qc-a7g" id="jfs-mc-SVW"/>
                         <outlet property="parentalRatingLabel" destination="nw9-dP-IJE" id="K7y-hJ-L9u"/>
                         <outlet property="playButton" destination="nEJ-s3-73e" id="5LK-Ai-Sdr"/>
                         <outlet property="productionYearLabel" destination="U7f-de-xiI" id="QAM-1S-hS4"/>
@@ -1391,7 +1460,10 @@
         <image name="close" width="32" height="32"/>
         <image name="download" width="32" height="32"/>
         <image name="download-cancel" width="32" height="32"/>
+        <image name="download-list" width="32" height="32"/>
         <image name="download-pause" width="32" height="32"/>
+        <image name="download-play" width="32" height="32"/>
+        <image name="download-remove" width="32" height="32"/>
         <image name="overlay-back" width="32" height="32"/>
         <image name="overlay-ff-10" width="32" height="32"/>
         <image name="overlay-play" width="32" height="32"/>
