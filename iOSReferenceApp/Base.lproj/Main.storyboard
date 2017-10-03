@@ -687,6 +687,9 @@
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kuF-q7-6h3">
                                                                         <rect key="frame" x="14" y="0.0" width="32" height="32"/>
                                                                         <state key="normal" image="download-remove"/>
+                                                                        <connections>
+                                                                            <action selector="removeOfflineMediaAction:" destination="aUa-uP-O3V" eventType="touchUpInside" id="igc-Dy-3wH"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Remove" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiO-9h-G7O">
                                                                         <rect key="frame" x="11.666666666666671" y="32" width="36.999999999999986" height="11.666666666666629"/>
@@ -708,6 +711,9 @@
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9kK-rt-ehG">
                                                                                 <rect key="frame" x="14" y="0.0" width="32" height="32"/>
                                                                                 <state key="normal" image="download-list"/>
+                                                                                <connections>
+                                                                                    <action selector="viewOfflineListAction:" destination="aUa-uP-O3V" eventType="touchUpInside" id="IqH-Wi-eOZ"/>
+                                                                                </connections>
                                                                             </button>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gab-Wm-Rof">
                                                                                 <rect key="frame" x="22" y="32" width="16" height="11.666666666666629"/>

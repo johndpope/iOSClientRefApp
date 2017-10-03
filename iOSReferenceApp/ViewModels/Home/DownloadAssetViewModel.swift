@@ -46,26 +46,26 @@ extension DownloadAssetViewModel {
                     return
                 }
                 
-                self?.handle(entitlement: entitlement, named: assetId) { task, error in
+                self?.handle(entitlement: entitlement, assetId: assetId) { task, error in
                     callback(task, entitlement, error)
                 }
         }
     }
     
-    fileprivate func handle(entitlement: PlaybackEntitlement, named name: String, callback: (DownloadTask?, DownloadAssetError?) -> Void) {
+    fileprivate func handle(entitlement: PlaybackEntitlement, assetId: String, callback: (DownloadTask?, DownloadAssetError?) -> Void) {
         let bps = selectedBitrate?.bitrate != nil ? selectedBitrate!.bitrate!*1000 : nil
         do {
             if #available(iOS 10.0, *) {
                 task = try Downloader
-                    .download(entitlement: entitlement, named: name)
+                    .download(entitlement: entitlement, assetId: assetId)
                     .use(bitrate: bps)
                 callback(task, nil)
             } else {
                 let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as! URL
-                let destinationUrl = documentsUrl.appendingPathComponent("\(name).m3u8")
+                let destinationUrl = documentsUrl.appendingPathComponent("\(assetId).m3u8")
                 
                 task = try Downloader
-                    .download(entitlement: entitlement, to: destinationUrl)
+                    .download(entitlement: entitlement, assetId: assetId, to: destinationUrl)
                     .use(bitrate: bps)
                 callback(task, nil)
             }
@@ -212,4 +212,14 @@ extension DownloadAssetViewModel {
     }
 }
 
-
+// MARK: - Manage offline functinality
+extension DownloadAssetViewModel {
+    func offline(assetId: String?) -> OfflineMediaAsset? {
+        guard let assetId = assetId else { return nil }
+        return Downloader.offline(assetId: assetId)
+    }
+    
+    func remove(localMedia assetId: String) {
+        offline(assetId: assetId)?.delete()
+    }
+}

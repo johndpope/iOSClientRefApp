@@ -93,7 +93,6 @@ class AssetDetailsViewController: UIViewController {
     
     @IBOutlet weak var offlineStackView: UIStackView!
     
-    
     fileprivate(set) var viewModel: AssetDetailsViewModel!
     fileprivate(set) var downloadViewModel: DownloadAssetViewModel!
     
@@ -117,12 +116,12 @@ class AssetDetailsViewController: UIViewController {
     }
     
     func determineDownloadUIForAsset() {
-        if let assetId = viewModel.asset.assetId, let offline = Downloader.offline(assetId: assetId) {
+        if let offline = downloadViewModel.offline(assetId: viewModel.asset.assetId) {
             switch offline.state {
             case .completed: startWithDownloadCompleteUI()
             case .inProgress: startWithDownloadInProgressUI()
             case .notFound: // TODO: Remove item and show StartDownloadUI
-                print("Asset [\(assetId)] not found locally")
+                print("Asset [\(viewModel.asset.assetId)] not found locally")
                 return
             }
         }
@@ -396,6 +395,15 @@ extension AssetDetailsViewController {
 extension AssetDetailsViewController {
     @IBAction func playOfflineAction(_ sender: UIButton) {
         
+    }
+    
+    @IBAction func removeOfflineMediaAction(_ sender: UIButton) {
+        guard let assetId = viewModel.asset.assetId else { return }
+        downloadViewModel.remove(localMedia: assetId)
+        transitionToDownloadUI(from: offlineStackView)
+    }
+    
+    @IBAction func viewOfflineListAction(_ sender: UIButton) {
     }
     
     func startWithDownloadCompleteUI() {
