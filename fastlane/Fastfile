@@ -91,6 +91,7 @@ platform :ios do
                     "com.emp.iOSReferenceApp" => "com.emp.iOSReferenceApp AppStore 1495113163"
                 }
             },
+            export_xcargs: "-allowProvisioningUpdates",
             workspace: ENV["CLIENT_WORKSPACE"],
             scheme: ENV["TESTFLIGHT_SCHEME"]
             )
