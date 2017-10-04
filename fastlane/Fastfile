@@ -83,7 +83,14 @@ platform :ios do
     lane :testflight_beta do
         cert
         sigh
+        
         gym(
+            export_method: "app-store",
+            export_options: {
+                provisioningProfiles: {
+                    "com.emp.iOSReferenceApp" => "com.emp.iOSReferenceApp AppStore 1495113163"
+                }
+            },
             workspace: ENV["CLIENT_WORKSPACE"],
             scheme: ENV["TESTFLIGHT_SCHEME"]
             )
