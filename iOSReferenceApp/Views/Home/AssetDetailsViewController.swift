@@ -117,12 +117,14 @@ class AssetDetailsViewController: UIViewController {
     
     func determineDownloadUIForAsset() {
         if let offline = downloadViewModel.offline(assetId: viewModel.asset.assetId) {
-            switch offline.state {
-            case .completed: startWithDownloadCompleteUI()
-            case .inProgress: startWithDownloadInProgressUI()
-            case .notFound: // TODO: Remove item and show StartDownloadUI
-                print("Asset [\(viewModel.asset.assetId)] not found locally")
-                return
+            offline.state{ [weak self] state in
+                switch state {
+                case .completed: self?.startWithDownloadCompleteUI()
+                case .inProgress: self?.startWithDownloadInProgressUI()
+                case .notFound: // TODO: Remove item and show StartDownloadUI
+                    print("Asset [\(self?.viewModel.asset.assetId)] not found locally")
+                    return
+                }
             }
         }
         else {
