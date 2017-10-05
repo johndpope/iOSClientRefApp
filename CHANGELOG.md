@@ -9,6 +9,7 @@ NO RELEASE DATE SET
 #### Features
 * `EMP-10322` Fetching cover art exhausts all options for images before displaying generic thumbnail.
 * Previous playback offset displayed when viewing asset details
+* `VOD` view now uses Carousel from CustomerConfig`
 
 #### Changes
 * `EMP-10293` Remove EntitlementRequester.
