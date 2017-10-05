@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import Exposure
 
 class HomeTabBarController: UITabBarController {
+
+    var config: ApplicationConfig?
+    var appConfigFile: Exposure.CustomerConfig.File?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,6 +26,24 @@ class HomeTabBarController: UITabBarController {
             [NSFontAttributeName: UIFont(name: "Helvetica", size: 12)!,
              ],
             for: UIControlState.normal)
+
+        guard let env = UserInfo.environment else { return }
+        config = ApplicationConfig(environment: env)
+        config?.setup {
+            self.fetchFile()
+        }
+    }
+
+    func fetchFile(name: String? = nil) {
+        var name = name
+        if name == nil {
+            name = config?.customerConfig?.fileNames.first
+        }
+        guard let fileName = name else { return }
+        config?.fetchFile(fileName: fileName,
+                          completion: { [weak self] file in
+                            self?.appConfigFile = file
+        })
     }
 
 }

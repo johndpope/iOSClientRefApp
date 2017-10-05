@@ -11,54 +11,43 @@ import Exposure
 
 class VODViewModel: AuthorizedEnvironment {
     // MARK: Basics
-    let credentials: Credentials
-    
-    fileprivate(set) var categories: [CategoryViewModel] = []
-    
-    init(credentials: Credentials, environment: Environment) {
-        self.credentials = credentials
-        self.environment = environment
-
-        self.categories = [
-            .movie,
-            .clip,
-            .episode,
-            .ad
-            ].map { CategoryViewModel(type: $0, environment: environment, sessionToken: sessionToken) }
-    }
-    
-    convenience init(sessionToken: SessionToken, environment: Environment) {
-        let cred = Credentials(sessionToken: sessionToken,
-                               crmToken: nil,
-                               accountId: nil,
-                               expiration: nil,
-                               accountStatus: nil)
-        
-        self.init(credentials: cred,
-                  environment: environment)
-    }
-
-    func loadCategories(callback: @escaping (Int?, ExposureError?) -> Void) {
-        for (index, category) in categories.enumerated() {
-            category.fetchMetadata(batch: 1) { error in
-                guard error == nil else { callback(nil, error); return }
-                callback(index, nil)
-            }
-        }
-    }
-    
-    // MARK: AuthorizedEnvironment
     let environment: Environment
-    var sessionToken: SessionToken {
-        return credentials.sessionToken
+    let carouselId: String
+    let sessionToken: SessionToken
+    
+    fileprivate(set) var carousels: [CarouselItemViewModel] = []
+    
+    init(carouselId: String, environment: Environment, sessionToken: SessionToken) {
+        self.carouselId = carouselId
+        self.environment = environment
+        self.sessionToken = sessionToken
+
+        //basicCarousels
+    }
+
+    func loadCarousels(callback: @escaping (ExposureError?) -> Void) {
+        FetchCarouselList(groupId: carouselId,
+                          environment: environment)
+            .request()
+            .validate()
+            .response { (response: ExposureResponse<CarouselList>) in
+                guard let items = response.value?.items else { return }
+                self.carousels = items.map { CarouselItemViewModel(item: $0) }
+                callback(response.error)
+        }
     }
 }
 
 // MARK: PreviewAssetCellConfig
 extension VODViewModel: PreviewAssetCellConfig {
     func rowHeight(index: Int) -> CGFloat {
-        let category = categories[index]
-        return (category.preferredCellSize.height + 2*category.previewCellPadding)
+        let carousel = carousels[index]
+        if carousel.item.items!.items!.isEmpty { return 0 }
+        return (carousel.preferredCellSize.height + 2*carousel.previewCellPadding)
+    }
+
+    func getSectionTitle(atIndex section: Int) -> String {
+        return carousels[section].item.titles?.first?.title ?? "No title"
     }
 }
 
@@ -67,5 +56,28 @@ extension VODViewModel {
     // MARK: Exposure Assets
 }
 
+struct CarouselItemViewModel: AssetListType {
+    var content: [AssetViewModel] {
+        get {
+            return item.items?.items?.flatMap { AssetViewModel(asset: $0) } ?? []
+        }
+    }
 
+    var item: CarouselItem
 
+    init(item: CarouselItem) {
+        self.item = item
+    }
+
+    var preferredCellSize: CGSize {
+        return CGSize(width: 128, height: 96)
+    }
+
+    var preferredCellsPerRow: CGFloat {
+        return 3
+    }
+
+    var previewCellPadding: CGFloat {
+        return 5
+    }
+}

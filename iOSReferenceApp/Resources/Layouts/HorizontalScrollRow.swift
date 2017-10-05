@@ -15,7 +15,7 @@ class HorizontalScrollRow: UITableViewCell {
     var cellSelected: (Asset) -> Void = { _ in }
     
     @IBOutlet weak var collectionView: UICollectionView!
-    fileprivate(set) var viewModel: CategoryViewModel!
+    fileprivate(set) var viewModel: AssetListType!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,7 +35,7 @@ class HorizontalScrollRow: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func bind(viewModel: CategoryViewModel) {
+    func bind(viewModel: AssetListType) {
         self.viewModel = viewModel
         collectionView.reloadData()
     }
@@ -106,11 +106,11 @@ extension HorizontalScrollRow {
     
     fileprivate func preloadNextBatch(after indexPath: IndexPath) {
         let currentBatch = batch(for: indexPath)
-        viewModel.fetchMetadata(batch: currentBatch+1) { [unowned self] error in
+        viewModel.fetchMetadata(batch: currentBatch+1) { [unowned self] (batch, error) in
             if let error = error {
                 print(error)
             }
-            else {
+            else if batch == currentBatch {
                 self.collectionView.reloadData()
             }
         }
