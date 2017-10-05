@@ -9,7 +9,22 @@
 import Foundation
 import Exposure
 
-class CategoryViewModel: AuthorizedEnvironment {
+protocol AssetListType {
+//    associatedtype AssetType
+
+    var content: [AssetViewModel] { get }
+    var preferredCellSize: CGSize { get }
+
+    func fetchMetadata(batch: Int, callback: @escaping (Int, ExposureError?) -> Void)
+}
+
+extension AssetListType {
+    func fetchMetadata(batch: Int, callback: @escaping (Int, ExposureError?) -> Void) {
+        callback(-1, nil)
+    }
+}
+
+class CategoryViewModel: AuthorizedEnvironment, AssetListType {
     typealias AssetType = Asset.AssetType
     
     var content: [AssetViewModel] {
@@ -47,7 +62,7 @@ extension CategoryViewModel {
         return 50
     }
     
-    func fetchMetadata(batch: Int, callback: @escaping (ExposureError?) -> Void) {
+    func fetchMetadata(batch: Int, callback: @escaping (Int, ExposureError?) -> Void) {
         guard !loadedBatches.contains(batch) else { return }
         guard !inProgressBatches.contains(batch) else { return }
         inProgressBatches.insert(batch)
@@ -65,11 +80,12 @@ extension CategoryViewModel {
                     self.processResponse(list: success, for: type)
                     self.inProgressBatches.remove(batch)
                     self.loadedBatches.insert(batch)
-                    callback(nil)
+                    callback(batch, nil)
                 }
                 
                 if let error = exposure.error {
                     print(error)
+                    callback(batch, error)
                     self.inProgressBatches.remove(batch)
                 }
         }

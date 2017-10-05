@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E6B3B461F84D5100071C10A /* ApplicationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */; };
 		3E9882281F66E46E003467B3 /* AuthorizedEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */; };
 		7633A9FE1F7F7B5C00580002 /* DownloadAssetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7633A9FD1F7F7B5C00580002 /* DownloadAssetViewModel.swift */; };
 		76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; };
@@ -124,6 +125,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationConfig.swift; sourceTree = "<group>"; };
 		3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedEnvironment.swift; sourceTree = "<group>"; };
 		7633A9FD1F7F7B5C00580002 /* DownloadAssetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAssetViewModel.swift; sourceTree = "<group>"; };
 		76344F481F7AB3BC0034AEC0 /* Download.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Download.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -317,6 +319,7 @@
 				76A843EF1EA7886400BDAF2C /* Utilities */,
 				76A843F21EA7886400BDAF2C /* ViewModels */,
 				76A843F71EA7886400BDAF2C /* Views */,
+				3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */,
 			);
 			path = iOSReferenceApp;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 			files = (
 				76A44C9E1F1637A7008992E9 /* MoreViewController.swift in Sources */,
 				76AF2F1A1F13BFB40014F007 /* Date+Extensions.swift in Sources */,
+				3E6B3B461F84D5100071C10A /* ApplicationConfig.swift in Sources */,
 				F793A8551EC5289E00DF7626 /* UITextField+fixCaretPosition.swift in Sources */,
 				F7061C691EC5BFAF0041E271 /* Constants.swift in Sources */,
 				76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */,

@@ -42,7 +42,7 @@ class LiveListViewModel: AuthorizedEnvironment {
     func loadCategories(callback: @escaping (Int?, ExposureError?) -> Void) {
         (0..<categories.count).forEach{ index in
             let vm = categories[index]
-            vm.fetchMetadata(batch: 1) { error in
+            vm.fetchMetadata(batch: 1) { (batch, error) in
                 if let error = error {
                     callback(nil,error)
                 }
