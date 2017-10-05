@@ -276,18 +276,18 @@ extension AssetDetailsViewController {
                 .onDownloadingMediaOption{ task, option in
                     print("Downloading media option")
                 }
-                .onCanceled { [weak self] task in
-                    // TODO: Clean up downloaded media
+                .onCanceled { [weak self] task, url in
+                    self?.downloadViewModel.removeDownload(at: url)
                     self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
                 }
-                .onError { [weak self] (task, error) in
-                    // TODO: Clean up downloaded media
+                .onError { [weak self] task, url, error in
+                    self?.downloadViewModel.removeDownload(at: url)
                     // TODO: Display error
                     self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
                     self?.showMessage(title: "Download Error", message: error.localizedDescription)
                 }
-                .onCompleted { [weak self] (task, url) in
-                    // TODO: Store URL somewhere
+                .onCompleted { [weak self] task, url in
+                    self?.downloadViewModel.downloadedMediaDestination = url
                     self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
                 }
             
@@ -406,8 +406,7 @@ extension AssetDetailsViewController {
     }
     
     @IBAction func removeOfflineMediaAction(_ sender: UIButton) {
-        guard let assetId = viewModel.asset.assetId else { return }
-        downloadViewModel.remove(localMedia: assetId)
+        downloadViewModel.removeDownload(at: downloadViewModel.downloadedMediaDestination)
         transitionToDownloadUI(from: offlineStackView)
     }
     

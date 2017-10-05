@@ -19,6 +19,8 @@ class DownloadAssetViewModel: AuthorizedEnvironment {
     fileprivate var availableBitrates: [DownloadValidation.Bitrate]?
     fileprivate var selectedBitrate: DownloadValidation.Bitrate?
     
+    var downloadedMediaDestination: URL?
+    
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
@@ -72,6 +74,23 @@ extension DownloadAssetViewModel {
         }
         catch {
             callback(nil, .download(error: error as! DownloadError))
+        }
+    }
+}
+
+extension DownloadAssetViewModel {
+    func removeDownload(at url: URL?) {
+        guard let url = url else {
+            print("⚠️ DownloadTask canceled, no url to local media supplied")
+            return
+        }
+        do {
+            try FileManager.default.removeItem(at: url)
+            
+            print("✅ DownloadTask canceled. Cleaned up local media")
+        }
+        catch {
+            print("🚨 DownloadTask canceled. Failed to clean local media: ",error.localizedDescription)
         }
     }
 }
@@ -225,9 +244,5 @@ extension DownloadAssetViewModel {
         return nil
 //        guard let assetId = assetId else { return nil }
 //        return Downloader.offlineMedia(assetId: assetId)
-    }
-    
-    func remove(localMedia assetId: String) {
-//        offline(assetId: assetId)?.delete()
     }
 }

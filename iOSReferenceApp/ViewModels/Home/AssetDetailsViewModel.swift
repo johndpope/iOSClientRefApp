@@ -19,7 +19,6 @@ class AssetDetailsViewModel: AuthorizedEnvironment {
         self.environment = environment
         self.sessionToken = sessionToken
     }
-    
 }
 
 extension AssetDetailsViewModel {
