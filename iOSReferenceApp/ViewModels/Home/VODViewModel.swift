@@ -21,8 +21,6 @@ class VODViewModel: AuthorizedEnvironment {
         self.carouselId = carouselId
         self.environment = environment
         self.sessionToken = sessionToken
-
-        //basicCarousels
     }
 
     func loadCarousels(callback: @escaping (ExposureError?) -> Void) {
@@ -42,7 +40,7 @@ class VODViewModel: AuthorizedEnvironment {
 extension VODViewModel: PreviewAssetCellConfig {
     func rowHeight(index: Int) -> CGFloat {
         let carousel = carousels[index]
-        if carousel.item.items!.items!.isEmpty { return 0 }
+        if let items = carousel.item.items?.items, items.isEmpty { return 0 }
         return (carousel.preferredCellSize.height + 2*carousel.previewCellPadding)
     }
 

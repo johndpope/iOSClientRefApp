@@ -10,7 +10,7 @@ import UIKit
 import Exposure
 
 class VODViewController: UIViewController {
-    var viewModel: VODViewModel?
+    var viewModel: VODViewModel!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -75,10 +75,10 @@ extension VODViewController: AssetDetailsPresenter {
     }
 
     var sessionToken: SessionToken {
-        return viewModel!.sessionToken
+        return viewModel.sessionToken
     }
     var environment: Environment {
-        return viewModel!.environment
+        return viewModel.environment
     }
 }
 
