@@ -102,7 +102,7 @@ platform :ios do
                                                merge_commit_filtering: 'exclude_merges'
                                                )
         pilot(
-              changelog: changelog,
+              changelog: strip_emoji(changelog),
               distribute_external: true,
               groups: "BetaGroup"
               )
@@ -129,7 +129,7 @@ platform :ios do
               attachment_properties: {
                     pretext: "#{project_name} build #{current_build_number} succesful!",
                     color: "good",
-                    text: changelog,
+                    text: strip_emoji(changelog),
                     footer: ENV["DEV_TEAM_NAME"],
                     ts: current_time,
                 }
@@ -166,6 +166,11 @@ platform :ios do
               )
               
         UI.error("====> ERROR")
+    end
+
+    def strip_emoji( str )
+        str = str.force_encoding('utf-8').encode
+        clean_text = str.each_char.select { |char| char.bytesize < 4 }.join.squeeze(' ')
     end
 end
 
