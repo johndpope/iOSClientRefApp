@@ -19,8 +19,6 @@ class DownloadAssetViewModel: AuthorizedEnvironment {
     fileprivate var availableBitrates: [DownloadValidation.Bitrate]?
     fileprivate var selectedBitrate: DownloadValidation.Bitrate?
     
-    var downloadedMediaDestination: URL?
-    
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
@@ -74,23 +72,6 @@ extension DownloadAssetViewModel {
         }
         catch {
             callback(nil, .download(error: error as! DownloadError))
-        }
-    }
-}
-
-extension DownloadAssetViewModel {
-    func removeDownload(at url: URL?) {
-        guard let url = url else {
-            print("⚠️ DownloadTask canceled, no url to local media supplied")
-            return
-        }
-        do {
-            try FileManager.default.removeItem(at: url)
-            
-            print("✅ DownloadTask canceled. Cleaned up local media")
-        }
-        catch {
-            print("🚨 DownloadTask canceled. Failed to clean local media: ",error.localizedDescription)
         }
     }
 }
@@ -238,11 +219,105 @@ extension DownloadAssetViewModel {
     }
 }
 
-// MARK: - Manage offline functinality
 extension DownloadAssetViewModel {
-    func offline(assetId: String?) -> OfflineMediaAsset? {
-        return nil
-//        guard let assetId = assetId else { return nil }
-//        return Downloader.offlineMedia(assetId: assetId)
+    func offline(assetId: String) -> OfflineMediaAsset? {
+        return OfflineAssetTracker.offline(assetId: assetId)
+    }
+    
+    func offlineAssets() -> [OfflineMediaAsset] {
+        return OfflineAssetTracker.offlineAssets()
+    }
+    
+    func save(assetId: String, url: URL?) {
+        OfflineAssetTracker.save(assetId: assetId, url: url)
+    }
+    
+    func remove(assetId: String, clearing url: URL? = nil) {
+        OfflineAssetTracker.remove(localRecordId: assetId)
+        if let url = url {
+            OfflineAssetTracker.clear(dataAt: url)
+        }
+    }
+}
+
+
+internal struct LocalMediaRecord: Codable {
+    /// URL encoded as bookmark data
+    var urlBookmark: Data? {
+        switch downloadState {
+        case .completed(urlBookmark: let data): return data
+        case .inProgress: return nil
+        }
+    }
+
+    /// State
+    let downloadState: DownloadState
+
+    /// Id for the asset at `bookmarkURL`
+    let assetId: String
+
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        assetId = try container.decode(String.self, forKey: .assetId)
+
+        if let data = try container.decodeIfPresent(Data.self, forKey: .downloadState) {
+            downloadState = .completed(urlBookmark: data)
+        }
+        else {
+            downloadState = .inProgress
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(assetId, forKey: .assetId)
+
+        switch downloadState {
+        case .completed(urlBookmark: let data): try container.encode(data, forKey: .downloadState)
+        default: return
+        }
+    }
+
+    internal init(assetId: String, completedAt location: URL?) throws {
+        self.assetId = assetId
+        if let data = try location?.bookmarkData() {
+            downloadState = .completed(urlBookmark: data)
+        }
+        else {
+            downloadState = .inProgress
+        }
+    }
+
+    internal enum DownloadState {
+
+        /// URL encoded as bookmark data
+        case completed(urlBookmark: Data)
+
+        /// No destination might have been set
+        case inProgress
+    }
+
+    internal enum CodingKeys: String, CodingKey {
+        case downloadState
+        case assetId
+    }
+}
+
+
+extension Data {
+    /// Convenience function for persisting a `Data` blob through `FileManager`.
+    ///
+    /// - parameter filename: Name of the file, including extension
+    /// - parameter directoryUrl: `URL` to the storage directory
+    /// - throws: `FileManager` related `Error` or `Data` related error in the *Cocoa Domain*
+    internal func persist(as filename: String, at directoryUrl: URL) throws {
+        if !FileManager.default.fileExists(atPath: directoryUrl.path) {
+            try FileManager.default.createDirectory(at: directoryUrl, withIntermediateDirectories: true, attributes: nil)
+        }
+        
+        try self.write(to: directoryUrl.appendingPathComponent(filename))
     }
 }

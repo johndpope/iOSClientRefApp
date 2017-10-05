@@ -16,6 +16,7 @@
 		7667AECD1EC5E21200C308FC /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 7667AECB1EC5E21200C308FC /* Fastfile */; };
 		7667AECF1EC5E29400C308FC /* .env in Resources */ = {isa = PBXBuildFile; fileRef = 7667AECE1EC5E29400C308FC /* .env */; };
 		768ED8AA1F0FAEE3008E8F9B /* update_dependency_graph.rb in Resources */ = {isa = PBXBuildFile; fileRef = 768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */; };
+		7697DE641F869B55004EB4A8 /* OfflineAssetTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7697DE631F869B55004EB4A8 /* OfflineAssetTracker.swift */; };
 		76A416F91EDDCAC700677A46 /* VODViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A416F81EDDCAC700677A46 /* VODViewModel.swift */; };
 		76A416FB1EDDCAD400677A46 /* VODViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A416FA1EDDCAD400677A46 /* VODViewController.swift */; };
 		76A417051EDEBF1B00677A46 /* AssetPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417031EDEBF1B00677A46 /* AssetPreviewCell.swift */; };
@@ -134,6 +135,7 @@
 		7667AECB1EC5E21200C308FC /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7667AECE1EC5E29400C308FC /* .env */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .env; sourceTree = "<group>"; };
 		768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = update_dependency_graph.rb; sourceTree = "<group>"; };
+		7697DE631F869B55004EB4A8 /* OfflineAssetTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAssetTracker.swift; sourceTree = "<group>"; };
 		76A416F81EDDCAC700677A46 /* VODViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VODViewModel.swift; sourceTree = "<group>"; };
 		76A416FA1EDDCAD400677A46 /* VODViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VODViewController.swift; sourceTree = "<group>"; };
 		76A417031EDEBF1B00677A46 /* AssetPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetPreviewCell.swift; sourceTree = "<group>"; };
@@ -385,6 +387,7 @@
 				F7B710A71ECB369E00E9D324 /* ProgressIndicatorUtil.swift */,
 				76A417071EDEC75B00677A46 /* Sequence+Extensions.swift */,
 				76AF2F191F13BFB40014F007 /* Date+Extensions.swift */,
+				7697DE631F869B55004EB4A8 /* OfflineAssetTracker.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -719,6 +722,7 @@
 				76AF2F1A1F13BFB40014F007 /* Date+Extensions.swift in Sources */,
 				F793A8551EC5289E00DF7626 /* UITextField+fixCaretPosition.swift in Sources */,
 				F7061C691EC5BFAF0041E271 /* Constants.swift in Sources */,
+				7697DE641F869B55004EB4A8 /* OfflineAssetTracker.swift in Sources */,
 				76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */,
 				76A844051EA7886400BDAF2C /* LoginViewController.swift in Sources */,
 				F7061C711EC5CF460041E271 /* UIColorExtension.swift in Sources */,

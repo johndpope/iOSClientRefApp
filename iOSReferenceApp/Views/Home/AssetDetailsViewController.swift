@@ -119,22 +119,27 @@ class AssetDetailsViewController: UIViewController {
         downloadStackView.isHidden = true
         downloadProgressStackView.isHidden = true
         offlineStackView.isHidden = true
-        if let offline = downloadViewModel.offline(assetId: viewModel.asset.assetId) {
+        guard let assetId = viewModel.asset.assetId else { return }
+        if let offline = downloadViewModel.offline(assetId: assetId) {
             offline.state{ [weak self] state in
                 switch state {
-                case .completed: self?.transitionToDownloadCompletedUI(from: nil)
+                case .completed:
+                    self?.transitionToDownloadCompletedUI(from: nil)
                 case .notPlayable:
-                    offline.isResumable { resumable in
-                        if resumable {
-                            self?.configureDownloadTask(assetId: offline.assetId, autoStart: false)
-                            self?.togglePauseResumeDownload(paused: true)
-                            self?.transitionToDownloadProgressUI(from: nil)
-                        }
-                        else {
-                            // TODO: Remove asset?
-                            self?.transitionToDownloadUI(from: nil)
-                        }
-                    }
+                    self?.configureDownloadTask(assetId: assetId, autoStart: false)
+                    self?.togglePauseResumeDownload(paused: true)
+                    self?.transitionToDownloadProgressUI(from: nil)
+//                    offline.isResumable { resumable in
+//                        if resumable {
+//                            self?.configureDownloadTask(assetId: offline.assetId, autoStart: false)
+//                            self?.togglePauseResumeDownload(paused: true)
+//                            self?.transitionToDownloadProgressUI(from: nil)
+//                        }
+//                        else {
+//                            // TODO: Remove asset?
+//                            self?.transitionToDownloadUI(from: nil)
+//                        }
+//                    }
                 }
             }
         }
@@ -257,6 +262,7 @@ extension AssetDetailsViewController {
             
             downloadTask?
                 .onStarted { [weak self] task in
+                    self?.downloadViewModel.save(assetId: assetId, url: nil)
                     self?.togglePauseResumeDownload(paused: false)
                 }
                 .onSuspended { [weak self] task in
@@ -277,17 +283,17 @@ extension AssetDetailsViewController {
                     print("Downloading media option")
                 }
                 .onCanceled { [weak self] task, url in
-                    self?.downloadViewModel.removeDownload(at: url)
+                    self?.downloadViewModel.remove(assetId: assetId, clearing: url)
                     self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
                 }
                 .onError { [weak self] task, url, error in
-                    self?.downloadViewModel.removeDownload(at: url)
+                    self?.downloadViewModel.remove(assetId: assetId, clearing: url)
                     // TODO: Display error
                     self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
                     self?.showMessage(title: "Download Error", message: error.localizedDescription)
                 }
                 .onCompleted { [weak self] task, url in
-                    self?.downloadViewModel.downloadedMediaDestination = url
+                    self?.downloadViewModel.save(assetId: assetId, url: url)
                     self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
                 }
             
@@ -406,7 +412,8 @@ extension AssetDetailsViewController {
     }
     
     @IBAction func removeOfflineMediaAction(_ sender: UIButton) {
-        downloadViewModel.removeDownload(at: downloadViewModel.downloadedMediaDestination)
+        guard let assetId = viewModel.asset.assetId else { return }
+        downloadViewModel.remove(assetId: assetId)
         transitionToDownloadUI(from: offlineStackView)
     }
     
