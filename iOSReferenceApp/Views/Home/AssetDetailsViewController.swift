@@ -116,19 +116,30 @@ class AssetDetailsViewController: UIViewController {
     }
     
     func determineDownloadUIForAsset() {
+        downloadStackView.isHidden = true
+        downloadProgressStackView.isHidden = true
+        offlineStackView.isHidden = true
         if let offline = downloadViewModel.offline(assetId: viewModel.asset.assetId) {
             offline.state{ [weak self] state in
                 switch state {
-                case .completed: self?.startWithDownloadCompleteUI()
-                case .inProgress: self?.startWithDownloadInProgressUI()
-                case .notFound: // TODO: Remove item and show StartDownloadUI
-                    print("Asset [\(self?.viewModel.asset.assetId)] not found locally")
-                    return
+                case .completed: self?.transitionToDownloadCompletedUI(from: nil)
+                case .notPlayable:
+                    offline.isResumable { resumable in
+                        if resumable {
+                            self?.configureDownloadTask(assetId: offline.assetId, autoStart: false)
+                            self?.togglePauseResumeDownload(paused: true)
+                            self?.transitionToDownloadProgressUI(from: nil)
+                        }
+                        else {
+                            // TODO: Remove asset?
+                            self?.transitionToDownloadUI(from: nil)
+                        }
+                    }
                 }
             }
         }
         else {
-            startWithDownloadUI()
+            transitionToDownloadUI(from: nil)
         }
     }
 
@@ -231,15 +242,22 @@ extension AssetDetailsViewController {
     @IBAction func downloadAction(_ sender: UIButton) {
         guard let assetId = viewModel.asset.assetId else { return }
 
+        let autoStart = true
+        configureDownloadTask(assetId: assetId, autoStart: autoStart)
+        togglePauseResumeDownload(paused: !autoStart)
+        transitionToDownloadProgressUI(from: downloadStackView)
+    }
+    
+    func configureDownloadTask(assetId: String, autoStart: Bool) {
         // TODO: "Disable/Freeze" download UI when the download action is taken. This ensures multiple downloads are not started at the same time. NOTE: This needs to be "un-frozen" in case of errors etc.
         freezeStartDownloadUI(frozen: true)
-
+        
         downloadViewModel.download(assetId: assetId) { downloadTask, entitlement, error in
             // TODO: Store entitlement?
-
+            
             downloadTask?
                 .onStarted { [weak self] task in
-                    self?.transitionToDownloadProgressUI(from: self?.downloadStackView)
+                    self?.togglePauseResumeDownload(paused: false)
                 }
                 .onSuspended { [weak self] task in
                     self?.togglePauseResumeDownload(paused: true)
@@ -272,22 +290,9 @@ extension AssetDetailsViewController {
                     // TODO: Store URL somewhere
                     self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
                 }
-                .resume()
-        }
-    }
-    
-    func startWithDownloadUI() {
-        togglePauseResumeDownload(paused: false)
-        downloadQualityStackView.alpha = 0
-       
-        downloadStackView.isHidden = false
-        downloadProgressStackView.isHidden = true
-        offlineStackView.isHidden = true
-        
-        guard let assetId = viewModel.asset.assetId else { return }
-        downloadViewModel.refreshDownloadMetadata(for: assetId) { [weak self] success in
-            if success {
-                self?.resetStartDownloadUI()
+            
+            if (autoStart) {
+                downloadTask?.resume()
             }
         }
     }
@@ -357,6 +362,7 @@ extension AssetDetailsViewController {
         switch downloadViewModel.state {
         case .running: downloadViewModel.pause()
         case .suspended: downloadViewModel.resume()
+        case .notStarted: downloadViewModel.resume()
         default: return
         }
     }

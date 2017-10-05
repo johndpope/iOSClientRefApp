@@ -77,6 +77,13 @@ extension DownloadAssetViewModel {
 }
 
 extension DownloadAssetViewModel {
+    var isRunning: Bool {
+        switch state {
+        case .running: return true
+        default: return false
+        }
+    }
+    
     var state: DownloadTask.State {
         guard let task = task else { return .notStarted }
         return task.state
@@ -215,11 +222,12 @@ extension DownloadAssetViewModel {
 // MARK: - Manage offline functinality
 extension DownloadAssetViewModel {
     func offline(assetId: String?) -> OfflineMediaAsset? {
-        guard let assetId = assetId else { return nil }
-        return Downloader.offline(assetId: assetId)
+        return nil
+//        guard let assetId = assetId else { return nil }
+//        return Downloader.offlineMedia(assetId: assetId)
     }
     
     func remove(localMedia assetId: String) {
-        offline(assetId: assetId)?.delete()
+//        offline(assetId: assetId)?.delete()
     }
 }
