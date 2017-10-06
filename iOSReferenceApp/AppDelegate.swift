@@ -81,7 +81,18 @@ extension AppDelegate {
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         if identifier == SessionManager.defaultSessionConfigurationIdentifier {
             print("🛏 Rejoining session \(identifier)")
-            SessionManager.default.backgroundCompletionHandler = completionHandler
+            let sessionManager = SessionManager.default
+            sessionManager.backgroundCompletionHandler = completionHandler
+            
+            sessionManager.restore(assigningRequesterFor: { assetId -> DownloadFairplayRequester? in
+                // TODO: Create an asset specific requester (for example from Exposure
+                return nil
+            }) { downloadTasks in
+                downloadTasks.forEach {
+                    // Restore state
+                    $0.resume()
+                }
+            }
         }
     }
     
