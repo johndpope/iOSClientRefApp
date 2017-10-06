@@ -272,27 +272,29 @@ extension AssetDetailsViewController {
                     self?.togglePauseResumeDownload(paused: false)
                 }
                 .onProgress { [weak self] task, progress in
-                    print("Percent",progress.current*100,"%")
+                    print("📱 Percent",progress.current*100,"%")
                     self?.update(downloadProgress: progress)
                 }
                 .onShouldDownloadMediaOption{ task, options in
-                    print("Select media option")
+                    print("📱 Select media option")
                     return nil
                 }
                 .onDownloadingMediaOption{ task, option in
-                    print("Downloading media option")
+                    print("📱 Downloading media option")
                 }
                 .onCanceled { [weak self] task, url in
                     self?.downloadViewModel.remove(assetId: assetId, clearing: url)
                     self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
                 }
                 .onError { [weak self] task, url, error in
+                    print("📱 Download error: \(error)")
                     self?.downloadViewModel.remove(assetId: assetId, clearing: url)
                     // TODO: Display error
                     self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
                     self?.showMessage(title: "Download Error", message: error.localizedDescription)
                 }
                 .onCompleted { [weak self] task, url in
+                    print("📱 Download completed: \(url)")
                     self?.downloadViewModel.save(assetId: assetId, url: url)
                     self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
                 }
