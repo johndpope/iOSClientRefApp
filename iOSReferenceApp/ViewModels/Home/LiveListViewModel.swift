@@ -13,7 +13,7 @@ class LiveListViewModel: AuthorizedEnvironment {
     // MARK: Basics
     let credentials: Credentials
     
-    fileprivate(set) var categories: [CategoryViewModel]
+    fileprivate(set) var categories: [CategoryViewModel] = []
     
     typealias AssetType = Asset.AssetType
     
