@@ -224,9 +224,9 @@ extension DownloadAssetViewModel {
         return OfflineAssetTracker.offline(assetId: assetId)
     }
     
-    func offlineAssets() -> [OfflineMediaAsset] {
-        return OfflineAssetTracker.offlineAssets()
-    }
+//    func offlineAssets() -> [OfflineMediaAsset] {
+//        return OfflineAssetTracker.offlineAssets()
+//    }
     
     func save(assetId: String, url: URL?) {
         OfflineAssetTracker.save(assetId: assetId, url: url)

@@ -126,20 +126,12 @@ class AssetDetailsViewController: UIViewController {
                 case .completed:
                     self?.transitionToDownloadCompletedUI(from: nil)
                 case .notPlayable:
-                    self?.configureDownloadTask(assetId: assetId, autoStart: false)
+                    self?.freezeStartDownloadInProgressUI(frozen: true)
+                    self?.configureDownloadTask(assetId: assetId) { [weak self] in
+                        self?.freezeStartDownloadInProgressUI(frozen: false)
+                    }
                     self?.togglePauseResumeDownload(paused: true)
                     self?.transitionToDownloadProgressUI(from: nil)
-//                    offline.isResumable { resumable in
-//                        if resumable {
-//                            self?.configureDownloadTask(assetId: offline.assetId, autoStart: false)
-//                            self?.togglePauseResumeDownload(paused: true)
-//                            self?.transitionToDownloadProgressUI(from: nil)
-//                        }
-//                        else {
-//                            // TODO: Remove asset?
-//                            self?.transitionToDownloadUI(from: nil)
-//                        }
-//                    }
                 }
             }
         }
@@ -245,22 +237,20 @@ extension AssetDetailsViewController {
     }
     
     @IBAction func downloadAction(_ sender: UIButton) {
-        guard let assetId = viewModel.asset.assetId else { return }
-
-        let autoStart = true
-        configureDownloadTask(assetId: assetId, autoStart: autoStart)
-        togglePauseResumeDownload(paused: !autoStart)
+        downloadViewModel.resume()
+        togglePauseResumeDownload(paused: false)
         transitionToDownloadProgressUI(from: downloadStackView)
     }
     
-    func configureDownloadTask(assetId: String, autoStart: Bool) {
-        // TODO: "Disable/Freeze" download UI when the download action is taken. This ensures multiple downloads are not started at the same time. NOTE: This needs to be "un-frozen" in case of errors etc.
-        freezeStartDownloadUI(frozen: true)
-        
+    func configureDownloadTask(assetId: String, onPrepared: @escaping () -> Void) {
         downloadViewModel.download(assetId: assetId) { downloadTask, entitlement, error in
             // TODO: Store entitlement?
             
             downloadTask?
+                .should(autoStart: false)
+                .onPrepared{ _ in
+                    onPrepared()
+                }
                 .onStarted { [weak self] task in
                     self?.downloadViewModel.save(assetId: assetId, url: nil)
                     self?.togglePauseResumeDownload(paused: false)
@@ -298,15 +288,15 @@ extension AssetDetailsViewController {
                     self?.downloadViewModel.save(assetId: assetId, url: url)
                     self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
                 }
-            
-            if (autoStart) {
-                downloadTask?.resume()
-            }
+                .prepare()
         }
     }
     
     func transitionToDownloadUI(from otherView: UIStackView?) {
         togglePauseResumeDownload(paused: false)
+        // TODO: "Disable/Freeze" download UI when the download action is taken. This ensures multiple downloads are not started at the same time. NOTE: This needs to be "un-frozen" in case of errors etc.
+        freezeStartDownloadUI(frozen: true)
+        
         downloadQualityStackView.alpha = 0
         
         UIView.animate(withDuration: 0.3) { [weak self] in
@@ -328,7 +318,11 @@ extension AssetDetailsViewController {
     }
     
     private func resetStartDownloadUI() {
-        freezeStartDownloadUI(frozen: false)
+        guard let assetId = viewModel.asset.assetId else { return }
+        configureDownloadTask(assetId: assetId) { [weak self] in
+            // Download is prepared, unfreeze UI
+            self?.freezeStartDownloadUI(frozen: false)
+        }
         
         if downloadViewModel.hasQualityOptions, let availableOptions = downloadViewModel.downloadQualityOptions {
             downloadQualitySelector.minimumValue = 0
@@ -359,11 +353,12 @@ extension AssetDetailsViewController {
 // MARK: - Download in progress
 extension AssetDetailsViewController {
     @IBAction func cancelDownloadAction(_ sender: UIButton) {
-        switch downloadViewModel.state {
-        case .running: downloadViewModel.cancel()
-        case .suspended: downloadViewModel.cancel()
-        default: return
-        }
+        downloadViewModel.cancel()
+//        switch downloadViewModel.state {
+//        case .running: downloadViewModel.cancel()
+//        case .suspended: downloadViewModel.cancel()
+//        default: return
+//        }
     }
     
     @IBAction func pauseResumeDownloadAction(_ sender: UIButton) {
@@ -373,6 +368,11 @@ extension AssetDetailsViewController {
         case .notStarted: downloadViewModel.resume()
         default: return
         }
+    }
+    
+    func freezeStartDownloadInProgressUI(frozen: Bool) {
+        downloadPauseResumeButton.isEnabled = !frozen
+        // TODO Cancel button?
     }
     
     func togglePauseResumeDownload(paused: Bool) {

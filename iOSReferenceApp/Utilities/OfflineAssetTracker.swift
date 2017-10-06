@@ -17,7 +17,7 @@ enum OfflineAssetTracker {
             .first
     }
     
-    static func offlineAssets() -> [OfflineMediaAsset] {
+    fileprivate static func offlineAssets() -> [OfflineMediaAsset] {
         guard let localMedia = localMediaRecords else { return [] }
         return localMedia.map{ resolve(mediaRecord: $0) }
     }
