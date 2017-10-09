@@ -180,10 +180,21 @@ extension AssetDetailsViewController {
                 }
             }
         }
+        else if segue.identifier == Segue.segueOfflineToPlayer.rawValue {
+            if let destination = segue.destination as? PlayerViewController, let assetId = sender as? String {
+                destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
+                                                        environment: viewModel.environment,
+                                                        playRequest: .offline(assetId: assetId))
+                destination.onDismissed = { [weak self] in
+                    self?.refreshUserDataUI()
+                }
+            }
+        }
     }
     
     fileprivate enum Segue: String {
         case segueDetailsToPlayer = "segueDetailsToPlayer"
+        case segueOfflineToPlayer = "segueOfflineToPlayer"
     }
 }
 
@@ -410,7 +421,8 @@ extension AssetDetailsViewController {
 // MARK: - Offline Asset
 extension AssetDetailsViewController {
     @IBAction func playOfflineAction(_ sender: UIButton) {
-        
+        guard let assetId = viewModel.asset.assetId else { return }
+        self.performSegue(withIdentifier: Segue.segueOfflineToPlayer.rawValue, sender: assetId)
     }
     
     @IBAction func removeOfflineMediaAction(_ sender: UIButton) {

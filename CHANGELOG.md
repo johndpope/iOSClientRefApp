@@ -8,9 +8,9 @@ NO RELEASE DATE SET
 
 #### Features
 * `EMP-10322` Fetching cover art exhausts all options for images before displaying generic thumbnail.
-* Previous playback offset displayed when viewing asset details
-* `EMP-10327` Downloading assets now possible
-* `EMP-10445` View and manage downloaded assets
+* Previous playback offset displayed when viewing asset details.
+* `EMP-10327` Downloading assets now possible.
+* `EMP-10445` View, manage and play downloaded assets.
 
 #### Changes
 * `EMP-10293` Remove EntitlementRequester.

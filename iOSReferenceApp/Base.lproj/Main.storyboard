@@ -830,6 +830,7 @@
                         <outlet property="ratingStarStackView" destination="Udj-Uv-EvL" id="ZfT-a1-u9I"/>
                         <outlet property="titleLabel" destination="pGp-GJ-CnU" id="A65-6S-UUz"/>
                         <segue destination="rhs-OU-IKm" kind="presentation" identifier="segueDetailsToPlayer" id="G3d-4d-mII"/>
+                        <segue destination="rhs-OU-IKm" kind="presentation" identifier="segueOfflineToPlayer" id="f4H-my-9wa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORZ-Xq-fbO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1354,13 +1355,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPO-8j-jce" customClass="LazyScrollView" customModule="iOSReferenceApp" customModuleProvider="target">
-                                <rect key="frame" x="20" y="20" width="374" height="603"/>
+                                <rect key="frame" x="20" y="0.0" width="374" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JUJ-bK-1dG">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="603"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="623"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="5vX-vJ-waR">
-                                                <rect key="frame" x="0.0" y="247" width="374" height="110"/>
+                                                <rect key="frame" x="0.0" y="257" width="374" height="110"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="R4p-9I-G7R" userLabel="m3u8PathTextField" customClass="SkyFloatingLabelTextField" customModule="iOSReferenceApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -1479,6 +1480,6 @@
         <image name="star-unfilled" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="G3d-4d-mII"/>
+        <segue reference="f4H-my-9wa"/>
     </inferredMetricsTieBreakers>
 </document>
