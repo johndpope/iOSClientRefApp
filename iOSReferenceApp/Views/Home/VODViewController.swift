@@ -35,23 +35,22 @@ extension VODViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let header = view as? AssetPreviewHeaderView {
-            
-            header.titleLabel.text = viewModel.categories[section].title
+            header.titleLabel.text = viewModel?.getSectionTitle(atIndex: section)
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return viewModel.headerHeight(index: section)
+        return viewModel?.headerHeight(index: section) ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return viewModel.rowHeight(index: indexPath.section)
+        return viewModel?.rowHeight(index: indexPath.section) ?? 0
     }
 }
 
 extension VODViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.categories.count
+        return viewModel?.carousels.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -60,7 +59,8 @@ extension VODViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HorizontalScrollRow") as! HorizontalScrollRow
-        cell.bind(viewModel: viewModel.categories[indexPath.section])
+        guard let carousel = viewModel?.carousels[indexPath.section] else { fatalError("No carousels") }
+        cell.bind(viewModel: carousel)
         cell.cellSelected = { [unowned self] asset in
             self.presetDetails(for: asset)
         }
@@ -69,45 +69,44 @@ extension VODViewController: UITableViewDataSource {
     }
 }
 
-extension VODViewController: AuthorizedEnvironment {
-    var environment: Environment {
-        return viewModel.environment
-    }
-    
-    var sessionToken: SessionToken {
-        return viewModel.sessionToken
-    }
-}
-
 extension VODViewController: AssetDetailsPresenter {
     var assetDetailsPresenter: UIViewController {
         return self
+    }
+
+    var sessionToken: SessionToken {
+        return viewModel.sessionToken
+    }
+    var environment: Environment {
+        return viewModel.environment
     }
 }
 
 extension VODViewController {
     fileprivate func setupViewModel() {
-        guard let env = UserInfo.environment else {
+        guard let env = UserInfo.environment,
+            let sessionToken = UserInfo.sessionToken else {
             // TODO: Fail gracefully
             fatalError("Unable to proceed without valid environment")
         }
-        
-        if let credentials = UserInfo.credentials {
-            viewModel = VODViewModel(credentials: credentials,
-                                     environment: env)
-        }
-        else if let sessionToken = UserInfo.sessionToken {
-            viewModel = VODViewModel(sessionToken: sessionToken,
-                                     environment: env)
-        }
-        else {
-            // TODO: Fail gracefully
-            fatalError("Unable to proceed without valid sessionToken")
+
+        guard let tabVC = self.tabBarController as? HomeTabBarController else {
+            fatalError("Unable to proceed without homeTabBarController")
         }
 
-        viewModel.loadCategories { [unowned self] (section, error) in
-            guard let section = section else { return }
-            self.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
+        guard let configData = tabVC.appConfigFile?.config.jsonValue as? [AnyJSONType],
+            let configDataDict = configData.first?.jsonValue as? [String: AnyJSONType],
+            let carouselId = configDataDict["carouselGroupId"]?.jsonValue as? String else {
+                // TODO: Retry?
+                return
+        }
+
+        viewModel = VODViewModel(carouselId: carouselId,
+                                 environment: env,
+                                 sessionToken: sessionToken)
+
+        viewModel?.loadCarousels { [unowned self] _ in
+            self.tableView.reloadData()
         }
     }
 }

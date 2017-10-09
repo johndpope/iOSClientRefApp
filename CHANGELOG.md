@@ -11,6 +11,8 @@ NO RELEASE DATE SET
 * Previous playback offset displayed when viewing asset details.
 * `EMP-10327` Downloading assets now possible.
 * `EMP-10445` View, manage and play downloaded assets. `HLS` `Unencrypted`.
+* Previous playback offset displayed when viewing asset details
+* `VOD` view now uses Carousel from CustomerConfig`
 
 #### Changes
 * `EMP-10293` Remove EntitlementRequester.
