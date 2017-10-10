@@ -14,6 +14,7 @@ class PlayerViewModel {
         case vod(assetId: String)
         case live(channelId: String)
         case catchup(channelId: String, programId: String)
+        case offline(assetId: String)
     }
     
     var onPlaybackRequested: (PlayRequest) -> Void = { _ in }

@@ -19,7 +19,6 @@ class AssetDetailsViewModel: AuthorizedEnvironment {
         self.environment = environment
         self.sessionToken = sessionToken
     }
-    
 }
 
 extension AssetDetailsViewModel {
@@ -29,29 +28,29 @@ extension AssetDetailsViewModel {
         let duration: String
     }
     
-    func refreshAssetMetaData(callback: @escaping (Bool) -> Void) {
+    func refreshAssetMetaData(callback: @escaping (ExposureError?) -> Void) {
         guard let assetId = asset.assetId else {
-            callback(false)
             return
         }
+        
         FetchAsset(environment: environment)
             .filter(assetId: assetId)
             .includeUserData(for: sessionToken)
             .request()
+            .validate()
             .response{ [weak self] (exposure: ExposureResponse<Asset>) in
                 guard let weakSelf = self else {
-                    callback(false)
                     return
                 }
                 
                 if let success = exposure.value {
                     weakSelf.asset = success
-                    callback(true)
+                    callback(nil)
                     return
                 }
                 
                 if let error = exposure.error {
-                    callback(false)
+                    callback(error)
                     return
                 }
         }
@@ -78,6 +77,28 @@ extension AssetDetailsViewModel {
         else {
             return "\(seconds / 3600) h : \((seconds % 3600)/60) m"
         }
+    }
+}
+
+extension AssetDetailsViewModel {
+    var productionYear: String {
+        return asset.productionYear != nil ? "\(asset.productionYear!)" : " "
+    }
+}
+
+extension AssetDetailsViewModel {
+    func anyParentalRating(locale: String) -> String? {
+        if let localizedRating = localizedParentalRating(locale: locale), let rating = localizedRating.rating {
+            return rating
+        }
+        return asset.parentalRatings?.first?.rating ?? " "
+    }
+    
+    fileprivate func localizedParentalRating(locale: String) -> ParentalRating? {
+        return asset
+            .parentalRatings?
+            .filter{ $0.country != nil ? $0.country! == locale : false }
+            .first
     }
 }
 

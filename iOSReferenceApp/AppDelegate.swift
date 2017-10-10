@@ -8,6 +8,7 @@
 
 import UIKit
 import Utilities
+import Download
 
 let TINY_DB = TinyDB.sharedInstance()!
 
@@ -61,8 +62,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         rootNavigationController?.setViewControllers(stack, animated: false)
     }
-    
-    private func enableAirplayInBackgroundMode() {
+}
+
+// MARK: - Enable Airplay in Background Mode
+extension AppDelegate {
+    fileprivate func enableAirplayInBackgroundMode() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayback)
@@ -72,3 +76,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+// MARK: - Enable Background Downloads
+extension AppDelegate {
+    func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+        if identifier == SessionManager.defaultSessionConfigurationIdentifier {
+            print("🛏 Rejoining session \(identifier)")
+            let sessionManager = SessionManager.default
+            sessionManager.backgroundCompletionHandler = completionHandler
+            
+            sessionManager.restore(assigningRequesterFor: { assetId -> DownloadFairplayRequester? in
+                // TODO: Create an asset specific requester (for example from Exposure
+                return nil
+            }) { downloadTasks in
+                downloadTasks.forEach {
+                    // Restore state
+                    $0.resume()
+                }
+            }
+        }
+    }
+    
+}

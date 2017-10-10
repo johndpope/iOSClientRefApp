@@ -62,7 +62,11 @@ class AssetDetailsViewController: UIViewController {
 
     @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var ratingsView: UIView!
+    
+    @IBOutlet weak var ratingStarStackView: UIStackView!
+    @IBOutlet weak var productionYearLabel: UILabel!
+    @IBOutlet weak var parentalRatingLabel: UILabel!
+    
     
     @IBOutlet weak var progressStackView: UIStackView!
     @IBOutlet weak var progressLabel: UILabel!
@@ -85,10 +89,9 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var downloadPauseResumeLabel: UILabel!
     @IBOutlet weak var downloadPauseResumeButton: UIButton!
     @IBOutlet weak var downloadProgress: UIProgressView!
-    
     @IBOutlet weak var downloadedSizeLabel: UILabel!
     
-    
+    @IBOutlet weak var offlineStackView: UIStackView!
     
     fileprivate(set) var viewModel: AssetDetailsViewModel!
     fileprivate(set) var downloadViewModel: DownloadAssetViewModel!
@@ -105,36 +108,36 @@ class AssetDetailsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.refreshAssetMetaData{ [weak self] success in
-            if success {
-                self?.refreshUserDataUI()
+        viewModel.refreshAssetMetaData{ [weak self] error in
+            if let error = error {
+                self?.showMessage(title: "Refresh Asset Metadata", message: error.localizedDescription)
             }
+            self?.refreshUserDataUI()
         }
     }
     
     func determineDownloadUIForAsset() {
-        // 1. Check if available locally
-        let notDownloaded = true
-        let downloadInProgress = false
-        let downloaded = false
-        //
-        // 2. Not downloaded
-        //      2.1 displayStartDownloadUI()
-        //
-        // 3. Download in progress
-        //      3.1 displayDownloadInProgressUI()
-        //
-        // 4. Downloaded
-        //      4.1 displayAssetDownloadedUI()
-        
-        if notDownloaded {
-            displayStartDownloadUI()
+        downloadStackView.isHidden = true
+        downloadProgressStackView.isHidden = true
+        offlineStackView.isHidden = true
+        guard let assetId = viewModel.asset.assetId else { return }
+        if let offline = downloadViewModel.offline(assetId: assetId) {
+            offline.state{ [weak self] state in
+                switch state {
+                case .completed:
+                    self?.transitionToDownloadCompletedUI(from: nil)
+                case .notPlayable:
+                    self?.freezeStartDownloadInProgressUI(frozen: true)
+                    self?.configureDownloadTask(assetId: assetId) { [weak self] in
+                        self?.freezeStartDownloadInProgressUI(frozen: false)
+                    }
+                    self?.togglePauseResumeDownload(paused: true)
+                    self?.transitionToDownloadProgressUI(from: nil)
+                }
+            }
         }
-        else if downloadInProgress {
-            displayDownloadInProgressUI()
-        }
-        else if downloaded {
-            displayAssetDownloadedUI()
+        else {
+            transitionToDownloadUI(from: nil)
         }
     }
 
@@ -178,18 +181,30 @@ extension AssetDetailsViewController {
                 }
             }
         }
+        else if segue.identifier == Segue.segueOfflineToPlayer.rawValue {
+            if let destination = segue.destination as? PlayerViewController, let assetId = sender as? String {
+                destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
+                                                        environment: viewModel.environment,
+                                                        playRequest: .offline(assetId: assetId))
+                destination.onDismissed = { [weak self] in
+                    self?.refreshUserDataUI()
+                }
+            }
+        }
     }
     
     fileprivate enum Segue: String {
         case segueDetailsToPlayer = "segueDetailsToPlayer"
+        case segueOfflineToPlayer = "segueOfflineToPlayer"
     }
 }
 
 // MARK: - User Data
 extension AssetDetailsViewController {
     func refreshUserDataUI() {
+        let locale = "en"
         if let imageUrl = viewModel
-            .images(locale: "en")
+            .images(locale: locale)
             .prefere(orientation: .landscape)
             .validImageUrls()
             .first {
@@ -200,8 +215,13 @@ extension AssetDetailsViewController {
             }
         }
         
-        titleLabel.text = viewModel.anyTitle(locale: "en")
-        descriptionTextLabel.text = viewModel.longestDescription(locale: "en")
+        
+        titleLabel.text = viewModel.anyTitle(locale: locale)
+        descriptionTextLabel.text = viewModel.longestDescription(locale: locale)
+        
+        productionYearLabel.text = viewModel.productionYear
+        
+        parentalRatingLabel.text = viewModel.anyParentalRating(locale: locale)
         
         // Update last viewed progress
         update(lastViewedOffset: viewModel.lastViewedOffset)
@@ -229,17 +249,23 @@ extension AssetDetailsViewController {
     }
     
     @IBAction func downloadAction(_ sender: UIButton) {
-        guard let assetId = viewModel.asset.assetId else { return }
-        
-        // TODO: "Disable/Freeze" download UI when the download action is taken. This ensures multiple downloads are not started at the same time. NOTE: This needs to be "un-frozen" in case of errors etc.
-        freezeStartDownloadUI(frozen: true)
-        
+        downloadViewModel.resume()
+        togglePauseResumeDownload(paused: false)
+        transitionToDownloadProgressUI(from: downloadStackView)
+    }
+    
+    func configureDownloadTask(assetId: String, onPrepared: @escaping () -> Void) {
         downloadViewModel.download(assetId: assetId) { downloadTask, entitlement, error in
             // TODO: Store entitlement?
             
             downloadTask?
+                .should(autoStart: false)
+                .onPrepared{ _ in
+                    onPrepared()
+                }
                 .onStarted { [weak self] task in
-                    self?.displayDownloadInProgressUI()
+                    self?.downloadViewModel.save(assetId: assetId, url: nil)
+                    self?.togglePauseResumeDownload(paused: false)
                 }
                 .onSuspended { [weak self] task in
                     self?.togglePauseResumeDownload(paused: true)
@@ -248,40 +274,47 @@ extension AssetDetailsViewController {
                     self?.togglePauseResumeDownload(paused: false)
                 }
                 .onProgress { [weak self] task, progress in
-                    print("Percent",progress.current*100,"%")
+                    print("📱 Percent",progress.current*100,"%")
                     self?.update(downloadProgress: progress)
                 }
                 .onShouldDownloadMediaOption{ task, options in
-                    print("Select media option")
+                    print("📱 Select media option")
                     return nil
                 }
                 .onDownloadingMediaOption{ task, option in
-                    print("Downloading media option")
+                    print("📱 Downloading media option")
                 }
-                .onCanceled { [weak self] task in
-                    // TODO: Clean up downloaded media
-                    self?.displayStartDownloadUI()
+                .onCanceled { [weak self] task, url in
+                    self?.downloadViewModel.remove(assetId: assetId, clearing: url)
+                    self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
                 }
-                .onError { [weak self] (task, error) in
-                    // TODO: Clean up downloaded media
+                .onError { [weak self] task, url, error in
+                    print("📱 Download error: \(error)")
+                    self?.downloadViewModel.remove(assetId: assetId, clearing: url)
                     // TODO: Display error
-                    self?.displayStartDownloadUI()
+                    self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
                     self?.showMessage(title: "Download Error", message: error.localizedDescription)
                 }
-                .onCompleted { [weak self] (task, url) in
-                    // TODO: Store URL somewhere
-                    self?.displayAssetDownloadedUI()
+                .onCompleted { [weak self] task, url in
+                    print("📱 Download completed: \(url)")
+                    self?.downloadViewModel.save(assetId: assetId, url: url)
+                    self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
                 }
-                .resume()
+                .prepare()
         }
     }
     
-    func displayStartDownloadUI() {
-        downloadStackView.isHidden = true
+    func transitionToDownloadUI(from otherView: UIStackView?) {
+        togglePauseResumeDownload(paused: false)
+        // TODO: "Disable/Freeze" download UI when the download action is taken. This ensures multiple downloads are not started at the same time. NOTE: This needs to be "un-frozen" in case of errors etc.
+        freezeStartDownloadUI(frozen: true)
         
-        // Hide other ui
-        downloadProgressStackView.isHidden = true
-        // TODO: Hide AssetDownloaded UI
+        downloadQualityStackView.alpha = 0
+        
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.downloadStackView.isHidden = false
+            otherView?.isHidden = true
+        }
         
         guard let assetId = viewModel.asset.assetId else { return }
         downloadViewModel.refreshDownloadMetadata(for: assetId) { [weak self] success in
@@ -297,21 +330,29 @@ extension AssetDetailsViewController {
     }
     
     private func resetStartDownloadUI() {
-        freezeStartDownloadUI(frozen: false)
-        
-        downloadStackView.isHidden = false
+        guard let assetId = viewModel.asset.assetId else { return }
+        configureDownloadTask(assetId: assetId) { [weak self] in
+            // Download is prepared, unfreeze UI
+            self?.freezeStartDownloadUI(frozen: false)
+        }
         
         if downloadViewModel.hasQualityOptions, let availableOptions = downloadViewModel.downloadQualityOptions {
-            downloadQualityStackView.isHidden = false
             downloadQualitySelector.minimumValue = 0
             downloadQualitySelector.maximumValue = Float(availableOptions-1)
-            downloadQualitySelector.setValue(0, animated: true)
+            downloadedSizeLabel.text = " "
+            
+            
+            if downloadViewModel.selectedQualityIndex == nil { downloadViewModel.select(downloadQuality: 0) }
+            let selectedQualityIndex = downloadViewModel.selectedQualityIndex!
+            
+            downloadQualitySelector.setValue(Float(selectedQualityIndex), animated: true)
             
             // Configure Slider
-            update(downloadQuality: downloadViewModel.downloadQuality(for: 0))
-        }
-        else {
-            downloadQualityStackView.isHidden = true
+            update(downloadQuality: downloadViewModel.downloadQuality(for: selectedQualityIndex))
+            
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.downloadQualityStackView.alpha = 1
+            }
         }
     }
     
@@ -324,49 +365,82 @@ extension AssetDetailsViewController {
 // MARK: - Download in progress
 extension AssetDetailsViewController {
     @IBAction func cancelDownloadAction(_ sender: UIButton) {
-        switch downloadViewModel.state {
-        case .running: downloadViewModel.cancel()
-        case .suspended: downloadViewModel.cancel()
-        default: return
-        }
+        downloadViewModel.cancel()
     }
     
     @IBAction func pauseResumeDownloadAction(_ sender: UIButton) {
         switch downloadViewModel.state {
         case .running: downloadViewModel.pause()
         case .suspended: downloadViewModel.resume()
+        case .notStarted: downloadViewModel.resume()
         default: return
         }
     }
     
+    func freezeStartDownloadInProgressUI(frozen: Bool) {
+        downloadPauseResumeButton.isEnabled = !frozen
+        // TODO Cancel button?
+    }
+    
     func togglePauseResumeDownload(paused: Bool) {
-        UIView.animate(withDuration: 0.2) { [weak self] in
-            if paused {
-                self?.downloadPauseResumeLabel.text = "Resume"
-                self?.downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download"), for: [])
-            }
-            else {
-                self?.downloadPauseResumeLabel.text = "Pause"
-                self?.downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download-pause"), for: [])
-            }
+        if paused {
+            downloadPauseResumeLabel.text = "Resume"
+            downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download"), for: [])
+        }
+        else {
+            downloadPauseResumeLabel.text = "Pause"
+            downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download-pause"), for: [])
         }
     }
     
-    func displayDownloadInProgressUI() {
-        downloadStackView.isHidden = true
+    func transitionToDownloadProgressUI(from otherView: UIStackView?) {
+        downloadProgress.setProgress(0, animated: false)
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.downloadProgressStackView.isHidden = false
+            otherView?.isHidden = true
+        }
+    }
+    
+    func startWithDownloadInProgressUI() {
+        downloadProgress.setProgress(0, animated: false)
         downloadProgressStackView.isHidden = false
-        // TODO: Hide AssetDownloaded UI
+        downloadStackView.isHidden = true
+        offlineStackView.isHidden = true
     }
     
     func update(downloadProgress progress: DownloadTask.Progress) {
+        downloadedSizeLabel.text = downloadViewModel.downloadedSize(for: progress.current)
         downloadProgress.setProgress(Float(progress.current), animated: true)
     }
 }
 
-// MARK: - Downloaded Asset
+// MARK: - Offline Asset
 extension AssetDetailsViewController {
-    func displayAssetDownloadedUI() {
-        
+    @IBAction func playOfflineAction(_ sender: UIButton) {
+        guard let assetId = viewModel.asset.assetId else { return }
+        self.performSegue(withIdentifier: Segue.segueOfflineToPlayer.rawValue, sender: assetId)
+    }
+    
+    @IBAction func removeOfflineMediaAction(_ sender: UIButton) {
+        guard let assetId = viewModel.asset.assetId else { return }
+        downloadViewModel.remove(assetId: assetId)
+        transitionToDownloadUI(from: offlineStackView)
+    }
+    
+    @IBAction func viewOfflineListAction(_ sender: UIButton) {
+    }
+    
+    func startWithDownloadCompleteUI() {
+        self.offlineStackView.isHidden = false
+        self.downloadProgressStackView.isHidden = true
+        self.downloadStackView.isHidden = true
+    }
+    
+    func transitionToDownloadCompletedUI(from otherView: UIStackView?) {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.offlineStackView.isHidden = false
+            otherView?.isHidden = true
+        }
     }
 }
 

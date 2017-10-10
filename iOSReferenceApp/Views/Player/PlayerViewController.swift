@@ -166,6 +166,7 @@ extension PlayerViewController {
         case .vod(assetId: let assetId): stream(vod: assetId)
         case .live(channelId: let channelId): stream(live: channelId)
         case .catchup(channelId: let channelId, programId: let programId): stream(program: programId, channel: channelId)
+        case .offline(assetId: let assetId): offline(assetId: assetId)
         }
         
     }
@@ -214,6 +215,20 @@ extension PlayerViewController {
                     self.showMessage(title: "Playback Error", message: error.localizedDescription)
                 }
         }
+    }
+    
+    private func offline(assetId: String) {
+        guard let offline = OfflineAssetTracker.offline(assetId: assetId) else {
+            self.showMessage(title: "Offline Playback Error", message: "No local media found for \(assetId)")
+            return
+        }
+        
+        guard let urlAsset = offline.urlAsset else {
+            self.showMessage(title: "Offline Playback Error", message: "Local media for \(assetId) has no url")
+            return
+        }
+        
+        player.stream(urlAsset: urlAsset)
     }
 }
 

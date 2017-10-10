@@ -46,27 +46,27 @@ extension DownloadAssetViewModel {
                     return
                 }
                 
-                self?.handle(entitlement: entitlement, named: assetId) { task, error in
+                self?.handle(entitlement: entitlement, assetId: assetId) { task, error in
                     callback(task, entitlement, error)
                 }
         }
     }
     
-    fileprivate func handle(entitlement: PlaybackEntitlement, named name: String, callback: (DownloadTask?, DownloadAssetError?) -> Void) {
+    fileprivate func handle(entitlement: PlaybackEntitlement, assetId: String, callback: (DownloadTask?, DownloadAssetError?) -> Void) {
+        let bps = selectedBitrate?.bitrate != nil ? selectedBitrate!.bitrate!*1000 : nil
         do {
             if #available(iOS 10.0, *) {
                 task = try Downloader
-                    .download(entitlement: entitlement, named: name)
-                    .use(bitrate: selectedBitrate?.bitrate)
-//                task = try Downloader.download(mediaLocator: "https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8")
+                    .download(entitlement: entitlement, assetId: assetId)
+                    .use(bitrate: bps)
                 callback(task, nil)
             } else {
                 let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as! URL
-                let destinationUrl = documentsUrl.appendingPathComponent("\(name).m3u8")
+                let destinationUrl = documentsUrl.appendingPathComponent("\(assetId).m3u8")
                 
                 task = try Downloader
-                    .download(entitlement: entitlement, to: destinationUrl)
-                    .use(bitrate: selectedBitrate?.bitrate)
+                    .download(entitlement: entitlement, assetId: assetId, to: destinationUrl)
+                    .use(bitrate: bps)
                 callback(task, nil)
             }
         }
@@ -77,6 +77,10 @@ extension DownloadAssetViewModel {
 }
 
 extension DownloadAssetViewModel {
+    var isRunning: Bool {
+        return state == .running
+    }
+    
     var state: DownloadTask.State {
         guard let task = task else { return .notStarted }
         return task.state
@@ -124,6 +128,13 @@ extension DownloadAssetViewModel {
         selectedBitrate = bitrates[index]
     }
     
+    var selectedQualityIndex: Int? {
+        guard let selectedBitrate = selectedBitrate else { return nil }
+        guard let availableBitrates = availableBitrates else { return nil }
+        return availableBitrates.index(of: selectedBitrate)
+        
+    }
+    
     var downloadQualityOptions: Int? {
         return availableBitrates?.count
     }
@@ -149,12 +160,18 @@ extension DownloadAssetViewModel {
                                size: size(for: downloadBitrate.size))
     }
     
-    private func size(for bytes: Int64?) -> String {
+    internal func downloadedSize(for progress: Double) -> String {
+        guard let bytes = selectedBitrate?.size else { return "n/a" }
+        let progressBytes = Int64(Double(bytes)*progress)
+        return size(for: progressBytes)
+    }
+    
+    internal func size(for bytes: Int64?) -> String {
         guard let bytes = bytes else { return "n/a" }
         return ByteCountFormatter.string(fromByteCount: bytes, countStyle: ByteCountFormatter.CountStyle.file)
     }
     
-    private func bitrate(for kbps: Int64?) -> String {
+    internal func bitrate(for kbps: Int64?) -> String {
         // LD 240p 3G Mobile @ H.264 baseline profile 350 kbps (3 MB/minute)
         // LD 360p 4G Mobile @ H.264 main profile 700 kbps (6 MB/minute)
         // SD 480p WiFi @ H.264 main profile 1200 kbps (10 MB/minute)
@@ -199,4 +216,101 @@ extension DownloadAssetViewModel {
     }
 }
 
+extension DownloadAssetViewModel {
+    func offline(assetId: String) -> OfflineMediaAsset? {
+        return OfflineAssetTracker.offline(assetId: assetId)
+    }
+    
+    func save(assetId: String, url: URL?) {
+        OfflineAssetTracker.save(assetId: assetId, url: url)
+    }
+    
+    func remove(assetId: String, clearing url: URL? = nil) {
+        OfflineAssetTracker.remove(localRecordId: assetId)
+        if let url = url {
+            OfflineAssetTracker.clear(dataAt: url)
+        }
+    }
+}
 
+
+internal struct LocalMediaRecord: Codable {
+    /// URL encoded as bookmark data
+    var urlBookmark: Data? {
+        switch downloadState {
+        case .completed(urlBookmark: let data): return data
+        case .inProgress: return nil
+        }
+    }
+
+    /// State
+    let downloadState: DownloadState
+
+    /// Id for the asset at `bookmarkURL`
+    let assetId: String
+
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        assetId = try container.decode(String.self, forKey: .assetId)
+
+        if let data = try container.decodeIfPresent(Data.self, forKey: .downloadState) {
+            downloadState = .completed(urlBookmark: data)
+        }
+        else {
+            downloadState = .inProgress
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(assetId, forKey: .assetId)
+
+        switch downloadState {
+        case .completed(urlBookmark: let data): try container.encode(data, forKey: .downloadState)
+        default: return
+        }
+    }
+
+    internal init(assetId: String, completedAt location: URL?) throws {
+        self.assetId = assetId
+        if let data = try location?.bookmarkData() {
+            downloadState = .completed(urlBookmark: data)
+        }
+        else {
+            downloadState = .inProgress
+        }
+    }
+
+    internal enum DownloadState {
+
+        /// URL encoded as bookmark data
+        case completed(urlBookmark: Data)
+
+        /// No destination might have been set
+        case inProgress
+    }
+
+    internal enum CodingKeys: String, CodingKey {
+        case downloadState
+        case assetId
+    }
+}
+
+
+extension Data {
+    /// Convenience function for persisting a `Data` blob through `FileManager`.
+    ///
+    /// - parameter filename: Name of the file, including extension
+    /// - parameter directoryUrl: `URL` to the storage directory
+    /// - throws: `FileManager` related `Error` or `Data` related error in the *Cocoa Domain*
+    internal func persist(as filename: String, at directoryUrl: URL) throws {
+        if !FileManager.default.fileExists(atPath: directoryUrl.path) {
+            try FileManager.default.createDirectory(at: directoryUrl, withIntermediateDirectories: true, attributes: nil)
+        }
+        
+        try self.write(to: directoryUrl.appendingPathComponent(filename))
+    }
+}

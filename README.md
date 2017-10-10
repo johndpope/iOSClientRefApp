@@ -15,6 +15,7 @@
 - [x] Vod, Live and Catchup playback.
 - [x] Fairplay `DRM` protection.
 - [x] Catchup playback from live *EPG*.
+- [x] Download and offline playback.
 - [x] Persistent user `SessionToken`s.
 - [x] Multi Device Session Shift.
 - [x] Airplay.
@@ -23,11 +24,12 @@
 ## Requirements
 
 * `iOS` 9.0+
-* `Swift` 3.0+
-* `Xcode` 8.2.1+
+* `Swift` 4.0+
+* `Xcode` 9.0+
 * Framework dependencies
     - [`Analytics`](https://github.com/EricssonBroadcastServices/iOSClientAnalytics)
     - [`Exposure`](https://github.com/EricssonBroadcastServices/iOSClientExposure)
+    - [`Download`](https://github.com/EricssonBroadcastServices/iOSClientDownload)
     - [`Utilities`](https://github.com/EricssonBroadcastServices/iOSClientUtilities)
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientRefApp/blob/master/Cartfile)
 

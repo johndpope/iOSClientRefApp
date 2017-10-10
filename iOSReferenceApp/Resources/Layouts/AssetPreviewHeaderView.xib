@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Bold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -18,24 +23,17 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0f-If-96i" userLabel="contentView">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aj4-42-7JM">
-                            <rect key="frame" x="8" y="8" width="359" height="24"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2G5-gf-O0k">
-                                    <rect key="frame" x="0.0" y="0.0" width="359" height="24"/>
-                                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                        </stackView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2G5-gf-O0k">
+                            <rect key="frame" x="8" y="11" width="39.5" height="18"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.086274509799999996" green="0.098039215690000001" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="bottomMargin" secondItem="aj4-42-7JM" secondAttribute="bottom" id="4Cm-lc-FQy"/>
-                        <constraint firstAttribute="trailingMargin" secondItem="aj4-42-7JM" secondAttribute="trailing" id="CDh-UE-2K5"/>
-                        <constraint firstItem="aj4-42-7JM" firstAttribute="top" secondItem="d0f-If-96i" secondAttribute="topMargin" id="NRH-N3-WfB"/>
-                        <constraint firstItem="aj4-42-7JM" firstAttribute="leading" secondItem="d0f-If-96i" secondAttribute="leadingMargin" id="ORv-3O-MOX"/>
+                        <constraint firstItem="2G5-gf-O0k" firstAttribute="centerY" secondItem="d0f-If-96i" secondAttribute="centerY" id="7HS-oH-kOk"/>
+                        <constraint firstItem="2G5-gf-O0k" firstAttribute="leading" secondItem="d0f-If-96i" secondAttribute="leading" constant="8" identifier="LeadingHeaderConstr" id="LQU-bY-eo1"/>
                     </constraints>
                 </view>
             </subviews>
