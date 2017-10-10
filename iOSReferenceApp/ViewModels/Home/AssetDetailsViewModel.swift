@@ -28,29 +28,29 @@ extension AssetDetailsViewModel {
         let duration: String
     }
     
-    func refreshAssetMetaData(callback: @escaping (Bool) -> Void) {
+    func refreshAssetMetaData(callback: @escaping (ExposureError?) -> Void) {
         guard let assetId = asset.assetId else {
-            callback(false)
             return
         }
+        
         FetchAsset(environment: environment)
             .filter(assetId: assetId)
             .includeUserData(for: sessionToken)
             .request()
+            .validate()
             .response{ [weak self] (exposure: ExposureResponse<Asset>) in
                 guard let weakSelf = self else {
-                    callback(false)
                     return
                 }
                 
                 if let success = exposure.value {
                     weakSelf.asset = success
-                    callback(true)
+                    callback(nil)
                     return
                 }
                 
                 if let error = exposure.error {
-                    callback(false)
+                    callback(error)
                     return
                 }
         }

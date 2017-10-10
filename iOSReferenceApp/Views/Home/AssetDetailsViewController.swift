@@ -108,10 +108,11 @@ class AssetDetailsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.refreshAssetMetaData{ [weak self] success in
-            if success {
-                self?.refreshUserDataUI()
+        viewModel.refreshAssetMetaData{ [weak self] error in
+            if let error = error {
+                self?.showMessage(title: "Refresh Asset Metadata", message: error.localizedDescription)
             }
+            self?.refreshUserDataUI()
         }
     }
     
