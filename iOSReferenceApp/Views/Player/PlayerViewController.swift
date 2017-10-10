@@ -228,10 +228,6 @@ extension PlayerViewController {
             return
         }
         
-        if #available(iOS 10.0, *) {
-            print(urlAsset.assetCache?.isPlayableOffline)
-        }
-        print(urlAsset.url)
         player.stream(urlAsset: urlAsset)
     }
 }

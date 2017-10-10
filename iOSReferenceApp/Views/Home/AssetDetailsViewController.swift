@@ -365,11 +365,6 @@ extension AssetDetailsViewController {
 extension AssetDetailsViewController {
     @IBAction func cancelDownloadAction(_ sender: UIButton) {
         downloadViewModel.cancel()
-//        switch downloadViewModel.state {
-//        case .running: downloadViewModel.cancel()
-//        case .suspended: downloadViewModel.cancel()
-//        default: return
-//        }
     }
     
     @IBAction func pauseResumeDownloadAction(_ sender: UIButton) {

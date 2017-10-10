@@ -78,10 +78,7 @@ extension DownloadAssetViewModel {
 
 extension DownloadAssetViewModel {
     var isRunning: Bool {
-        switch state {
-        case .running: return true
-        default: return false
-        }
+        return state == .running
     }
     
     var state: DownloadTask.State {
@@ -223,10 +220,6 @@ extension DownloadAssetViewModel {
     func offline(assetId: String) -> OfflineMediaAsset? {
         return OfflineAssetTracker.offline(assetId: assetId)
     }
-    
-//    func offlineAssets() -> [OfflineMediaAsset] {
-//        return OfflineAssetTracker.offlineAssets()
-//    }
     
     func save(assetId: String, url: URL?) {
         OfflineAssetTracker.save(assetId: assetId, url: url)
