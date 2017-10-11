@@ -8,11 +8,13 @@
 
 import Foundation
 import Download
+import Exposure
 import AVFoundation
 
 public struct OfflineMediaAsset {
-    public init(assetId: String, url: URL?) {
+    public init(assetId: String, entitlement: PlaybackEntitlement, url: URL?) {
         self.assetId = assetId
+        self.entitlement = entitlement
         if let url = url {
             self.urlAsset = AVURLAsset(url: url)
         }
@@ -22,6 +24,7 @@ public struct OfflineMediaAsset {
     }
     
     public let assetId: String
+    public let entitlement: PlaybackEntitlement
     public let urlAsset: AVURLAsset?
     
     public func state(callback: @escaping (State) -> Void) {

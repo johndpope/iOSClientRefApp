@@ -255,8 +255,11 @@ extension AssetDetailsViewController {
     }
     
     func configureDownloadTask(assetId: String, onPrepared: @escaping () -> Void) {
-        downloadViewModel.download(assetId: assetId) { downloadTask, entitlement, error in
-            // TODO: Store entitlement?
+        downloadViewModel.download(assetId: assetId) { [weak self] downloadTask, entitlement, error in
+            guard let entitlement = entitlement else {
+                self?.showMessage(title: "Entitlement Error", message: error?.localizedDescription ?? "Unable to fetch entitlement")
+                return
+            }
             
             downloadTask?
                 .should(autoStart: false)
@@ -264,7 +267,7 @@ extension AssetDetailsViewController {
                     onPrepared()
                 }
                 .onStarted { [weak self] task in
-                    self?.downloadViewModel.save(assetId: assetId, url: nil)
+                    self?.downloadViewModel.save(assetId: assetId, entitlement: entitlement, url: nil)
                     self?.togglePauseResumeDownload(paused: false)
                 }
                 .onSuspended { [weak self] task in
@@ -297,7 +300,7 @@ extension AssetDetailsViewController {
                 }
                 .onCompleted { [weak self] task, url in
                     print("📱 Download completed: \(url)")
-                    self?.downloadViewModel.save(assetId: assetId, url: url)
+                    self?.downloadViewModel.save(assetId: assetId, entitlement: entitlement, url: url)
                     self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
                 }
                 .prepare()

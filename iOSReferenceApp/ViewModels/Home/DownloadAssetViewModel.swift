@@ -221,8 +221,8 @@ extension DownloadAssetViewModel {
         return OfflineAssetTracker.offline(assetId: assetId)
     }
     
-    func save(assetId: String, url: URL?) {
-        OfflineAssetTracker.save(assetId: assetId, url: url)
+    func save(assetId: String, entitlement: PlaybackEntitlement, url: URL?) {
+        OfflineAssetTracker.save(assetId: assetId, entitlement: entitlement, url: url)
     }
     
     func remove(assetId: String, clearing url: URL? = nil) {
@@ -248,12 +248,15 @@ internal struct LocalMediaRecord: Codable {
 
     /// Id for the asset at `bookmarkURL`
     let assetId: String
-
-
+    
+    /// Related entitlement
+    let entitlement: PlaybackEntitlement
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         assetId = try container.decode(String.self, forKey: .assetId)
+        entitlement = try container.decode(PlaybackEntitlement.self, forKey: .entitlement)
 
         if let data = try container.decodeIfPresent(Data.self, forKey: .downloadState) {
             downloadState = .completed(urlBookmark: data)
@@ -267,6 +270,7 @@ internal struct LocalMediaRecord: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         try container.encode(assetId, forKey: .assetId)
+        try container.encode(entitlement, forKey: .entitlement)
 
         switch downloadState {
         case .completed(urlBookmark: let data): try container.encode(data, forKey: .downloadState)
@@ -274,8 +278,10 @@ internal struct LocalMediaRecord: Codable {
         }
     }
 
-    internal init(assetId: String, completedAt location: URL?) throws {
+    internal init(assetId: String, entitlement: PlaybackEntitlement, completedAt location: URL?) throws {
         self.assetId = assetId
+        self.entitlement = entitlement
+        
         if let data = try location?.bookmarkData() {
             downloadState = .completed(urlBookmark: data)
         }
@@ -296,6 +302,7 @@ internal struct LocalMediaRecord: Codable {
     internal enum CodingKeys: String, CodingKey {
         case downloadState
         case assetId
+        case entitlement
     }
 }
 
