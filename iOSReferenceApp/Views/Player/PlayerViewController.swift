@@ -227,8 +227,7 @@ extension PlayerViewController {
             self.showMessage(title: "Offline Playback Error", message: "Local media for \(assetId) has no url")
             return
         }
-        
-        player.stream(urlAsset: urlAsset)
+        player.offline(entitlement: offline.entitlement, assetId: offline.assetId, urlAsset: urlAsset)
     }
 }
 
