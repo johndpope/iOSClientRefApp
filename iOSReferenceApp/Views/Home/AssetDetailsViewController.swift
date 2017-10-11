@@ -256,7 +256,6 @@ extension AssetDetailsViewController {
     
     func configureDownloadTask(assetId: String, onPrepared: @escaping () -> Void) {
         downloadViewModel.download(assetId: assetId) { [weak self] downloadTask, entitlement, error in
-            // TODO: Store entitlement?
             guard let entitlement = entitlement else {
                 self?.showMessage(title: "Entitlement Error", message: error?.localizedDescription ?? "Unable to fetch entitlement")
                 return
