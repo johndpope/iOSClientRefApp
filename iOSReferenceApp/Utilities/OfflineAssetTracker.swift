@@ -118,6 +118,7 @@ extension OfflineAssetTracker {
         
         filteredLog.append(localRecord)
         save(mediaLog: filteredLog)
+        print("✅ Saved bookmark for local media record \(localRecord.assetId): ")
     }
     
     fileprivate static func save(mediaLog: [LocalMediaRecord]) {
