@@ -19,6 +19,7 @@ NO RELEASE DATE SET
 * `EMP-10293` Remove EntitlementRequester.
 * Listen to onScrubbing event.
 * Cleanup Constants naming (#9)
+* `EMP-10478` Preparation of `DownloadTask`s now occur once `resume()` is called.
 
 ## 0.2.0
 Released 5 Sep 2017
