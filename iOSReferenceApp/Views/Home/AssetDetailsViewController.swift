@@ -217,11 +217,12 @@ extension AssetDetailsViewController {
             .prefere(orientation: .landscape)
             .validImageUrls()
             .first {
-            mainImageView.kf.setImage(with: imageUrl) { (_, error, _, _) in
+            mainImageView.kf.setImage(with: imageUrl) { (image, error, _, _) in
                 if let error = error {
                     print("Kingfisher error: ",error)
                 }
             }
+            applyGradientToMainImage()
         }
         
         
@@ -237,6 +238,22 @@ extension AssetDetailsViewController {
         
         // Update last viewed progress
         update(lastViewedOffset: viewModel.lastViewedOffset)
+    }
+    
+    func applyGradientToMainImage() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = mainImageView.frame
+        
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.locations = [0.65, 0.85, 1.0]
+        gradientLayer.colors = [
+            Color(red: 0.086, green: 0.098, blue: 0.106, alpha: 0).cgColor,
+            Color(red: 0.086, green: 0.098, blue: 0.106, alpha: 0.65).cgColor,
+            Color(red: 0.086, green: 0.098, blue: 0.106, alpha: 1.0).cgColor
+        ]
+        
+        mainImageView.layer.addSublayer(gradientLayer)
     }
     
     func update(lastViewedOffset: AssetDetailsViewModel.LastViewedOffset?) {
@@ -275,6 +292,10 @@ extension AssetDetailsViewController {
         }
         participantsStackView.layoutIfNeeded()
     }
+}
+
+extension UIImageView {
+    
 }
 
 // MARK: - Download available
