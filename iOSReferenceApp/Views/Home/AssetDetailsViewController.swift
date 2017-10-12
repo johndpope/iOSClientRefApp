@@ -59,7 +59,10 @@ extension AssetDetailsPresenter {
 }
 
 class AssetDetailsViewController: UIViewController {
-
+    
+    @IBOutlet weak var scrollView: LazyScrollView!
+    @IBOutlet weak var contentStackView: UIStackView!
+    
     @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
@@ -73,6 +76,7 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var durationLabel: UILabel!
     
+    @IBOutlet weak var participantsStackView: UIStackView!
     
     @IBOutlet weak var descriptionTextLabel: UILabel!
     @IBOutlet weak var footerTextLabel: UILabel!
@@ -166,6 +170,11 @@ class AssetDetailsViewController: UIViewController {
         
         self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        scrollView.contentSize = CGSize(width: contentStackView.frame.width, height: contentStackView.frame.height)
+    }
 }
 
 extension AssetDetailsViewController {
@@ -224,6 +233,8 @@ extension AssetDetailsViewController {
         
         parentalRatingLabel.text = viewModel.anyParentalRating(locale: locale)
         
+        assignParticipants()
+        
         // Update last viewed progress
         update(lastViewedOffset: viewModel.lastViewedOffset)
     }
@@ -233,6 +244,36 @@ extension AssetDetailsViewController {
         progressLabel.text = lastViewedOffset?.currentOffset
         progressBar.setProgress(lastViewedOffset?.progress ?? 0, animated: false)
         durationLabel.text = lastViewedOffset?.duration
+    }
+    
+    private func assignParticipants() {
+        let current = participantsStackView.subviews
+        current.forEach{
+            participantsStackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+        
+        viewModel.participantGroups()
+            .sorted{ $0.function < $1.function }
+            .map{ group -> UILabel in
+                print(group.function)
+                print(group.names)
+                let label = UILabel()
+                let function = (group.function + (group.names.count > 1 ? "s: " : ": ")).capitalized
+                
+                let names = group.names.joined(separator: ", ")
+                print(function+names)
+                label.font = UIFont(name: "Helvetica Neue", size: 14)
+                label.textColor = Color.lightGray
+                label.lineBreakMode = NSLineBreakMode.byWordWrapping
+                label.numberOfLines = 0
+                label.text = function + names
+                return label
+            }
+            .forEach{
+                participantsStackView.addArrangedSubview($0)
+        }
+        participantsStackView.layoutIfNeeded()
     }
 }
 
