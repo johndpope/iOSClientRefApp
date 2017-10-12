@@ -10,7 +10,7 @@
     </dependencies>
     <customFonts key="customFonts">
         <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
+            <string>HelveticaNeue-Medium</string>
         </array>
     </customFonts>
     <objects>
@@ -24,8 +24,8 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="28"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2G5-gf-O0k">
-                            <rect key="frame" x="8" y="9" width="37" height="18"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                            <rect key="frame" x="8" y="9" width="38.5" height="18"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
