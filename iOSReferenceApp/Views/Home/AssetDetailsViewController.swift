@@ -217,7 +217,7 @@ extension AssetDetailsViewController {
         
         
         titleLabel.text = viewModel.anyTitle(locale: locale)
-        descriptionTextLabel.text = viewModel.longestDescription(locale: locale)
+        descriptionTextLabel.text = viewModel.anyDescription(locale: locale)
         
         productionYearLabel.text = viewModel.productionYear
         

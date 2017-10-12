@@ -42,6 +42,13 @@ extension AssetViewModel {
         else if let assetId = asset.assetId { return assetId }
         return "NO TITIE"
     }
+    
+    func anyDescription(locale: String) -> String {
+        if let description = localizedData(locale: locale)?.allDescriptions().last {
+            return description
+        }
+        return localizations().flatMap{ $0.allDescriptions() }.last ?? ""
+    }
 }
 
 extension AssetViewModel: Hashable {
@@ -77,6 +84,7 @@ protocol LocalizedEntity {
     func localizedData(locale: String) -> LocalizedData?
     func localizations() -> [LocalizedData]
     func anyTitle(locale: String) -> String
+    func anyDescription(locale: String) -> String
 }
 
 extension LocalizedEntity {
@@ -129,6 +137,15 @@ extension LocalizedEntity {
     }
 }
 
+extension LocalizedData {
+    func allDescriptions() -> [String] {
+        return [tinyDescription,
+                shortDescription,
+                description,
+                longDescription]
+            .flatMap{ $0 }
+    }
+}
 
 extension Sequence where Self.Iterator.Element == Image {
     func validImageUrls() -> [URL] {

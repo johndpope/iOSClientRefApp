@@ -54,6 +54,13 @@ extension EPGDetailsViewModel: LocalizedEntity {
         else if let assetId = channelAsset.assetId { return assetId }
         return "CHANNEL"
     }
+    
+    func anyDescription(locale: String) -> String {
+        if let description = localizedData(locale: locale)?.allDescriptions().last {
+            return description
+        }
+        return localizations().flatMap{ $0.allDescriptions() }.last ?? ""
+    }
 }
 
 extension EPGDetailsViewModel {
