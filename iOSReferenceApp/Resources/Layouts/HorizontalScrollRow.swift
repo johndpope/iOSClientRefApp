@@ -73,7 +73,7 @@ extension HorizontalScrollRow: UICollectionViewDelegate {
         return viewModel
             .content[indexPath.row]
             .images(locale: "en")
-            .prefere(orientation: .landscape)
+            .prefere(orientation: .portrait)
             .validImageUrls()
             .first
     }

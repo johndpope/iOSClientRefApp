@@ -109,7 +109,7 @@ extension CategoryViewModel {
 
 extension CategoryViewModel {
     var preferredCellSize: CGSize {
-        return CGSize(width: 128, height: 96)
+        return CGSize(width: 108, height: 186)//CGSize(width: 128, height: 96)
     }
     
     var preferredCellsPerRow: CGFloat {
