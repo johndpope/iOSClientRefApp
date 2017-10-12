@@ -128,7 +128,7 @@ class AssetDetailsViewController: UIViewController {
                     self?.transitionToDownloadCompletedUI(from: nil)
                 case .notPlayable:
                     self?.freezeStartDownloadInProgressUI(frozen: true)
-                    self?.configureDownloadTask(assetId: assetId) { [weak self] in
+                    self?.configureDownloadTask(assetId: assetId, autostart: false) { [weak self] in
                         self?.freezeStartDownloadInProgressUI(frozen: false)
                     }
                     self?.togglePauseResumeDownload(paused: true)
@@ -249,12 +249,13 @@ extension AssetDetailsViewController {
     }
     
     @IBAction func downloadAction(_ sender: UIButton) {
-        downloadViewModel.resume()
+        guard let assetId = viewModel.asset.assetId else { return }
+        configureDownloadTask(assetId: assetId, autostart: true)
         togglePauseResumeDownload(paused: false)
         transitionToDownloadProgressUI(from: downloadStackView)
     }
     
-    func configureDownloadTask(assetId: String, onPrepared: @escaping () -> Void) {
+    func configureDownloadTask(assetId: String, autostart: Bool, onPrepared: @escaping () -> Void = { _ in }) {
         downloadViewModel.download(assetId: assetId) { [weak self] downloadTask, entitlement, error in
             guard let entitlement = entitlement else {
                 self?.showMessage(title: "Entitlement Error", message: error?.localizedDescription ?? "Unable to fetch entitlement")
@@ -262,10 +263,6 @@ extension AssetDetailsViewController {
             }
             
             downloadTask?
-                .should(autoStart: false)
-                .onPrepared{ _ in
-                    onPrepared()
-                }
                 .onStarted { [weak self] task in
                     self?.downloadViewModel.save(assetId: assetId, entitlement: entitlement, url: nil)
                     self?.togglePauseResumeDownload(paused: false)
@@ -303,7 +300,12 @@ extension AssetDetailsViewController {
                     self?.downloadViewModel.save(assetId: assetId, entitlement: entitlement, url: url)
                     self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
                 }
-                .prepare()
+            
+            onPrepared()
+            
+            if autostart {
+                downloadTask?.resume()
+            }
         }
     }
     
@@ -333,11 +335,7 @@ extension AssetDetailsViewController {
     }
     
     private func resetStartDownloadUI() {
-        guard let assetId = viewModel.asset.assetId else { return }
-        configureDownloadTask(assetId: assetId) { [weak self] in
-            // Download is prepared, unfreeze UI
-            self?.freezeStartDownloadUI(frozen: false)
-        }
+        freezeStartDownloadUI(frozen: false)
         
         if downloadViewModel.hasQualityOptions, let availableOptions = downloadViewModel.downloadQualityOptions {
             downloadQualitySelector.minimumValue = 0
