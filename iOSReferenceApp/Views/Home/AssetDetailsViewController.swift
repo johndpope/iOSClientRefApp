@@ -64,6 +64,7 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var contentStackView: UIStackView!
     
     @IBOutlet weak var mainImageView: UIImageView!
+    @IBOutlet weak var gradientView: GradientView!
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var ratingStarStackView: UIStackView!
@@ -107,7 +108,7 @@ class AssetDetailsViewController: UIViewController {
         super.viewDidLoad()
 
         defer { refreshUserDataUI() }
-        
+        loadAssetMetaData()
         determineDownloadUIForAsset()
     }
     
@@ -210,21 +211,19 @@ extension AssetDetailsViewController {
 
 // MARK: - User Data
 extension AssetDetailsViewController {
-    func refreshUserDataUI() {
+    func loadAssetMetaData() {
         let locale = "en"
         if let imageUrl = viewModel
             .images(locale: locale)
-            .prefere(orientation: .landscape)
+            .prefere(orientation: .square)
             .validImageUrls()
             .first {
-            mainImageView.kf.setImage(with: imageUrl) { (image, error, _, _) in
+            mainImageView.kf.setImage(with: imageUrl) { [weak self] (image, error, _, _) in
                 if let error = error {
                     print("Kingfisher error: ",error)
                 }
             }
-            applyGradientToMainImage()
         }
-        
         
         titleLabel.text = viewModel.anyTitle(locale: locale)
         descriptionTextLabel.text = viewModel.anyDescription(locale: locale)
@@ -235,25 +234,10 @@ extension AssetDetailsViewController {
         parentalRatingLabel.text = viewModel.anyParentalRating(locale: locale)
         
         assignParticipants()
-        
+    }
+    func refreshUserDataUI() {
         // Update last viewed progress
         update(lastViewedOffset: viewModel.lastViewedOffset)
-    }
-    
-    func applyGradientToMainImage() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = mainImageView.frame
-        
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradientLayer.locations = [0.65, 0.85, 1.0]
-        gradientLayer.colors = [
-            Color(red: 0.086, green: 0.098, blue: 0.106, alpha: 0).cgColor,
-            Color(red: 0.086, green: 0.098, blue: 0.106, alpha: 0.65).cgColor,
-            Color(red: 0.086, green: 0.098, blue: 0.106, alpha: 1.0).cgColor
-        ]
-        
-        mainImageView.layer.addSublayer(gradientLayer)
     }
     
     func update(lastViewedOffset: AssetDetailsViewModel.LastViewedOffset?) {
@@ -273,13 +257,11 @@ extension AssetDetailsViewController {
         viewModel.participantGroups()
             .sorted{ $0.function < $1.function }
             .map{ group -> UILabel in
-                print(group.function)
-                print(group.names)
                 let label = UILabel()
                 let function = (group.function + (group.names.count > 1 ? "s: " : ": ")).capitalized
                 
                 let names = group.names.joined(separator: ", ")
-                print(function+names)
+                
                 label.font = UIFont(name: "Helvetica Neue", size: 14)
                 label.textColor = Color.lightGray
                 label.lineBreakMode = NSLineBreakMode.byWordWrapping
