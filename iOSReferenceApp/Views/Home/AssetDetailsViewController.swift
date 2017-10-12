@@ -217,7 +217,8 @@ extension AssetDetailsViewController {
         
         
         titleLabel.text = viewModel.anyTitle(locale: locale)
-        descriptionTextLabel.text = viewModel.longestDescription(locale: locale)
+        descriptionTextLabel.text = viewModel.anyDescription(locale: locale)
+        footerTextLabel.text = ""
         
         productionYearLabel.text = viewModel.productionYear
         
@@ -325,6 +326,9 @@ extension AssetDetailsViewController {
         downloadViewModel.refreshDownloadMetadata(for: assetId) { [weak self] success in
             if success {
                 self?.resetStartDownloadUI()
+            }
+            else {
+                self?.downloadStackView.isHidden = true
             }
         }
     }

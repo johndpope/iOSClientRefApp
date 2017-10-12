@@ -121,4 +121,11 @@ extension AssetDetailsViewModel: LocalizedEntity {
         else if let assetId = asset.assetId { return assetId }
         return "NO TITIE"
     }
+    
+    func anyDescription(locale: String) -> String {
+        if let description = localizedData(locale: locale)?.allDescriptions().last {
+            return description
+        }
+        return localizations().flatMap{ $0.allDescriptions() }.last ?? ""
+    }
 }
