@@ -93,15 +93,10 @@ extension VODViewController {
         guard let tabVC = self.tabBarController as? HomeTabBarController else {
             fatalError("Unable to proceed without homeTabBarController")
         }
+        
+        guard let carouselGroupId = tabVC.dynamicCustomerConfig?.carouselGroupId else { return }
 
-        guard let configData = tabVC.appConfigFile?.config.jsonValue as? [AnyJSONType],
-            let configDataDict = configData.first?.jsonValue as? [String: AnyJSONType],
-            let carouselId = configDataDict["carouselGroupId"]?.jsonValue as? String else {
-                // TODO: Retry?
-                return
-        }
-
-        viewModel = VODViewModel(carouselId: carouselId,
+        viewModel = VODViewModel(carouselId: carouselGroupId,
                                  environment: env,
                                  sessionToken: sessionToken)
 

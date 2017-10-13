@@ -57,6 +57,7 @@
 		76A844851EA7A23700BDAF2C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844841EA7A23700BDAF2C /* Alamofire.framework */; };
 		76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844841EA7A23700BDAF2C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76AE64EB1F90217B0036933E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64EA1F90217B0036933E /* GradientView.swift */; };
+		76AE64F71F91498D0036933E /* DynamicCustomerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64F61F91498D0036933E /* DynamicCustomerConfig.swift */; };
 		76AF2F041F139D040014F007 /* EPGDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F031F139D040014F007 /* EPGDetailsViewController.swift */; };
 		76AF2F061F13A0A00014F007 /* EPGDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F051F13A0A00014F007 /* EPGDetailsViewModel.swift */; };
 		76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */; };
@@ -180,6 +181,7 @@
 		76A844871EA7A23700BDAF2C /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A8448A1EA7A23700BDAF2C /* SwiftEventBus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftEventBus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76AE64EA1F90217B0036933E /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		76AE64F61F91498D0036933E /* DynamicCustomerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCustomerConfig.swift; sourceTree = "<group>"; };
 		76AF2F031F139D040014F007 /* EPGDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EPGDetailsViewController.swift; sourceTree = "<group>"; };
 		76AF2F051F13A0A00014F007 /* EPGDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EPGDetailsViewModel.swift; sourceTree = "<group>"; };
 		76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramViewModel.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				76A843ED1EA7886400BDAF2C /* CustomerConfig.swift */,
 				76A843EE1EA7886400BDAF2C /* EnvironmentConfig.swift */,
 				3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */,
+				76AE64F61F91498D0036933E /* DynamicCustomerConfig.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -746,6 +749,7 @@
 				F7061C731EC5CF8F0041E271 /* Logging.swift in Sources */,
 				76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */,
 				F793A8531EC5289E00DF7626 /* SkyFloatingLabelTextField.swift in Sources */,
+				76AE64F71F91498D0036933E /* DynamicCustomerConfig.swift in Sources */,
 				76A843FF1EA7886400BDAF2C /* CustomerConfig.swift in Sources */,
 				F7B710A81ECB369E00E9D324 /* ProgressIndicatorUtil.swift in Sources */,
 				76AF2F171F13B6DB0014F007 /* EPGPreviewCell.swift in Sources */,
