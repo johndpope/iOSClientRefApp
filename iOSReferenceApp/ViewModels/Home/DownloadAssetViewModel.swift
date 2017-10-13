@@ -11,13 +11,13 @@ import Exposure
 import Download
 
 class DownloadAssetViewModel: AuthorizedEnvironment {
-    fileprivate var task: DownloadTask?
+    fileprivate var task: ExposureDownloadTask?
     
     fileprivate(set) var environment: Environment
     fileprivate(set) var sessionToken: SessionToken
     
     fileprivate var availableBitrates: [DownloadValidation.Bitrate]?
-    fileprivate(set) var selectedBitrate: DownloadValidation.Bitrate?
+    fileprivate var selectedBitrate: DownloadValidation.Bitrate?
     
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
@@ -37,7 +37,7 @@ extension DownloadAssetViewModel {
         return state == .running
     }
     
-    var state: DownloadTask.State {
+    var state: ExposureDownloadTask.State {
         guard let task = task else { return .notStarted }
         return task.state
     }
@@ -52,6 +52,23 @@ extension DownloadAssetViewModel {
     
     func cancel() {
         task?.cancel()
+    }
+}
+
+extension DownloadAssetViewModel {
+    func createDownloadTask(for assetId: String) -> ExposureDownloadTask {
+        
+        let bps = selectedBitrate?.bitrate != nil ? selectedBitrate!.bitrate!*1000 : nil
+        
+        task = SessionManager
+            .default
+            .download(assetId: assetId,
+                      environment: environment,
+                      sessionToken: sessionToken)
+            .use(drm: .fairplay)
+            .use(bitrate: bps)
+        
+        return task!
     }
 }
 

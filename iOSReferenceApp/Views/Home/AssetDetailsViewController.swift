@@ -302,16 +302,10 @@ extension AssetDetailsViewController {
     
     func configureDownloadTask(assetId: String, autostart: Bool, onPrepared: @escaping () -> Void = { _ in }) {
         
-        let bps = downloadViewModel.selectedBitrate?.bitrate != nil ? downloadViewModel.selectedBitrate!.bitrate!*1000 : nil
-        
-        
-        let downloadTask = SessionManager
-            .default
-            .download(assetId: assetId,
-                      environment: downloadViewModel.environment,
-                      sessionToken: downloadViewModel.sessionToken)
-            .use(drm: .fairplay)
-            .use(bitrate: bps)
+        let downloadTask = downloadViewModel.createDownloadTask(for: assetId)
+            .onEntitlementRequestStarted{ [weak self] task in
+                self?.togglePauseResumeDownload(paused: false)
+            }
             .onEntitlementResponse{ task, entitlement in
                 // Optionally store it somewhere
                 print("📱 Entitlement successfully requested")
@@ -320,7 +314,7 @@ extension AssetDetailsViewController {
                 self?.showMessage(title: "Entitlement Request", message: "Cancelled by User")
             }
             .onStarted { [weak self] task in
-                self?.togglePauseResumeDownload(paused: false)
+                print("📱 Media Download started")
             }
             .onSuspended { [weak self] task in
                 self?.togglePauseResumeDownload(paused: true)

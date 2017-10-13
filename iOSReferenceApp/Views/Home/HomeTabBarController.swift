@@ -30,7 +30,7 @@ class HomeTabBarController: UITabBarController {
         guard let env = UserInfo.environment else { return }
         config = ApplicationConfig(environment: env)
         config?.setup {
-            self.fetchFile()
+            self.fetchFile(name: "main.json")
         }
     }
 
