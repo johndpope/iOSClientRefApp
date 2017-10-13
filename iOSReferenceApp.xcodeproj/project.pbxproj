@@ -58,6 +58,7 @@
 		76A844831EA7A23700BDAF2C /* Exposure.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844811EA7A23700BDAF2C /* Exposure.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A844851EA7A23700BDAF2C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844841EA7A23700BDAF2C /* Alamofire.framework */; };
 		76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844841EA7A23700BDAF2C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76AE64EB1F90217B0036933E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64EA1F90217B0036933E /* GradientView.swift */; };
 		76AF2F041F139D040014F007 /* EPGDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F031F139D040014F007 /* EPGDetailsViewController.swift */; };
 		76AF2F061F13A0A00014F007 /* EPGDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F051F13A0A00014F007 /* EPGDetailsViewModel.swift */; };
 		76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */; };
@@ -182,6 +183,7 @@
 		76A844841EA7A23700BDAF2C /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A844871EA7A23700BDAF2C /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A8448A1EA7A23700BDAF2C /* SwiftEventBus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftEventBus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76AE64EA1F90217B0036933E /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		76AF2F031F139D040014F007 /* EPGDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EPGDetailsViewController.swift; sourceTree = "<group>"; };
 		76AF2F051F13A0A00014F007 /* EPGDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EPGDetailsViewModel.swift; sourceTree = "<group>"; };
 		76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramViewModel.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				76A417111EDED17800677A46 /* AssetPreviewHeaderView.xib */,
 				76AF2F151F13B6DB0014F007 /* EPGPreviewCell.swift */,
 				76AF2F161F13B6DB0014F007 /* EPGPreviewCell.xib */,
+				76AE64EA1F90217B0036933E /* GradientView.swift */,
 			);
 			path = Layouts;
 			sourceTree = "<group>";
@@ -762,6 +765,7 @@
 				F7129CB11EC9AB970033B3FF /* Extensions.swift in Sources */,
 				76A417101EDED09700677A46 /* AssetPreviewHeaderView.swift in Sources */,
 				F7171A791EDC4ADC00140D2B /* LiveListViewController.swift in Sources */,
+				76AE64EB1F90217B0036933E /* GradientView.swift in Sources */,
 				76B217B41EEABFED006F334F /* PlayerViewModel.swift in Sources */,
 				76A417161EDEDAA800677A46 /* CategoryViewModel.swift in Sources */,
 				F7061C6E1EC5C0960041E271 /* ColorsUtil.swift in Sources */,

@@ -14,6 +14,7 @@ protocol AssetListType {
 
     var content: [AssetViewModel] { get }
     var preferredCellSize: CGSize { get }
+    var preferredThumbnailSize: CGSize { get }
 
     func fetchMetadata(batch: Int, callback: @escaping (Int, ExposureError?) -> Void)
 }
@@ -109,7 +110,11 @@ extension CategoryViewModel {
 
 extension CategoryViewModel {
     var preferredCellSize: CGSize {
-        return CGSize(width: 128, height: 96)
+        return CGSize(width: 108, height: 186)//CGSize(width: 128, height: 96)
+    }
+    
+    var preferredThumbnailSize: CGSize {
+        return CGSize(width: 108, height: 162)
     }
     
     var preferredCellsPerRow: CGFloat {

@@ -14,6 +14,7 @@ NO RELEASE DATE SET
 * Previous playback offset displayed when viewing asset details
 * `VOD` view now uses Carousel from CustomerConfig`
 * `EMP-10474` Downloading and asset now also stores the related playback entitlement on device.
+* `EMP-10480` UI Refresh. Participants, actors etc added to details view.
 
 #### Changes
 * `EMP-10293` Remove EntitlementRequester.

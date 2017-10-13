@@ -15,7 +15,7 @@ protocol PreviewAssetCellConfig {
 
 extension PreviewAssetCellConfig {
     func headerHeight(index: Int) -> CGFloat {
-        return 40
+        return 28
     }
 }
 

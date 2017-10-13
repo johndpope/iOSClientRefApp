@@ -80,12 +80,14 @@ extension AssetDetailsViewModel {
     }
 }
 
+// MARK: Production Year
 extension AssetDetailsViewModel {
     var productionYear: String {
         return asset.productionYear != nil ? "\(asset.productionYear!)" : " "
     }
 }
 
+// MARK: Parental Rating
 extension AssetDetailsViewModel {
     func anyParentalRating(locale: String) -> String? {
         if let localizedRating = localizedParentalRating(locale: locale), let rating = localizedRating.rating {
@@ -99,6 +101,26 @@ extension AssetDetailsViewModel {
             .parentalRatings?
             .filter{ $0.country != nil ? $0.country! == locale : false }
             .first
+    }
+}
+
+// MARK: Participants
+extension AssetDetailsViewModel {
+    struct ParticipantGroup {
+        let function: String
+        let names: [String]
+    }
+    
+    func participantGroups() -> [ParticipantGroup] {
+        let groups = asset.participants?.flatMap{ p -> (String, String)? in
+            guard let function = p.function, let name = p.name else { return nil }
+            return (function, name)
+        }
+        if let groups = groups {
+            return Dictionary(grouping: groups) { $0.0 }
+                .map{ ParticipantGroup(function: $0.key, names: $0.value.map{ $0.1 }) }
+        }
+        return []
     }
 }
 

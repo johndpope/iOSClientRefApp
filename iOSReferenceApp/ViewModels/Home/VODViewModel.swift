@@ -68,7 +68,11 @@ struct CarouselItemViewModel: AssetListType {
     }
 
     var preferredCellSize: CGSize {
-        return CGSize(width: 128, height: 96)
+        return CGSize(width: 108, height: 186)
+    }
+    
+    var preferredThumbnailSize: CGSize {
+        return CGSize(width: 108, height: 162)
     }
 
     var preferredCellsPerRow: CGFloat {
