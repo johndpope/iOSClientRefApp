@@ -301,56 +301,64 @@ extension AssetDetailsViewController {
     }
     
     func configureDownloadTask(assetId: String, autostart: Bool, onPrepared: @escaping () -> Void = { _ in }) {
-        downloadViewModel.download(assetId: assetId) { [weak self] downloadTask, entitlement, error in
-            guard let entitlement = entitlement else {
-                self?.showMessage(title: "Entitlement Error", message: error?.localizedDescription ?? "Unable to fetch entitlement")
-                return
+        
+        let bps = downloadViewModel.selectedBitrate?.bitrate != nil ? downloadViewModel.selectedBitrate!.bitrate!*1000 : nil
+        
+        
+        let downloadTask = SessionManager
+            .default
+            .download(assetId: assetId,
+                      environment: downloadViewModel.environment,
+                      sessionToken: downloadViewModel.sessionToken)
+            .use(drm: .fairplay)
+            .use(bitrate: bps)
+            .onEntitlementResponse{ task, entitlement in
+                // Optionally store it somewhere
+                print("📱 Entitlement successfully requested")
             }
-            
-            downloadTask?
-                .onStarted { [weak self] task in
-                    self?.downloadViewModel.save(assetId: assetId, entitlement: entitlement, url: nil)
-                    self?.togglePauseResumeDownload(paused: false)
-                }
-                .onSuspended { [weak self] task in
-                    self?.togglePauseResumeDownload(paused: true)
-                }
-                .onResumed { [weak self] task in
-                    self?.togglePauseResumeDownload(paused: false)
-                }
-                .onProgress { [weak self] task, progress in
-                    print("📱 Percent",progress.current*100,"%")
-                    self?.update(downloadProgress: progress)
-                }
-                .onShouldDownloadMediaOption{ task, options in
-                    print("📱 Select media option")
-                    return nil
-                }
-                .onDownloadingMediaOption{ task, option in
-                    print("📱 Downloading media option")
-                }
-                .onCanceled { [weak self] task, url in
-                    self?.downloadViewModel.remove(assetId: assetId, clearing: url)
-                    self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
-                }
-                .onError { [weak self] task, url, error in
-                    print("📱 Download error: \(error)")
-                    self?.downloadViewModel.remove(assetId: assetId, clearing: url)
-                    // TODO: Display error
-                    self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
-                    self?.showMessage(title: "Download Error", message: error.localizedDescription)
-                }
-                .onCompleted { [weak self] task, url in
-                    print("📱 Download completed: \(url)")
-                    self?.downloadViewModel.save(assetId: assetId, entitlement: entitlement, url: url)
-                    self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
-                }
-            
-            onPrepared()
-            
-            if autostart {
-                downloadTask?.resume()
+            .onEntitlementRequestCancelled{ [weak self] task in
+                self?.showMessage(title: "Entitlement Request", message: "Cancelled by User")
             }
+            .onStarted { [weak self] task in
+                self?.togglePauseResumeDownload(paused: false)
+            }
+            .onSuspended { [weak self] task in
+                self?.togglePauseResumeDownload(paused: true)
+            }
+            .onResumed { [weak self] task in
+                self?.togglePauseResumeDownload(paused: false)
+            }
+            .onProgress { [weak self] task, progress in
+                print("📱 Percent",progress.current*100,"%")
+                self?.update(downloadProgress: progress)
+            }
+            .onShouldDownloadMediaOption{ task, options in
+                print("📱 Select media option")
+                return nil
+            }
+            .onDownloadingMediaOption{ task, option in
+                print("📱 Downloading media option")
+            }
+            .onCanceled { [weak self] task, url in
+                self?.downloadViewModel.remove(assetId: assetId)
+                self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
+            }
+            .onError { [weak self] task, url, error in
+                print("📱 Download error: \(error)")
+                self?.downloadViewModel.remove(assetId: assetId)
+                // TODO: Display error
+                self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
+                self?.showMessage(title: "Download Error", message: error.localizedDescription)
+            }
+            .onCompleted { [weak self] task, url in
+                print("📱 Download completed: \(url)")
+                self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
+        }
+        
+        onPrepared()
+        
+        if autostart {
+            downloadTask.resume()
         }
     }
     

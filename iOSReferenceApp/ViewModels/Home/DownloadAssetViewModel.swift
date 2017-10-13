@@ -17,7 +17,7 @@ class DownloadAssetViewModel: AuthorizedEnvironment {
     fileprivate(set) var sessionToken: SessionToken
     
     fileprivate var availableBitrates: [DownloadValidation.Bitrate]?
-    fileprivate var selectedBitrate: DownloadValidation.Bitrate?
+    fileprivate(set) var selectedBitrate: DownloadValidation.Bitrate?
     
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
@@ -29,52 +29,6 @@ extension DownloadAssetViewModel {
     enum DownloadAssetError: Error {
         case exposure(error: ExposureError)
         case download(error: DownloadError)
-    }
-}
-
-extension DownloadAssetViewModel {
-    func download(assetId: String, callback: @escaping (DownloadTask?, PlaybackEntitlement?, DownloadAssetError?) -> Void) {
-        Entitlement(environment: environment,
-                    sessionToken: sessionToken)
-            .download(assetId: assetId)
-            .use(drm: .fairplay)
-            .request()
-            .validate()
-            .response{ [weak self] (res: ExposureResponse<PlaybackEntitlement>) in
-                guard let entitlement = res.value else {
-                    callback(nil, nil, .exposure(error: res.error!))
-                    return
-                }
-                
-                self?.handle(entitlement: entitlement, assetId: assetId) { task, error in
-                    callback(task, entitlement, error)
-                }
-        }
-    }
-    
-    fileprivate func handle(entitlement: PlaybackEntitlement, assetId: String, callback: (DownloadTask?, DownloadAssetError?) -> Void) {
-        let bps = selectedBitrate?.bitrate != nil ? selectedBitrate!.bitrate!*1000 : nil
-        do {
-            if #available(iOS 10.0, *) {
-                task = try SessionManager
-                    .default
-                    .download(entitlement: entitlement, assetId: assetId)
-                    .use(bitrate: bps)
-                callback(task, nil)
-            } else {
-                let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as! URL
-                let destinationUrl = documentsUrl.appendingPathComponent("\(assetId).m3u8")
-                
-                task = try SessionManager
-                    .default
-                    .download(entitlement: entitlement, assetId: assetId, to: destinationUrl)
-                    .use(bitrate: bps)
-                callback(task, nil)
-            }
-        }
-        catch {
-            callback(nil, .download(error: error as! DownloadError))
-        }
     }
 }
 
@@ -223,11 +177,7 @@ extension DownloadAssetViewModel {
         return SessionManager.default.offline(assetId: assetId)
     }
     
-    func save(assetId: String, entitlement: PlaybackEntitlement, url: URL?) {
-        Downloader.save(assetId: assetId, entitlement: entitlement, url: url)
-    }
-    
-    func remove(assetId: String, clearing url: URL? = nil) {
+    func remove(assetId: String) {
         SessionManager.default.delete(assetId: assetId)
     }
 }
