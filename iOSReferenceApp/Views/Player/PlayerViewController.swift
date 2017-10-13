@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Player
+import Download
 import AVFoundation
 import Exposure
 import Analytics
@@ -218,7 +219,7 @@ extension PlayerViewController {
     }
     
     private func offline(assetId: String) {
-        guard let offline = OfflineAssetTracker.offline(assetId: assetId) else {
+        guard let offline = SessionManager.default.offline(assetId: assetId) else {
             self.showMessage(title: "Offline Playback Error", message: "No local media found for \(assetId)")
             return
         }
