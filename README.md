@@ -20,6 +20,7 @@
 - [x] Multi Device Session Shift.
 - [x] Airplay.
 - [x] Custom playback overlay.
+- [x] Customer configured carousels
 
 ## Requirements
 
@@ -81,7 +82,7 @@ Release specific changes can be found in the [CHANGELOG](https://github.com/Eric
 ## Roadmap
 No formalised roadmap has yet been established but an extensive backlog of possible items exist. The following represent an unordered *wish list* and is subject to change.
 
-- [ ] Carousel integration
+- [x] Carousel integration
 - [ ] Content search
 - [ ] User playback history
 - [ ] Better customization and loading of selected `Environment`s.
