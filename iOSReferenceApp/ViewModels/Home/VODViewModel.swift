@@ -45,7 +45,7 @@ extension VODViewModel: PreviewAssetCellConfig {
     }
 
     func getSectionTitle(atIndex section: Int) -> String {
-        return carousels[section].item.titles?.first?.title ?? "No title"
+        return (carousels[section].item.titles?.first?.title ?? "No title").uppercased()
     }
 }
 

@@ -128,6 +128,10 @@ extension CategoryViewModel {
 
 extension CategoryViewModel {
     var title: String {
+        return categoryTitle.uppercased()
+    }
+    
+    private var categoryTitle: String {
         switch type {
         case .movie: return "Movies"
         case .tvShow: return "Tv Shows"

@@ -9,8 +9,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Helvetica.ttc">
-            <string>Helvetica</string>
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
         </array>
     </customFonts>
     <objects>
@@ -27,8 +27,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="108" height="162"/>
                     </imageView>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sge-bn-gt6">
-                        <rect key="frame" x="10" y="164" width="88" height="14"/>
-                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                        <rect key="frame" x="0.0" y="164" width="108" height="14"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -40,8 +40,8 @@
                 <constraint firstAttribute="bottom" secondItem="ueJ-ft-p9X" secondAttribute="bottom" constant="24" id="9eQ-lr-yDx"/>
                 <constraint firstItem="ueJ-ft-p9X" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Lec-y2-TZ0"/>
                 <constraint firstItem="ueJ-ft-p9X" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Uff-RY-iIM"/>
-                <constraint firstItem="Sge-bn-gt6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="XKA-bS-9WC"/>
-                <constraint firstAttribute="trailing" secondItem="Sge-bn-gt6" secondAttribute="trailing" constant="10" id="ykT-qP-8Pq"/>
+                <constraint firstItem="Sge-bn-gt6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="XKA-bS-9WC"/>
+                <constraint firstAttribute="trailing" secondItem="Sge-bn-gt6" secondAttribute="trailing" id="ykT-qP-8Pq"/>
                 <constraint firstAttribute="trailing" secondItem="ueJ-ft-p9X" secondAttribute="trailing" id="ytb-iw-9jA"/>
             </constraints>
             <size key="customSize" width="233" height="231"/>
