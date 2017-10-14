@@ -11,9 +11,12 @@ import Exposure
 
 class MoreViewController: UIViewController {
 
+    @IBOutlet weak var appSloganLabel: UILabel!
     @IBOutlet weak var refAppVersion: UILabel!
     @IBOutlet weak var playerVersion: UILabel!
     @IBOutlet weak var exposureVersion: UILabel!
+    @IBOutlet weak var analyticsVersion: UILabel!
+    @IBOutlet weak var downloadVersion: UILabel!
     @IBOutlet weak var utilitiesVersion: UILabel!
     
     @IBAction func actionLogout(_ sender: UIButton) {
@@ -39,11 +42,22 @@ class MoreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        appSloganLabel.text = appSlogan()
+        
         refAppVersion.text = framework(identifier: Bundle.main.bundleIdentifier ?? "")
         playerVersion.text = framework(identifier: "com.emp.Player")
         exposureVersion.text = framework(identifier: "com.emp.Exposure")
+        analyticsVersion.text = framework(identifier: "com.emp.Analytics")
+        downloadVersion.text = framework(identifier: "com.emp.Download")
         utilitiesVersion.text = framework(identifier: "com.emp.Utilities")
+    }
+    
+    func appSlogan() -> String {
+        guard let tabVC = self.tabBarController as? HomeTabBarController else {
+            return ""
+        }
+        
+        return tabVC.dynamicCustomerConfig?.serviceSlogan ?? ""
     }
     
     func framework(identifier: String) -> String {
