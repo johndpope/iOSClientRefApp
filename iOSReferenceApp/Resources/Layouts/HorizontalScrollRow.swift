@@ -57,21 +57,34 @@ extension HorizontalScrollRow: UICollectionViewDelegate {
         if let preview = cell as? AssetPreviewCell {
             let vm = viewModel.content[indexPath.row]
             
-            let resizeProcessor = ResizingImageProcessor(referenceSize: viewModel.preferredThumbnailSize, mode: ContentMode.aspectFill)
-            let croppingProcessor = CroppingImageProcessor(size: viewModel.preferredThumbnailSize)
-            let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: 6)
-            let processor = (resizeProcessor>>croppingProcessor)>>roundedRectProcessor
             preview.reset()
             preview.thumbnail(title: vm.anyTitle(locale: "en"))
             if let url = imageUrl(for: indexPath) {
-                preview.thumbnailView.kf.setImage(with: url, options: [.processor(processor)]) { (image, error, _, url) in
-//                preview.thumbnailView.kf.setImage(with: url) { (image, error, _, url) in
-                    if let error = error {
-                        print("Kingfisher: ",error)
-                    }
+                preview
+                    .thumbnailView
+                    .kf
+                    .setImage(with: url, options: thumbnailImageOptions) { (image, error, cache, url) in
+                        if let error = error {
+                            print("Kingfisher: ",error)
+                        }
                 }
             }
         }
+    }
+    
+    private var thumbnailImageProcessor: ImageProcessor {
+        let resizeProcessor = CrispResizingImageProcessor(referenceSize: viewModel.preferredThumbnailSize, mode: ContentMode.aspectFill)
+        let croppingProcessor = CroppingImageProcessor(size: viewModel.preferredThumbnailSize)
+        let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: 6)
+        return (resizeProcessor>>croppingProcessor)>>roundedRectProcessor
+    }
+    
+    private var thumbnailImageOptions: KingfisherOptionsInfo {
+        return [
+            .backgroundDecode,
+            .cacheMemoryOnly,
+            .processor(thumbnailImageProcessor)
+        ]
     }
     
     fileprivate func imageUrl(for indexPath: IndexPath) -> URL? {
