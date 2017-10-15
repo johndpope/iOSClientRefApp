@@ -84,11 +84,15 @@ extension SearchViewController: UICollectionViewDelegate {
 
             preview.reset()
             preview.thumbnail(title: vm.anyTitle(locale: "en"))
+            // We need aspectFit for "general" thumbnail since we have little control over screen size.
+            preview.thumbnailView.contentMode = .scaleAspectFit
             if let url = viewModel.imageUrl(for: indexPath) {
                 preview
                     .thumbnailView
                     .kf
                     .setImage(with: url, options: thumbnailImageOptions) { (image, error, cache, url) in
+                        // AspectFill for images to make sure they "fill" the entire preview.
+                        preview.thumbnailView.contentMode = .scaleAspectFill
                         if let error = error {
                             print("Kingfisher: ",error)
                         }

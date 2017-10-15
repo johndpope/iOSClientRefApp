@@ -89,7 +89,7 @@ extension SearchViewModel {
     
     func preferredThumbnailSize(forWidth width: CGFloat) -> CGSize {
         let cellWidth = width/preferredCellsPerRow - (preferredCellsPerRow - 1)*previewCellPadding
-        let cellHeight =  cellWidth * 16 / 9 - previewCellPadding
+        let cellHeight =  cellWidth * 9 / 6
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
