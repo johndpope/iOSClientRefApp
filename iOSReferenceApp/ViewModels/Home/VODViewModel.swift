@@ -74,6 +74,14 @@ struct CarouselItemViewModel: AssetListType {
     var preferredThumbnailSize: CGSize {
         return CGSize(width: 108, height: 162)
     }
+    
+    func preferredCellSize(forWidth width: CGFloat) -> CGSize {
+        return preferredCellSize
+    }
+    
+    func preferredThumbnailSize(forWidth width: CGFloat) -> CGSize {
+        return preferredThumbnailSize
+    }
 
     var preferredCellsPerRow: CGFloat {
         return 3

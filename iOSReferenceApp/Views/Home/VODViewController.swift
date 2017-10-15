@@ -26,6 +26,24 @@ class VODViewController: UIViewController {
         
         setupViewModel()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let searchImage = #imageLiteral(resourceName: "nav-search").withRenderingMode(.alwaysOriginal)
+        let searchButton = UIBarButtonItem(image: searchImage, landscapeImagePhone: searchImage, style: .plain, target: self, action: #selector(VODViewController.searchAction))
+        
+        tabBarController?.navigationItem.rightBarButtonItems = [searchButton]
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        tabBarController?.navigationItem.rightBarButtonItems = nil
+    }
+    
+    enum Segue: String {
+        case segueVodToSearch = "segueVodToSearch"
+    }
+    func searchAction() {
+        performSegue(withIdentifier: Segue.segueVodToSearch.rawValue, sender: nil)
+    }
 }
 
 extension VODViewController: UITableViewDelegate {
@@ -102,6 +120,14 @@ extension VODViewController {
 
         viewModel?.loadCarousels { [unowned self] _ in
             self.tableView.reloadData()
+        }
+    }
+}
+
+extension VODViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? SearchViewController, segue.identifier == Segue.segueVodToSearch.rawValue {
+            destination.viewModel = SearchViewModel(environment: viewModel.environment, sessionToken: viewModel.sessionToken)
         }
     }
 }
