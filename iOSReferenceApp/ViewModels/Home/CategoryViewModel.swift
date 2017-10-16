@@ -9,22 +9,6 @@
 import Foundation
 import Exposure
 
-protocol AssetListType {
-//    associatedtype AssetType
-
-    var content: [AssetViewModel] { get }
-    var preferredCellSize: CGSize { get }
-    var preferredThumbnailSize: CGSize { get }
-
-    func fetchMetadata(batch: Int, callback: @escaping (Int, ExposureError?) -> Void)
-}
-
-extension AssetListType {
-    func fetchMetadata(batch: Int, callback: @escaping (Int, ExposureError?) -> Void) {
-        callback(-1, nil)
-    }
-}
-
 class CategoryViewModel: AuthorizedEnvironment, AssetListType {
     typealias AssetType = Asset.AssetType
     
@@ -110,11 +94,19 @@ extension CategoryViewModel {
 
 extension CategoryViewModel {
     var preferredCellSize: CGSize {
-        return CGSize(width: 108, height: 186)//CGSize(width: 128, height: 96)
+        return CGSize(width: 108, height: 186)
     }
     
     var preferredThumbnailSize: CGSize {
         return CGSize(width: 108, height: 162)
+    }
+    
+    func preferredCellSize(forWidth width: CGFloat) -> CGSize {
+        return preferredCellSize
+    }
+    
+    func preferredThumbnailSize(forWidth width: CGFloat) -> CGSize {
+        return preferredThumbnailSize
     }
     
     var preferredCellsPerRow: CGFloat {
@@ -128,6 +120,10 @@ extension CategoryViewModel {
 
 extension CategoryViewModel {
     var title: String {
+        return categoryTitle.uppercased()
+    }
+    
+    private var categoryTitle: String {
         switch type {
         case .movie: return "Movies"
         case .tvShow: return "Tv Shows"

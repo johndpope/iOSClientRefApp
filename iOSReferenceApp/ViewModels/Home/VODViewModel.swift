@@ -45,7 +45,7 @@ extension VODViewModel: PreviewAssetCellConfig {
     }
 
     func getSectionTitle(atIndex section: Int) -> String {
-        return carousels[section].item.titles?.first?.title ?? "No title"
+        return (carousels[section].item.titles?.first?.title ?? "No title").uppercased()
     }
 }
 
@@ -73,6 +73,14 @@ struct CarouselItemViewModel: AssetListType {
     
     var preferredThumbnailSize: CGSize {
         return CGSize(width: 108, height: 162)
+    }
+    
+    func preferredCellSize(forWidth width: CGFloat) -> CGSize {
+        return preferredCellSize
+    }
+    
+    func preferredThumbnailSize(forWidth width: CGFloat) -> CGSize {
+        return preferredThumbnailSize
     }
 
     var preferredCellsPerRow: CGFloat {

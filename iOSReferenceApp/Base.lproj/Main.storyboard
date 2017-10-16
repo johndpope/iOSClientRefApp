@@ -371,6 +371,7 @@
                     </tabBarItem>
                     <connections>
                         <outlet property="tableView" destination="lPD-R1-jsZ" id="fF2-me-NqP"/>
+                        <segue destination="6vn-U8-XOv" kind="presentation" identifier="segueVodToSearch" id="JQd-vV-229"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aGv-TY-2GY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1431,6 +1432,62 @@
             </objects>
             <point key="canvasLocation" x="3498.75" y="2815.1408450704225"/>
         </scene>
+        <!--Search View Controller-->
+        <scene sceneID="Z6Y-eQ-ZG8">
+            <objects>
+                <viewController id="6vn-U8-XOv" customClass="SearchViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xc4-Ny-YCV"/>
+                        <viewControllerLayoutGuide type="bottom" id="c6v-V7-l0h"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lt2-OJ-Jh5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bN0-hQ-4ET">
+                                <rect key="frame" x="0.0" y="76" width="414" height="660"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ph2-Su-GKh">
+                                    <size key="itemSize" width="108" height="162"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="6vn-U8-XOv" id="Enj-Bv-xyB"/>
+                                    <outlet property="delegate" destination="6vn-U8-XOv" id="o6e-VA-vXc"/>
+                                </connections>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xp5-9r-IIO">
+                                <rect key="frame" x="0.0" y="20" width="414" height="56"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="AbO-P0-39C"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="c6v-V7-l0h" firstAttribute="top" secondItem="bN0-hQ-4ET" secondAttribute="bottom" id="IO5-Vu-hMA"/>
+                            <constraint firstItem="Xp5-9r-IIO" firstAttribute="leading" secondItem="lt2-OJ-Jh5" secondAttribute="leading" id="NVL-cp-HR6"/>
+                            <constraint firstItem="Xp5-9r-IIO" firstAttribute="top" secondItem="Xc4-Ny-YCV" secondAttribute="bottom" id="PUp-bE-mh7"/>
+                            <constraint firstItem="bN0-hQ-4ET" firstAttribute="leading" secondItem="lt2-OJ-Jh5" secondAttribute="leading" id="RXr-jE-bQy"/>
+                            <constraint firstItem="bN0-hQ-4ET" firstAttribute="top" secondItem="Xp5-9r-IIO" secondAttribute="bottom" id="WOK-c7-jw6"/>
+                            <constraint firstAttribute="trailing" secondItem="bN0-hQ-4ET" secondAttribute="trailing" id="jXv-5d-PPi"/>
+                            <constraint firstAttribute="trailing" secondItem="Xp5-9r-IIO" secondAttribute="trailing" id="nlA-eY-b0f"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <connections>
+                        <outlet property="collectionView" destination="bN0-hQ-4ET" id="cHk-W8-I42"/>
+                        <outlet property="searchContainerView" destination="Xp5-9r-IIO" id="O65-eh-a4Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZiT-pl-5HG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5386.9565217391309" y="2229.6195652173915"/>
+        </scene>
         <!--Manual-->
         <scene sceneID="sP3-2T-Cuc">
             <objects>
@@ -1444,13 +1501,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPO-8j-jce" customClass="LazyScrollView" customModule="iOSReferenceApp" customModuleProvider="target">
-                                <rect key="frame" x="20" y="20" width="374" height="603"/>
+                                <rect key="frame" x="20" y="0.0" width="374" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JUJ-bK-1dG">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="603"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="623"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="5vX-vJ-waR">
-                                                <rect key="frame" x="0.0" y="247" width="374" height="110"/>
+                                                <rect key="frame" x="0.0" y="257" width="374" height="110"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="R4p-9I-G7R" userLabel="m3u8PathTextField" customClass="SkyFloatingLabelTextField" customModule="iOSReferenceApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -1549,7 +1606,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sw3-mp-RmW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4464.375" y="2150.7042253521126"/>
+            <point key="canvasLocation" x="4465" y="2230"/>
         </scene>
     </scenes>
     <resources>

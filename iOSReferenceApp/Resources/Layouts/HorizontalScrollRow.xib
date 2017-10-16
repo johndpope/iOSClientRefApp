@@ -20,7 +20,7 @@
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="gaf-En-Ar2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                        <color key="backgroundColor" red="0.047058823529411764" green="0.054901960784313725" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FAs-kC-0Tw">
                             <size key="itemSize" width="96" height="126"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -33,7 +33,7 @@
                         </connections>
                     </collectionView>
                 </subviews>
-                <color key="backgroundColor" red="0.047058823529411764" green="0.054901960784313725" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="gaf-En-Ar2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Bf8-Ia-vv0"/>
                     <constraint firstAttribute="trailing" secondItem="gaf-En-Ar2" secondAttribute="trailing" id="HnP-rJ-1Cn"/>
@@ -41,6 +41,7 @@
                     <constraint firstAttribute="bottom" secondItem="gaf-En-Ar2" secondAttribute="bottom" id="vlU-ii-i18"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="collectionView" destination="gaf-En-Ar2" id="aaa-gp-6Sm"/>
             </connections>

@@ -59,7 +59,7 @@ extension HorizontalScrollRow: UICollectionViewDelegate {
             
             preview.reset()
             preview.thumbnail(title: vm.anyTitle(locale: "en"))
-            if let url = imageUrl(for: indexPath) {
+            if let url = viewModel.imageUrl(for: indexPath) {
                 preview
                     .thumbnailView
                     .kf
@@ -87,15 +87,6 @@ extension HorizontalScrollRow: UICollectionViewDelegate {
         ]
     }
     
-    fileprivate func imageUrl(for indexPath: IndexPath) -> URL? {
-        return viewModel
-            .content[indexPath.row]
-            .images(locale: "en")
-            .prefere(orientation: .portrait)
-            .validImageUrls()
-            .first
-    }
-    
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let vm = viewModel.content[indexPath.row]
@@ -112,7 +103,7 @@ extension HorizontalScrollRow: UICollectionViewDelegateFlowLayout {
 
 extension HorizontalScrollRow: UICollectionViewDataSourcePrefetching {
     public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let urls = indexPaths.flatMap{ imageUrl(for: $0) }
+        let urls = indexPaths.flatMap{ viewModel.imageUrl(for: $0) }
         ImagePrefetcher(urls: urls).start()
     }
 }
