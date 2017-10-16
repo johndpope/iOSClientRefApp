@@ -38,49 +38,6 @@ class HomeTabBarController: UITabBarController {
         config?.setup { [weak self] in
             self?.loadDynamicConfig()
         }
-        
-//        Search(environment: env)
-//            .autocomplete(for: "ba")
-//            .request()
-//            .validate()
-//            .response{ (resp: ExposureResponse<[SearchResponseAutocomplete]>) in
-//                if let val = resp.value {
-//                    print(val)
-//                }
-//
-//                if let error = resp.error {
-//                    print(error)
-//                }
-//        }
-//
-//        Search(environment: env)
-//            .spelling(for: "ba")
-//            .request()
-//            .validate()
-//            .response{ (resp: ExposureResponse<[SearchResponseSpelling]>) in
-//                if let val = resp.value {
-//                    print(val)
-//                }
-//
-//                if let error = resp.error {
-//                    print(error)
-//                }
-//        }
-//
-//        Search(environment: env)
-//            .query(for: "bahhahahahahahhahahahaah")
-//            .request()
-//            .validate()
-//            .response{ (resp: ExposureResponse<SearchResponseList>) in
-//                if let val = resp.value {
-//                    print(val)
-//                }
-//                
-//                if let error = resp.error {
-//                    print(error)
-//                }
-//                
-//        }
     }
 
     func loadDynamicConfig() {
@@ -115,16 +72,4 @@ class HomeTabBarController: UITabBarController {
             .processor(CrispResizingImageProcessor(referenceSize: logoSize, mode: .aspectFit))
         ]
     }
-//    func fetchFile(name: String? = nil) {
-//        var name = name
-//        if name == nil {
-//            name = config?.customerConfig?.fileNames.first
-//        }
-//        guard let fileName = name else { return }
-//        config?.fetchFile(fileName: fileName,
-//                          completion: { [weak self] file in
-//                            self?.appConfigFile = file
-//        })
-//    }
-
 }
