@@ -15,7 +15,7 @@ class VODViewModel: AuthorizedEnvironment {
     let carouselId: String
     let sessionToken: SessionToken
     
-    fileprivate(set) var carousels: [CarouselItemViewModel] = []
+    fileprivate(set) var carousels: [AssetListType] = []
     
     init(carouselId: String, environment: Environment, sessionToken: SessionToken) {
         self.carouselId = carouselId
@@ -34,18 +34,27 @@ class VODViewModel: AuthorizedEnvironment {
                 callback(response.error)
         }
     }
+    
+    func loadFakeCarousel(callback: @escaping (ExposureError?) -> Void) {
+        let fakeCarousel = CategoryViewModel(type: .movie, environment: environment, sessionToken: sessionToken)
+        carousels = [fakeCarousel]
+        
+        fakeCarousel.fetchMetadata(batch: 1) { _, error in
+            callback(error)
+        }
+    }
 }
 
 // MARK: PreviewAssetCellConfig
 extension VODViewModel: PreviewAssetCellConfig {
     func rowHeight(index: Int) -> CGFloat {
         let carousel = carousels[index]
-        if let items = carousel.item.items?.items, items.isEmpty { return 0 }
-        return (carousel.preferredCellSize.height + 2*carousel.previewCellPadding)
+        if carousel.content.isEmpty { return 0 }
+        return (carousel.preferredCellSize.height + 2*5)
     }
 
     func getSectionTitle(atIndex section: Int) -> String {
-        return (carousels[section].item.titles?.first?.title ?? "No title").uppercased()
+        return carousels[section].anyTitle() ?? "No title"
     }
 }
 
@@ -89,5 +98,9 @@ struct CarouselItemViewModel: AssetListType {
 
     var previewCellPadding: CGFloat {
         return 5
+    }
+    
+    func anyTitle() -> String? {
+        return item.titles?.first?.title?.uppercased()
     }
 }

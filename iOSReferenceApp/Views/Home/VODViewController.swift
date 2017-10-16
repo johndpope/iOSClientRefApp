@@ -112,7 +112,16 @@ extension VODViewController {
             fatalError("Unable to proceed without homeTabBarController")
         }
         
-        guard let carouselGroupId = tabVC.dynamicCustomerConfig?.carouselGroupId else { return }
+        guard let carouselGroupId = tabVC.dynamicCustomerConfig?.carouselGroupId else {
+            viewModel = VODViewModel(carouselId: "fakeCarousel",
+                                     environment: env,
+                                     sessionToken: sessionToken)
+            
+            viewModel?.loadFakeCarousel { [unowned self] _ in
+                self.tableView.reloadData()
+            }
+            return
+        }
 
         viewModel = VODViewModel(carouselId: carouselGroupId,
                                  environment: env,

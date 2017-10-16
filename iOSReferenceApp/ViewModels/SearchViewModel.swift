@@ -105,6 +105,10 @@ extension SearchViewModel {
         return 20
     }
     
+    
+    func anyTitle() -> String? {
+        return "Search".uppercased()
+    }
 }
 
 extension SearchViewModel {

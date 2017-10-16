@@ -57,7 +57,7 @@ extension CategoryViewModel {
         request
             .show(page: batch, spanning: batchSize)
             .filter(on: type)
-            .filter(onlyPublished: false)
+            .filter(onlyPublished: true)
             .sort(on: ["-assetId"])
             .request()
             .response{ [unowned self] (exposure: ExposureResponse<AssetList>) in
@@ -115,6 +115,10 @@ extension CategoryViewModel {
     
     var previewCellPadding: CGFloat {
         return 5
+    }
+    
+    func anyTitle() -> String? {
+        return title
     }
 }
 

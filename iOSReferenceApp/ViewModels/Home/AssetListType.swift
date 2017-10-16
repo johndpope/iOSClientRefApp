@@ -23,6 +23,8 @@ protocol AssetListType {
     func fetchMetadata(batch: Int, callback: @escaping (Int, ExposureError?) -> Void)
     
     func imageUrl(for indexPath: IndexPath) -> URL?
+    
+    func anyTitle() -> String?
 }
 
 extension AssetListType {
