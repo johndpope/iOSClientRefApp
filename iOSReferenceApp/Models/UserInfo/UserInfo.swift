@@ -8,21 +8,22 @@
 
 import Foundation
 import Exposure
+import Utilities
 
 enum UserInfo {
     static var credentials: Credentials? {
         guard let session = sessionToken else { return nil }
         
-        let crmToken = TINY_DB.getString(UserInfo.Lets.KEY_CRM_TOKEN)
-        let accountId = TINY_DB.getString(UserInfo.Lets.KEY_ACCOUNT_ID)
+        let crmToken = TinyDB.getString(UserInfo.Lets.KEY_CRM_TOKEN)
+        let accountId = TinyDB.getString(UserInfo.Lets.KEY_ACCOUNT_ID)
         
         var expiration: Date? = nil
-        if let expirationDateTime = TINY_DB.getString(UserInfo.Lets.KEY_EXPIRATION_DATE_TIME) {
+        if let expirationDateTime = TinyDB.getString(UserInfo.Lets.KEY_EXPIRATION_DATE_TIME) {
             expiration = Date
                 .utcFormatter()
                 .date(from: expirationDateTime)
         }
-        let accountStatus = TINY_DB.getString(UserInfo.Lets.KEY_ACCOUNT_STATUS)
+        let accountStatus = TinyDB.getString(UserInfo.Lets.KEY_ACCOUNT_STATUS)
         
         return Credentials(sessionToken: session,
                            crmToken: crmToken,
@@ -32,13 +33,13 @@ enum UserInfo {
     }
     
     static var sessionToken: SessionToken? {
-        return SessionToken(value: TINY_DB.getString(UserInfo.Lets.KEY_SESSION_TOKEN))
+        return SessionToken(value: TinyDB.getString(UserInfo.Lets.KEY_SESSION_TOKEN))
     }
     
     static var environment: Environment? {
-        guard let customer = TINY_DB.getString(UserInfo.Lets.KEY_CUSTOMER),
-            let businessUnit = TINY_DB.getString(UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT),
-            let environmentUrl = TINY_DB.getString(UserInfo.Lets.KEY_ENVIRONMENT_URL) else { return nil }
+        guard let customer = TinyDB.getString(UserInfo.Lets.KEY_CUSTOMER),
+            let businessUnit = TinyDB.getString(UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT),
+            let environmentUrl = TinyDB.getString(UserInfo.Lets.KEY_ENVIRONMENT_URL) else { return nil }
         
         return Environment(baseUrl: environmentUrl,
                            customer: customer,
@@ -71,16 +72,16 @@ extension UserInfo {
     
     static func clear() {
         // Credentials
-        TINY_DB.removeData(byKey: UserInfo.Lets.KEY_SESSION_TOKEN)
-        TINY_DB.removeData(byKey: UserInfo.Lets.KEY_CRM_TOKEN)
-        TINY_DB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_ID)
-        TINY_DB.removeData(byKey: UserInfo.Lets.KEY_EXPIRATION_DATE_TIME)
-        TINY_DB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_STATUS)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_SESSION_TOKEN)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_CRM_TOKEN)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_ID)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_EXPIRATION_DATE_TIME)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_STATUS)
         
         // Environment
-        TINY_DB.removeData(byKey: UserInfo.Lets.KEY_ENVIRONMENT_URL)
-        TINY_DB.removeData(byKey: UserInfo.Lets.KEY_CUSTOMER)
-        TINY_DB.removeData(byKey: UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ENVIRONMENT_URL)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_CUSTOMER)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT)
     }
 }
 
@@ -91,31 +92,31 @@ extension UserInfo {
         update(sessionToken: credentials.sessionToken)
         
         if let crmToken = credentials.crmToken {
-            TINY_DB.save(crmToken, withKey: UserInfo.Lets.KEY_CRM_TOKEN)
+            TinyDB.save(crmToken, withKey: UserInfo.Lets.KEY_CRM_TOKEN)
         }
         if let accountId = credentials.accountId {
-            TINY_DB.save(accountId, withKey: UserInfo.Lets.KEY_ACCOUNT_ID)
+            TinyDB.save(accountId, withKey: UserInfo.Lets.KEY_ACCOUNT_ID)
         }
         if let expirationDate = credentials.expiration {
             let expiration = Date.utcFormatter().string(from: expirationDate)
-            TINY_DB.save(expiration, withKey: UserInfo.Lets.KEY_EXPIRATION_DATE_TIME)
+            TinyDB.save(expiration, withKey: UserInfo.Lets.KEY_EXPIRATION_DATE_TIME)
         }
         if let accountStatus = credentials.accountStatus {
-            TINY_DB.save(accountStatus, withKey: UserInfo.Lets.KEY_ACCOUNT_STATUS)
+            TinyDB.save(accountStatus, withKey: UserInfo.Lets.KEY_ACCOUNT_STATUS)
         }
     }
     
     static func update(sessionToken: SessionToken) {
-        TINY_DB.save(sessionToken.value, withKey: UserInfo.Lets.KEY_SESSION_TOKEN)
+        TinyDB.save(sessionToken.value, withKey: UserInfo.Lets.KEY_SESSION_TOKEN)
     }
     
     static func update(environment: Environment) {
         // Environment
-        TINY_DB.save(environment.baseUrl, withKey: UserInfo.Lets.KEY_ENVIRONMENT_URL)
+        TinyDB.save(environment.baseUrl, withKey: UserInfo.Lets.KEY_ENVIRONMENT_URL)
         
         // Customer
-        TINY_DB.save(environment.customer, withKey: UserInfo.Lets.KEY_CUSTOMER)
-        TINY_DB.save(environment.businessUnit, withKey: UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT)
+        TinyDB.save(environment.customer, withKey: UserInfo.Lets.KEY_CUSTOMER)
+        TinyDB.save(environment.businessUnit, withKey: UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT)
     }
     
 }

@@ -24,6 +24,9 @@ NO RELEASE DATE SET
 * `EMP-10481` Asset descriptions now fallbacks on any description locale.
 * `EMP-10486` Adopted new `Exposure` based download task.
 
+#### Bug Fixes
+* Task restoration now forwards errors from tasks that completed with an error state.
+
 ## 0.2.0
 Released 5 Sep 2017
 

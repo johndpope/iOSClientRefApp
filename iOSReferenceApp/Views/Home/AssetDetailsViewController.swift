@@ -126,20 +126,8 @@ class AssetDetailsViewController: UIViewController {
         downloadProgressStackView.isHidden = true
         offlineStackView.isHidden = true
         guard let assetId = viewModel.asset.assetId else { return }
-        if let offline = downloadViewModel.offline(assetId: assetId) {
-            offline.state{ [weak self] state in
-                switch state {
-                case .completed:
-                    self?.transitionToDownloadCompletedUI(from: nil)
-                case .notPlayable:
-                    self?.freezeStartDownloadInProgressUI(frozen: true)
-                    self?.configureDownloadTask(assetId: assetId, autostart: false) { [weak self] in
-                        self?.freezeStartDownloadInProgressUI(frozen: false)
-                    }
-                    self?.togglePauseResumeDownload(paused: true)
-                    self?.transitionToDownloadProgressUI(from: nil)
-                }
-            }
+        if downloadViewModel.offline(assetId: assetId) != nil {
+            configureDownloadTask(assetId: assetId, lazily: true, autostart: false)
         }
         else {
             transitionToDownloadUI(from: nil)
@@ -295,12 +283,11 @@ extension AssetDetailsViewController {
     
     @IBAction func downloadAction(_ sender: UIButton) {
         guard let assetId = viewModel.asset.assetId else { return }
-        configureDownloadTask(assetId: assetId, autostart: true)
+        configureDownloadTask(assetId: assetId, lazily: false, autostart: true)
         togglePauseResumeDownload(paused: false)
-        transitionToDownloadProgressUI(from: downloadStackView)
     }
     
-    func configureDownloadTask(assetId: String, autostart: Bool, onPrepared: @escaping () -> Void = { _ in }) {
+    func configureDownloadTask(assetId: String, lazily: Bool, autostart: Bool) {
         
         let downloadTask = downloadViewModel.createDownloadTask(for: assetId)
             .onEntitlementRequestStarted{ [weak self] task in
@@ -313,13 +300,20 @@ extension AssetDetailsViewController {
             .onEntitlementRequestCancelled{ [weak self] task in
                 self?.showMessage(title: "Entitlement Request", message: "Cancelled by User")
             }
-            .onStarted { [weak self] task in
-                print("📱 Media Download started")
+            .onPrepared { [weak self] task in
+                print("📱 Media Download prepared")
+                self?.transitionToDownloadProgressUI(from: self?.downloadStackView)
+                if autostart {
+                    print("📱 Autostarting download")
+                    task.resume()
+                }
             }
             .onSuspended { [weak self] task in
+                print("📱 Media Download suspended")
                 self?.togglePauseResumeDownload(paused: true)
             }
             .onResumed { [weak self] task in
+                print("📱 Media Download resumed")
                 self?.togglePauseResumeDownload(paused: false)
             }
             .onProgress { [weak self] task, progress in
@@ -334,6 +328,7 @@ extension AssetDetailsViewController {
                 print("📱 Downloading media option")
             }
             .onCanceled { [weak self] task, url in
+                print("📱 Download cancelled: \(url)")
                 self?.downloadViewModel.remove(assetId: assetId)
                 self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
             }
@@ -347,13 +342,8 @@ extension AssetDetailsViewController {
             .onCompleted { [weak self] task, url in
                 print("📱 Download completed: \(url)")
                 self?.transitionToDownloadCompletedUI(from: self?.downloadProgressStackView)
-        }
-        
-        onPrepared()
-        
-        if autostart {
-            downloadTask.resume()
-        }
+            }
+            .prepare(lazily: lazily)
     }
     
     func transitionToDownloadUI(from otherView: UIStackView?) {
@@ -445,6 +435,7 @@ extension AssetDetailsViewController {
     }
     
     func transitionToDownloadProgressUI(from otherView: UIStackView?) {
+        
         downloadProgress.setProgress(0, animated: false)
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.downloadProgressStackView.isHidden = false
