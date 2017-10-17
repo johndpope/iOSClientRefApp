@@ -89,39 +89,43 @@ extension AppDelegate {
                 downloadTasks.forEach {
                     print("🛏 found",$0.assetId)
                     // Restore state
-//                    $0.onCanceled{ task, url in
-//                        print("📱 Media Download canceled",task.assetId,url)
-//                        SessionManager.default.delete(assetId: task.assetId)
-//                        }
-//                        .onPrepared { [weak self] task in
-//                            print("📱 Media Download prepared")
-//                        }
-//                        .onSuspended { [weak self] task in
-//                            print("📱 Media Download Suspended")
-//                        }
-//                        .onResumed { [weak self] task in
-//                            print("📱 Media Download Resumed")
-//                        }
-//                        .onProgress { [weak self] task, progress in
-//                            print("📱 Percent",progress.current*100,"%")
-//                        }
-//                        .onShouldDownloadMediaOption{ task, options in
-//                            print("📱 Select media option")
-//                            return nil
-//                        }
-//                        .onDownloadingMediaOption{ task, option in
-//                            print("📱 Downloading media option")
-//                        }
-//                        .onError { [weak self] task, url, error in
-//                            print("📱 Download error: \(error)",url)
-//                        }
-//                        .onCompleted { [weak self] task, url in
-//                            print("📱 Download completed: \(url)")
-//                    }
-//                    .resume()
+//                    log(downloadTask: $0)
                 }
             }
         }
     }
     
+    private func log(downloadTask: DownloadTask) {
+        downloadTask.onCanceled{ task, url in
+            print("📱 Media Download canceled",task.assetId,url)
+            SessionManager.default.delete(assetId: task.assetId)
+            }
+            .onPrepared { [weak self] task in
+                print("📱 Media Download prepared")
+            }
+            .onSuspended { [weak self] task in
+                print("📱 Media Download Suspended")
+            }
+            .onResumed { [weak self] task in
+                print("📱 Media Download Resumed")
+            }
+            .onProgress { [weak self] task, progress in
+                print("📱 Percent",progress.current*100,"%")
+            }
+            .onShouldDownloadMediaOption{ task, options in
+                print("📱 Select media option")
+                return nil
+            }
+            .onDownloadingMediaOption{ task, option in
+                print("📱 Downloading media option")
+            }
+            .onError { [weak self] task, url, error in
+                print("📱 Download error: \(error)",url)
+            }
+            .onCompleted { [weak self] task, url in
+                print("📱 Download completed: \(url)")
+            }
+            .resume()
+
+    }
 }
