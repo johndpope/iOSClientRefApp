@@ -126,21 +126,8 @@ class AssetDetailsViewController: UIViewController {
         downloadProgressStackView.isHidden = true
         offlineStackView.isHidden = true
         guard let assetId = viewModel.asset.assetId else { return }
-        if let offline = downloadViewModel.offline(assetId: assetId) {
+        if downloadViewModel.offline(assetId: assetId) != nil {
             configureDownloadTask(assetId: assetId, lazily: true, autostart: false)
-//            offline.state{ [weak self] state in
-//                switch state {
-//                case .completed:
-//                    self?.transitionToDownloadCompletedUI(from: nil)
-//                case .notPlayable:
-//                    self?.freezeStartDownloadInProgressUI(frozen: true)
-//                    self?.configureDownloadTask(assetId: assetId, autostart: false) { [weak self] in
-//                        self?.freezeStartDownloadInProgressUI(frozen: false)
-//                    }
-//                    self?.togglePauseResumeDownload(paused: true)
-//                    self?.transitionToDownloadProgressUI(from: nil)
-//                }
-//            }
         }
         else {
             transitionToDownloadUI(from: nil)
