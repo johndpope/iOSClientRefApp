@@ -189,11 +189,21 @@ extension AssetDetailsViewController {
                 }
             }
         }
+        else if segue.identifier == Segue.segueDetailsToList.rawValue {
+            if let destination = segue.destination as? OfflineListViewController {
+                destination.onDismissedWithSelection = { selection in
+                    if let newAsset = selection {
+                        newAsset.assetId
+                    }
+                }
+            }
+        }
     }
     
     fileprivate enum Segue: String {
         case segueDetailsToPlayer = "segueDetailsToPlayer"
         case segueOfflineToPlayer = "segueOfflineToPlayer"
+        case segueDetailsToList = "segueDetailsToList"
     }
 }
 

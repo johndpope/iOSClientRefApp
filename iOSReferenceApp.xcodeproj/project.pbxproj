@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		3E6B3B461F84D5100071C10A /* ApplicationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */; };
 		3E9882281F66E46E003467B3 /* AuthorizedEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */; };
+		762383F81F98B6BA0046EF38 /* OfflineListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762383F71F98B6BA0046EF38 /* OfflineListViewController.swift */; };
+		762383FB1F98B8B00046EF38 /* OfflineListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762383F91F98B8B00046EF38 /* OfflineListCell.swift */; };
+		762383FC1F98B8B00046EF38 /* OfflineListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 762383FA1F98B8B00046EF38 /* OfflineListCell.xib */; };
+		762384001F98BDE40046EF38 /* OfflineListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762383FF1F98BDE40046EF38 /* OfflineListCellViewModel.swift */; };
 		7633A9FE1F7F7B5C00580002 /* DownloadAssetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7633A9FD1F7F7B5C00580002 /* DownloadAssetViewModel.swift */; };
 		76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; };
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -133,6 +137,10 @@
 /* Begin PBXFileReference section */
 		3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationConfig.swift; sourceTree = "<group>"; };
 		3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedEnvironment.swift; sourceTree = "<group>"; };
+		762383F71F98B6BA0046EF38 /* OfflineListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineListViewController.swift; sourceTree = "<group>"; };
+		762383F91F98B8B00046EF38 /* OfflineListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineListCell.swift; sourceTree = "<group>"; };
+		762383FA1F98B8B00046EF38 /* OfflineListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfflineListCell.xib; sourceTree = "<group>"; };
+		762383FF1F98BDE40046EF38 /* OfflineListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineListCellViewModel.swift; sourceTree = "<group>"; };
 		7633A9FD1F7F7B5C00580002 /* DownloadAssetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAssetViewModel.swift; sourceTree = "<group>"; };
 		76344F481F7AB3BC0034AEC0 /* Download.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Download.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		764EDC481F5EADFB00569D5B /* environments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = environments.json; sourceTree = SOURCE_ROOT; };
@@ -284,6 +292,8 @@
 				76AF2F151F13B6DB0014F007 /* EPGPreviewCell.swift */,
 				76AF2F161F13B6DB0014F007 /* EPGPreviewCell.xib */,
 				76AE64EA1F90217B0036933E /* GradientView.swift */,
+				762383F91F98B8B00046EF38 /* OfflineListCell.swift */,
+				762383FA1F98B8B00046EF38 /* OfflineListCell.xib */,
 			);
 			path = Layouts;
 			sourceTree = "<group>";
@@ -414,6 +424,7 @@
 				76A843F31EA7886400BDAF2C /* Login */,
 				76B217B21EEABFE3006F334F /* Player */,
 				7672F26A1F93B5E300F892C3 /* SearchViewModel.swift */,
+				762383FF1F98BDE40046EF38 /* OfflineListCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -433,6 +444,7 @@
 				76A843F91EA7886400BDAF2C /* Login */,
 				76A843FD1EA7886400BDAF2C /* Player */,
 				7672F2681F93B01300F892C3 /* SearchViewController.swift */,
+				762383F71F98B6BA0046EF38 /* OfflineListViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -700,6 +712,7 @@
 				F7061C6B1EC5BFAF0041E271 /* icon_pure_512.png in Resources */,
 				76A417121EDED17800677A46 /* AssetPreviewHeaderView.xib in Resources */,
 				7667AECC1EC5E21200C308FC /* Appfile in Resources */,
+				762383FC1F98B8B00046EF38 /* OfflineListCell.xib in Resources */,
 				7667AECD1EC5E21200C308FC /* Fastfile in Resources */,
 				76A843B51EA7856C00BDAF2C /* LaunchScreen.storyboard in Resources */,
 				7667AECF1EC5E29400C308FC /* .env in Resources */,
@@ -742,13 +755,16 @@
 				F793A8551EC5289E00DF7626 /* UITextField+fixCaretPosition.swift in Sources */,
 				F7061C691EC5BFAF0041E271 /* Constants.swift in Sources */,
 				76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */,
+				762384001F98BDE40046EF38 /* OfflineListCellViewModel.swift in Sources */,
 				76A844051EA7886400BDAF2C /* LoginViewController.swift in Sources */,
 				F7061C711EC5CF460041E271 /* UIColorExtension.swift in Sources */,
 				F7A6A15F1ECEDF4600C145E8 /* HomeTabBarController.swift in Sources */,
 				3E9882281F66E46E003467B3 /* AuthorizedEnvironment.swift in Sources */,
 				76A844011EA7886400BDAF2C /* KeyboardAnimationFrame.swift in Sources */,
 				76AF2F041F139D040014F007 /* EPGDetailsViewController.swift in Sources */,
+				762383F81F98B6BA0046EF38 /* OfflineListViewController.swift in Sources */,
 				F793A8451EC516BC00DF7626 /* LazyScrollView.swift in Sources */,
+				762383FB1F98B8B00046EF38 /* OfflineListCell.swift in Sources */,
 				F7061C5F1EC5AF760041E271 /* McPicker.swift in Sources */,
 				7633A9FE1F7F7B5C00580002 /* DownloadAssetViewModel.swift in Sources */,
 				76A417051EDEBF1B00677A46 /* AssetPreviewCell.swift in Sources */,

@@ -148,7 +148,7 @@ extension DownloadAssetViewModel {
     
     internal func size(for bytes: Int64?) -> String {
         guard let bytes = bytes else { return "" }
-        return ByteCountFormatter.string(fromByteCount: bytes, countStyle: ByteCountFormatter.CountStyle.binary)
+        return ByteCountFormatter.string(fromByteCount: bytes, countStyle: ByteCountFormatter.CountStyle.file)
     }
     
     internal func bitrate(for kbps: Int64?) -> String {
