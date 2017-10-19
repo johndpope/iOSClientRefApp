@@ -219,16 +219,24 @@ extension PlayerViewController {
     }
     
     private func offline(assetId: String) {
-//        guard let offline = SessionManager.default.offline(assetId: assetId) else {
-//            self.showMessage(title: "Offline Playback Error", message: "No local media found for \(assetId)")
-//            return
-//        }
-//
-//        guard let urlAsset = offline.urlAsset else {
-//            self.showMessage(title: "Offline Playback Error", message: "Local media for \(assetId) has no url")
-//            return
-//        }
-//        player.offline(entitlement: offline.entitlement, assetId: offline.assetId, urlAsset: urlAsset)
+        guard let offline = ExposureSessionManager
+            .shared
+            .manager
+            .offline(assetId: assetId) else {
+            self.showMessage(title: "Offline Playback Error", message: "No local media found for \(assetId)")
+            return
+        }
+
+        guard let urlAsset = offline.urlAsset else {
+            self.showMessage(title: "Offline Playback Error", message: "Local media for \(assetId) has no url")
+            return
+        }
+        
+        guard let entitlement = offline.entitlement else {
+            self.showMessage(title: "Offline Playback Error", message: "No entitlement found for local media \(assetId)")
+            return
+        }
+        player.offline(entitlement: entitlement, assetId: offline.assetId, urlAsset: urlAsset)
     }
 }
 

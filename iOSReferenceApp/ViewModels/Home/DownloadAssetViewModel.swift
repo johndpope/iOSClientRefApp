@@ -10,6 +10,12 @@ import Foundation
 import Exposure
 import Download
 
+class ExposureSessionManager {
+    static let shared = ExposureSessionManager()
+    
+    let manager = SessionManager<ExposureDownloadTask>()
+}
+
 class DownloadAssetViewModel: AuthorizedEnvironment {
     fileprivate var task: ExposureDownloadTask?
     
@@ -60,8 +66,9 @@ extension DownloadAssetViewModel {
         
         let bps = selectedBitrate?.bitrate != nil ? selectedBitrate!.bitrate!*1000 : nil
         
-        task = SessionManager
-            .default
+        task = ExposureSessionManager
+            .shared
+            .manager
             .download(assetId: assetId,
                       environment: environment,
                       sessionToken: sessionToken)
@@ -134,14 +141,14 @@ extension DownloadAssetViewModel {
     }
     
     internal func downloadedSize(for progress: Double) -> String {
-        guard let bytes = selectedBitrate?.size else { return "n/a" }
+        guard let bytes = selectedBitrate?.size else { return "" }
         let progressBytes = Int64(Double(bytes)*progress)
         return size(for: progressBytes)
     }
     
     internal func size(for bytes: Int64?) -> String {
-        guard let bytes = bytes else { return "n/a" }
-        return ByteCountFormatter.string(fromByteCount: bytes, countStyle: ByteCountFormatter.CountStyle.file)
+        guard let bytes = bytes else { return "" }
+        return ByteCountFormatter.string(fromByteCount: bytes, countStyle: ByteCountFormatter.CountStyle.binary)
     }
     
     internal func bitrate(for kbps: Int64?) -> String {
@@ -191,10 +198,16 @@ extension DownloadAssetViewModel {
 
 extension DownloadAssetViewModel {
     func offline(assetId: String) -> OfflineMediaAsset? {
-        return SessionManager.default.offline(assetId: assetId)
+        return ExposureSessionManager
+            .shared
+            .manager
+            .offline(assetId: assetId)
     }
     
     func remove(assetId: String) {
-        SessionManager.default.delete(assetId: assetId)
+        ExposureSessionManager
+            .shared
+            .manager
+            .delete(assetId: assetId)
     }
 }

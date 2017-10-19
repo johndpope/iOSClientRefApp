@@ -450,7 +450,7 @@ extension AssetDetailsViewController {
         offlineStackView.isHidden = true
     }
     
-    func update(downloadProgress progress: DownloadTask.Progress) {
+    func update(downloadProgress progress: Download.Progress) {
         downloadedSizeLabel.text = downloadViewModel.downloadedSize(for: progress.current)
         downloadProgress.setProgress(Float(progress.current), animated: true)
     }
