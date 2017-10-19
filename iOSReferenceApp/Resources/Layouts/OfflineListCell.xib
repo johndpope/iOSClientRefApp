@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="OfflineListCell" customModule="iOSReferenceApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="84.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9hT-Ja-KfO">
+                        <rect key="frame" x="2" y="2" width="54" height="81"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="9hT-Ja-KfO" secondAttribute="height" multiplier="6:9" id="i06-OT-w2K"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="iWN-md-Ep2">
+                        <rect key="frame" x="63.5" y="14" width="256.5" height="58"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="TSj-hR-fmE">
+                                <rect key="frame" x="0.0" y="0.0" width="180.5" height="58"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="yTj-RJ-HVL">
+                                        <rect key="frame" x="0.0" y="0.0" width="180.5" height="58"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JwG-Mp-ErR">
+                                                <rect key="frame" x="0.0" y="0.0" width="180.5" height="19"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfs-dv-mQd">
+                                                <rect key="frame" x="0.0" y="23" width="180.5" height="15.5"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRq-4I-9MO">
+                                                <rect key="frame" x="0.0" y="42.5" width="180.5" height="15.5"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DeQ-aE-DWO">
+                                <rect key="frame" x="186.5" y="13" width="32" height="32"/>
+                                <state key="normal" image="download-cancel"/>
+                                <connections>
+                                    <action selector="showDetailsAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lxZ-Yj-Sq2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mf1-jZ-3Sq">
+                                <rect key="frame" x="224.5" y="13" width="32" height="32"/>
+                                <state key="normal" image="download-play"/>
+                                <connections>
+                                    <action selector="playAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="kIx-M3-TQz"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="iWN-md-Ep2" secondAttribute="trailing" id="4lf-Jm-bnd"/>
+                    <constraint firstItem="iWN-md-Ep2" firstAttribute="leading" secondItem="9hT-Ja-KfO" secondAttribute="trailing" constant="7.5" id="PyH-22-8oi"/>
+                    <constraint firstItem="9hT-Ja-KfO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="Yln-xP-BiX"/>
+                    <constraint firstItem="9hT-Ja-KfO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="2" id="Yyi-uk-8eq"/>
+                    <constraint firstAttribute="bottom" secondItem="9hT-Ja-KfO" secondAttribute="bottom" constant="2" id="mRJ-y9-KIO"/>
+                    <constraint firstItem="iWN-md-Ep2" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="pjV-Qd-4M9"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="expirationLabel" destination="ZRq-4I-9MO" id="Vkb-Fy-yXs"/>
+                <outlet property="sizeLabel" destination="kfs-dv-mQd" id="JLB-Q1-tZG"/>
+                <outlet property="thumbnailView" destination="9hT-Ja-KfO" id="brA-SM-btU"/>
+                <outlet property="titleLabel" destination="JwG-Mp-ErR" id="MWn-lA-U7r"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="download-cancel" width="32" height="32"/>
+        <image name="download-play" width="32" height="32"/>
+    </resources>
+</document>
