@@ -23,8 +23,6 @@ class OfflineListViewModel: AuthorizedEnvironment {
     }
     
     func fetchContent() -> [OfflineListCellViewModel] {
-        let t: Asset!
-        
         return ExposureSessionManager
             .shared
             .manager

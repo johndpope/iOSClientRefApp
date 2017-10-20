@@ -26,7 +26,7 @@ class VODViewModel: AuthorizedEnvironment {
     }
 
     func loadCarousel(group: String, callback: @escaping (ExposureError?) -> Void) {
-        if group == "fakeCarousel" {
+        if group == "fakeCarousels" {
             loadFakeCarousel(callback: callback)
         }
         else {
@@ -47,11 +47,18 @@ class VODViewModel: AuthorizedEnvironment {
     }
     
     fileprivate func loadFakeCarousel(callback: @escaping (ExposureError?) -> Void) {
-        let fakeCarousel = CategoryViewModel(type: .movie, environment: environment, sessionToken: sessionToken)
-        carousels = [fakeCarousel]
+        let fakeCarousels = [
+            CategoryViewModel(type: .movie, environment: environment, sessionToken: sessionToken),
+            CategoryViewModel(type: .clip, environment: environment, sessionToken: sessionToken)
+        ]
         
-        fakeCarousel.fetchMetadata(batch: 1) { _, error in
-            callback(error)
+        carousels = fakeCarousels
+        
+        fakeCarousels
+            .forEach{
+                $0.fetchMetadata(batch: 1) { _, error in
+                    callback(error)
+                }
         }
     }
 }
