@@ -92,29 +92,26 @@ extension VODViewController: AssetDetailsPresenter {
         return self
     }
 
-    var sessionToken: SessionToken {
-        return viewModel.sessionToken
-    }
     var environment: Environment {
-        return viewModel.environment
+        set{ viewModel.environment = newValue }
+        get { return viewModel.environment }
+    }
+    
+    var sessionToken: SessionToken {
+        set{ viewModel.sessionToken = newValue }
+        get { return viewModel.sessionToken }
     }
 }
 
 extension VODViewController {
     fileprivate func setupViewModel() {
-        guard let env = UserInfo.environment,
-            let sessionToken = UserInfo.sessionToken else {
-            // TODO: Fail gracefully
-            fatalError("Unable to proceed without valid environment")
-        }
-
         guard let tabVC = self.tabBarController as? HomeTabBarController else {
             fatalError("Unable to proceed without homeTabBarController")
         }
         
         guard let carouselGroupId = tabVC.dynamicCustomerConfig?.carouselGroupId else {
             viewModel = VODViewModel(carouselId: "fakeCarousel",
-                                     environment: env,
+                                     environment: environment,
                                      sessionToken: sessionToken)
             
             viewModel?.loadFakeCarousel { [unowned self] _ in
@@ -124,7 +121,7 @@ extension VODViewController {
         }
 
         viewModel = VODViewModel(carouselId: carouselGroupId,
-                                 environment: env,
+                                 environment: environment,
                                  sessionToken: sessionToken)
 
         viewModel?.loadCarousels { [unowned self] _ in

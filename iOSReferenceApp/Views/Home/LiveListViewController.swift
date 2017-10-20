@@ -71,6 +71,9 @@ extension LiveListViewController: UITableViewDataSource {
 }
 
 extension LiveListViewController: AuthorizedEnvironment {
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        viewModel.authorize(environment: environment, sessionToken: sessionToken)
+    }
     var environment: Environment {
         return viewModel.environment
     }
@@ -88,24 +91,8 @@ extension LiveListViewController: AssetDetailsPresenter {
 
 extension LiveListViewController {
     fileprivate func setupViewModel() {
-        guard let env = UserInfo.environment else {
-            // TODO: Fail gracefully
-            fatalError("Unable to proceed without valid environment")
-        }
-        
-        if let credentials = UserInfo.credentials {
-            viewModel = LiveListViewModel(credentials: credentials,
-                                          environment: env)
-            
-        }
-        else if let sessionToken = UserInfo.sessionToken {
-            viewModel = LiveListViewModel(sessionToken: sessionToken,
-                                          environment: env)
-        }
-        else {
-            // TODO: Fail gracefully
-            fatalError("Unable to proceed without valid sessionToken")
-        }
+        viewModel = LiveListViewModel(sessionToken: sessionToken,
+                                          environment: environment)
         
         // Load rows
         viewModel.loadCategories{ [unowned self] section, error in

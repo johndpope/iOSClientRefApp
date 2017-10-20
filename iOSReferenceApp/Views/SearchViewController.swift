@@ -58,11 +58,14 @@ extension SearchViewController: AssetDetailsPresenter {
         return self
     }
     
-    var sessionToken: SessionToken {
-        return viewModel.sessionToken
-    }
     var environment: Environment {
-        return viewModel.environment
+        set{ viewModel.environment = newValue }
+        get { return viewModel.environment }
+    }
+    
+    var sessionToken: SessionToken {
+        set{ viewModel.sessionToken = newValue }
+        get { return viewModel.sessionToken }
     }
 }
 

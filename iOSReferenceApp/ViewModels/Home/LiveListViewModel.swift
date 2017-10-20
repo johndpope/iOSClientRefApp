@@ -10,33 +10,26 @@ import Foundation
 import Exposure
 
 class LiveListViewModel: AuthorizedEnvironment {
-    // MARK: Basics
-    let credentials: Credentials
+    // MARK: AuthorizedEnvironment
+    var environment: Environment
+    var sessionToken: SessionToken
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        self.environment = environment
+        self.sessionToken = sessionToken
+    }
     
     fileprivate(set) var categories: [CategoryViewModel] = []
     
     typealias AssetType = Asset.AssetType
-    
-    init(credentials: Credentials, environment: Environment) {
-        self.credentials = credentials
+    init(sessionToken: SessionToken, environment: Environment) {
+        self.sessionToken = sessionToken
         self.environment = environment
         
         self.categories = [
             .tvChannel,
             .liveEvent,
             ]
-            .map{ CategoryViewModel(type: $0, environment: environment, sessionToken: credentials.sessionToken) }
-    }
-    
-    convenience init(sessionToken: SessionToken, environment: Environment) {
-        let cred = Credentials(sessionToken: sessionToken,
-                               crmToken: nil,
-                               accountId: nil,
-                               expiration: nil,
-                               accountStatus: nil)
-        
-        self.init(credentials: cred,
-                  environment: environment)
+            .map{ CategoryViewModel(type: $0, environment: environment, sessionToken: sessionToken) }
     }
     
     func loadCategories(callback: @escaping (Int?, ExposureError?) -> Void) {
@@ -51,12 +44,6 @@ class LiveListViewModel: AuthorizedEnvironment {
                 }
             }
         }
-    }
-    
-    // MARK: AuthorizedEnvironment
-    let environment: Environment
-    var sessionToken: SessionToken {
-        return credentials.sessionToken
     }
 }
 

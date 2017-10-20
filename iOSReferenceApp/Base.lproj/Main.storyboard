@@ -1541,6 +1541,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="qGP-vf-Rlx" id="vyP-nj-ton"/>
+                        <segue destination="rhs-OU-IKm" kind="presentation" identifier="segueOfflineListToPlayer" id="JGB-CF-Tfa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iq8-Bt-sFm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1707,6 +1708,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="nwT-fg-peA"/>
-        <segue reference="G3d-4d-mII"/>
+        <segue reference="JGB-CF-Tfa"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -499,6 +499,9 @@ extension AssetDetailsViewController {
 
 // MARK: - AuthorizedEnvironment
 extension AssetDetailsViewController: AuthorizedEnvironment {
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        viewModel.authorize(environment: environment, sessionToken: sessionToken)
+    }
     var environment: Environment {
         return viewModel.environment
     }

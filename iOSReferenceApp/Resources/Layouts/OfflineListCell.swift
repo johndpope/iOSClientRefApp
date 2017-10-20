@@ -19,6 +19,7 @@ class OfflineListCell: UITableViewCell {
     @IBOutlet weak var expirationLabel: UILabel!
     
     fileprivate var viewModel: OfflineListCellViewModel!
+    var onPlaySelected: (OfflineMediaAsset) -> Void = { _ in }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -59,7 +60,7 @@ class OfflineListCell: UITableViewCell {
     }
     
     @IBAction func playAction(_ sender: UIButton) {
-        
+        onPlaySelected(viewModel.offlineAsset)
     }
     
     @IBAction func showDetailsAction(_ sender: UIButton) {

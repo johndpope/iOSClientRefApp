@@ -11,6 +11,15 @@ import UIKit
 import Exposure
 
 class OfflineListViewController: UIViewController {
+    var viewModel: OfflineListViewModel!
+    struct OfflineListViewModel: AuthorizedEnvironment {
+        var environment: Environment
+        var sessionToken: SessionToken
+        func authorize(environment: Environment, sessionToken: SessionToken) {
+            self.environment = environment
+            self.sessionToken = sessionToken
+        }
+    }
     
     fileprivate var content: [OfflineListCellViewModel] = []
     
@@ -35,6 +44,23 @@ class OfflineListViewController: UIViewController {
     }
 }
 
+extension OfflineListViewController {
+    enum Segue: String {
+        case segueOfflineListToPlayer = "segueOfflineListToPlayer"
+    }
+}
+
+extension OfflineListViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Segue.segueOfflineListToPlayer.rawValue {
+            if let destination = segue.destination as? PlayerViewController, let assetId = sender as? String {
+                destination.viewModel = PlayerViewModel(sessionToken: sessionToken,
+                                                        environment: environment,
+                                                        playRequest: .offline(assetId: assetId))
+            }
+        }
+    }
+}
 extension OfflineListViewController {
     func unwind(with offlineMediaAsset: OfflineMediaAsset?) {
         
@@ -62,10 +88,29 @@ extension OfflineListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? OfflineListCell {
             cell.bind(viewModel: content[indexPath.row])
+            cell.onPlaySelected = { [weak self] offlineMedia in
+                self?.performSegue(withIdentifier: Segue.segueOfflineListToPlayer.rawValue, sender: offlineMedia.assetId)
+            }
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+}
+
+
+
+// MARK: - AuthorizedEnvironment
+extension OfflineListViewController: AuthorizedEnvironment {
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        viewModel.authorize(environment: environment, sessionToken: sessionToken)
+    }
+    var environment: Environment {
+        return viewModel.environment
+    }
+    
+    var sessionToken: SessionToken {
+        return viewModel.sessionToken
     }
 }

@@ -11,8 +11,13 @@ import Exposure
 
 class AssetDetailsViewModel: AuthorizedEnvironment {
     fileprivate(set) var asset: Asset
-    fileprivate(set) var environment: Environment
-    fileprivate(set) var sessionToken: SessionToken
+    
+    var environment: Environment
+    var sessionToken: SessionToken
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        self.environment = environment
+        self.sessionToken = sessionToken
+    }
     
     init(asset: Asset, environment: Environment, sessionToken: SessionToken) {
         self.asset = asset

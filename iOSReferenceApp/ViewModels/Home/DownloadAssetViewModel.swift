@@ -14,8 +14,13 @@ import Kingfisher
 class DownloadAssetViewModel: AuthorizedEnvironment {
     fileprivate var task: ExposureDownloadTask?
     
-    fileprivate(set) var environment: Environment
-    fileprivate(set) var sessionToken: SessionToken
+    
+    var environment: Environment
+    var sessionToken: SessionToken
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        self.environment = environment
+        self.sessionToken = sessionToken
+    }
     
     fileprivate var availableBitrates: [DownloadValidation.Bitrate]?
     fileprivate var selectedBitrate: DownloadValidation.Bitrate?
