@@ -27,6 +27,7 @@ NO RELEASE DATE SET
 
 #### Bug Fixes
 * Task restoration now forwards errors from tasks that completed with an error state.
+* Logout response handled correctly
 
 ## 0.2.0
 Released 5 Sep 2017
