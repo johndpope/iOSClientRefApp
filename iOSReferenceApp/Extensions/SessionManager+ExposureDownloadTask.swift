@@ -15,6 +15,15 @@ extension SessionManager where T == ExposureDownloadTask {
         return offlineAssets().map{ return ($0, retrieveMetaData(for: $0.assetId)) }
     }
     
+    func removeMetaData(for asset: Asset) {
+        guard let assetId = asset.assetId else { return }
+        let all = retrieveMetaData() ?? []
+        
+        let filtered = all.filter{ $0.assetId != assetId }
+        
+        persist(metaData: filtered)
+    }
+    
     func storeMetaData(for asset: Asset) {
         guard let assetId = asset.assetId else { return }
         let all = retrieveMetaData() ?? []
@@ -22,10 +31,14 @@ extension SessionManager where T == ExposureDownloadTask {
         var filtered = all.filter{ $0.assetId != assetId }
         filtered.append(asset)
         
+        persist(metaData: filtered)
+    }
+    
+    private func persist(metaData: [Asset]) {
         do {
             let dirURL = try baseDirectory()
             
-            let data = try JSONEncoder().encode(filtered)
+            let data = try JSONEncoder().encode(metaData)
             try data.persist(as: metaDataStorageFileName, at: dirURL)
         }
         catch {
