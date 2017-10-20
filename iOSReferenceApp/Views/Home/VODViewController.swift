@@ -136,7 +136,8 @@ extension VODViewController {
 extension VODViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? SearchViewController, segue.identifier == Segue.segueVodToSearch.rawValue {
-            destination.viewModel = SearchViewModel(environment: viewModel.environment, sessionToken: viewModel.sessionToken)
+            destination.viewModel = SearchViewModel(environment: viewModel.environment,
+                                                    sessionToken: viewModel.sessionToken)
         }
     }
 }

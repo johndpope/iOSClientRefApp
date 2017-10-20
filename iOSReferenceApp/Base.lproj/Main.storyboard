@@ -772,7 +772,7 @@
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3Lk-W1-u3S">
                                                                         <rect key="frame" x="0.0" y="0.0" width="394" height="16.333333333333371"/>
                                                                         <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actors: Some Actor, Good Actor vhfhfhfhfhfhfhfhfhf f fhfh f fhfhhfhf f f" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4b-sn-EMC">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actors: One Actor, Another Person" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4b-sn-EMC">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="394" height="16.333333333333371"/>
                                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -1216,8 +1216,8 @@
                     <connections>
                         <segue destination="sWK-wV-p5O" kind="relationship" relationship="viewControllers" id="qPl-Se-FRj"/>
                         <segue destination="omF-aQ-R7h" kind="relationship" relationship="viewControllers" id="1eZ-LP-5jw"/>
-                        <segue destination="wMZ-we-7Yb" kind="relationship" relationship="viewControllers" id="IQR-xP-n1i"/>
-                        <segue destination="AuL-Nc-sbI" kind="relationship" relationship="viewControllers" id="CIP-Cj-WBq"/>
+                        <segue destination="qZW-VQ-sPH" kind="relationship" relationship="viewControllers" id="nwT-fg-peA"/>
+                        <segue destination="wMZ-we-7Yb" kind="relationship" relationship="viewControllers" id="Yau-6m-wMv"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nw6-SM-PPD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1498,11 +1498,11 @@
                         <viewControllerLayoutGuide type="bottom" id="xls-Of-P79"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="CkJ-Dq-pOL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="579"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qGP-vf-Rlx">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="579"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1530,6 +1530,7 @@
                             <constraint firstItem="qGP-vf-Rlx" firstAttribute="top" secondItem="byQ-FL-PIU" secondAttribute="bottom" id="gHj-NG-71L"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Offline" id="Wse-qM-a7Q"/>
                     <navigationItem key="navigationItem" title="Offline Assets" id="hLW-j1-wTE">
                         <barButtonItem key="leftBarButtonItem" image="nav-back" id="xCW-Wf-r8I">
                             <color key="tintColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -1673,7 +1674,7 @@
                     <tabBarItem key="tabBarItem" title="Offline" id="27r-GM-dZP"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="QsB-Qj-KOE">
-                        <rect key="frame" x="0.0" y="-44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
@@ -1705,7 +1706,7 @@
         <image name="star-unfilled" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CIP-Cj-WBq"/>
+        <segue reference="nwT-fg-peA"/>
         <segue reference="G3d-4d-mII"/>
     </inferredMetricsTieBreakers>
 </document>
