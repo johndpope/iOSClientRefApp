@@ -32,7 +32,7 @@ class MoreViewController: UIViewController {
             .logout(sessionToken: sessionToken)
             .request()
             .validate()
-            .response{ (exposureResponse: ExposureResponse<[String:Any]>) in
+            .response{ (exposureResponse: ExposureResponse<AnyJSONType>) in
                 if let error = exposureResponse.error {
                     print(error)
                 }
