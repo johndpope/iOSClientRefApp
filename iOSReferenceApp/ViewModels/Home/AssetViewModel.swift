@@ -9,7 +9,7 @@
 import Foundation
 import Exposure
 
-class AssetViewModel: LocalizedEntity {
+class AssetViewModel: LocalizedAssetEntity {
     fileprivate(set) var asset: Asset
     
     typealias ExposureImage = Image
@@ -21,34 +21,6 @@ class AssetViewModel: LocalizedEntity {
     }
     
     fileprivate(set) var type: Asset.AssetType
-}
-
-extension AssetViewModel {
-    var locales: [String] {
-        return asset.localized?.flatMap{ $0.locale } ?? []
-    }
-    
-    func localizedData(locale: String) -> LocalizedData? {
-        return asset.localized?.filter{ $0.locale == locale }.first
-    }
-    
-    func localizations() -> [LocalizedData] {
-        return asset.localized ?? []
-    }
-    
-    func anyTitle(locale: String) -> String {
-        if let title = title(locale: locale) { return title }
-        else if let originalTitle = asset.originalTitle { return originalTitle }
-        else if let assetId = asset.assetId { return assetId }
-        return "NO TITIE"
-    }
-    
-    func anyDescription(locale: String) -> String {
-        if let description = localizedData(locale: locale)?.allDescriptions().last {
-            return description
-        }
-        return localizations().flatMap{ $0.allDescriptions() }.last ?? ""
-    }
 }
 
 extension AssetViewModel: Hashable {

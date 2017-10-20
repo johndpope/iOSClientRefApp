@@ -40,31 +40,9 @@ class EPGDetailsViewModel {
     }
 }
 
-extension EPGDetailsViewModel: LocalizedEntity {
-    var locales: [String] {
-        return channelAsset.localized?.flatMap{ $0.locale } ?? []
-    }
-    
-    func localizedData(locale: String) -> LocalizedData? {
-        return channelAsset.localized?.filter{ $0.locale == locale }.first
-    }
-    
-    func localizations() -> [LocalizedData] {
-        return channelAsset.localized ?? []
-    }
-    
-    func anyTitle(locale: String) -> String {
-        if let title = title(locale: locale) { return title }
-        else if let originalTitle = channelAsset.originalTitle { return originalTitle }
-        else if let assetId = channelAsset.assetId { return assetId }
-        return "CHANNEL"
-    }
-    
-    func anyDescription(locale: String) -> String {
-        if let description = localizedData(locale: locale)?.allDescriptions().last {
-            return description
-        }
-        return localizations().flatMap{ $0.allDescriptions() }.last ?? ""
+extension EPGDetailsViewModel: LocalizedAssetEntity {
+    var asset: Asset {
+        return channelAsset
     }
 }
 

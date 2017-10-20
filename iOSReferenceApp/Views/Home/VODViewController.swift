@@ -79,8 +79,8 @@ extension VODViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HorizontalScrollRow") as! HorizontalScrollRow
         guard let carousel = viewModel?.carousels[indexPath.section] else { fatalError("No carousels") }
         cell.bind(viewModel: carousel)
-        cell.cellSelected = { [unowned self] asset in
-            self.presetDetails(for: asset)
+        cell.cellSelected = { [weak self] asset in
+            self?.presetDetails(for: asset, from: .other)
         }
         
         return cell

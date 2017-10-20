@@ -65,7 +65,7 @@ extension LiveListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HorizontalScrollRow") as! HorizontalScrollRow
         cell.bind(viewModel: viewModel.categories[indexPath.section])
         cell.cellSelected = { [unowned self] asset in
-            self.presetDetails(for: asset)
+            self.presetDetails(for: asset, from: .other)
         }
         
         return cell

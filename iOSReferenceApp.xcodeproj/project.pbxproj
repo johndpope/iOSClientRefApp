@@ -77,6 +77,9 @@
 		76AF2F181F13B6DB0014F007 /* EPGPreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76AF2F161F13B6DB0014F007 /* EPGPreviewCell.xib */; };
 		76B217B41EEABFED006F334F /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B217B31EEABFED006F334F /* PlayerViewModel.swift */; };
 		76B217B61EEAC6DB006F334F /* ManualPlaybackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B217B51EEAC6DB006F334F /* ManualPlaybackView.swift */; };
+		76BB35A51F9A28CD00C2B386 /* OfflineListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A41F9A28CD00C2B386 /* OfflineListViewModel.swift */; };
+		76BB35A71F9A29C200C2B386 /* Asset+LocalizedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */; };
+		76BB35A91F9A2A7100C2B386 /* LocalizedAssetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */; };
 		76BBFB7E1EA8CF2E001DBDDB /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */; };
 		76C7DDE61F235D74008FE955 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7DDE51F235D74008FE955 /* Analytics.framework */; };
 		76C7DDE71F235D74008FE955 /* Analytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7DDE51F235D74008FE955 /* Analytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -213,6 +216,9 @@
 		76AF2F161F13B6DB0014F007 /* EPGPreviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EPGPreviewCell.xib; sourceTree = "<group>"; };
 		76B217B31EEABFED006F334F /* PlayerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
 		76B217B51EEAC6DB006F334F /* ManualPlaybackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualPlaybackView.swift; sourceTree = "<group>"; };
+		76BB35A41F9A28CD00C2B386 /* OfflineListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineListViewModel.swift; sourceTree = "<group>"; };
+		76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Asset+LocalizedEntity.swift"; sourceTree = "<group>"; };
+		76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedAssetEntity.swift; sourceTree = "<group>"; };
 		76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = SOURCE_ROOT; };
 		76C7DDE51F235D74008FE955 /* Analytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Analytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76D704551F92273400D6FC6B /* CrispResizingImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrispResizingImageProcessor.swift; sourceTree = "<group>"; };
@@ -276,6 +282,7 @@
 				766502FD1F99CB29009A5BFE /* Date+Extensions.swift */,
 				766502FC1F99CB29009A5BFE /* Sequence+Extensions.swift */,
 				766502F81F99CA4E009A5BFE /* SessionManager+ExposureDownloadTask.swift */,
+				76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -444,7 +451,9 @@
 				76B217B21EEABFE3006F334F /* Player */,
 				7672F26A1F93B5E300F892C3 /* SearchViewModel.swift */,
 				762383FF1F98BDE40046EF38 /* OfflineListCellViewModel.swift */,
+				76BB35A41F9A28CD00C2B386 /* OfflineListViewModel.swift */,
 				766502F31F99C8FD009A5BFE /* LocalizedEntity.swift */,
+				76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -770,11 +779,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				76A44C9E1F1637A7008992E9 /* MoreViewController.swift in Sources */,
+				76BB35A71F9A29C200C2B386 /* Asset+LocalizedEntity.swift in Sources */,
 				766502F91F99CA4E009A5BFE /* SessionManager+ExposureDownloadTask.swift in Sources */,
 				3E6B3B461F84D5100071C10A /* ApplicationConfig.swift in Sources */,
 				F793A8551EC5289E00DF7626 /* UITextField+fixCaretPosition.swift in Sources */,
 				F7061C691EC5BFAF0041E271 /* Constants.swift in Sources */,
 				76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */,
+				76BB35A91F9A2A7100C2B386 /* LocalizedAssetEntity.swift in Sources */,
 				762384001F98BDE40046EF38 /* OfflineListCellViewModel.swift in Sources */,
 				76A844051EA7886400BDAF2C /* LoginViewController.swift in Sources */,
 				F7061C711EC5CF460041E271 /* UIColorExtension.swift in Sources */,
@@ -788,6 +799,7 @@
 				762383FB1F98B8B00046EF38 /* OfflineListCell.swift in Sources */,
 				F7061C5F1EC5AF760041E271 /* McPicker.swift in Sources */,
 				7633A9FE1F7F7B5C00580002 /* DownloadAssetViewModel.swift in Sources */,
+				76BB35A51F9A28CD00C2B386 /* OfflineListViewModel.swift in Sources */,
 				76A417051EDEBF1B00677A46 /* AssetPreviewCell.swift in Sources */,
 				76A4170D1EDEC9A400677A46 /* HorizontalScrollRow.swift in Sources */,
 				766502FE1F99CB29009A5BFE /* Sequence+Extensions.swift in Sources */,

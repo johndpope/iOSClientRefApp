@@ -10,7 +10,7 @@ import Foundation
 import Exposure
 
 class AssetDetailsViewModel: AuthorizedEnvironment {
-    fileprivate(set) var asset: Asset
+    var asset: Asset
     
     var environment: Environment
     var sessionToken: SessionToken
@@ -129,30 +129,6 @@ extension AssetDetailsViewModel {
     }
 }
 
-extension AssetDetailsViewModel: LocalizedEntity {
-    var locales: [String] {
-        return asset.localized?.flatMap{ $0.locale } ?? []
-    }
+extension AssetDetailsViewModel: LocalizedAssetEntity {
     
-    func localizedData(locale: String) -> LocalizedData? {
-        return asset.localized?.filter{ $0.locale == locale }.first
-    }
-    
-    func localizations() -> [LocalizedData] {
-        return asset.localized ?? []
-    }
-    
-    func anyTitle(locale: String) -> String {
-        if let title = title(locale: locale) { return title }
-        else if let originalTitle = asset.originalTitle { return originalTitle }
-        else if let assetId = asset.assetId { return assetId }
-        return "NO TITIE"
-    }
-    
-    func anyDescription(locale: String) -> String {
-        if let description = localizedData(locale: locale)?.allDescriptions().last {
-            return description
-        }
-        return localizations().flatMap{ $0.allDescriptions() }.last ?? ""
-    }
 }

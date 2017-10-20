@@ -10,28 +10,21 @@ import Foundation
 import UIKit
 import Exposure
 
-class OfflineListViewController: UIViewController {
-    var viewModel: OfflineListViewModel!
+class OfflineListViewController: UIViewController, AssetDetailsPresenter {
+    var assetDetailsPresenter: UIViewController { return self }
     
-    class OfflineListViewModel: AuthorizedEnvironment {
-        var environment: Environment
-        var sessionToken: SessionToken
-        func authorize(environment: Environment, sessionToken: SessionToken) {
-            self.environment = environment
-            self.sessionToken = sessionToken
-        }
-        
-        init(environment: Environment, sessionToken: SessionToken) {
-            self.environment = environment
-            self.sessionToken = sessionToken
-        }
-    }
+    var viewModel: OfflineListViewModel!
     
     fileprivate var content: [OfflineListCellViewModel] = []
     
     @IBOutlet weak var tableView: UITableView!
     
-    var onDismissedWithSelection: (OfflineMediaAsset?) -> Void = { _ in }
+    var presentedFrom: PresentedFrom = .other
+    enum PresentedFrom {
+        case assetDetails(onSelected: (OfflineMediaAsset, Asset?) -> Void)
+        case other
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,23 +35,25 @@ class OfflineListViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        content = ExposureSessionManager
-            .shared
-            .manager
-            .offlineAssetsWithMetaData()
-            .map{ OfflineListCellViewModel(offlineAsset: $0.0, metaData: $0.1) }
+        content = viewModel.fetchContent()
         
         navigationItem.hidesBackButton = tabBarController != nil
     }
     
     @IBAction func unwindListAction(_ sender: UIBarButtonItem) {
-        unwind(with: nil)
+        unwind()
+    }
+    
+    func unwind() {
+        // This should be called ONLY when the list was presented modaly inside a navController, typically by a "back" button in the navBar (which wont be visible otherwise)
+        navigationController?.dismiss(animated: true)
     }
 }
 
 extension OfflineListViewController {
     enum Segue: String {
         case segueOfflineListToPlayer = "segueOfflineListToPlayer"
+        case segueOfflineListToDetails = "segueOfflineListToDetails"
     }
 }
 
@@ -71,12 +66,6 @@ extension OfflineListViewController {
                                                         playRequest: .offline(assetId: assetId))
             }
         }
-    }
-}
-extension OfflineListViewController {
-    func unwind(with offlineMediaAsset: OfflineMediaAsset?) {
-        onDismissedWithSelection(offlineMediaAsset)
-        navigationController?.dismiss(animated: true)
     }
 }
 
@@ -107,6 +96,21 @@ extension OfflineListViewController: UITableViewDelegate {
             
             content.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let vm = content[indexPath.row]
+        switch presentedFrom {
+        case .assetDetails(onSelected: let callback):
+            callback(vm.offlineAsset, vm.asset)
+            unwind()
+        case .other:
+            guard let asset = vm.asset else { return }
+            presetDetails(for: asset, from: .offlineList)
         }
     }
 }
