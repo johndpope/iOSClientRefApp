@@ -38,11 +38,17 @@ class OfflineListViewController: UIViewController {
         
         tableView.register(UINib(nibName: "OfflineListCell", bundle: nil),
                            forCellReuseIdentifier: "offlineListCell")
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         content = ExposureSessionManager
             .shared
             .manager
             .offlineAssetsWithMetaData()
             .map{ OfflineListCellViewModel(offlineAsset: $0.0, metaData: $0.1) }
+        
+        navigationItem.hidesBackButton = tabBarController != nil
     }
     
     @IBAction func unwindListAction(_ sender: UIBarButtonItem) {
@@ -69,7 +75,6 @@ extension OfflineListViewController {
 }
 extension OfflineListViewController {
     func unwind(with offlineMediaAsset: OfflineMediaAsset?) {
-        
         onDismissedWithSelection(offlineMediaAsset)
         navigationController?.dismiss(animated: true)
     }
