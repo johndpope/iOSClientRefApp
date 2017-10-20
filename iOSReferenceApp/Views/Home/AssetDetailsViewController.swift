@@ -194,6 +194,7 @@ extension AssetDetailsViewController {
                 destination.onDismissedWithSelection = { selection in
                     if let newAsset = selection {
                         newAsset.assetId
+                        // TODO: Replace current asset details with the selected one
                     }
                 }
             }
