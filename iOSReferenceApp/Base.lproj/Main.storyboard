@@ -335,14 +335,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lPD-R1-jsZ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-martian-poster" translatesAutoresizingMaskIntoConstraints="NO" id="kK1-z0-gFy">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="04p-dc-9JZ">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0Xf-Q8-HSk">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdV-bz-5DC">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tAj-xR-SZo">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <vibrancyEffect>
+                                                <blurEffect style="light"/>
+                                            </vibrancyEffect>
+                                        </visualEffectView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="tdV-bz-5DC" secondAttribute="trailing" id="Aaw-M2-7Vo"/>
+                                        <constraint firstItem="tdV-bz-5DC" firstAttribute="top" secondItem="0Xf-Q8-HSk" secondAttribute="top" id="Tjv-B8-1ep"/>
+                                        <constraint firstAttribute="bottom" secondItem="tdV-bz-5DC" secondAttribute="bottom" id="yeT-ZF-WGS"/>
+                                        <constraint firstItem="tdV-bz-5DC" firstAttribute="leading" secondItem="0Xf-Q8-HSk" secondAttribute="leading" id="zlW-ta-r4r"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="lPD-R1-jsZ">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="sectionIndexBackgroundColor" red="0.047058823529411764" green="0.054901960784313725" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5aR-Wj-0Ra" customClass="HorizontalScrollRow" customModule="iOSReferenceApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5aR-Wj-0Ra" id="Ilf-4j-MKk">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -360,16 +389,25 @@
                         </subviews>
                         <color key="backgroundColor" red="0.047058823529411764" green="0.054901960784313725" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="L7t-yB-8A2" firstAttribute="top" secondItem="lPD-R1-jsZ" secondAttribute="bottom" id="KKg-P5-Kn3"/>
-                            <constraint firstAttribute="trailing" secondItem="lPD-R1-jsZ" secondAttribute="trailing" id="bYa-6d-nZD"/>
-                            <constraint firstItem="lPD-R1-jsZ" firstAttribute="leading" secondItem="sPM-Tb-kjF" secondAttribute="leading" id="qec-rr-JFy"/>
-                            <constraint firstItem="lPD-R1-jsZ" firstAttribute="top" secondItem="apg-qT-4tG" secondAttribute="bottom" id="ybN-Rb-kXT"/>
+                            <constraint firstItem="kK1-z0-gFy" firstAttribute="leading" secondItem="sPM-Tb-kjF" secondAttribute="leading" id="46S-mY-obB"/>
+                            <constraint firstItem="lPD-R1-jsZ" firstAttribute="top" secondItem="apg-qT-4tG" secondAttribute="bottom" id="70a-Py-1UE"/>
+                            <constraint firstAttribute="trailing" secondItem="kK1-z0-gFy" secondAttribute="trailing" id="FpG-T4-CgJ"/>
+                            <constraint firstItem="kK1-z0-gFy" firstAttribute="top" secondItem="apg-qT-4tG" secondAttribute="bottom" id="Hqg-2r-krf"/>
+                            <constraint firstItem="L7t-yB-8A2" firstAttribute="top" secondItem="lPD-R1-jsZ" secondAttribute="bottom" id="P3Z-dX-Fei"/>
+                            <constraint firstItem="04p-dc-9JZ" firstAttribute="top" secondItem="apg-qT-4tG" secondAttribute="bottom" id="Rnm-CH-VxL"/>
+                            <constraint firstItem="L7t-yB-8A2" firstAttribute="top" secondItem="04p-dc-9JZ" secondAttribute="bottom" id="aZh-eF-j2s"/>
+                            <constraint firstItem="L7t-yB-8A2" firstAttribute="top" secondItem="kK1-z0-gFy" secondAttribute="bottom" id="j2U-RE-IWB"/>
+                            <constraint firstItem="lPD-R1-jsZ" firstAttribute="leading" secondItem="sPM-Tb-kjF" secondAttribute="leading" id="joV-Wr-ahY"/>
+                            <constraint firstAttribute="trailing" secondItem="lPD-R1-jsZ" secondAttribute="trailing" id="jqO-Fi-2Zb"/>
+                            <constraint firstItem="04p-dc-9JZ" firstAttribute="leading" secondItem="sPM-Tb-kjF" secondAttribute="leading" id="khm-Jo-xFL"/>
+                            <constraint firstAttribute="trailing" secondItem="04p-dc-9JZ" secondAttribute="trailing" id="oCh-xc-aZd"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="VOD" id="X6n-BH-kQn">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="backgroundView" destination="kK1-z0-gFy" id="niI-xl-TPk"/>
                         <outlet property="tableView" destination="lPD-R1-jsZ" id="fF2-me-NqP"/>
                         <segue destination="6vn-U8-XOv" kind="presentation" identifier="segueVodToSearch" id="JQd-vV-229"/>
                     </connections>
@@ -1210,7 +1248,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.047058823529411764" green="0.054901960784313725" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.070588235294117646" green="0.074509803921568626" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
@@ -1232,7 +1270,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="OXG-cX-7fF">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.047058823529411764" green="0.054901960784313725" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.070588235294117646" green="0.074509803921568626" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                 </navigationController>
@@ -1248,7 +1286,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="UkT-9e-mLJ">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.047058823529411764" green="0.054901960784313725" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.070588235294117646" green="0.074509803921568626" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1498,11 +1536,11 @@
                         <viewControllerLayoutGuide type="bottom" id="xls-Of-P79"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="CkJ-Dq-pOL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qGP-vf-Rlx">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1677,7 +1715,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="QsB-Qj-KOE">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.070588235294117646" green="0.074509803921568626" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1705,9 +1743,10 @@
         <image name="play" width="75" height="75"/>
         <image name="star-filled" width="22" height="22"/>
         <image name="star-unfilled" width="22" height="22"/>
+        <image name="the-martian-poster" width="1382" height="2048"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nwT-fg-peA"/>
-        <segue reference="f4H-my-9wa"/>
+        <segue reference="nQt-zF-1Mn"/>
+        <segue reference="G3d-4d-mII"/>
     </inferredMetricsTieBreakers>
 </document>

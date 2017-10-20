@@ -13,6 +13,7 @@ import Exposure
 class HorizontalScrollRow: UITableViewCell {
     
     var cellSelected: (Asset) -> Void = { _ in }
+    var didScrollLoadImage: (UIImage) -> Void = { _ in }
     
     @IBOutlet weak var collectionView: UICollectionView!
     fileprivate(set) var viewModel: AssetListType!
@@ -53,19 +54,29 @@ extension HorizontalScrollRow: UICollectionViewDataSource {
 
 extension HorizontalScrollRow: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
         preloadNextBatch(after: indexPath)
         if let preview = cell as? AssetPreviewCell {
             let vm = viewModel.content[indexPath.row]
             
             preview.reset()
+            preview.applyShadow(cornerRadius: viewModel.thumbnailCornerRadius)
+            let borderColor = UIColor("0C0E0F")
+            let oddOrEven = indexPath.row % 2 == 0
+            let background = oddOrEven ? UIColor("0F273D") : UIColor("0F4A3D")
+            preview.applyBox(border: borderColor, background: background, alpha: 1)
             preview.thumbnail(title: vm.anyTitle(locale: "en"))
             if let url = viewModel.imageUrl(for: indexPath) {
                 preview
                     .thumbnailView
                     .kf
-                    .setImage(with: url, options: thumbnailImageOptions) { (image, error, cache, url) in
+                    .setImage(with: url, placeholder: #imageLiteral(resourceName: "assetPlaceholder"), options: thumbnailImageOptions) { [weak self] (image, error, cache, url) in
                         if let error = error {
                             print("Kingfisher: ",error)
+                        }
+                        
+                        if let image = image {
+                            self?.didScrollLoadImage(image)
                         }
                 }
             }
@@ -75,7 +86,7 @@ extension HorizontalScrollRow: UICollectionViewDelegate {
     private var thumbnailImageProcessor: ImageProcessor {
         let resizeProcessor = CrispResizingImageProcessor(referenceSize: viewModel.preferredThumbnailSize, mode: ContentMode.aspectFill)
         let croppingProcessor = CroppingImageProcessor(size: viewModel.preferredThumbnailSize)
-        let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: 6)
+        let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: viewModel.thumbnailCornerRadius)
         return (resizeProcessor>>croppingProcessor)>>roundedRectProcessor
     }
     
@@ -99,6 +110,9 @@ extension HorizontalScrollRow: UICollectionViewDelegateFlowLayout {
         return viewModel.preferredCellSize
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return viewModel.previewCellPadding
+    }
 }
 
 extension HorizontalScrollRow: UICollectionViewDataSourcePrefetching {

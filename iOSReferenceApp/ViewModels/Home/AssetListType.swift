@@ -10,8 +10,6 @@ import Foundation
 import Exposure
 
 protocol AssetListType {
-    //    associatedtype AssetType
-    
     var content: [AssetViewModel] { get }
     
     
@@ -19,12 +17,31 @@ protocol AssetListType {
     var preferredThumbnailSize: CGSize { get }
     func preferredCellSize(forWidth width: CGFloat) -> CGSize
     func preferredThumbnailSize(forWidth width: CGFloat) -> CGSize
+    var thumbnailCornerRadius: CGFloat { get }
     
     func fetchMetadata(batch: Int, callback: @escaping (Int, ExposureError?) -> Void)
     
     func imageUrl(for indexPath: IndexPath) -> URL?
     
     func anyTitle() -> String?
+}
+
+extension AssetListType {
+    var thumbnailCornerRadius: CGFloat {
+        return 6
+    }
+    
+    var preferredCellSize: CGSize {
+        return CGSize(width: 108, height: 186)
+    }
+    
+    var preferredThumbnailSize: CGSize {
+        return CGSize(width: 96, height: 150)
+    }
+    
+    var previewCellPadding: CGFloat {
+        return 0
+    }
 }
 
 extension AssetListType {
