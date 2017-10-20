@@ -12,4 +12,5 @@ import Exposure
 protocol AuthorizedEnvironment {
     var environment: Environment { get }
     var sessionToken: SessionToken { get }
+    func authorize(environment: Environment, sessionToken: SessionToken)
 }

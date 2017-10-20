@@ -13,14 +13,26 @@ import Kingfisher
 class HomeTabBarController: UITabBarController {
 
     var config: ApplicationConfig?
-    
     var dynamicCustomerConfig: DynamicCustomerConfig?
+    var environment: Environment!
+    var sessionToken: SessionToken!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //ImageCache.default.clearDiskCache()
         
+        guard let environment = UserInfo.environment,
+            let sessionToken = UserInfo.sessionToken else {
+                // TODO: Fail gracefully
+                fatalError("Unable to proceed without valid environment")
+        }
+        self.environment = environment
+        self.sessionToken = sessionToken
+        
+        viewControllers?.forEach {
+            if let vc = $0 as? AuthorizedEnvironment {
+                    vc.authorize(environment: environment, sessionToken: sessionToken)
+            }
+        }
         
         // Do any additional setup after loading the view.
         self.navigationItem.hidesBackButton = true

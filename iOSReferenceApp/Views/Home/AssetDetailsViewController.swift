@@ -294,6 +294,7 @@ extension AssetDetailsViewController {
     @IBAction func downloadAction(_ sender: UIButton) {
         guard let assetId = viewModel.asset.assetId else { return }
         configureDownloadTask(assetId: assetId, lazily: false, autostart: true)
+        downloadViewModel.persist(metaData: viewModel.asset)
         togglePauseResumeDownload(paused: false)
     }
     
@@ -498,6 +499,9 @@ extension AssetDetailsViewController {
 
 // MARK: - AuthorizedEnvironment
 extension AssetDetailsViewController: AuthorizedEnvironment {
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        viewModel.authorize(environment: environment, sessionToken: sessionToken)
+    }
     var environment: Environment {
         return viewModel.environment
     }

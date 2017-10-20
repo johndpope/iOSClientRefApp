@@ -11,9 +11,14 @@ import Exposure
 
 class VODViewModel: AuthorizedEnvironment {
     // MARK: Basics
-    let environment: Environment
+    var environment: Environment
+    var sessionToken: SessionToken
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        self.environment = environment
+        self.sessionToken = sessionToken
+    }
+    
     let carouselId: String
-    let sessionToken: SessionToken
     
     fileprivate(set) var carousels: [AssetListType] = []
     

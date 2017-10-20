@@ -92,43 +92,42 @@ extension VODViewController: AssetDetailsPresenter {
         return self
     }
 
-    var sessionToken: SessionToken {
-        return viewModel.sessionToken
-    }
-    var environment: Environment {
-        return viewModel.environment
-    }
-}
-
-extension VODViewController {
-    fileprivate func setupViewModel() {
-        guard let env = UserInfo.environment,
-            let sessionToken = UserInfo.sessionToken else {
-            // TODO: Fail gracefully
-            fatalError("Unable to proceed without valid environment")
-        }
-
+    func authorize(environment: Environment, sessionToken: SessionToken) {
         guard let tabVC = self.tabBarController as? HomeTabBarController else {
             fatalError("Unable to proceed without homeTabBarController")
         }
         
         guard let carouselGroupId = tabVC.dynamicCustomerConfig?.carouselGroupId else {
             viewModel = VODViewModel(carouselId: "fakeCarousel",
-                                     environment: env,
+                                     environment: environment,
                                      sessionToken: sessionToken)
-            
+            return
+        }
+        
+        viewModel = VODViewModel(carouselId: carouselGroupId,
+                                 environment: environment,
+                                 sessionToken: sessionToken)
+    }
+    var environment: Environment {
+        return viewModel.environment
+    }
+    
+    var sessionToken: SessionToken {
+        return viewModel.sessionToken
+    }
+}
+
+extension VODViewController {
+    fileprivate func setupViewModel() {
+        if viewModel.carouselId == "fakeCarousel" {
             viewModel?.loadFakeCarousel { [unowned self] _ in
                 self.tableView.reloadData()
             }
-            return
         }
-
-        viewModel = VODViewModel(carouselId: carouselGroupId,
-                                 environment: env,
-                                 sessionToken: sessionToken)
-
-        viewModel?.loadCarousels { [unowned self] _ in
-            self.tableView.reloadData()
+        else {
+            viewModel?.loadCarousels { [unowned self] _ in
+                self.tableView.reloadData()
+            }
         }
     }
 }
@@ -136,7 +135,8 @@ extension VODViewController {
 extension VODViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? SearchViewController, segue.identifier == Segue.segueVodToSearch.rawValue {
-            destination.viewModel = SearchViewModel(environment: viewModel.environment, sessionToken: viewModel.sessionToken)
+            destination.viewModel = SearchViewModel(environment: viewModel.environment,
+                                                    sessionToken: viewModel.sessionToken)
         }
     }
 }

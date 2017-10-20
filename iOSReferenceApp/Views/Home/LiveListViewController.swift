@@ -25,8 +25,10 @@ class LiveListViewController: UIViewController {
         
         tableView.register(UINib(nibName: "AssetPreviewHeaderView", bundle: nil),
                            forHeaderFooterViewReuseIdentifier: "AssetPreviewHeaderView")
-        
         setupViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
     }
 }
 
@@ -71,6 +73,10 @@ extension LiveListViewController: UITableViewDataSource {
 }
 
 extension LiveListViewController: AuthorizedEnvironment {
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        viewModel = LiveListViewModel(sessionToken: sessionToken,
+                                      environment: environment)
+    }
     var environment: Environment {
         return viewModel.environment
     }
@@ -88,25 +94,6 @@ extension LiveListViewController: AssetDetailsPresenter {
 
 extension LiveListViewController {
     fileprivate func setupViewModel() {
-        guard let env = UserInfo.environment else {
-            // TODO: Fail gracefully
-            fatalError("Unable to proceed without valid environment")
-        }
-        
-        if let credentials = UserInfo.credentials {
-            viewModel = LiveListViewModel(credentials: credentials,
-                                          environment: env)
-            
-        }
-        else if let sessionToken = UserInfo.sessionToken {
-            viewModel = LiveListViewModel(sessionToken: sessionToken,
-                                          environment: env)
-        }
-        else {
-            // TODO: Fail gracefully
-            fatalError("Unable to proceed without valid sessionToken")
-        }
-        
         // Load rows
         viewModel.loadCategories{ [unowned self] section, error in
             if let section = section {

@@ -19,8 +19,13 @@ class CategoryViewModel: AuthorizedEnvironment, AssetListType {
     }
     fileprivate(set) var assets: Set<AssetViewModel> = Set()
     let type: AssetType
-    let environment: Environment
-    let sessionToken: SessionToken
+    
+    var environment: Environment
+    var sessionToken: SessionToken
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        self.environment = environment
+        self.sessionToken = sessionToken
+    }
     
     init(type: Asset.AssetType, environment: Environment, sessionToken: SessionToken, list: [AssetViewModel] = []) {
         self.type = type

@@ -11,8 +11,13 @@ import CoreGraphics
 import Exposure
 
 class SearchViewModel: AuthorizedEnvironment, AssetListType {
-    let environment: Environment
-    let sessionToken: SessionToken
+    
+    var environment: Environment
+    var sessionToken: SessionToken
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        self.environment = environment
+        self.sessionToken = sessionToken
+    }
     
     
     fileprivate(set) var content: [AssetViewModel] = []
