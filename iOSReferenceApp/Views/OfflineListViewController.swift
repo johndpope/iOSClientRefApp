@@ -38,6 +38,8 @@ class OfflineListViewController: UIViewController, AssetDetailsPresenter {
         content = viewModel.fetchContent()
         
         navigationItem.hidesBackButton = tabBarController != nil
+        
+        tableView.reloadData()
     }
     
     @IBAction func unwindListAction(_ sender: UIBarButtonItem) {
