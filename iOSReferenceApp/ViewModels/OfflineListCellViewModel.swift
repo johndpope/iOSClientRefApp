@@ -29,12 +29,16 @@ class OfflineListCellViewModel {
         return offlineAsset.entitlement?.licenseExpiration
     }
     
-    var preferedHeight: CGFloat {
-        return 85
+    var preferedCellHeight: CGFloat {
+        return preferredThumbnailSize.height - 2*2
+    }
+    
+    var preferredThumbnailSize: CGSize {
+        return CGSize(width: 54, height: 81)
     }
 }
 
-extension OfflineListCell: LocalizedEntity {
+extension OfflineListCellViewModel: LocalizedEntity {
     var locales: [String] {
         return asset?
             .localized?
@@ -54,7 +58,7 @@ extension OfflineListCell: LocalizedEntity {
     
     func anyTitle(locale: String) -> String {
         if let title = title(locale: locale) { return title }
-        else if let originalTitle = asset.originalTitle { return originalTitle }
+        else if let originalTitle = asset?.originalTitle { return originalTitle }
         else if let assetId = asset?.assetId { return assetId }
         return "NO TITIE"
     }

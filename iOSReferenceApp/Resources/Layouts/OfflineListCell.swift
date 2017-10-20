@@ -33,7 +33,7 @@ class OfflineListCell: UITableViewCell {
     
     func bind(viewModel: OfflineListCellViewModel) {
         self.viewModel = viewModel
-        titleLabel.text = viewModel.title
+        titleLabel.text = viewModel.anyTitle(locale: "en")
         sizeLabel.text = viewModel.downloadSize
         expirationLabel.text = viewModel.expiration
         
@@ -47,8 +47,15 @@ class OfflineListCell: UITableViewCell {
                 .prefere(orientation: .portrait)
                 .validImageUrls()
                 .first
-            thumbnailView.kf.setImage(with: url, options: [.onlyFromCache])
+            thumbnailView.kf.setImage(with: url, options: [.onlyFromCache, .processor(thumbnailImageProcessor)])
         }
+    }
+    
+    private var thumbnailImageProcessor: ImageProcessor {
+        let resizeProcessor = CrispResizingImageProcessor(referenceSize: viewModel.preferredThumbnailSize, mode: ContentMode.aspectFill)
+        let croppingProcessor = CroppingImageProcessor(size: viewModel.preferredThumbnailSize)
+        let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: 6)
+        return (resizeProcessor>>croppingProcessor)>>roundedRectProcessor
     }
     
     @IBAction func playAction(_ sender: UIButton) {

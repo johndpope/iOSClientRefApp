@@ -119,8 +119,6 @@ class AssetDetailsViewController: UIViewController {
             }
             self?.refreshUserDataUI()
         }
-        
-        downloadViewModel.persist(metaData: viewModel.asset)
     }
     
     func determineDownloadUIForAsset() {
@@ -296,6 +294,7 @@ extension AssetDetailsViewController {
     @IBAction func downloadAction(_ sender: UIButton) {
         guard let assetId = viewModel.asset.assetId else { return }
         configureDownloadTask(assetId: assetId, lazily: false, autostart: true)
+        downloadViewModel.persist(metaData: viewModel.asset)
         togglePauseResumeDownload(paused: false)
     }
     

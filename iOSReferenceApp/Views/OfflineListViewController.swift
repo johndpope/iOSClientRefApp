@@ -45,7 +45,7 @@ extension OfflineListViewController {
 
 extension OfflineListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return content[indexPath.row].preferedHeight
+        return content[indexPath.row].preferedCellHeight
     }
 }
 

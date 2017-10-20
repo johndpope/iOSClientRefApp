@@ -8,6 +8,7 @@
 
 import Foundation
 import Exposure
+import Download
 
 class ExposureSessionManager {
     static let shared = ExposureSessionManager()
