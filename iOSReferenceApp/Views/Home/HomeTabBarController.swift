@@ -19,7 +19,7 @@ class HomeTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         guard let environment = UserInfo.environment,
             let sessionToken = UserInfo.sessionToken else {
                 // TODO: Fail gracefully
@@ -27,6 +27,12 @@ class HomeTabBarController: UITabBarController {
         }
         self.environment = environment
         self.sessionToken = sessionToken
+        
+        viewControllers?.forEach {
+            if let vc = $0 as? AuthorizedEnvironment {
+                    vc.authorize(environment: environment, sessionToken: sessionToken)
+            }
+        }
         
         // Do any additional setup after loading the view.
         self.navigationItem.hidesBackButton = true
@@ -77,13 +83,5 @@ class HomeTabBarController: UITabBarController {
             .cacheMemoryOnly,
             .processor(CrispResizingImageProcessor(referenceSize: logoSize, mode: .aspectFit))
         ]
-    }
-}
-
-extension HomeTabBarController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if let destination = viewController as? AuthorizedEnvironment {
-            destination.authorize(environment: environment, sessionToken: sessionToken)
-        }
     }
 }

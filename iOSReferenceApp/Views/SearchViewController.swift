@@ -58,14 +58,15 @@ extension SearchViewController: AssetDetailsPresenter {
         return self
     }
     
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        viewModel.authorize(environment: environment, sessionToken: sessionToken)
+    }
     var environment: Environment {
-        set{ viewModel.environment = newValue }
-        get { return viewModel.environment }
+        return viewModel.environment
     }
     
     var sessionToken: SessionToken {
-        set{ viewModel.sessionToken = newValue }
-        get { return viewModel.sessionToken }
+        return viewModel.sessionToken
     }
 }
 

@@ -14,6 +14,11 @@ class EPGDetailsViewModel {
     
     var environment: Environment
     var sessionToken: SessionToken
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        self.environment = environment
+        self.sessionToken = sessionToken
+    }
+    
     let channelAsset: Asset
     init(channelAsset: Asset, environment: Environment, sessionToken: SessionToken) {
         self.environment = environment

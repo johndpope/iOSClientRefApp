@@ -12,10 +12,16 @@ import Exposure
 
 class OfflineListViewController: UIViewController {
     var viewModel: OfflineListViewModel!
-    struct OfflineListViewModel: AuthorizedEnvironment {
+    
+    class OfflineListViewModel: AuthorizedEnvironment {
         var environment: Environment
         var sessionToken: SessionToken
         func authorize(environment: Environment, sessionToken: SessionToken) {
+            self.environment = environment
+            self.sessionToken = sessionToken
+        }
+        
+        init(environment: Environment, sessionToken: SessionToken) {
             self.environment = environment
             self.sessionToken = sessionToken
         }
@@ -104,7 +110,8 @@ extension OfflineListViewController: UITableViewDataSource {
 // MARK: - AuthorizedEnvironment
 extension OfflineListViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
-        viewModel.authorize(environment: environment, sessionToken: sessionToken)
+        viewModel = OfflineListViewModel(environment: environment,
+                                         sessionToken: sessionToken)
     }
     var environment: Environment {
         return viewModel.environment
