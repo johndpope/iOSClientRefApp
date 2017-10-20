@@ -737,7 +737,6 @@
                                                                                         <state key="normal" image="download-list"/>
                                                                                         <connections>
                                                                                             <action selector="viewOfflineListAction:" destination="aUa-uP-O3V" eventType="touchUpInside" id="IqH-Wi-eOZ"/>
-                                                                                            <segue destination="AuL-Nc-sbI" kind="showDetail" identifier="segueDetailsToList" id="AA5-84-Z12"/>
                                                                                         </connections>
                                                                                     </button>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gab-Wm-Rof">
@@ -882,6 +881,7 @@
                         <outlet property="titleLabel" destination="pGp-GJ-CnU" id="A65-6S-UUz"/>
                         <segue destination="rhs-OU-IKm" kind="presentation" identifier="segueDetailsToPlayer" id="G3d-4d-mII"/>
                         <segue destination="rhs-OU-IKm" kind="presentation" identifier="segueOfflineToPlayer" id="f4H-my-9wa"/>
+                        <segue destination="AuL-Nc-sbI" kind="showDetail" identifier="segueDetailsToList" id="zz8-6d-TPe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORZ-Xq-fbO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1501,7 +1501,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qGP-vf-Rlx">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qGP-vf-Rlx">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

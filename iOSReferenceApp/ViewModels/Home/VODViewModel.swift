@@ -18,18 +18,24 @@ class VODViewModel: AuthorizedEnvironment {
         self.sessionToken = sessionToken
     }
     
-    let carouselId: String
-    
     fileprivate(set) var carousels: [AssetListType] = []
     
-    init(carouselId: String, environment: Environment, sessionToken: SessionToken) {
-        self.carouselId = carouselId
+    init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
     }
 
-    func loadCarousels(callback: @escaping (ExposureError?) -> Void) {
-        FetchCarouselList(groupId: carouselId,
+    func loadCarousel(group: String, callback: @escaping (ExposureError?) -> Void) {
+        if group == "fakeCarousel" {
+            loadFakeCarousel(callback: callback)
+        }
+        else {
+            loadCarousels(for: group, callback: callback)
+        }
+    }
+    
+    fileprivate func loadCarousels(for groupId: String, callback: @escaping (ExposureError?) -> Void) {
+        FetchCarouselList(groupId: groupId,
                           environment: environment)
             .request()
             .validate()
@@ -40,7 +46,7 @@ class VODViewModel: AuthorizedEnvironment {
         }
     }
     
-    func loadFakeCarousel(callback: @escaping (ExposureError?) -> Void) {
+    fileprivate func loadFakeCarousel(callback: @escaping (ExposureError?) -> Void) {
         let fakeCarousel = CategoryViewModel(type: .movie, environment: environment, sessionToken: sessionToken)
         carousels = [fakeCarousel]
         

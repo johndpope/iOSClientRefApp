@@ -4,7 +4,7 @@
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.6](#016)
 
 ## 0.2.1
-NO RELEASE DATE SET
+Released 20 Oct 2017
 
 #### Features
 * `EMP-10322` Fetching cover art exhausts all options for images before displaying generic thumbnail.

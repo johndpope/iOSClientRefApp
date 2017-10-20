@@ -18,7 +18,7 @@ protocol AssetDetailsPresenter: class, AuthorizedEnvironment {
 }
 
 extension AssetDetailsPresenter {
-    func presetDetails(for asset: Asset) {
+    func presetDetails(for asset: Asset, from origin: AssetDetailsViewController.PresentedFrom) {
         guard let assetType = asset.type else {
             assetDetailsPresenter.showMessage(title: "AssetType missing", message: "Please check Exposure response")
             return
@@ -26,11 +26,11 @@ extension AssetDetailsPresenter {
         
         switch assetType {
         case .tvChannel: presentEPG(for: asset)
-        default: presentVod(for: asset)
+        default: presentVod(for: asset, from: origin)
         }
     }
     
-    fileprivate func presentVod(for asset: Asset) {
+    fileprivate func presentVod(for asset: Asset, from origin: AssetDetailsViewController.PresentedFrom) {
         let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
         if let vc = uiStoryboard.instantiateViewController(withIdentifier: "AssetDetailsViewController") as? AssetDetailsViewController {
             vc.bind(viewModel: AssetDetailsViewModel(asset: asset,
@@ -38,6 +38,7 @@ extension AssetDetailsPresenter {
                                                      sessionToken: sessionToken))
             vc.bind(downloadViewModel: DownloadAssetViewModel(environment: environment,
                                                               sessionToken: sessionToken))
+            vc.presentedFrom = origin
             assetDetailsPresenter.present(vc, animated: true) { }
         }
     }
@@ -103,6 +104,12 @@ class AssetDetailsViewController: UIViewController {
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
+    
+    var presentedFrom: PresentedFrom = .other
+    enum PresentedFrom {
+        case offlineList
+        case other
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -190,12 +197,20 @@ extension AssetDetailsViewController {
             }
         }
         else if segue.identifier == Segue.segueDetailsToList.rawValue {
-            if let destination = segue.destination as? OfflineListViewController {
-                destination.onDismissedWithSelection = { selection in
-                    if let newAsset = selection {
-                        newAsset.assetId
+            if let navController = segue.destination as? UINavigationController, let destination = navController.topViewController as? OfflineListViewController {
+                destination.authorize(environment: environment,
+                                      sessionToken: sessionToken)
+                // Scroll to the current asset (if applicable)
+                let scrollTo = viewModel.asset
+                
+                // Hook the callback
+                destination.presentedFrom = .assetDetails(onSelected: { [weak self] offlineMedia, asset in
+                    if let newAsset = asset {
+                        self?.viewModel.asset = newAsset
+                        self?.loadAssetMetaData()
+                        self?.determineDownloadUIForAsset()
                     }
-                }
+                })
             }
         }
     }
@@ -481,6 +496,10 @@ extension AssetDetailsViewController {
     }
     
     @IBAction func viewOfflineListAction(_ sender: UIButton) {
+        switch presentedFrom {
+        case .offlineList: dismiss(animated: true)
+        case .other: performSegue(withIdentifier: Segue.segueDetailsToList.rawValue, sender: nil)
+        }
     }
     
     func startWithDownloadCompleteUI() {
