@@ -9,12 +9,7 @@
 import Foundation
 import Exposure
 import Download
-
-class ExposureSessionManager {
-    static let shared = ExposureSessionManager()
-    
-    let manager = SessionManager<ExposureDownloadTask>()
-}
+import Kingfisher
 
 class DownloadAssetViewModel: AuthorizedEnvironment {
     fileprivate var task: ExposureDownloadTask?
@@ -58,6 +53,23 @@ extension DownloadAssetViewModel {
     
     func cancel() {
         task?.cancel()
+    }
+}
+
+extension DownloadAssetViewModel {
+    func persist(metaData asset: Asset) {
+        ExposureSessionManager
+            .shared
+            .manager
+            .storeMetaData(for: asset)
+        
+        let urls = asset
+            .localized?
+            .flatMap{ $0.images ?? []}
+            .prefere(orientation: .portrait)
+            .validImageUrls() ?? []
+        
+        ImagePrefetcher(resources: urls, options: [.backgroundDecode]).start()
     }
 }
 

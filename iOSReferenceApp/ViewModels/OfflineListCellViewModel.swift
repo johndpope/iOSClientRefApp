@@ -11,15 +11,12 @@ import Exposure
 import Download
 
 class OfflineListCellViewModel {
-    
     let offlineAsset: OfflineMediaAsset
+    var asset: Asset?
     
-    init(offlineAsset: OfflineMediaAsset) {
+    init(offlineAsset: OfflineMediaAsset, metaData: Asset?) {
         self.offlineAsset = offlineAsset
-    }
-    
-    var title: String {
-        return offlineAsset.assetId
+        self.asset = metaData
     }
     
     var downloadSize: String? {
@@ -34,5 +31,38 @@ class OfflineListCellViewModel {
     
     var preferedHeight: CGFloat {
         return 85
+    }
+}
+
+extension OfflineListCell: LocalizedEntity {
+    var locales: [String] {
+        return asset?
+            .localized?
+            .flatMap{ $0.locale } ?? []
+    }
+    
+    func localizedData(locale: String) -> LocalizedData? {
+        return asset?
+            .localized?
+            .filter{ $0.locale == locale }
+            .first
+    }
+    
+    func localizations() -> [LocalizedData] {
+        return asset?.localized ?? []
+    }
+    
+    func anyTitle(locale: String) -> String {
+        if let title = title(locale: locale) { return title }
+        else if let originalTitle = asset.originalTitle { return originalTitle }
+        else if let assetId = asset?.assetId { return assetId }
+        return "NO TITIE"
+    }
+    
+    func anyDescription(locale: String) -> String {
+        if let description = localizedData(locale: locale)?.allDescriptions().last {
+            return description
+        }
+        return localizations().flatMap{ $0.allDescriptions() }.last ?? ""
     }
 }

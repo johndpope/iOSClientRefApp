@@ -1216,8 +1216,8 @@
                     <connections>
                         <segue destination="sWK-wV-p5O" kind="relationship" relationship="viewControllers" id="qPl-Se-FRj"/>
                         <segue destination="omF-aQ-R7h" kind="relationship" relationship="viewControllers" id="1eZ-LP-5jw"/>
-                        <segue destination="KmI-Vw-hoT" kind="relationship" relationship="viewControllers" id="IFe-M7-J1T"/>
                         <segue destination="wMZ-we-7Yb" kind="relationship" relationship="viewControllers" id="IQR-xP-n1i"/>
+                        <segue destination="AuL-Nc-sbI" kind="relationship" relationship="viewControllers" id="CIP-Cj-WBq"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nw6-SM-PPD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1498,11 +1498,11 @@
                         <viewControllerLayoutGuide type="bottom" id="xls-Of-P79"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="CkJ-Dq-pOL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="579"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qGP-vf-Rlx">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="579"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1555,17 +1555,17 @@
                         <viewControllerLayoutGuide type="bottom" id="0OL-eh-oCu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="BaZ-ZJ-qQP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPO-8j-jce" customClass="LazyScrollView" customModule="iOSReferenceApp" customModuleProvider="target">
-                                <rect key="frame" x="20" y="0.0" width="374" height="623"/>
+                                <rect key="frame" x="20" y="20" width="374" height="716"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JUJ-bK-1dG">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="623"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="716"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="5vX-vJ-waR">
-                                                <rect key="frame" x="0.0" y="257" width="374" height="110"/>
+                                                <rect key="frame" x="0.0" y="303.66666666666669" width="374" height="110"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="R4p-9I-G7R" userLabel="m3u8PathTextField" customClass="SkyFloatingLabelTextField" customModule="iOSReferenceApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -1666,14 +1666,14 @@
             </objects>
             <point key="canvasLocation" x="4465" y="2230"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Offline-->
         <scene sceneID="krl-5P-rP2">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cGh-Bl-Eei" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AuL-Nc-sbI" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Offline" id="27r-GM-dZP"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="QsB-Qj-KOE">
-                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="-44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
@@ -1682,6 +1682,7 @@
                         <segue destination="qZW-VQ-sPH" kind="relationship" relationship="rootViewController" id="nQt-zF-1Mn"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cGh-Bl-Eei" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6210.144927536232" y="1906.7934782608697"/>
         </scene>
@@ -1704,6 +1705,7 @@
         <image name="star-unfilled" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="CIP-Cj-WBq"/>
         <segue reference="G3d-4d-mII"/>
     </inferredMetricsTieBreakers>
 </document>

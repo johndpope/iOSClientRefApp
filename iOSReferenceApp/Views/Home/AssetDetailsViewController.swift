@@ -119,6 +119,8 @@ class AssetDetailsViewController: UIViewController {
             }
             self?.refreshUserDataUI()
         }
+        
+        downloadViewModel.persist(metaData: viewModel.asset)
     }
     
     func determineDownloadUIForAsset() {

@@ -26,8 +26,8 @@ class OfflineListViewController: UIViewController {
         content = ExposureSessionManager
             .shared
             .manager
-            .offlineAssets()
-            .map{ OfflineListCellViewModel(offlineAsset: $0) }
+            .offlineAssetsWithMetaData()
+            .map{ OfflineListCellViewModel(offlineAsset: $0.0, metaData: $0.1) }
     }
     
     @IBAction func unwindListAction(_ sender: UIBarButtonItem) {

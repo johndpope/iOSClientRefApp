@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Kingfisher
+import Exposure
 
 class OfflineListCell: UITableViewCell {
 
@@ -34,6 +36,19 @@ class OfflineListCell: UITableViewCell {
         titleLabel.text = viewModel.title
         sizeLabel.text = viewModel.downloadSize
         expirationLabel.text = viewModel.expiration
+        
+        if let metaData = ExposureSessionManager
+            .shared
+            .manager
+            .retrieveMetaData(for: viewModel.offlineAsset.assetId) {
+            let url = metaData
+                .localized?
+                .flatMap{ $0.images ?? []}
+                .prefere(orientation: .portrait)
+                .validImageUrls()
+                .first
+            thumbnailView.kf.setImage(with: url, options: [.onlyFromCache])
+        }
     }
     
     @IBAction func playAction(_ sender: UIButton) {
