@@ -51,10 +51,10 @@ class AssetPreviewCell: UICollectionViewCell {
     }
     
     func applyBox(border: UIColor, background: UIColor, alpha: CGFloat) {
-//        boxView.layer.borderWidth = 1
-//        boxView.layer.borderColor = border.cgColor
+        boxView.layer.borderWidth = 1
+        boxView.layer.borderColor = border.cgColor
         
-        backgroundColor = background
-//        boxView.alpha = alpha
+        boxView.backgroundColor = background
+        boxView.alpha = alpha
     }
 }

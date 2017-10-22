@@ -14,7 +14,6 @@ class VODViewController: UIViewController {
     var isTransitioningBackground: Bool = false
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var backgroundView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,25 +83,8 @@ extension VODViewController: UITableViewDataSource {
         cell.cellSelected = { [weak self] asset in
             self?.presetDetails(for: asset, from: .other)
         }
-        cell.didScrollLoadImage = { [weak self] image in
-            self?.transitionBackground(to: image)
-        }
         
         return cell
-    }
-}
-
-extension VODViewController {
-    func transitionBackground(to image: UIImage) {
-        if !isTransitioningBackground {
-            isTransitioningBackground = true
-            UIView.transition(with: backgroundView,
-                              duration:0.5,
-                              options: .transitionCrossDissolve,
-                              animations: { self.backgroundView.image = image }) { [weak self] completed in
-                                self?.isTransitioningBackground = false
-            }
-        }
     }
 }
 

@@ -13,7 +13,7 @@ import Exposure
 class HorizontalScrollRow: UITableViewCell {
     
     var cellSelected: (Asset) -> Void = { _ in }
-    var didScrollLoadImage: (UIImage) -> Void = { _ in }
+//    var didScrollLoadImage: (UIImage) -> Void = { _ in }
     
     @IBOutlet weak var collectionView: UICollectionView!
     fileprivate(set) var viewModel: AssetListType!
@@ -61,10 +61,10 @@ extension HorizontalScrollRow: UICollectionViewDelegate {
             
             preview.reset()
             preview.applyShadow(cornerRadius: viewModel.thumbnailCornerRadius)
-            let borderColor = UIColor("0C0E0F")
-            let oddOrEven = indexPath.row % 2 == 0
-            let background = oddOrEven ? UIColor("0F273D") : UIColor("0F4A3D")
-            preview.applyBox(border: borderColor, background: background, alpha: 1)
+//            let borderColor = UIColor(red: 0.047, green: 0.055, blue: 0.059, alpha: 1)
+//            let oddOrEven = indexPath.row % 2 == 0
+//            let background = oddOrEven ? UIColor(red: 0.256, green: 0.153, blue: 0.239, alpha: 1) : UIColor(red: 0.059, green: 0.195, blue: 0.239, alpha: 1)
+//            preview.applyBox(border: borderColor, background: background, alpha: 0.2)
             preview.thumbnail(title: vm.anyTitle(locale: "en"))
             if let url = viewModel.imageUrl(for: indexPath) {
                 preview
@@ -73,10 +73,6 @@ extension HorizontalScrollRow: UICollectionViewDelegate {
                     .setImage(with: url, placeholder: #imageLiteral(resourceName: "assetPlaceholder"), options: thumbnailImageOptions) { [weak self] (image, error, cache, url) in
                         if let error = error {
                             print("Kingfisher: ",error)
-                        }
-                        
-                        if let image = image {
-                            self?.didScrollLoadImage(image)
                         }
                 }
             }
