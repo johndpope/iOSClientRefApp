@@ -30,6 +30,14 @@
 		7672F26B1F93B5E300F892C3 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672F26A1F93B5E300F892C3 /* SearchViewModel.swift */; };
 		7672F26D1F93EEB200F892C3 /* AssetListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672F26C1F93EEB200F892C3 /* AssetListType.swift */; };
 		768ED8AA1F0FAEE3008E8F9B /* update_dependency_graph.rb in Resources */ = {isa = PBXBuildFile; fileRef = 768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */; };
+		7696DE601F9D19EF00D4543C /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696DE5E1F9D19EF00D4543C /* CarouselView.swift */; };
+		7696DE611F9D19EF00D4543C /* CarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7696DE5F1F9D19EF00D4543C /* CarouselView.xib */; };
+		7696DE651F9D1B9600D4543C /* HeroPromotionalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696DE631F9D1B9600D4543C /* HeroPromotionalCell.swift */; };
+		7696DE661F9D1B9600D4543C /* HeroPromotionalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7696DE641F9D1B9600D4543C /* HeroPromotionalCell.xib */; };
+		7696DE691F9D1FC100D4543C /* CarouselHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696DE671F9D1FC100D4543C /* CarouselHeaderView.swift */; };
+		7696DE6A1F9D1FC100D4543C /* CarouselHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7696DE681F9D1FC100D4543C /* CarouselHeaderView.xib */; };
+		7696DE6D1F9D22CD00D4543C /* CarouselFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696DE6B1F9D22CD00D4543C /* CarouselFooterView.swift */; };
+		7696DE6E1F9D22CD00D4543C /* CarouselFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7696DE6C1F9D22CD00D4543C /* CarouselFooterView.xib */; };
 		76A416F91EDDCAC700677A46 /* VODViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A416F81EDDCAC700677A46 /* VODViewModel.swift */; };
 		76A416FB1EDDCAD400677A46 /* VODViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A416FA1EDDCAD400677A46 /* VODViewController.swift */; };
 		76A417051EDEBF1B00677A46 /* AssetPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417031EDEBF1B00677A46 /* AssetPreviewCell.swift */; };
@@ -84,6 +92,10 @@
 		76C7DDE61F235D74008FE955 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7DDE51F235D74008FE955 /* Analytics.framework */; };
 		76C7DDE71F235D74008FE955 /* Analytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7DDE51F235D74008FE955 /* Analytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76D704561F92273400D6FC6B /* CrispResizingImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D704551F92273400D6FC6B /* CrispResizingImageProcessor.swift */; };
+		76FC1F711F9D2D6900847E4A /* CarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FC1F701F9D2D6900847E4A /* CarouselViewController.swift */; };
+		76FC1F731F9D2F9500847E4A /* CarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FC1F721F9D2F9500847E4A /* CarouselViewModel.swift */; };
+		76FC1F751F9D37E000847E4A /* CarouselListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FC1F741F9D37E000847E4A /* CarouselListViewModel.swift */; };
+		76FC1F771F9DBFCE00847E4A /* CarouselItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FC1F761F9DBFCE00847E4A /* CarouselItemViewModel.swift */; };
 		F7061C5F1EC5AF760041E271 /* McPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7061C5E1EC5AF760041E271 /* McPicker.swift */; };
 		F7061C691EC5BFAF0041E271 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7061C601EC5BFAF0041E271 /* Constants.swift */; };
 		F7061C6A1EC5BFAF0041E271 /* colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7061C631EC5BFAF0041E271 /* colors.plist */; };
@@ -166,6 +178,14 @@
 		7672F26A1F93B5E300F892C3 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		7672F26C1F93EEB200F892C3 /* AssetListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetListType.swift; sourceTree = "<group>"; };
 		768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = update_dependency_graph.rb; sourceTree = "<group>"; };
+		7696DE5E1F9D19EF00D4543C /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
+		7696DE5F1F9D19EF00D4543C /* CarouselView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselView.xib; sourceTree = "<group>"; };
+		7696DE631F9D1B9600D4543C /* HeroPromotionalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroPromotionalCell.swift; sourceTree = "<group>"; };
+		7696DE641F9D1B9600D4543C /* HeroPromotionalCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeroPromotionalCell.xib; sourceTree = "<group>"; };
+		7696DE671F9D1FC100D4543C /* CarouselHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselHeaderView.swift; sourceTree = "<group>"; };
+		7696DE681F9D1FC100D4543C /* CarouselHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselHeaderView.xib; sourceTree = "<group>"; };
+		7696DE6B1F9D22CD00D4543C /* CarouselFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselFooterView.swift; sourceTree = "<group>"; };
+		7696DE6C1F9D22CD00D4543C /* CarouselFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselFooterView.xib; sourceTree = "<group>"; };
 		76A416F81EDDCAC700677A46 /* VODViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VODViewModel.swift; sourceTree = "<group>"; };
 		76A416FA1EDDCAD400677A46 /* VODViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VODViewController.swift; sourceTree = "<group>"; };
 		76A417031EDEBF1B00677A46 /* AssetPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetPreviewCell.swift; sourceTree = "<group>"; };
@@ -223,6 +243,10 @@
 		76C7DDE51F235D74008FE955 /* Analytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Analytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76D704551F92273400D6FC6B /* CrispResizingImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrispResizingImageProcessor.swift; sourceTree = "<group>"; };
 		76F5154A1F5EC18C00BA8B01 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		76FC1F701F9D2D6900847E4A /* CarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewController.swift; sourceTree = "<group>"; };
+		76FC1F721F9D2F9500847E4A /* CarouselViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewModel.swift; sourceTree = "<group>"; };
+		76FC1F741F9D37E000847E4A /* CarouselListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselListViewModel.swift; sourceTree = "<group>"; };
+		76FC1F761F9DBFCE00847E4A /* CarouselItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselItemViewModel.swift; sourceTree = "<group>"; };
 		F7061C5E1EC5AF760041E271 /* McPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = McPicker.swift; sourceTree = "<group>"; };
 		F7061C601EC5BFAF0041E271 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F7061C631EC5BFAF0041E271 /* colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = colors.plist; sourceTree = "<group>"; };
@@ -304,6 +328,15 @@
 				768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */,
 			);
 			path = actions;
+			sourceTree = "<group>";
+		};
+		7696DE621F9D1B4B00D4543C /* EditorialCells */ = {
+			isa = PBXGroup;
+			children = (
+				7696DE631F9D1B9600D4543C /* HeroPromotionalCell.swift */,
+				7696DE641F9D1B9600D4543C /* HeroPromotionalCell.xib */,
+			);
+			path = EditorialCells;
 			sourceTree = "<group>";
 		};
 		76A416FE1EDEBE2200677A46 /* Layouts */ = {
@@ -454,6 +487,9 @@
 				76BB35A41F9A28CD00C2B386 /* OfflineListViewModel.swift */,
 				766502F31F99C8FD009A5BFE /* LocalizedEntity.swift */,
 				76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */,
+				76FC1F741F9D37E000847E4A /* CarouselListViewModel.swift */,
+				76FC1F721F9D2F9500847E4A /* CarouselViewModel.swift */,
+				76FC1F761F9DBFCE00847E4A /* CarouselItemViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -474,6 +510,14 @@
 				76A843FD1EA7886400BDAF2C /* Player */,
 				7672F2681F93B01300F892C3 /* SearchViewController.swift */,
 				762383F71F98B6BA0046EF38 /* OfflineListViewController.swift */,
+				7696DE5E1F9D19EF00D4543C /* CarouselView.swift */,
+				7696DE5F1F9D19EF00D4543C /* CarouselView.xib */,
+				7696DE671F9D1FC100D4543C /* CarouselHeaderView.swift */,
+				7696DE681F9D1FC100D4543C /* CarouselHeaderView.xib */,
+				7696DE6B1F9D22CD00D4543C /* CarouselFooterView.swift */,
+				7696DE6C1F9D22CD00D4543C /* CarouselFooterView.xib */,
+				76FC1F701F9D2D6900847E4A /* CarouselViewController.swift */,
+				7696DE621F9D1B4B00D4543C /* EditorialCells */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -750,10 +794,14 @@
 				76A843B21EA7856C00BDAF2C /* Assets.xcassets in Resources */,
 				764EDC491F5EADFB00569D5B /* environments.json in Resources */,
 				76A843D91EA7859E00BDAF2C /* Cartfile in Resources */,
+				7696DE6A1F9D1FC100D4543C /* CarouselHeaderView.xib in Resources */,
+				7696DE661F9D1B9600D4543C /* HeroPromotionalCell.xib in Resources */,
 				76A417061EDEBF1B00677A46 /* AssetPreviewCell.xib in Resources */,
 				76BBFB7E1EA8CF2E001DBDDB /* Cartfile.resolved in Resources */,
 				76AF2F181F13B6DB0014F007 /* EPGPreviewCell.xib in Resources */,
+				7696DE6E1F9D22CD00D4543C /* CarouselFooterView.xib in Resources */,
 				76A843B01EA7856C00BDAF2C /* Main.storyboard in Resources */,
+				7696DE611F9D19EF00D4543C /* CarouselView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -794,31 +842,39 @@
 				76A844011EA7886400BDAF2C /* KeyboardAnimationFrame.swift in Sources */,
 				76AF2F041F139D040014F007 /* EPGDetailsViewController.swift in Sources */,
 				762383F81F98B6BA0046EF38 /* OfflineListViewController.swift in Sources */,
+				76FC1F751F9D37E000847E4A /* CarouselListViewModel.swift in Sources */,
 				766502FB1F99CAA9009A5BFE /* ExposureSessionManager.swift in Sources */,
 				F793A8451EC516BC00DF7626 /* LazyScrollView.swift in Sources */,
 				762383FB1F98B8B00046EF38 /* OfflineListCell.swift in Sources */,
 				F7061C5F1EC5AF760041E271 /* McPicker.swift in Sources */,
 				7633A9FE1F7F7B5C00580002 /* DownloadAssetViewModel.swift in Sources */,
+				7696DE691F9D1FC100D4543C /* CarouselHeaderView.swift in Sources */,
+				76FC1F711F9D2D6900847E4A /* CarouselViewController.swift in Sources */,
 				76BB35A51F9A28CD00C2B386 /* OfflineListViewModel.swift in Sources */,
 				76A417051EDEBF1B00677A46 /* AssetPreviewCell.swift in Sources */,
 				76A4170D1EDEC9A400677A46 /* HorizontalScrollRow.swift in Sources */,
 				766502FE1F99CB29009A5BFE /* Sequence+Extensions.swift in Sources */,
 				76D704561F92273400D6FC6B /* CrispResizingImageProcessor.swift in Sources */,
+				7696DE601F9D19EF00D4543C /* CarouselView.swift in Sources */,
 				76A417211EE063FB00677A46 /* AssetDetailsViewController.swift in Sources */,
 				76AF2F061F13A0A00014F007 /* EPGDetailsViewModel.swift in Sources */,
 				76A4171F1EE062A100677A46 /* AssetDetailsViewModel.swift in Sources */,
 				76A844001EA7886400BDAF2C /* EnvironmentConfig.swift in Sources */,
 				F7061C731EC5CF8F0041E271 /* Logging.swift in Sources */,
+				7696DE651F9D1B9600D4543C /* HeroPromotionalCell.swift in Sources */,
 				76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */,
 				F793A8531EC5289E00DF7626 /* SkyFloatingLabelTextField.swift in Sources */,
+				7696DE6D1F9D22CD00D4543C /* CarouselFooterView.swift in Sources */,
 				766502F71F99CA34009A5BFE /* Data+Extensions.swift in Sources */,
 				76AE64F71F91498D0036933E /* DynamicCustomerConfig.swift in Sources */,
 				76A843FF1EA7886400BDAF2C /* CustomerConfig.swift in Sources */,
 				F7B710A81ECB369E00E9D324 /* ProgressIndicatorUtil.swift in Sources */,
+				76FC1F771F9DBFCE00847E4A /* CarouselItemViewModel.swift in Sources */,
 				76AF2F171F13B6DB0014F007 /* EPGPreviewCell.swift in Sources */,
 				F793A8541EC5289E00DF7626 /* SkyFloatingLabelTextFieldWithIcon.swift in Sources */,
 				76A844021EA7886400BDAF2C /* Notifications+KeyboardAnimationFrame.swift in Sources */,
 				7672F26D1F93EEB200F892C3 /* AssetListType.swift in Sources */,
+				76FC1F731F9D2F9500847E4A /* CarouselViewModel.swift in Sources */,
 				76A416F91EDDCAC700677A46 /* VODViewModel.swift in Sources */,
 				76A4171D1EE0134100677A46 /* LiveListViewModel.swift in Sources */,
 				76A843AB1EA7856C00BDAF2C /* AppDelegate.swift in Sources */,

@@ -11,7 +11,6 @@ import Exposure
 
 class VODViewController: UIViewController {
     var viewModel: VODViewModel!
-    var isTransitioningBackground: Bool = false
     
     @IBOutlet weak var tableView: UITableView!
     
