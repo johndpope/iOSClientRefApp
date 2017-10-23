@@ -18,8 +18,8 @@ class CarouselViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.rowHeight = 308//UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 308
+        tableView.rowHeight = 348//UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 348
         
         tableView.register(UINib(nibName: "CarouselView", bundle: nil),
                            forCellReuseIdentifier: "carousel")

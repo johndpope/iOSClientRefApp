@@ -22,7 +22,8 @@ class CarouselView: UITableViewCell {
         collectionView.register(UINib(nibName: "HeroPromotionalCell", bundle: nil), forCellWithReuseIdentifier: "heroCell")
 
         collectionView.register(UINib(nibName: "CarouselHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "carouselHeader")
-//        collectionView.register(UINib(nibName: "CarouselFooterView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "carouselFooter")
+        
+        collectionView.register(UINib(nibName: "CarouselFooterView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "carouselFooter")
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -90,6 +91,10 @@ extension CarouselView: UICollectionViewDelegate {
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselHeader", for: indexPath) as! CarouselHeaderView
             return view
         }
+        if kind == UICollectionElementKindSectionFooter {
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselFooter", for: indexPath) as! CarouselFooterView
+            return view
+        }
         return UICollectionReusableView()
     }
 //    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -121,39 +126,15 @@ extension CarouselView: UICollectionViewDelegate {
     }
 }
 
-//extension CarouselView: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let size = collectionView.bounds.size
-//        return CGSize(width: size.width, height: size.width / 9 * 6 + 43)
-//    }
-//    
-////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-////        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-////    }
-//    
-////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-////        return 0
-////    }
-//    
-////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-////        return 0
-////    }
-//    
-////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-////        return CGSize(width: collectionView.bounds.size.width, height: 43)
-////    }
-////
-////    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-////        return CGSize(width: collectionView.bounds.size.width, height: 60)
-////    }
-//}
-
 extension CarouselView: HeroPromotionalLayoutDelegate {
     func carouselSpecificEditorialHeight() -> CGFloat? {
         return 43
     }
     func itemSpecificEditorialHeight() -> CGFloat? {
         return 43
+    }
+    func carouselFooterHeight() -> CGFloat {
+        return 60
     }
 
     func pageWidth() -> CGFloat {

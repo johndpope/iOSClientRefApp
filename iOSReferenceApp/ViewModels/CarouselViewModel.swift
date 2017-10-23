@@ -15,7 +15,7 @@ import UIKit
 protocol HeroPromotionalLayoutDelegate: class {
     func carouselSpecificEditorialHeight() -> CGFloat?
     func itemSpecificEditorialHeight() -> CGFloat?
-    
+    func carouselFooterHeight() -> CGFloat
     func pageWidth() -> CGFloat
 }
 class HeroPromotionalLayout: UICollectionViewLayout {
@@ -84,6 +84,8 @@ class HeroPromotionalLayout: UICollectionViewLayout {
     }
     
     var carouselEditorialAttribute: UICollectionViewLayoutAttributes?
+    
+    var carouselFooterAttribute: UICollectionViewLayoutAttributes?
     /// Note: As prepare() is called whenever the collection view's layout is invalidated, there are many situations in a typical implementation where you might need to recalculate attributes here. For example, the bounds of the UICollectionView might change - such as when the orientation changes - or items may be added or removed from the collection. These cases are out of scope for this tutorial, but it's important to be aware of them in a non-trivial implementation.
     override func prepare() {
         guard let collectionView = collectionView else { return }
@@ -103,11 +105,15 @@ class HeroPromotionalLayout: UICollectionViewLayout {
             carouselEditorialAttribute!.frame = CGRect(x: 0, y: 0, width: width, height: editorialHeight)
             cache = [carouselEditorialAttribute!]
         }
-        // Content height is Thumbnail + Item Editorial + Carousel Editorial
-        contentHeight = cellHeight + editorialHeight
         
         
+        let footerHeight = delegate.carouselFooterHeight()
+        carouselFooterAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))
+        carouselFooterAttribute!.frame = CGRect(x: 0, y: cellHeight+editorialHeight, width: width, height: footerHeight)
+        cache.append(carouselFooterAttribute!)
         
+        // Content height is Thumbnail + Item Editorial + Carousel Editorial + FooterHeight
+        contentHeight = cellHeight + editorialHeight + footerHeight
         
         var offset: CGFloat = edgeInset
         let other:[UICollectionViewLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: 0)).map {
@@ -153,7 +159,13 @@ class HeroPromotionalLayout: UICollectionViewLayout {
         if let stickyHeader = carouselEditorialAttribute, let collectionView = collectionView {
             let contentOffset = collectionView.contentOffset
             let oldFrame = stickyHeader.frame
-            stickyHeader.frame = CGRect(x: contentOffset.x, y: 0, width: oldFrame.width, height: oldFrame.height)
+            stickyHeader.frame = CGRect(x: contentOffset.x, y: oldFrame.minY, width: oldFrame.width, height: oldFrame.height)
+        }
+        
+        if let stickyFooter = carouselFooterAttribute, let collectionView = collectionView {
+            let contentOffset = collectionView.contentOffset
+            let oldFrame = stickyFooter.frame
+            stickyFooter.frame = CGRect(x: contentOffset.x, y: oldFrame.minY, width: oldFrame.width, height: oldFrame.height)
         }
         
         return cache.filter{ $0.frame.intersects(rect) }
