@@ -48,12 +48,10 @@ class CarouselViewController: UIViewController {
 
 extension CarouselViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("CarouselViewController",#function)
         return viewModel.content.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("CarouselViewController",#function)
         return collectionView.dequeueReusableCell(withReuseIdentifier: "carousel", for: indexPath)
     }
 }
@@ -61,7 +59,6 @@ extension CarouselViewController: UICollectionViewDataSource {
 extension CarouselViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print("CarouselViewController",#function)
-        print(#function, indexPath.row, indexPath.section)
         if let cell = cell as? CarouselView {
             let carouselViewModel = viewModel.content[indexPath.row]
             cell.bind(viewModel: carouselViewModel)
@@ -74,10 +71,7 @@ extension CarouselViewController: UICollectionViewDelegate {
 
 extension CarouselViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let vm = viewModel.content[indexPath.row].layout.carouselCellSize(for: collectionView.bounds)
-        
-        print("CarouselViewController",#function,vm)
-        return vm
+        return viewModel.content[indexPath.row].layout.carouselCellSize(for: collectionView.bounds)
     }
 }
 
