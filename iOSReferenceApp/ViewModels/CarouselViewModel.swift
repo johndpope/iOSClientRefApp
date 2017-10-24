@@ -58,10 +58,10 @@ protocol CarouselViewModelType {
 
 class CarouselViewModel<Editorial: CarouselLayoutDelegate, ItemEditorial>: CarouselViewModelType {
     fileprivate(set) var editorial: Editorial
-    var content: [CarouselItemViewModel<ItemEditorial>] = []
+    var content: [CarouselItemViewModel<ItemEditorial>]
     let layout = HeroPromotionLayout()
     
-    init(carousel: Editorial, data: [(Asset, ItemEditorial)]) {
+    init(carousel: Editorial, data: [(Asset, ItemEditorial?)] = []) {
         self.editorial = carousel
         self.content = data.map{ CarouselItemViewModel(data: $0.0, editorial: $0.1) }
         
