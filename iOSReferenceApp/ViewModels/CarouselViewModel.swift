@@ -62,7 +62,7 @@ struct CarouselEditorialFakeData {
 class CarouselViewModel<Editorial, ItemEditorial>: CarouselViewModelType {
     fileprivate(set) var editorial: Editorial
     var content: [CarouselItemViewModel<ItemEditorial>] = []
-    let layout = HeroPromotionalLayout()
+    let layout = HeroPromotionLayout()
     
     init(carousel: Editorial, data: [(Asset, ItemEditorial)]) {
         self.editorial = carousel

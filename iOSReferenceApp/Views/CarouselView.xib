@@ -22,7 +22,7 @@
                     <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hAE-f5-GUx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <collectionViewLayout key="collectionViewLayout" id="zDT-2m-hyt" customClass="HeroPromotionalLayout" customModule="iOSReferenceApp" customModuleProvider="target"/>
+                        <collectionViewLayout key="collectionViewLayout" id="zDT-2m-hyt" customClass="HeroPromotionLayout" customModule="iOSReferenceApp" customModuleProvider="target"/>
                         <connections>
                             <outlet property="dataSource" destination="KGk-i7-Jjw" id="BqE-hd-PIK"/>
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="hwT-xn-fJg"/>
