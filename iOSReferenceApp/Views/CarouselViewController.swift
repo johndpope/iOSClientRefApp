@@ -20,10 +20,6 @@ class CarouselViewController: UIViewController {
         
         collectionView.register(UINib(nibName: "CarouselView", bundle: nil), forCellWithReuseIdentifier: "carousel")
         
-        
-//        let layout = UICollectionViewFlowLayout()
-//        collectionView
-        
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -43,72 +39,45 @@ class CarouselViewController: UIViewController {
         let carouselGroupId = "fakeCarousels"//tabVC.dynamicCustomerConfig?.carouselGroupId ?? "fakeCarousels"
         
         viewModel.loadCarousel(group: carouselGroupId) { [weak self] error in
-//            self?.tableView.reloadData()
+            self?.collectionView.invalidateIntrinsicContentSize()
             self?.collectionView.reloadData()
         }
     }
 }
 
-//extension CarouselViewController: UITableViewDataSource {
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return viewModel.content.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 1
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        return tableView.dequeueReusableCell(withIdentifier: "carousel", for: indexPath) //as! CarouselView
-//    }
-//}
-//
-//extension CarouselViewController: UITableViewDelegate{
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        print(#function, indexPath.row, indexPath.section)
-//        return 308
-//    }
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//
-//        print(#function, indexPath.row, indexPath.section)
-//        return 308
-//    }
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        print(#function, indexPath.row, indexPath.section)
-//        if let cell = cell as? CarouselView {
-//            let carouselViewModel = viewModel.content[indexPath.row]
-//            cell.bind(viewModel: carouselViewModel)
-//        }
-//        //        cell.cellSelected = { [weak self] asset in
-//        //            self?.presetDetails(for: asset, from: .other)
-//        //        }
-//
-//    }
-//}
 
 extension CarouselViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("CarouselViewController",#function)
         return viewModel.content.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("CarouselViewController",#function)
         return collectionView.dequeueReusableCell(withReuseIdentifier: "carousel", for: indexPath)
     }
 }
 
 extension CarouselViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("CarouselViewController",#function)
         print(#function, indexPath.row, indexPath.section)
         if let cell = cell as? CarouselView {
             let carouselViewModel = viewModel.content[indexPath.row]
             cell.bind(viewModel: carouselViewModel)
         }
+//        cell.cellSelected = { [weak self] asset in
+//            self?.presetDetails(for: asset, from: .other)
+//        }
     }
 }
 
 extension CarouselViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 319.333333333)
+        let vm = viewModel.content[indexPath.row].layout.carouselCellSize(for: collectionView.bounds)
+        
+        print("CarouselViewController",#function,vm)
+        return vm
     }
 }
 

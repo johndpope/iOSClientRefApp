@@ -31,13 +31,11 @@ class CarouselView: UICollectionViewCell {//UITableViewCell {
             collectionView.prefetchDataSource = self
         }
         
-        let layout = HeroPromotionalLayout()
-        layout.delegate = self
-        collectionView.collectionViewLayout = layout
     }
     
     func bind(viewModel: CarouselViewModel<CarouselEditorialFakeData, CarouselItemEditorialFakeData>) {
         self.viewModel = viewModel
+        collectionView.collectionViewLayout = viewModel.layout
         collectionView.reloadData()
     }
     
@@ -47,10 +45,12 @@ class CarouselView: UICollectionViewCell {//UITableViewCell {
 
 extension CarouselView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("CarouselView",#function)
         return viewModel.content.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("CarouselView",#function)
         switch viewModel.editorial.promotionalType {
         case .hero:
             return collectionView.dequeueReusableCell(withReuseIdentifier: "heroCell", for: indexPath) as! HeroPromotionalCell
@@ -61,6 +61,7 @@ extension CarouselView: UICollectionViewDataSource {
 
 extension CarouselView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("CarouselView",#function)
         
         preloadNextBatch(after: indexPath)
         if let preview = cell as? HeroPromotionalCell {
@@ -86,6 +87,11 @@ extension CarouselView: UICollectionViewDelegate {
             }
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionElementKindSectionHeader {
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselHeader", for: indexPath) as! CarouselHeaderView
@@ -97,27 +103,6 @@ extension CarouselView: UICollectionViewDelegate {
         }
         return UICollectionReusableView()
     }
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        if kind == UICollectionElementKindSectionHeader {
-//            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselHeader", for: indexPath) as! CarouselHeaderView
-//
-//            if viewModel.editorial.usesCarouselSpecificEditorial {
-//                view.editorialText.text = viewModel.editorial.editorialText
-//                view.title.text = viewModel.editorial.editorialTitle
-//            }
-//            else {
-////                view.editorialText.text = viewModel.content[indexPath.row].editorial?.editorialText
-////                view.title.text = viewModel.content[indexPath.row].editorial?.editorialTitle
-//            }
-//            return view
-//        }
-//
-//        if kind == UICollectionElementKindSectionFooter {
-//            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselFooter", for: indexPath) as! CarouselFooterView
-//            return view
-//        }
-//        return UICollectionReusableView()
-//    }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
@@ -126,21 +111,6 @@ extension CarouselView: UICollectionViewDelegate {
     }
 }
 
-extension CarouselView: HeroPromotionalLayoutDelegate {
-    func carouselSpecificEditorialHeight() -> CGFloat? {
-        return 43
-    }
-    func itemSpecificEditorialHeight() -> CGFloat? {
-        return 43
-    }
-    func carouselFooterHeight() -> CGFloat {
-        return 60
-    }
-
-    func pageWidth() -> CGFloat {
-        return collectionView.bounds.size.width
-    }
-}
 
 extension CarouselView: UICollectionViewDataSourcePrefetching {
     public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {

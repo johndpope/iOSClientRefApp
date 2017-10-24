@@ -21,7 +21,7 @@
                 <subviews>
                     <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hAE-f5-GUx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <collectionViewLayout key="collectionViewLayout" id="zDT-2m-hyt" customClass="HeroPromotionalLayout" customModule="iOSReferenceApp" customModuleProvider="target"/>
                         <connections>
                             <outlet property="dataSource" destination="KGk-i7-Jjw" id="BqE-hd-PIK"/>
@@ -29,6 +29,7 @@
                         </connections>
                     </collectionView>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="hAE-f5-GUx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="9Wd-yr-oou"/>
                     <constraint firstItem="hAE-f5-GUx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="a8Q-3d-0k8"/>
@@ -36,11 +37,12 @@
                     <constraint firstAttribute="trailing" secondItem="hAE-f5-GUx" secondAttribute="trailing" id="crp-WD-Yaw"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="collectionView" destination="hAE-f5-GUx" id="M5G-7s-lQt"/>
             </connections>
-            <point key="canvasLocation" x="35" y="54"/>
+            <point key="canvasLocation" x="-34" y="36"/>
         </tableViewCell>
     </objects>
 </document>
