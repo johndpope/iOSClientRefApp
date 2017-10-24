@@ -19,7 +19,7 @@ class CarouselView: UICollectionViewCell {//UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        collectionView.register(UINib(nibName: "HeroPromotionalCell", bundle: nil), forCellWithReuseIdentifier: "heroCell")
+        collectionView.register(UINib(nibName: "HeroPromotionCell", bundle: nil), forCellWithReuseIdentifier: "heroCell")
 
         collectionView.register(UINib(nibName: "CarouselHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "carouselHeader")
         
@@ -53,7 +53,7 @@ extension CarouselView: UICollectionViewDataSource {
         print("CarouselView",#function)
         switch viewModel.editorial.promotionalType {
         case .hero:
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "heroCell", for: indexPath) as! HeroPromotionalCell
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "heroCell", for: indexPath) as! HeroPromotionCell
         }
         
     }
@@ -64,7 +64,7 @@ extension CarouselView: UICollectionViewDelegate {
         print("CarouselView",#function)
         
         preloadNextBatch(after: indexPath)
-        if let preview = cell as? HeroPromotionalCell {
+        if let preview = cell as? HeroPromotionCell {
             if viewModel.editorial.usesItemSpecificEditorials {
                 let vm = viewModel.content[indexPath.row]
                 preview.title.text = vm.editorial?.editorialTitle

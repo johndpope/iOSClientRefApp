@@ -1,5 +1,5 @@
 //
-//  HeroPromotionalCell.swift
+//  HeroPromotionCell.swift
 //  iOSReferenceApp
 //
 //  Created by Fredrik Sjöberg on 2017-10-22.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeroPromotionalCell: UICollectionViewCell {
+class HeroPromotionCell: UICollectionViewCell {
 
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var editorialText: UILabel!

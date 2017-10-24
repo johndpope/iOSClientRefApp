@@ -32,8 +32,8 @@
 		768ED8AA1F0FAEE3008E8F9B /* update_dependency_graph.rb in Resources */ = {isa = PBXBuildFile; fileRef = 768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */; };
 		7696DE601F9D19EF00D4543C /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696DE5E1F9D19EF00D4543C /* CarouselView.swift */; };
 		7696DE611F9D19EF00D4543C /* CarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7696DE5F1F9D19EF00D4543C /* CarouselView.xib */; };
-		7696DE651F9D1B9600D4543C /* HeroPromotionalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696DE631F9D1B9600D4543C /* HeroPromotionalCell.swift */; };
-		7696DE661F9D1B9600D4543C /* HeroPromotionalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7696DE641F9D1B9600D4543C /* HeroPromotionalCell.xib */; };
+		7696DE651F9D1B9600D4543C /* HeroPromotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696DE631F9D1B9600D4543C /* HeroPromotionCell.swift */; };
+		7696DE661F9D1B9600D4543C /* HeroPromotionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7696DE641F9D1B9600D4543C /* HeroPromotionCell.xib */; };
 		7696DE691F9D1FC100D4543C /* CarouselHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696DE671F9D1FC100D4543C /* CarouselHeaderView.swift */; };
 		7696DE6A1F9D1FC100D4543C /* CarouselHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7696DE681F9D1FC100D4543C /* CarouselHeaderView.xib */; };
 		7696DE6D1F9D22CD00D4543C /* CarouselFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696DE6B1F9D22CD00D4543C /* CarouselFooterView.swift */; };
@@ -182,8 +182,8 @@
 		768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = update_dependency_graph.rb; sourceTree = "<group>"; };
 		7696DE5E1F9D19EF00D4543C /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		7696DE5F1F9D19EF00D4543C /* CarouselView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselView.xib; sourceTree = "<group>"; };
-		7696DE631F9D1B9600D4543C /* HeroPromotionalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroPromotionalCell.swift; sourceTree = "<group>"; };
-		7696DE641F9D1B9600D4543C /* HeroPromotionalCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeroPromotionalCell.xib; sourceTree = "<group>"; };
+		7696DE631F9D1B9600D4543C /* HeroPromotionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroPromotionCell.swift; sourceTree = "<group>"; };
+		7696DE641F9D1B9600D4543C /* HeroPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeroPromotionCell.xib; sourceTree = "<group>"; };
 		7696DE671F9D1FC100D4543C /* CarouselHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselHeaderView.swift; sourceTree = "<group>"; };
 		7696DE681F9D1FC100D4543C /* CarouselHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselHeaderView.xib; sourceTree = "<group>"; };
 		7696DE6B1F9D22CD00D4543C /* CarouselFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselFooterView.swift; sourceTree = "<group>"; };
@@ -337,8 +337,8 @@
 		7696DE621F9D1B4B00D4543C /* EditorialCells */ = {
 			isa = PBXGroup;
 			children = (
-				7696DE631F9D1B9600D4543C /* HeroPromotionalCell.swift */,
-				7696DE641F9D1B9600D4543C /* HeroPromotionalCell.xib */,
+				7696DE631F9D1B9600D4543C /* HeroPromotionCell.swift */,
+				7696DE641F9D1B9600D4543C /* HeroPromotionCell.xib */,
 				76FFED4E1F9F794800FFB07D /* HeroPromotionalLayout.swift */,
 				76FFED501F9F7C8800FFB07D /* HeroPromotionEditorial.swift */,
 			);
@@ -801,7 +801,7 @@
 				764EDC491F5EADFB00569D5B /* environments.json in Resources */,
 				76A843D91EA7859E00BDAF2C /* Cartfile in Resources */,
 				7696DE6A1F9D1FC100D4543C /* CarouselHeaderView.xib in Resources */,
-				7696DE661F9D1B9600D4543C /* HeroPromotionalCell.xib in Resources */,
+				7696DE661F9D1B9600D4543C /* HeroPromotionCell.xib in Resources */,
 				76A417061EDEBF1B00677A46 /* AssetPreviewCell.xib in Resources */,
 				76BBFB7E1EA8CF2E001DBDDB /* Cartfile.resolved in Resources */,
 				76AF2F181F13B6DB0014F007 /* EPGPreviewCell.xib in Resources */,
@@ -867,7 +867,7 @@
 				76A4171F1EE062A100677A46 /* AssetDetailsViewModel.swift in Sources */,
 				76A844001EA7886400BDAF2C /* EnvironmentConfig.swift in Sources */,
 				F7061C731EC5CF8F0041E271 /* Logging.swift in Sources */,
-				7696DE651F9D1B9600D4543C /* HeroPromotionalCell.swift in Sources */,
+				7696DE651F9D1B9600D4543C /* HeroPromotionCell.swift in Sources */,
 				76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */,
 				F793A8531EC5289E00DF7626 /* SkyFloatingLabelTextField.swift in Sources */,
 				7696DE6D1F9D22CD00D4543C /* CarouselFooterView.swift in Sources */,
