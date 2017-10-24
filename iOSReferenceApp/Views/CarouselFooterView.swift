@@ -10,8 +10,8 @@ import UIKit
 
 class CarouselFooterView: UICollectionReusableView {
 
-    var fadeColor: UIColor = UIColor.white
-    var originalColor: UIColor = UIColor.black
+    var fadeColor: UIColor = UIColor("18181A")
+    var originalColor: UIColor = UIColor("0C0E0F")
     var roundness: CGFloat = 20
     
     private var gradientLayer = CAGradientLayer()
@@ -21,17 +21,6 @@ class CarouselFooterView: UICollectionReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        // Necessary in layoutSubviews to get the proper frame size.
     }
     
     func setupFade() {
@@ -44,13 +33,23 @@ class CarouselFooterView: UICollectionReusableView {
         layer.insertSublayer(gradientLayer, at: 0)
         gradientLayer.frame = bounds
         
-        footerView.layer.backgroundColor = originalColor.cgColor
-        footerView.layer.cornerRadius = roundness
-        footerView.layer.shadowColor = UIColor.black.cgColor
-        footerView.layer.shadowOpacity = 1
-        footerView.layer.shadowOffset = CGSize.zero
-        footerView.layer.shadowRadius = 3
-        footerView.layer.shadowPath = UIBezierPath(roundedRect: footerView.bounds, cornerRadius: roundness).cgPath
+        let fadeLayer = CAShapeLayer()
+        fadeLayer.path = UIBezierPath(rect: footerView.bounds).cgPath
+//        fadeLayer.path = UIBezierPath(roundedRect: footerView.bounds, cornerRadius: roundness).cgPath
+        fadeLayer.backgroundColor = originalColor.cgColor
+        footerView.layer.insertSublayer(fadeLayer, at: 0)
+        
+        let shadowLayer = CALayer()
+        shadowLayer.cornerRadius = roundness
+        shadowLayer.shadowColor = UIColor.black.cgColor
+        shadowLayer.shadowOpacity = 1
+        shadowLayer.shadowOffset = CGSize.zero
+        shadowLayer.shadowRadius = 3
+        shadowLayer.shadowPath = UIBezierPath(rect: footerView.bounds).cgPath
+//        shadowLayer.shadowPath = UIBezierPath(roundedRect: footerView.bounds, cornerRadius: roundness).cgPath
+        footerView.layer.insertSublayer(shadowLayer, at: 0)
+        
+        
     }
     
 //    // Helper to return the main layer as CAGradientLayer

@@ -31,7 +31,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TFA-b3-7uI">
                                 <rect key="frame" x="0.0" y="0.0" width="360" height="21.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -43,7 +43,7 @@
                             </label>
                         </subviews>
                     </stackView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MD6-hU-Ovn">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assetPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="MD6-hU-Ovn">
                         <rect key="frame" x="0.0" y="43" width="360" height="240"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="MD6-hU-Ovn" secondAttribute="height" multiplier="3:2" id="fXw-QN-ium"/>
@@ -71,4 +71,7 @@
             <point key="canvasLocation" x="-1" y="80.5"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="assetPlaceholder" width="108" height="162"/>
+    </resources>
 </document>

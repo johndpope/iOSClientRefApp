@@ -91,7 +91,7 @@ class CarouselViewModel<Editorial: CarouselLayoutDelegate, ItemEditorial>: Carou
 
 extension CarouselViewModel where Editorial == HeroPromotionEditorial {
     func thumbnailSize(forCellWidth cellWidth: CGFloat) -> CGSize {
-        let size = cellWidth - 2 * editorial.contentInset
+        let size = cellWidth - 2 * editorial.contentSideInset
         return CGSize(width: size, height: size / 9 * 6)
     }
     

@@ -24,7 +24,8 @@ struct HeroPromotionEditorial {
     let itemEditorialHeight: CGFloat? = 43
     
     // MARK: General Layout
-    let contentInset: CGFloat = 30
+    let contentSideInset: CGFloat = 30
+    let contentTopInset: CGFloat = 10
 }
 
 extension HeroPromotionEditorial: CarouselLayoutDelegate {
@@ -36,8 +37,12 @@ extension HeroPromotionEditorial: CarouselLayoutDelegate {
         return footerHeight
     }
     
-    var carouselContentInset: CGFloat {
-        return contentInset
+    var carouselContentSideInset: CGFloat {
+        return contentSideInset
+    }
+    
+    var carouselContentTopInset: CGFloat {
+        return contentTopInset
     }
     
     var itemSpecificEditorialHeight: CGFloat? {

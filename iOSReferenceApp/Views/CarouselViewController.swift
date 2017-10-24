@@ -58,7 +58,6 @@ extension CarouselViewController: UICollectionViewDataSource {
 
 extension CarouselViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("CarouselViewController",#function)
         if let cell = cell as? CarouselView {
             let carouselViewModel = viewModel.content[indexPath.row]
             cell.bind(viewModel: carouselViewModel)

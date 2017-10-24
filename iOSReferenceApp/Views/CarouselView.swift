@@ -55,14 +55,12 @@ extension CarouselView: UICollectionViewDataSource {
 
 extension CarouselView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("CarouselView",#function)
-        
         preloadNextBatch(after: indexPath)
         if let cell = cell as? HeroPromotionCell {
             cell.reset()
             if viewModel.editorial.usesItemSpecificEditorials {
                 let vm = viewModel.content[indexPath.row]
-                cell.title.text = vm.editorial?.title
+                cell.title.text = vm.editorial?.title?.uppercased()
                 cell.editorialText.text = vm.editorial?.text
             }
             
@@ -89,13 +87,14 @@ extension CarouselView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionElementKindSectionHeader {
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselHeader", for: indexPath) as! CarouselHeaderView
-            view.title.text = viewModel.editorial.title
+            view.title.text = viewModel.editorial.title?.uppercased()
             view.editorialText.text = viewModel.editorial.text
             return view
         }
         
         if kind == UICollectionElementKindSectionFooter {
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselFooter", for: indexPath) as! CarouselFooterView
+            view.setupFade()
             return view
         }
         return UICollectionReusableView()
