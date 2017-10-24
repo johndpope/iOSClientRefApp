@@ -18,8 +18,6 @@ class CarouselViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        tableView.register(UINib(nibName: "CarouselView", bundle: nil), forCellReuseIdentifier: "carousel")
-        
         collectionView.register(UINib(nibName: "CarouselView", bundle: nil), forCellWithReuseIdentifier: "carousel")
         
         
@@ -51,42 +49,42 @@ class CarouselViewController: UIViewController {
     }
 }
 
-extension CarouselViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.content.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "carousel", for: indexPath) //as! CarouselView
-    }
-}
-
-extension CarouselViewController: UITableViewDelegate{
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print(#function, indexPath.row, indexPath.section)
-        return 308
-    }
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        print(#function, indexPath.row, indexPath.section)
-        return 308
-    }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(#function, indexPath.row, indexPath.section)
+//extension CarouselViewController: UITableViewDataSource {
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return viewModel.content.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return 1
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        return tableView.dequeueReusableCell(withIdentifier: "carousel", for: indexPath) //as! CarouselView
+//    }
+//}
+//
+//extension CarouselViewController: UITableViewDelegate{
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        print(#function, indexPath.row, indexPath.section)
+//        return 308
+//    }
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//
+//        print(#function, indexPath.row, indexPath.section)
+//        return 308
+//    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        print(#function, indexPath.row, indexPath.section)
 //        if let cell = cell as? CarouselView {
 //            let carouselViewModel = viewModel.content[indexPath.row]
 //            cell.bind(viewModel: carouselViewModel)
 //        }
-        //        cell.cellSelected = { [weak self] asset in
-        //            self?.presetDetails(for: asset, from: .other)
-        //        }
-        
-    }
-}
+//        //        cell.cellSelected = { [weak self] asset in
+//        //            self?.presetDetails(for: asset, from: .other)
+//        //        }
+//
+//    }
+//}
 
 extension CarouselViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -99,7 +97,19 @@ extension CarouselViewController: UICollectionViewDataSource {
 }
 
 extension CarouselViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(#function, indexPath.row, indexPath.section)
+        if let cell = cell as? CarouselView {
+            let carouselViewModel = viewModel.content[indexPath.row]
+            cell.bind(viewModel: carouselViewModel)
+        }
+    }
+}
+
+extension CarouselViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 319.333333333)
+    }
 }
 
 extension CarouselViewController: AuthorizedEnvironment {

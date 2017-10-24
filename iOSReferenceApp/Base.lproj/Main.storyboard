@@ -1707,6 +1707,10 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="Ef5-sN-eb6" id="2fS-B2-QAJ"/>
+                                    <outlet property="delegate" destination="Ef5-sN-eb6" id="8JW-E9-wCN"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
