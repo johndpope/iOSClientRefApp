@@ -9,14 +9,11 @@
 import Foundation
 import Exposure
 import Kingfisher
-
 import UIKit
 
-protocol CarouselLayoutDelegate: class {
+protocol EmbeddedCarouselLayoutDelegate: class {
     func carouselCellSize(for bounds: CGRect) -> CGSize
 }
-
-
 
 protocol CarouselViewModelType {
     associatedtype EditorialData
@@ -27,39 +24,39 @@ protocol CarouselViewModelType {
 }
 
 
-struct CarouselEditorialFakeData {
-    let promotionalType: PromotionalType
-    let editorialTitle: String?
-    let editorialText: String?
-    
-    init(type: PromotionalType = .hero, title: String? = nil, text: String? = nil) {
-        self.promotionalType = type
-        self.editorialTitle = title
-        self.editorialText = text
-    }
-    
-    enum PromotionalType {
-        case hero
-//        case poster
-    }
-    
-    var usesCarouselSpecificEditorial: Bool {
-        switch promotionalType {
-        case .hero: return false
-//        case .poster: return true
-        }
-    }
-    
-    var usesItemSpecificEditorials: Bool {
-        switch promotionalType {
-        case .hero: return true
-//        case .poster: return false
-        }
-    }
-}
+//struct CarouselEditorialFakeData {
+//    let promotionalType: PromotionalType
+//    let editorialTitle: String?
+//    let editorialText: String?
+//
+//    init(type: PromotionalType = .hero, title: String? = nil, text: String? = nil) {
+//        self.promotionalType = type
+//        self.editorialTitle = title
+//        self.editorialText = text
+//    }
+//
+//    enum PromotionalType {
+//        case hero
+////        case poster
+//    }
+//
+//    var usesCarouselSpecificEditorial: Bool {
+//        switch promotionalType {
+//        case .hero: return false
+////        case .poster: return true
+//        }
+//    }
+//
+//    var usesItemSpecificEditorials: Bool {
+//        switch promotionalType {
+//        case .hero: return true
+////        case .poster: return false
+//        }
+//    }
+//}
 
 
-class CarouselViewModel<Editorial, ItemEditorial>: CarouselViewModelType {
+class CarouselViewModel<Editorial: CarouselLayoutDelegate, ItemEditorial>: CarouselViewModelType {
     fileprivate(set) var editorial: Editorial
     var content: [CarouselItemViewModel<ItemEditorial>] = []
     let layout = HeroPromotionLayout()
@@ -68,10 +65,7 @@ class CarouselViewModel<Editorial, ItemEditorial>: CarouselViewModelType {
         self.editorial = carousel
         self.content = data.map{ CarouselItemViewModel(data: $0.0, editorial: $0.1) }
         
-        layout.carouselSpecificEditorialHeight = 43
-        layout.carouselFooterHeight = 60
-        layout.itemSpecificEditorialHeight = 43
-        layout.carouselContentInset = 30
+        layout.delegate = editorial
     }
     
     // 1. Main Table View
@@ -95,29 +89,14 @@ class CarouselViewModel<Editorial, ItemEditorial>: CarouselViewModelType {
     //          * Promotional text
 }
 
-extension CarouselViewModel where Editorial == CarouselEditorialFakeData {
-    func contentInset(forCellWidth cellWidth: CGFloat) -> CGFloat {
-        return 10
-    }
-    
-    func cellSize(forCellWidth cellWidth: CGFloat) -> CGSize {
-        let thumbSize = thumbnailSize(forCellWidth: cellWidth)
-        return CGSize(width: thumbSize.width, height: thumbSize.height+43)
-    }
-    
+extension CarouselViewModel where Editorial == HeroPromotionEditorial {
     func thumbnailSize(forCellWidth cellWidth: CGFloat) -> CGSize {
-        let size = cellWidth - 2 * contentInset(forCellWidth: cellWidth)
-        switch editorial.promotionalType {
-        case .hero:
-            // 9:6 Aspect, Full Cell
-            return CGSize(width: size, height: size / 9 * 6)
-        }
+        let size = cellWidth - 2 * editorial.contentInset
+        return CGSize(width: size, height: size / 9 * 6)
     }
     
     func thumbnailCornerRadius(forCellWidth cellWidth: CGFloat) -> CGFloat {
-        switch editorial.promotionalType {
-        case .hero: return 10
-        }
+        return 10
     }
     
     func thumbnailProcessor(forCellWidth cellWidth: CGFloat) -> ImageProcessor {
@@ -137,9 +116,7 @@ extension CarouselViewModel where Editorial == CarouselEditorialFakeData {
     }
     
     var preferedImageOrientation: Exposure.Image.Orientation {
-        switch editorial.promotionalType {
-        case .hero: return .landscape
-        }
+        return .landscape
     }
     
     func imageUrl(for index: Int) -> URL? {

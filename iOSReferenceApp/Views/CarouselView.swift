@@ -9,11 +9,11 @@
 import UIKit
 import Kingfisher
 
-class CarouselView: UICollectionViewCell {//UITableViewCell {
+class CarouselView: UICollectionViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    fileprivate(set) var viewModel: CarouselViewModel<CarouselEditorialFakeData, CarouselItemEditorialFakeData>!
+    fileprivate(set) var viewModel: CarouselViewModel<HeroPromotionEditorial, HeroItemPromotionEditorial>!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,7 +33,7 @@ class CarouselView: UICollectionViewCell {//UITableViewCell {
         
     }
     
-    func bind(viewModel: CarouselViewModel<CarouselEditorialFakeData, CarouselItemEditorialFakeData>) {
+    func bind(viewModel: CarouselViewModel<HeroPromotionEditorial, HeroItemPromotionEditorial>) {
         self.viewModel = viewModel
         collectionView.collectionViewLayout = viewModel.layout
         collectionView.reloadData()
@@ -45,17 +45,11 @@ class CarouselView: UICollectionViewCell {//UITableViewCell {
 
 extension CarouselView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("CarouselView",#function)
         return viewModel.content.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("CarouselView",#function)
-        switch viewModel.editorial.promotionalType {
-        case .hero:
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "heroCell", for: indexPath) as! HeroPromotionCell
-        }
-        
+        return collectionView.dequeueReusableCell(withReuseIdentifier: "heroCell", for: indexPath) as! HeroPromotionCell
     }
 }
 
@@ -64,11 +58,12 @@ extension CarouselView: UICollectionViewDelegate {
         print("CarouselView",#function)
         
         preloadNextBatch(after: indexPath)
-        if let preview = cell as? HeroPromotionCell {
+        if let cell = cell as? HeroPromotionCell {
+            cell.reset()
             if viewModel.editorial.usesItemSpecificEditorials {
                 let vm = viewModel.content[indexPath.row]
-                preview.title.text = vm.editorial?.editorialTitle
-                preview.editorialText.text = vm.editorial?.editorialText
+                cell.title.text = vm.editorial?.title
+                cell.editorialText.text = vm.editorial?.text
             }
             
             
@@ -76,8 +71,7 @@ extension CarouselView: UICollectionViewDelegate {
             let cellWidth = collectionView.bounds.size.width
             if let url = viewModel.imageUrl(for: indexPath.row) {
                 let imageOptions = viewModel.thumbnailOptions(forCellWidth: cellWidth)
-                preview
-                    .heroBanner
+                cell.heroBanner
                     .kf
                     .setImage(with: url, placeholder: #imageLiteral(resourceName: "assetPlaceholder"), options: imageOptions) { [weak self] (image, error, cache, url) in
                         if let error = error {
@@ -95,8 +89,11 @@ extension CarouselView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionElementKindSectionHeader {
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselHeader", for: indexPath) as! CarouselHeaderView
+            view.title.text = viewModel.editorial.title
+            view.editorialText.text = viewModel.editorial.text
             return view
         }
+        
         if kind == UICollectionElementKindSectionFooter {
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselFooter", for: indexPath) as! CarouselFooterView
             return view

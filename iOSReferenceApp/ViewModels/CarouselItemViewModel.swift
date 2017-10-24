@@ -9,11 +9,6 @@
 import Foundation
 import Exposure
 
-struct CarouselItemEditorialFakeData {
-    let editorialTitle: String
-    let editorialText: String
-}
-
 protocol CarouselItemViewModelType: Hashable {
     associatedtype AssetData
     associatedtype EditorialData

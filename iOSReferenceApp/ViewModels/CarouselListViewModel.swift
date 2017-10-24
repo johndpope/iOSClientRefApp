@@ -18,7 +18,7 @@ class CarouselListViewModel {
         self.sessionToken = sessionToken
     }
     
-    fileprivate(set) var content: [CarouselViewModel<CarouselEditorialFakeData, CarouselItemEditorialFakeData>] = []
+    fileprivate(set) var content: [CarouselViewModel<HeroPromotionEditorial, HeroItemPromotionEditorial>] = []
     
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
@@ -50,9 +50,9 @@ class CarouselListViewModel {
 
 extension CarouselListViewModel {
     fileprivate func loadFakeCarousel(callback: @escaping (ExposureError?) -> Void) {
-        let list:[(CarouselViewModel<CarouselEditorialFakeData, CarouselItemEditorialFakeData>, Asset.AssetType)] = [
-            (CarouselViewModel(carousel: CarouselEditorialFakeData(), data: []), .movie),
-            (CarouselViewModel(carousel: CarouselEditorialFakeData(), data: []), .clip)
+        let list:[(CarouselViewModel<HeroPromotionEditorial, HeroItemPromotionEditorial>, Asset.AssetType)] = [
+            (CarouselViewModel(carousel: HeroPromotionEditorial(), data: []), .movie),
+            (CarouselViewModel(carousel: HeroPromotionEditorial(), data: []), .clip)
         ]
         
         content = list.map{ $0.0 }
@@ -61,7 +61,7 @@ extension CarouselListViewModel {
             fetchMetadata(type: type) { [weak self] list, error in
                 guard let weakSelf = self else { return }
                 if let items = list?.items {
-                    let data =  items.map{ asset -> CarouselItemViewModel<CarouselItemEditorialFakeData> in
+                    let data =  items.map{ asset -> CarouselItemViewModel<HeroItemPromotionEditorial> in
                         let editorial = vm.editorial.usesItemSpecificEditorials ? weakSelf.fakeEditorial(for: asset) : nil
                         return CarouselItemViewModel(data: asset, editorial: editorial)
                     }
@@ -72,8 +72,8 @@ extension CarouselListViewModel {
         }
     }
     
-    private func fakeEditorial(for asset: Asset) -> CarouselItemEditorialFakeData? {
-        return CarouselItemEditorialFakeData(editorialTitle: asset.anyTitle(locale: "en"), editorialText: asset.anyDescription(locale: "en"))
+    private func fakeEditorial(for asset: Asset) -> HeroItemPromotionEditorial? {
+        return HeroItemPromotionEditorial(title: asset.anyTitle(locale: "en"), text: asset.anyDescription(locale: "en"))
     }
     
     fileprivate func fetchMetadata(type: Asset.AssetType, callback: @escaping (AssetList?, ExposureError?) -> Void) {

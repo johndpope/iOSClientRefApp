@@ -8,13 +8,17 @@
 
 import UIKit
 
+protocol CarouselLayoutDelegate {
+    var carouselSpecificEditorialHeight: CGFloat? { get }
+    var carouselFooterHeight: CGFloat { get }
+    var carouselContentInset: CGFloat { get }
+    var itemSpecificEditorialHeight: CGFloat? { get }
+}
+
 class HeroPromotionLayout: UICollectionViewLayout {
     
-    // MARK: - Configuration
-    var carouselContentInset: CGFloat = 30
-    var carouselSpecificEditorialHeight: CGFloat? = 43
-    var itemSpecificEditorialHeight: CGFloat? = 43
-    var carouselFooterHeight: CGFloat = 60
+    // MARK: - Delegate
+    var delegate: CarouselLayoutDelegate!
     
     
     // MARK: - Internal
@@ -36,13 +40,13 @@ class HeroPromotionLayout: UICollectionViewLayout {
         // Thumbnail view is 3:2 aspect of width
         let aspect:CGFloat = 2 / 3
         
-        let cellWidth = width - carouselContentInset * 2
+        let cellWidth = width - delegate.carouselContentInset * 2
         let thumbnailSize = CGSize(width: cellWidth, height: cellWidth * aspect)
-        let itemEditorialHeight = (itemSpecificEditorialHeight ?? 0)
+        let itemEditorialHeight = (delegate.itemSpecificEditorialHeight ?? 0)
         let cellHeight = thumbnailSize.height + itemEditorialHeight
         
-        let editorialHeight = carouselSpecificEditorialHeight ?? 0
-        let footerHeight = carouselFooterHeight
+        let editorialHeight = delegate.carouselSpecificEditorialHeight ?? 0
+        let footerHeight = delegate.carouselFooterHeight
         
         return cellHeight + editorialHeight + footerHeight
     }
@@ -65,12 +69,12 @@ class HeroPromotionLayout: UICollectionViewLayout {
         // Thumbnail view is 3:2 aspect of width
         let aspect:CGFloat = 2 / 3
         let width = pageWidth
-        let cellWidth = width - carouselContentInset * 2
+        let cellWidth = width - delegate.carouselContentInset * 2
         let thumbnailSize = CGSize(width: cellWidth, height: cellWidth * aspect)
-        let itemEditorialHeight = (itemSpecificEditorialHeight ?? 0)
+        let itemEditorialHeight = (delegate.itemSpecificEditorialHeight ?? 0)
         let cellHeight = thumbnailSize.height + itemEditorialHeight
         
-        let editorialHeight = carouselSpecificEditorialHeight ?? 0
+        let editorialHeight = delegate.carouselSpecificEditorialHeight ?? 0
         if editorialHeight > 0 {
             carouselEditorialAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: 0))
             carouselEditorialAttribute!.frame = CGRect(x: 0, y: 0, width: width, height: editorialHeight)
@@ -78,7 +82,7 @@ class HeroPromotionLayout: UICollectionViewLayout {
         }
         
         
-        let footerHeight = carouselFooterHeight
+        let footerHeight = delegate.carouselFooterHeight
         carouselFooterAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))
         carouselFooterAttribute!.frame = CGRect(x: 0, y: cellHeight+editorialHeight, width: width, height: footerHeight)
         cache.append(carouselFooterAttribute!)
@@ -86,7 +90,7 @@ class HeroPromotionLayout: UICollectionViewLayout {
         // Content height is Thumbnail + Item Editorial + Carousel Editorial + FooterHeight
         let totalContentHeight = cellHeight + editorialHeight + footerHeight
         
-        var offset: CGFloat = carouselContentInset
+        var offset: CGFloat = delegate.carouselContentInset
         let other:[UICollectionViewLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: 0)).map {
             let indexPath = IndexPath(item: $0, section: 0)
             
@@ -95,7 +99,7 @@ class HeroPromotionLayout: UICollectionViewLayout {
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = frame
             
-            offset += cellWidth + carouselContentInset/2
+            offset += cellWidth + delegate.carouselContentInset/2
             
             // Update total offset
             contentWidth = max(contentWidth, frame.maxX)
@@ -192,7 +196,7 @@ class HeroPromotionLayout: UICollectionViewLayout {
     }
 }
 
-extension HeroPromotionLayout: CarouselLayoutDelegate {
+extension HeroPromotionLayout: EmbeddedCarouselLayoutDelegate {
     func carouselCellSize(for bounds: CGRect) -> CGSize {
         return CGSize(width: bounds.size.width, height: contentHeight(for: bounds.size.width))
     }

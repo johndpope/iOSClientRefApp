@@ -14,6 +14,9 @@ class HeroPromotionCell: UICollectionViewCell {
     @IBOutlet weak var editorialText: UILabel!
     @IBOutlet weak var heroBanner: UIImageView!
     
+    func reset() {
+        heroBanner.image = #imageLiteral(resourceName: "assetPlaceholder")
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
