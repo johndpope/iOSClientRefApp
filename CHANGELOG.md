@@ -6,6 +6,9 @@
 ## 0.2.1
 NOT RELEASED
 
+#### Features
+* Content promotion through `Carousel` layout with editorial control.
+
 #### Bug Fixes
 * Offline media list now reloads when the view appears
 
