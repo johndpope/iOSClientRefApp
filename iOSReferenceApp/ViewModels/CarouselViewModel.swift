@@ -132,6 +132,9 @@ class HeroPromotionalLayout: UICollectionViewLayout {
             
             return attributes
         }
+        
+        print(#function, "CONTENT HEIGHT", contentHeight)
+        
         cache.append(contentsOf: other)
     }
     
@@ -156,6 +159,7 @@ class HeroPromotionalLayout: UICollectionViewLayout {
 //    }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        print(#function, "CONTENT HEIGHT", contentHeight)
         if let stickyHeader = carouselEditorialAttribute, let collectionView = collectionView {
             let contentOffset = collectionView.contentOffset
             let oldFrame = stickyHeader.frame

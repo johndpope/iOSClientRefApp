@@ -11,19 +11,24 @@ import Exposure
 
 class CarouselViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var viewModel: CarouselListViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.rowHeight = 348//UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 348
+//        tableView.register(UINib(nibName: "CarouselView", bundle: nil), forCellReuseIdentifier: "carousel")
         
-        tableView.register(UINib(nibName: "CarouselView", bundle: nil),
-                           forCellReuseIdentifier: "carousel")
-//
+        collectionView.register(UINib(nibName: "CarouselView", bundle: nil), forCellWithReuseIdentifier: "carousel")
+        
+        
+//        let layout = UICollectionViewFlowLayout()
+//        collectionView
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
         setupViewModel()
     }
 
@@ -40,7 +45,8 @@ class CarouselViewController: UIViewController {
         let carouselGroupId = "fakeCarousels"//tabVC.dynamicCustomerConfig?.carouselGroupId ?? "fakeCarousels"
         
         viewModel.loadCarousel(group: carouselGroupId) { [weak self] error in
-            self?.tableView.reloadData()
+//            self?.tableView.reloadData()
+            self?.collectionView.reloadData()
         }
     }
 }
@@ -55,25 +61,45 @@ extension CarouselViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "carousel") as! CarouselView
+        return tableView.dequeueReusableCell(withIdentifier: "carousel", for: indexPath) //as! CarouselView
     }
 }
 
 extension CarouselViewController: UITableViewDelegate{
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 308
-//    }
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        print(#function, indexPath.row, indexPath.section)
+        return 308
+    }
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        print(#function, indexPath.row, indexPath.section)
+        return 308
+    }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? CarouselView {
-            let carouselViewModel = viewModel.content[indexPath.row]
-            cell.bind(viewModel: carouselViewModel)
-        }
+        print(#function, indexPath.row, indexPath.section)
+//        if let cell = cell as? CarouselView {
+//            let carouselViewModel = viewModel.content[indexPath.row]
+//            cell.bind(viewModel: carouselViewModel)
+//        }
         //        cell.cellSelected = { [weak self] asset in
         //            self?.presetDetails(for: asset, from: .other)
         //        }
         
     }
+}
+
+extension CarouselViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.content.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return collectionView.dequeueReusableCell(withReuseIdentifier: "carousel", for: indexPath)
+    }
+}
+
+extension CarouselViewController: UICollectionViewDelegate {
+    
 }
 
 extension CarouselViewController: AuthorizedEnvironment {

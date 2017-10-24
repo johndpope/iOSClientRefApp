@@ -1688,36 +1688,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0tl-Ke-nl3">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Zj-mg-1X9">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="jwd-jC-MEV" customClass="CarouselView" customModule="iOSReferenceApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jwd-jC-MEV" id="o7Z-hd-7Zh">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZNI-j9-PkT">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="carousel" id="1nV-n2-YTK" customClass="CarouselView" customModule="iOSReferenceApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="Ef5-sN-eb6" id="8Ld-m8-4ja"/>
-                                    <outlet property="delegate" destination="Ef5-sN-eb6" id="rGa-nr-x3A"/>
-                                </connections>
-                            </tableView>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="MFl-Nl-6lF" firstAttribute="top" secondItem="0tl-Ke-nl3" secondAttribute="bottom" id="QVL-eM-hLw"/>
-                            <constraint firstAttribute="trailing" secondItem="0tl-Ke-nl3" secondAttribute="trailing" id="epq-om-GfU"/>
-                            <constraint firstItem="0tl-Ke-nl3" firstAttribute="top" secondItem="vjK-cE-WEh" secondAttribute="bottom" id="g5Y-zg-4vf"/>
-                            <constraint firstItem="0tl-Ke-nl3" firstAttribute="leading" secondItem="UxI-wt-i8y" secondAttribute="leading" id="nPZ-NL-wdC"/>
+                            <constraint firstItem="6Zj-mg-1X9" firstAttribute="leading" secondItem="UxI-wt-i8y" secondAttribute="leading" id="hcI-Ox-UwQ"/>
+                            <constraint firstItem="MFl-Nl-6lF" firstAttribute="top" secondItem="6Zj-mg-1X9" secondAttribute="bottom" id="ly6-IH-BWA"/>
+                            <constraint firstItem="6Zj-mg-1X9" firstAttribute="top" secondItem="vjK-cE-WEh" secondAttribute="bottom" id="mAK-mD-gs5"/>
+                            <constraint firstAttribute="trailing" secondItem="6Zj-mg-1X9" secondAttribute="trailing" id="wMP-In-fPm"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Carousel" id="Q5J-PB-rRC"/>
                     <connections>
-                        <outlet property="tableView" destination="0tl-Ke-nl3" id="H5X-CX-Siv"/>
+                        <outlet property="collectionView" destination="6Zj-mg-1X9" id="s0U-Oj-cfL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="69Q-Af-t27" userLabel="First Responder" sceneMemberID="firstResponder"/>

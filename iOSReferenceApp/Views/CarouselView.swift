@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class CarouselView: UITableViewCell {
+class CarouselView: UICollectionViewCell {//UITableViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
