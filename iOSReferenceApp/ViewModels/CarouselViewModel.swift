@@ -12,7 +12,7 @@ import Kingfisher
 import UIKit
 
 protocol EmbeddedCarouselLayoutDelegate: class {
-    func carouselCellSize(for bounds: CGRect) -> CGSize
+    func estimatedCellSize(for bounds: CGRect) -> CGSize
 }
 
 protocol EditorialCell {

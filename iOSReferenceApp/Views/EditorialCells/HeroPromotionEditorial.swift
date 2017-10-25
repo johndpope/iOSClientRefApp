@@ -110,8 +110,8 @@ extension HeroPromotionEditorial: CarouselLayoutDelegate {
 }
 
 extension HeroPromotionEditorial: EmbeddedCarouselLayoutDelegate {
-    func carouselCellSize(for bounds: CGRect) -> CGSize {
-        return heroLayout.carouselCellSize(for: bounds)
+    func estimatedCellSize(for bounds: CGRect) -> CGSize {
+        return heroLayout.estimatedCellSize(for: bounds)
     }
 }
 

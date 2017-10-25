@@ -45,7 +45,7 @@ class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
         
         
         // Promotional Art
-        let cellSize = carousel.portraitLayout.thumbnailSize(for: carousel.portraitLayout.cellWidth())
+        let cellSize = carousel.portraitLayout.thumbnailSize()
         let imageOptions = carousel.thumbnailOptions(for: cellSize)
         
         load(imageView: first, options: imageOptions, editorial: editorial) { $0.first }

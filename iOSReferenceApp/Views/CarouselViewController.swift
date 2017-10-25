@@ -70,7 +70,7 @@ extension CarouselViewController: UICollectionViewDelegate {
 
 extension CarouselViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return viewModel.content[indexPath.row].editorial.carouselCellSize(for: collectionView.bounds)
+        return viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds)
     }
 }
 

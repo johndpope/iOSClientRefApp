@@ -110,8 +110,8 @@ extension PortraitTrioPromotionEditorial: CarouselLayoutDelegate {
 }
 
 extension PortraitTrioPromotionEditorial: EmbeddedCarouselLayoutDelegate {
-    func carouselCellSize(for bounds: CGRect) -> CGSize {
-        return portraitLayout.carouselCellSize(for: bounds)
+    func estimatedCellSize(for bounds: CGRect) -> CGSize {
+        return portraitLayout.estimatedCellSize(for: bounds)
     }
 }
 

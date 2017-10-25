@@ -38,7 +38,7 @@ class HeroPromotionCell: UICollectionViewCell, EditorialCell {
         
         
         // Promotional Art
-        let cellSize = carousel.heroLayout.thumbnailSize(for: carousel.heroLayout.cellWidth())
+        let cellSize = carousel.heroLayout.thumbnailSize()
         if let url = editorial.imageUrl() {
             heroBanner
                 .kf
