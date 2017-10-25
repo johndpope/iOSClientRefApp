@@ -33,7 +33,7 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
     
     internal func thumbnailHeight() -> CGFloat {
         // Thumbnail view is 2:3 aspect of width
-        let aspect:CGFloat = 3 / 2
+        let aspect:CGFloat = 16 / 9
         return thumbnailWidth() * aspect
     }
     

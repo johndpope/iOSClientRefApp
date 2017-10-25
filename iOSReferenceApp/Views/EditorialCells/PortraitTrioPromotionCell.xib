@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,6 +54,9 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assetPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="dGX-DL-ZPh">
                                         <rect key="frame" x="0.0" y="0.0" width="128.5" height="209"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="dGX-DL-ZPh" secondAttribute="height" multiplier="128:209" id="iqO-LZ-5uE"/>
+                                        </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assetPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="od8-RH-Wss">
                                         <rect key="frame" x="138.5" y="0.0" width="129" height="209"/>
