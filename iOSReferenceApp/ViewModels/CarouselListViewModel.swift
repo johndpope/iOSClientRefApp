@@ -87,7 +87,14 @@ extension CarouselListViewModel {
             return assetList.map{ HeroItemPromotionEditorial(title: $0.anyTitle(locale: "en"), text: $0.anyDescription(locale: "en"), data: $0) }
         }
         else if let editorial = using as? PortraitTrioPromotionEditorial {
-            let cellData = assetList.chunks(3).map{ PortraitTrioItemPromotionEditorial.Data(first: $0[0], second: $0[1], third: $0[2]) }
+            let cellData = assetList
+                .chuncked(by: 3)
+                .flatMap{ list -> (PortraitTrioItemPromotionEditorial.Data)? in
+                    guard let first = list.first else { return nil }
+                    return PortraitTrioItemPromotionEditorial.Data(first: first,
+                                                                   second: (list.count > 1 ? list[1] : nil),
+                                                                   third: (list.count > 2 ? list[2] : nil))
+            }
             guard editorial.usesItemSpecificEditorials else {
                 return cellData.map{ PortraitTrioItemPromotionEditorial(data: $0) }
             }
@@ -119,10 +126,17 @@ extension CarouselListViewModel {
     }
 }
 
-extension Array {
-    func chunks(_ chunkSize: Int) -> [[Element]] {
-        return stride(from: 0, to: self.count, by: chunkSize).map {
-            Array(self[$0..<Swift.min($0 + chunkSize, self.count)])
+extension Sequence {
+    func chuncked(by size:Int) -> [[Element]] {
+        return self.reduce(into:[]) { memo, cur in
+            if memo.count == 0 {
+                return memo.append([cur])
+            }
+            if memo.last!.count < size {
+                memo.append(memo.removeLast() + [cur])
+            } else {
+                memo.append([cur])
+            }
         }
     }
 }

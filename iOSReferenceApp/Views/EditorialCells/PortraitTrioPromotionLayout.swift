@@ -28,7 +28,7 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
     }
     
     internal func cellWidth() -> CGFloat {
-        return pageWidth
+        return pageWidth - 2 * delegate.carouselContentSideInset
     }
     
     internal func thumbnailHeight(for width: CGFloat) -> CGFloat {
@@ -60,9 +60,6 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
         cache = []
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         
-        
-        let cellsHeight = cellHeight(for: pageWidth)
-        
         let editorialHeight = (delegate.carouselSpecificEditorialHeight ?? 0) + delegate.carouselContentTopInset
         if editorialHeight > 0 {
             carouselEditorialAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: 0))
@@ -70,6 +67,8 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
             cache = [carouselEditorialAttribute!]
         }
         
+        
+        let cellsHeight = cellHeight(for: cellWidth())
         
         let footerHeight = delegate.carouselFooterHeight
         carouselFooterAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))
@@ -81,11 +80,11 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
             let indexPath = IndexPath(item: $0, section: 0)
             
             // Item
-            let frame = CGRect(x: offset, y: editorialHeight, width: pageWidth, height: cellsHeight)
+            let frame = CGRect(x: offset, y: editorialHeight, width: cellWidth(), height: cellsHeight)
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = frame
             
-            offset += pageWidth + delegate.carouselContentSideInset/2
+            offset += cellWidth() + delegate.carouselContentSideInset/2
             
             // Update total offset
             contentWidth = max(contentWidth, frame.maxX)

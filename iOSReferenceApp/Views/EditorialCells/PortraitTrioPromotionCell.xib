@@ -51,13 +51,13 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="djN-3k-yqO">
                                 <rect key="frame" x="0.0" y="0.0" width="406" height="209"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dGX-DL-ZPh">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assetPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="dGX-DL-ZPh">
                                         <rect key="frame" x="0.0" y="0.0" width="128.5" height="209"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="od8-RH-Wss">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assetPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="od8-RH-Wss">
                                         <rect key="frame" x="138.5" y="0.0" width="129" height="209"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NDm-Dt-YXu">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assetPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="NDm-Dt-YXu">
                                         <rect key="frame" x="277.5" y="0.0" width="128.5" height="209"/>
                                     </imageView>
                                 </subviews>
@@ -88,4 +88,7 @@
             <point key="canvasLocation" x="90" y="229"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="assetPlaceholder" width="108" height="162"/>
+    </resources>
 </document>

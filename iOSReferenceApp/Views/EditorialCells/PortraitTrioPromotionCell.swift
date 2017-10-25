@@ -49,6 +49,8 @@ class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
         let imageOptions = carousel.thumbnailOptions(for: cellSize)
         
         load(imageView: first, options: imageOptions, editorial: editorial) { $0.first }
+        load(imageView: second, options: imageOptions, editorial: editorial) { $0.second }
+        load(imageView: third, options: imageOptions, editorial: editorial) { $0.third }
     }
     
     private func load(imageView: UIImageView, options: KingfisherOptionsInfo, editorial: PortraitTrioItemPromotionEditorial, asset: (PortraitTrioItemPromotionEditorial.Data) -> Asset?) {
