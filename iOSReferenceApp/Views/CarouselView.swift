@@ -60,6 +60,10 @@ extension CarouselView: UICollectionViewDelegate {
             cell.configure(with: viewModel.editorial as? HeroPromotionEditorial,
                            for: indexPath.row)
         }
+        else if let cell = cell as? PortraitTrioPromotionCell {
+            cell.configure(with: viewModel.editorial as? PortraitTrioPromotionEditorial,
+                           for: indexPath.row)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
@@ -91,7 +95,7 @@ extension CarouselView: UICollectionViewDelegate {
 
 extension CarouselView: UICollectionViewDataSourcePrefetching {
     public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let urls = indexPaths.flatMap{ viewModel.editorial.imageUrls(for: $0.row) }
+        let urls = viewModel.editorial.content.flatMap{ $0.prefetchImageUrls() }
         ImagePrefetcher(urls: urls).start()
     }
 }

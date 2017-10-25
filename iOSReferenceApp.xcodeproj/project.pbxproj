@@ -99,7 +99,6 @@
 		76FC1F711F9D2D6900847E4A /* CarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FC1F701F9D2D6900847E4A /* CarouselViewController.swift */; };
 		76FC1F731F9D2F9500847E4A /* CarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FC1F721F9D2F9500847E4A /* CarouselViewModel.swift */; };
 		76FC1F751F9D37E000847E4A /* CarouselListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FC1F741F9D37E000847E4A /* CarouselListViewModel.swift */; };
-		76FC1F771F9DBFCE00847E4A /* CarouselItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FC1F761F9DBFCE00847E4A /* CarouselItemViewModel.swift */; };
 		76FFED4F1F9F794800FFB07D /* HeroPromotionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FFED4E1F9F794800FFB07D /* HeroPromotionLayout.swift */; };
 		76FFED511F9F7C8800FFB07D /* HeroPromotionEditorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FFED501F9F7C8800FFB07D /* HeroPromotionEditorial.swift */; };
 		F7061C5F1EC5AF760041E271 /* McPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7061C5E1EC5AF760041E271 /* McPicker.swift */; };
@@ -256,7 +255,6 @@
 		76FC1F701F9D2D6900847E4A /* CarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewController.swift; sourceTree = "<group>"; };
 		76FC1F721F9D2F9500847E4A /* CarouselViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewModel.swift; sourceTree = "<group>"; };
 		76FC1F741F9D37E000847E4A /* CarouselListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselListViewModel.swift; sourceTree = "<group>"; };
-		76FC1F761F9DBFCE00847E4A /* CarouselItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselItemViewModel.swift; sourceTree = "<group>"; };
 		76FFED4E1F9F794800FFB07D /* HeroPromotionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroPromotionLayout.swift; sourceTree = "<group>"; };
 		76FFED501F9F7C8800FFB07D /* HeroPromotionEditorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroPromotionEditorial.swift; sourceTree = "<group>"; };
 		F7061C5E1EC5AF760041E271 /* McPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = McPicker.swift; sourceTree = "<group>"; };
@@ -507,7 +505,6 @@
 				76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */,
 				76FC1F741F9D37E000847E4A /* CarouselListViewModel.swift */,
 				76FC1F721F9D2F9500847E4A /* CarouselViewModel.swift */,
-				76FC1F761F9DBFCE00847E4A /* CarouselItemViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -888,7 +885,6 @@
 				76AE64F71F91498D0036933E /* DynamicCustomerConfig.swift in Sources */,
 				76A843FF1EA7886400BDAF2C /* CustomerConfig.swift in Sources */,
 				F7B710A81ECB369E00E9D324 /* ProgressIndicatorUtil.swift in Sources */,
-				76FC1F771F9DBFCE00847E4A /* CarouselItemViewModel.swift in Sources */,
 				76C244731FA093C1007213D3 /* PortraitTrioPromotionEditorial.swift in Sources */,
 				761B8D211F9FCF7B0004E688 /* PortraitTrioPromotionCell.swift in Sources */,
 				76AF2F171F13B6DB0014F007 /* EPGPreviewCell.swift in Sources */,

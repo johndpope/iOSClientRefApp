@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import Exposure
+import Kingfisher
 
-class PortraitTrioPromotionCell: UICollectionViewCell {
+class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
+    
+    typealias ContentEditorial = PortraitTrioPromotionEditorial
 
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var text: UILabel!
@@ -17,9 +21,47 @@ class PortraitTrioPromotionCell: UICollectionViewCell {
     @IBOutlet weak var second: UIImageView!
     @IBOutlet weak var third: UIImageView!
     
+    func reset() {
+        first.image = nil
+        second.image = nil
+        third.image = nil
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
+    func configure(with carousel: PortraitTrioPromotionEditorial?, for index: Int) {
+        guard let carousel = carousel else { return }
+        reset()
+        
+        guard let editorial: PortraitTrioItemPromotionEditorial = carousel.editorial(for: index) else { return }
+        
+        if carousel.usesItemSpecificEditorials {
+            title.text = editorial.title?.uppercased()
+            text.text = editorial.text
+        }
+        
+        
+        // Promotional Art
+        let cellSize = carousel.portraitLayout.thumbnailSize(for: carousel.portraitLayout.cellWidth())
+        let imageOptions = carousel.thumbnailOptions(for: cellSize)
+        
+        load(imageView: first, options: imageOptions, editorial: editorial) { $0.first }
+    }
+    
+    private func load(imageView: UIImageView, options: KingfisherOptionsInfo, editorial: PortraitTrioItemPromotionEditorial, asset: (PortraitTrioItemPromotionEditorial.Data) -> Asset?) {
+        if let url = editorial.imageUrl(callback: asset) {
+            imageView
+                .kf
+                .setImage(with: url,
+                          placeholder: #imageLiteral(resourceName: "assetPlaceholder"),
+                          options: options) { (image, error, cache, url) in
+                            if let error = error {
+                                print("Kingfisher: ",error)
+                            }
+            }
+        }
+    }
 }

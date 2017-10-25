@@ -63,7 +63,7 @@ extension CarouselListViewModel {
     fileprivate func loadFakeCarousel(callback: @escaping (ExposureError?) -> Void) {
         let list: [(CarouselViewModel, Asset.AssetType)] = [
             (CarouselViewModel(editorial: HeroPromotionEditorial()), .movie),
-            (CarouselViewModel(editorial: HeroPromotionEditorial()), .clip)
+            (CarouselViewModel(editorial: PortraitTrioPromotionEditorial()), .clip)
         ]
         
         content = list.map{ $0.0 }
@@ -71,22 +71,29 @@ extension CarouselListViewModel {
         list.forEach{ vm, type in
             fetchMetadata(type: type) { [weak self] list, error in
                 guard let weakSelf = self else { return }
-                if let items = list?.items {
-                    let data =  items.flatMap{
-                        return weakSelf.fakeEditorial(itemSpecific: vm.editorial.usesItemSpecificEditorials, for: $0)
-                    }
-                    vm.editorial.append(content: data)
-                }
+                guard let assets = list?.items else { return }
+                let editorials = weakSelf.fakeEditorials(using: vm.editorial, for: assets)
+                vm.editorial.append(content: editorials)
                 callback(error)
             }
         }
     }
     
-    fileprivate func fakeEditorial(itemSpecific: Bool, for asset: Asset) -> HeroItemPromotionEditorial? {
-        guard itemSpecific else {
-            return HeroItemPromotionEditorial(data: asset)
+    fileprivate func fakeEditorials(using: CarouselEditorial, for assetList: [Asset]) -> [ContentEditorial] {
+        if let editorial = using as? HeroPromotionEditorial {
+            guard editorial.usesItemSpecificEditorials else {
+                return assetList.map{ HeroItemPromotionEditorial(data: $0) }
+            }
+            return assetList.map{ HeroItemPromotionEditorial(title: $0.anyTitle(locale: "en"), text: $0.anyDescription(locale: "en"), data: $0) }
         }
-        return HeroItemPromotionEditorial(title: asset.anyTitle(locale: "en"), text: asset.anyDescription(locale: "en"), data: asset)
+        else if let editorial = using as? PortraitTrioPromotionEditorial {
+            let cellData = assetList.chunks(3).map{ PortraitTrioItemPromotionEditorial.Data(first: $0[0], second: $0[1], third: $0[2]) }
+            guard editorial.usesItemSpecificEditorials else {
+                return cellData.map{ PortraitTrioItemPromotionEditorial(data: $0) }
+            }
+            return cellData.map{ PortraitTrioItemPromotionEditorial(title: $0.first.anyTitle(locale: "en"), text: $0.first.anyDescription(locale: "en"), data: $0) }
+        }
+        return []
     }
     
     fileprivate func fetchMetadata(type: Asset.AssetType, callback: @escaping (AssetList?, ExposureError?) -> Void) {
@@ -112,6 +119,13 @@ extension CarouselListViewModel {
     }
 }
 
+extension Array {
+    func chunks(_ chunkSize: Int) -> [[Element]] {
+        return stride(from: 0, to: self.count, by: chunkSize).map {
+            Array(self[$0..<Swift.min($0 + chunkSize, self.count)])
+        }
+    }
+}
 extension CarouselListViewModel: AuthorizedEnvironment {
     
 }

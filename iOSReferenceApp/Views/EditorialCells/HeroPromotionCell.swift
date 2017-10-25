@@ -29,16 +29,17 @@ class HeroPromotionCell: UICollectionViewCell, EditorialCell {
         guard let carousel = carousel else { return }
         reset()
         
+        guard let editorial: HeroItemPromotionEditorial = carousel.editorial(for: index) else { return }
         
-        if let editorial: HeroItemPromotionEditorial = carousel.editorial(for: index), carousel.usesItemSpecificEditorials {
+        if carousel.usesItemSpecificEditorials {
             title.text = editorial.title?.uppercased()
             editorialText.text = editorial.text
         }
         
         
         // Promotional Art
-        let cellSize = carousel.thumbnailSize()
-        if let url = carousel.imageUrls(for: index).first {
+        let cellSize = carousel.heroLayout.thumbnailSize(for: carousel.heroLayout.cellWidth())
+        if let url = editorial.imageUrl() {
             heroBanner
                 .kf
                 .setImage(with: url,

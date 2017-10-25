@@ -13,7 +13,7 @@ import Kingfisher
 
 class HeroPromotionEditorial {
     fileprivate(set) var heroLayout = HeroPromotionLayout()
-    var content: [HeroItemPromotionEditorial] = []
+    fileprivate var itemEditorials: [HeroItemPromotionEditorial] = []
     
     init() {
         heroLayout.delegate = self
@@ -40,26 +40,11 @@ class HeroPromotionEditorial {
     
     func append(content: [ContentEditorial]) {
         let filtered = content.flatMap{ $0 as? HeroItemPromotionEditorial }
-        self.content.append(contentsOf: filtered)
+        itemEditorials.append(contentsOf: filtered)
     }
 }
 
 extension HeroPromotionEditorial {
-    func thumbnailSize() -> CGSize {
-        return heroLayout.thumbnailSize(for: heroLayout.cellWidth())
-    }
-    
-    func thumbnailCornerRadius(forCellWidth cellWidth: CGFloat) -> CGFloat {
-        return 10
-    }
-    
-    func thumbnailProcessor(for size: CGSize) -> ImageProcessor {
-        let resizeProcessor = CrispResizingImageProcessor(referenceSize: size, mode: ContentMode.aspectFill)
-        let croppingProcessor = CroppingImageProcessor(size: size)
-        let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: thumbnailCornerRadius(forCellWidth: size.width))
-        return (resizeProcessor>>croppingProcessor)>>roundedRectProcessor
-    }
-    
     func thumbnailOptions(for size: CGSize) ->  KingfisherOptionsInfo {
         return [
             .backgroundDecode,
@@ -68,12 +53,27 @@ extension HeroPromotionEditorial {
         ]
     }
     
-    var preferedImageOrientation: Exposure.Image.Orientation {
+    fileprivate func thumbnailCornerRadius(forCellWidth cellWidth: CGFloat) -> CGFloat {
+        return 10
+    }
+    
+    fileprivate func thumbnailProcessor(for size: CGSize) -> ImageProcessor {
+        let resizeProcessor = CrispResizingImageProcessor(referenceSize: size, mode: ContentMode.aspectFill)
+        let croppingProcessor = CroppingImageProcessor(size: size)
+        let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: thumbnailCornerRadius(forCellWidth: size.width))
+        return (resizeProcessor>>croppingProcessor)>>roundedRectProcessor
+    }
+    
+    fileprivate var preferedImageOrientation: Exposure.Image.Orientation {
         return .landscape
     }
 }
 
 extension HeroPromotionEditorial: CarouselEditorial {
+    var content: [ContentEditorial] {
+        return itemEditorials
+    }
+    
     var layout: CollectionViewLayout {
         return heroLayout
     }
@@ -84,14 +84,6 @@ extension HeroPromotionEditorial: CarouselEditorial {
     
     var count: Int {
         return content.count
-    }
-    
-    func imageUrls(for index: Int) -> [URL] {
-        return content[index]
-            .data
-            .images(locale: "en")
-            .prefere(orientation: preferedImageOrientation)
-            .validImageUrls()
     }
 }
 
@@ -135,4 +127,19 @@ struct HeroItemPromotionEditorial: ContentEditorial {
     // Carousel Editorial
     let title: String?
     let text: String?
+    
+    func imageUrl() -> URL? {
+        return data
+            .images(locale: "en")
+            .prefere(orientation: .landscape)
+            .validImageUrls()
+            .first
+    }
+}
+
+extension HeroItemPromotionEditorial {
+    func prefetchImageUrls() -> [URL] {
+        let url = imageUrl()
+        return url != nil ? [url!] : []
+    }
 }

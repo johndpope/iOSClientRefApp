@@ -9,11 +9,12 @@
 import Foundation
 import CoreGraphics
 import Exposure
+import Kingfisher
 
 class PortraitTrioPromotionEditorial {
     
     fileprivate(set) var portraitLayout = PortraitTrioPromotionLayout()
-    var content: [PortraitTrioItemPromotionEditorial] = []
+    fileprivate var itemEditorials: [PortraitTrioItemPromotionEditorial] = []
     
     init() {
         portraitLayout.delegate = self
@@ -39,12 +40,40 @@ class PortraitTrioPromotionEditorial {
     
     func append(content: [ContentEditorial]) {
         let filtered = content.flatMap{ $0 as? PortraitTrioItemPromotionEditorial }
-        self.content.append(contentsOf: filtered)
+        self.itemEditorials.append(contentsOf: filtered)
     }
 }
 
+extension PortraitTrioPromotionEditorial {
+    func thumbnailOptions(for size: CGSize) ->  KingfisherOptionsInfo {
+        return [
+            .backgroundDecode,
+            .cacheMemoryOnly,
+            .processor(thumbnailProcessor(for: size))
+        ]
+    }
+    
+    fileprivate func thumbnailCornerRadius(forCellWidth cellWidth: CGFloat) -> CGFloat {
+        return 10
+    }
+    
+    fileprivate func thumbnailProcessor(for size: CGSize) -> ImageProcessor {
+        let resizeProcessor = CrispResizingImageProcessor(referenceSize: size, mode: ContentMode.aspectFill)
+        let croppingProcessor = CroppingImageProcessor(size: size)
+        let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: thumbnailCornerRadius(forCellWidth: size.width))
+        return (resizeProcessor>>croppingProcessor)>>roundedRectProcessor
+    }
+    
+    fileprivate var preferedImageOrientation: Exposure.Image.Orientation {
+        return .landscape
+    }
+}
 
 extension PortraitTrioPromotionEditorial: CarouselEditorial {
+    var content: [ContentEditorial] {
+        return itemEditorials
+    }
+    
     var layout: CollectionViewLayout {
         return portraitLayout
     }
@@ -56,11 +85,6 @@ extension PortraitTrioPromotionEditorial: CarouselEditorial {
     var count: Int {
         return content.count
     }
-    
-    func imageUrls(for index: Int) -> [URL] {
-        return []
-    }
-    
 }
 
 extension PortraitTrioPromotionEditorial: CarouselLayoutDelegate {
@@ -91,11 +115,11 @@ extension PortraitTrioPromotionEditorial: EmbeddedCarouselLayoutDelegate {
     }
 }
 
-struct PortraitTrioItemPromotionEditorial {
+struct PortraitTrioItemPromotionEditorial: ContentEditorial {
     struct Data {
         let first: Asset
-        let second: Asset
-        let third: Asset
+        let second: Asset?
+        let third: Asset?
     }
     
     init(title: String? = nil, text: String? = nil, data: Data) {
@@ -109,4 +133,23 @@ struct PortraitTrioItemPromotionEditorial {
     let text: String?
     
     let data: Data
+    
+    func imageUrl(callback: (Data) -> Asset?) -> URL? {
+        return callback(data)?
+            .images(locale: "en")
+            .prefere(orientation: .landscape)
+            .validImageUrls()
+            .first
+    }
+    
+    func prefetchImageUrls() -> [URL] {
+        return [data.first, data.second, data.third]
+            .flatMap{ $0 }
+            .flatMap{
+                $0.images(locale: "en")
+                    .prefere(orientation: .landscape)
+                    .validImageUrls()
+                    .first
+        }
+    }
 }

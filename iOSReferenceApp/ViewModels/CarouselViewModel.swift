@@ -15,7 +15,6 @@ protocol EmbeddedCarouselLayoutDelegate: class {
     func carouselCellSize(for bounds: CGRect) -> CGSize
 }
 
-
 protocol EditorialCell {
     associatedtype Editorial
     func configure(with editorial: Editorial?, for index: Int)
@@ -24,7 +23,7 @@ protocol EditorialCell {
 protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {
     var layout: CollectionViewLayout { get }
     func editorial<T: ContentEditorial>(for index: Int) -> T?
-    
+    var content: [ContentEditorial] { get }
     func append(content: [ContentEditorial])
     
     var count: Int { get }
@@ -45,12 +44,10 @@ protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {
     // MARK: General Layout
     var contentSideInset: CGFloat { get }
     var contentTopInset: CGFloat { get }
-    
-    func imageUrls(for index: Int) -> [URL]
 }
 
 protocol ContentEditorial {
-    
+    func prefetchImageUrls() -> [URL]
 }
 
 // Cell
