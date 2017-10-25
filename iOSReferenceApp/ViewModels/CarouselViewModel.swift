@@ -23,39 +23,6 @@ protocol CarouselViewModelType {
     var content: [Content] { get }
 }
 
-
-//struct CarouselEditorialFakeData {
-//    let promotionalType: PromotionalType
-//    let editorialTitle: String?
-//    let editorialText: String?
-//
-//    init(type: PromotionalType = .hero, title: String? = nil, text: String? = nil) {
-//        self.promotionalType = type
-//        self.editorialTitle = title
-//        self.editorialText = text
-//    }
-//
-//    enum PromotionalType {
-//        case hero
-////        case poster
-//    }
-//
-//    var usesCarouselSpecificEditorial: Bool {
-//        switch promotionalType {
-//        case .hero: return false
-////        case .poster: return true
-//        }
-//    }
-//
-//    var usesItemSpecificEditorials: Bool {
-//        switch promotionalType {
-//        case .hero: return true
-////        case .poster: return false
-//        }
-//    }
-//}
-
-
 class CarouselViewModel<Editorial: CarouselLayoutDelegate, ItemEditorial>: CarouselViewModelType {
     fileprivate(set) var editorial: Editorial
     var content: [CarouselItemViewModel<ItemEditorial>]
@@ -66,6 +33,7 @@ class CarouselViewModel<Editorial: CarouselLayoutDelegate, ItemEditorial>: Carou
         self.content = data.map{ CarouselItemViewModel(data: $0.0, editorial: $0.1) }
         
         layout.delegate = editorial
+        layout.use(pagination: true)
     }
     
     // 1. Main Table View

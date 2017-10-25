@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3E6B3B461F84D5100071C10A /* ApplicationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */; };
 		3E9882281F66E46E003467B3 /* AuthorizedEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */; };
+		761B8D211F9FCF7B0004E688 /* PortraitTrioPromotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B8D1F1F9FCF7B0004E688 /* PortraitTrioPromotionCell.swift */; };
+		761B8D221F9FCF7B0004E688 /* PortraitTrioPromotionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 761B8D201F9FCF7B0004E688 /* PortraitTrioPromotionCell.xib */; };
+		761B8D241FA07D3C0004E688 /* PortraitTrioPromotionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B8D231FA07D3C0004E688 /* PortraitTrioPromotionLayout.swift */; };
 		762383F81F98B6BA0046EF38 /* OfflineListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762383F71F98B6BA0046EF38 /* OfflineListViewController.swift */; };
 		762383FB1F98B8B00046EF38 /* OfflineListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762383F91F98B8B00046EF38 /* OfflineListCell.swift */; };
 		762383FC1F98B8B00046EF38 /* OfflineListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 762383FA1F98B8B00046EF38 /* OfflineListCell.xib */; };
@@ -158,6 +161,9 @@
 /* Begin PBXFileReference section */
 		3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationConfig.swift; sourceTree = "<group>"; };
 		3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedEnvironment.swift; sourceTree = "<group>"; };
+		761B8D1F1F9FCF7B0004E688 /* PortraitTrioPromotionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitTrioPromotionCell.swift; sourceTree = "<group>"; };
+		761B8D201F9FCF7B0004E688 /* PortraitTrioPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PortraitTrioPromotionCell.xib; sourceTree = "<group>"; };
+		761B8D231FA07D3C0004E688 /* PortraitTrioPromotionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitTrioPromotionLayout.swift; sourceTree = "<group>"; };
 		762383F71F98B6BA0046EF38 /* OfflineListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineListViewController.swift; sourceTree = "<group>"; };
 		762383F91F98B8B00046EF38 /* OfflineListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineListCell.swift; sourceTree = "<group>"; };
 		762383FA1F98B8B00046EF38 /* OfflineListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfflineListCell.xib; sourceTree = "<group>"; };
@@ -341,6 +347,9 @@
 				7696DE641F9D1B9600D4543C /* HeroPromotionCell.xib */,
 				76FFED4E1F9F794800FFB07D /* HeroPromotionLayout.swift */,
 				76FFED501F9F7C8800FFB07D /* HeroPromotionEditorial.swift */,
+				761B8D1F1F9FCF7B0004E688 /* PortraitTrioPromotionCell.swift */,
+				761B8D201F9FCF7B0004E688 /* PortraitTrioPromotionCell.xib */,
+				761B8D231FA07D3C0004E688 /* PortraitTrioPromotionLayout.swift */,
 			);
 			path = EditorialCells;
 			sourceTree = "<group>";
@@ -789,6 +798,7 @@
 				F7061C6A1EC5BFAF0041E271 /* colors.plist in Resources */,
 				F7061C6C1EC5BFAF0041E271 /* strings.plist in Resources */,
 				F7061C6B1EC5BFAF0041E271 /* icon_pure_512.png in Resources */,
+				761B8D221F9FCF7B0004E688 /* PortraitTrioPromotionCell.xib in Resources */,
 				76A417121EDED17800677A46 /* AssetPreviewHeaderView.xib in Resources */,
 				7667AECC1EC5E21200C308FC /* Appfile in Resources */,
 				762383FC1F98B8B00046EF38 /* OfflineListCell.xib in Resources */,
@@ -876,6 +886,7 @@
 				76A843FF1EA7886400BDAF2C /* CustomerConfig.swift in Sources */,
 				F7B710A81ECB369E00E9D324 /* ProgressIndicatorUtil.swift in Sources */,
 				76FC1F771F9DBFCE00847E4A /* CarouselItemViewModel.swift in Sources */,
+				761B8D211F9FCF7B0004E688 /* PortraitTrioPromotionCell.swift in Sources */,
 				76AF2F171F13B6DB0014F007 /* EPGPreviewCell.swift in Sources */,
 				F793A8541EC5289E00DF7626 /* SkyFloatingLabelTextFieldWithIcon.swift in Sources */,
 				76A844021EA7886400BDAF2C /* Notifications+KeyboardAnimationFrame.swift in Sources */,
@@ -888,6 +899,7 @@
 				766502F41F99C8FD009A5BFE /* LocalizedEntity.swift in Sources */,
 				F7129CB11EC9AB970033B3FF /* Extensions.swift in Sources */,
 				76A417101EDED09700677A46 /* AssetPreviewHeaderView.swift in Sources */,
+				761B8D241FA07D3C0004E688 /* PortraitTrioPromotionLayout.swift in Sources */,
 				76FFED511F9F7C8800FFB07D /* HeroPromotionEditorial.swift in Sources */,
 				F7171A791EDC4ADC00140D2B /* LiveListViewController.swift in Sources */,
 				76AE64EB1F90217B0036933E /* GradientView.swift in Sources */,

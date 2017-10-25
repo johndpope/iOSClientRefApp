@@ -16,22 +16,94 @@ protocol CarouselLayoutDelegate {
     var itemSpecificEditorialHeight: CGFloat? { get }
 }
 
-class HeroPromotionLayout: UICollectionViewLayout {
+class UICollectionViewLayoutPagination {
+    init(layout: UICollectionViewLayout) {
+        self.layout = layout
+    }
     
-    // MARK: - Delegate
+    // MARK: - Pagination
+    unowned var layout: UICollectionViewLayout
+    fileprivate var mostRecentOffset: CGPoint = CGPoint.zero
+    func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+        if velocity.x == 0 {
+            return mostRecentOffset
+        }
+        
+        if let cv = layout.collectionView {
+            
+            let cvBounds = cv.bounds
+            let halfWidth = cvBounds.size.width * 0.5;
+            
+            
+            if let attributesForVisibleCells = layout.layoutAttributesForElements(in: cvBounds) {
+                
+                var candidateAttributes : UICollectionViewLayoutAttributes?
+                for attributes in attributesForVisibleCells {
+                    
+                    // == Skip comparison with non-cell items (headers and footers) == //
+                    if attributes.representedElementCategory != UICollectionElementCategory.cell {
+                        continue
+                    }
+                    
+                    if (attributes.center.x == 0) || (attributes.center.x > (cv.contentOffset.x + halfWidth) && velocity.x < 0) {
+                        continue
+                    }
+                    candidateAttributes = attributes
+                }
+                
+                // Beautification step , I don't know why it works!
+                if(proposedContentOffset.x == -(cv.contentInset.left)) {
+                    return proposedContentOffset
+                }
+                
+                guard let _ = candidateAttributes else {
+                    return mostRecentOffset
+                }
+                mostRecentOffset = CGPoint(x: floor(candidateAttributes!.center.x - halfWidth), y: proposedContentOffset.y)
+                return mostRecentOffset
+                
+            }
+        }
+        
+        // fallback
+        mostRecentOffset = layout.targetContentOffset(forProposedContentOffset: proposedContentOffset)
+        return mostRecentOffset
+    }
+}
+
+class CollectionViewLayout: UICollectionViewLayout {
+    
+    /// Quick access of the underlying collectionView page width
+    var pageWidth: CGFloat {
+        guard let collectionView = collectionView else { return 0 }
+        return collectionView.bounds.size.width
+    }
+    
+    // MARK: - Pagination
+    func use(pagination value: Bool) {
+        pagination = (value ? UICollectionViewLayoutPagination(layout: self) : nil)
+    }
+    fileprivate var pagination: UICollectionViewLayoutPagination?
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+        if let pagination = pagination {
+            return pagination.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity:velocity)
+        }
+        return proposedContentOffset
+    }
+}
+
+class HeroPromotionLayout: CollectionViewLayout {
+    
+    
+    
+    // MARK: - Configuration
     var delegate: CarouselLayoutDelegate!
     
+    // MARK: - Shared
     
     // MARK: - Internal
     /// Cache for layout attribs
     fileprivate var cache: [UICollectionViewLayoutAttributes] = []
-    
-    
-    /// Quick access of the underlying collectionView page width
-    fileprivate var pageWidth: CGFloat {
-        guard let collectionView = collectionView else { return 0 }
-        return collectionView.bounds.size.width
-    }
     
     /// Incremented as cells are added
     fileprivate var contentWidth: CGFloat = 0
@@ -146,54 +218,6 @@ class HeroPromotionLayout: UICollectionViewLayout {
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return cache[indexPath.item]
-    }
-    
-    // MARK: - Pagination
-    fileprivate var mostRecentOffset: CGPoint = CGPoint.zero
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        if velocity.x == 0 {
-            return mostRecentOffset
-        }
-        
-        if let cv = self.collectionView {
-            
-            let cvBounds = cv.bounds
-            let halfWidth = cvBounds.size.width * 0.5;
-            
-            
-            if let attributesForVisibleCells = self.layoutAttributesForElements(in: cvBounds) {
-                
-                var candidateAttributes : UICollectionViewLayoutAttributes?
-                for attributes in attributesForVisibleCells {
-                    
-                    // == Skip comparison with non-cell items (headers and footers) == //
-                    if attributes.representedElementCategory != UICollectionElementCategory.cell {
-                        continue
-                    }
-                    
-                    if (attributes.center.x == 0) || (attributes.center.x > (cv.contentOffset.x + halfWidth) && velocity.x < 0) {
-                        continue
-                    }
-                    candidateAttributes = attributes
-                }
-                
-                // Beautification step , I don't know why it works!
-                if(proposedContentOffset.x == -(cv.contentInset.left)) {
-                    return proposedContentOffset
-                }
-                
-                guard let _ = candidateAttributes else {
-                    return mostRecentOffset
-                }
-                mostRecentOffset = CGPoint(x: floor(candidateAttributes!.center.x - halfWidth), y: proposedContentOffset.y)
-                return mostRecentOffset
-                
-            }
-        }
-        
-        // fallback
-        mostRecentOffset = super.targetContentOffset(forProposedContentOffset: proposedContentOffset)
-        return mostRecentOffset
     }
 }
 
