@@ -72,6 +72,9 @@ class UICollectionViewLayoutPagination {
 }
 
 class CollectionViewLayout: UICollectionViewLayout {
+    // MARK: - Configuration
+    var delegate: CarouselLayoutDelegate!
+    
     
     /// Quick access of the underlying collectionView page width
     var pageWidth: CGFloat {
@@ -88,25 +91,56 @@ class CollectionViewLayout: UICollectionViewLayout {
         if let pagination = pagination {
             return pagination.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity:velocity)
         }
-        return proposedContentOffset
+        return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
+    }
+    
+    
+    // Private storage of header + footer
+    internal var carouselEditorialAttribute: UICollectionViewLayoutAttributes?
+    internal var carouselFooterAttribute: UICollectionViewLayoutAttributes?
+    
+    /// Cache for layout attribs
+    internal var cache: [UICollectionViewLayoutAttributes] = []
+    
+    /// Incremented as cells are added
+    internal var contentWidth: CGFloat = 0
+    
+    // MARK: - Overrides
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
+    }
+    
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        if elementKind == UICollectionElementKindSectionHeader {
+            return carouselEditorialAttribute
+        }
+        
+        if elementKind == UICollectionElementKindSectionHeader {
+            return carouselFooterAttribute
+        }
+        
+        return nil
+    }
+    
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        if let stickyHeader = carouselEditorialAttribute, let collectionView = collectionView {
+            let contentOffset = collectionView.contentOffset
+            let oldFrame = stickyHeader.frame
+            stickyHeader.frame = CGRect(x: contentOffset.x, y: oldFrame.minY, width: oldFrame.width, height: oldFrame.height)
+        }
+        
+        if let stickyFooter = carouselFooterAttribute, let collectionView = collectionView {
+            let contentOffset = collectionView.contentOffset
+            let oldFrame = stickyFooter.frame
+            stickyFooter.frame = CGRect(x: contentOffset.x, y: oldFrame.minY, width: oldFrame.width, height: oldFrame.height)
+        }
+        
+        return cache.filter{ $0.frame.intersects(rect) }
     }
 }
 
 class HeroPromotionLayout: CollectionViewLayout {
-    
-    
-    
-    // MARK: - Configuration
-    var delegate: CarouselLayoutDelegate!
-    
-    // MARK: - Shared
-    
     // MARK: - Internal
-    /// Cache for layout attribs
-    fileprivate var cache: [UICollectionViewLayoutAttributes] = []
-    
-    /// Incremented as cells are added
-    fileprivate var contentWidth: CGFloat = 0
     
     /// Calculated
     fileprivate func contentHeight(for width: CGFloat) -> CGFloat {
@@ -123,11 +157,6 @@ class HeroPromotionLayout: CollectionViewLayout {
         
         return cellHeight + editorialHeight + footerHeight
     }
-    
-    // Private storage of header + footer
-    fileprivate var carouselEditorialAttribute: UICollectionViewLayoutAttributes?
-    fileprivate var carouselFooterAttribute: UICollectionViewLayoutAttributes?
-    
     
     // MARK: - Overrides
     override var collectionViewContentSize: CGSize {
@@ -160,9 +189,6 @@ class HeroPromotionLayout: CollectionViewLayout {
         carouselFooterAttribute!.frame = CGRect(x: 0, y: cellHeight+editorialHeight, width: width, height: footerHeight)
         cache.append(carouselFooterAttribute!)
         
-        // Content height is Thumbnail + Item Editorial + Carousel Editorial + FooterHeight
-        let totalContentHeight = cellHeight + editorialHeight + footerHeight
-        
         var offset: CGFloat = delegate.carouselContentSideInset
         let other:[UICollectionViewLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: 0)).map {
             let indexPath = IndexPath(item: $0, section: 0)
@@ -182,38 +208,6 @@ class HeroPromotionLayout: CollectionViewLayout {
         }
         
         cache.append(contentsOf: other)
-    }
-    
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
-    }
-    
-    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        if elementKind == UICollectionElementKindSectionHeader {
-            return carouselEditorialAttribute
-        }
-        
-        if elementKind == UICollectionElementKindSectionHeader {
-            return carouselFooterAttribute
-        }
-        
-        return nil
-    }
-    
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        if let stickyHeader = carouselEditorialAttribute, let collectionView = collectionView {
-            let contentOffset = collectionView.contentOffset
-            let oldFrame = stickyHeader.frame
-            stickyHeader.frame = CGRect(x: contentOffset.x, y: oldFrame.minY, width: oldFrame.width, height: oldFrame.height)
-        }
-        
-        if let stickyFooter = carouselFooterAttribute, let collectionView = collectionView {
-            let contentOffset = collectionView.contentOffset
-            let oldFrame = stickyFooter.frame
-            stickyFooter.frame = CGRect(x: contentOffset.x, y: oldFrame.minY, width: oldFrame.width, height: oldFrame.height)
-        }
-        
-        return cache.filter{ $0.frame.intersects(rect) }
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
