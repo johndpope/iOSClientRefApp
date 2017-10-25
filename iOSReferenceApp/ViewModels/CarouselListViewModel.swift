@@ -18,7 +18,7 @@ class CarouselListViewModel {
         self.sessionToken = sessionToken
     }
     
-    fileprivate(set) var content: [CarouselViewModel<HeroPromotionEditorial, HeroItemPromotionEditorial>] = []
+    fileprivate(set) var content: [CarouselViewModel] = []
     
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
@@ -26,44 +26,44 @@ class CarouselListViewModel {
     }
     
     func loadCarousel(group: String, callback: @escaping (ExposureError?) -> Void) {
-        if group == "fakeCarousels" {
+//        if group == "fakeCarousels" {
             loadFakeCarousel(callback: callback)
-        }
-        else {
-            loadCarousels(for: group, callback: callback)
-        }
+//        }
+//        else {
+//            loadCarousels(for: group, callback: callback)
+//        }
     }
     
-    fileprivate func loadCarousels(for groupId: String, callback: @escaping (ExposureError?) -> Void) {
-        FetchCarouselList(groupId: groupId,
-                          environment: environment)
-            .request()
-            .validate()
-            .response { [weak self] (response: ExposureResponse<CarouselList>) in
-                guard let weakSelf = self else { return }
-                guard let items = response.value?.items else { return }
-                
-                weakSelf.content = items.map {
-                    let carousel: CarouselViewModel<HeroPromotionEditorial, HeroItemPromotionEditorial> = CarouselViewModel(carousel: HeroPromotionEditorial())
-                    
-                    if carousel.editorial.usesItemSpecificEditorials {
-                        carousel.content = $0
-                            .items?
-                            .items?
-                            .map{ return CarouselItemViewModel(data: $0, editorial: weakSelf.fakeEditorial(for: $0)) } ?? []
-                    }
-                    return carousel
-                }
-                callback(response.error)
-        }
-    }
+//    fileprivate func loadCarousels(for groupId: String, callback: @escaping (ExposureError?) -> Void) {
+//        FetchCarouselList(groupId: groupId,
+//                          environment: environment)
+//            .request()
+//            .validate()
+//            .response { [weak self] (response: ExposureResponse<CarouselList>) in
+//                guard let weakSelf = self else { return }
+//                guard let items = response.value?.items else { return }
+//
+//                weakSelf.content = items.map {
+//                    let carousel = CarouselViewModel(editorial: HeroPromotionEditorial())
+//
+//                    if carousel.editorial.usesItemSpecificEditorials {
+//                        carousel.content = $0
+//                            .items?
+//                            .items?
+//                            .map{ return CarouselItemViewModel(data: $0, editorial: weakSelf.fakeEditorial(for: $0)) } ?? []
+//                    }
+//                    return carousel
+//                }
+//                callback(response.error)
+//        }
+//    }
 }
 
 extension CarouselListViewModel {
     fileprivate func loadFakeCarousel(callback: @escaping (ExposureError?) -> Void) {
-        let list:[(CarouselViewModel<HeroPromotionEditorial, HeroItemPromotionEditorial>, Asset.AssetType)] = [
-            (CarouselViewModel(carousel: HeroPromotionEditorial()), .movie),
-            (CarouselViewModel(carousel: HeroPromotionEditorial()), .clip)
+        let list: [(CarouselViewModel, Asset.AssetType)] = [
+            (CarouselViewModel(editorial: HeroPromotionEditorial()), .movie),
+            (CarouselViewModel(editorial: HeroPromotionEditorial()), .clip)
         ]
         
         content = list.map{ $0.0 }
@@ -72,19 +72,21 @@ extension CarouselListViewModel {
             fetchMetadata(type: type) { [weak self] list, error in
                 guard let weakSelf = self else { return }
                 if let items = list?.items {
-                    let data =  items.map{ asset -> CarouselItemViewModel<HeroItemPromotionEditorial> in
-                        let editorial = vm.editorial.usesItemSpecificEditorials ? weakSelf.fakeEditorial(for: asset) : nil
-                        return CarouselItemViewModel(data: asset, editorial: editorial)
+                    let data =  items.flatMap{
+                        return weakSelf.fakeEditorial(itemSpecific: vm.editorial.usesItemSpecificEditorials, for: $0)
                     }
-                    vm.content = data
+                    vm.editorial.append(content: data)
                 }
                 callback(error)
             }
         }
     }
     
-    fileprivate func fakeEditorial(for asset: Asset) -> HeroItemPromotionEditorial? {
-        return HeroItemPromotionEditorial(title: asset.anyTitle(locale: "en"), text: asset.anyDescription(locale: "en"))
+    fileprivate func fakeEditorial(itemSpecific: Bool, for asset: Asset) -> HeroItemPromotionEditorial? {
+        guard itemSpecific else {
+            return HeroItemPromotionEditorial(data: asset)
+        }
+        return HeroItemPromotionEditorial(title: asset.anyTitle(locale: "en"), text: asset.anyDescription(locale: "en"), data: asset)
     }
     
     fileprivate func fetchMetadata(type: Asset.AssetType, callback: @escaping (AssetList?, ExposureError?) -> Void) {

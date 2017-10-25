@@ -21,9 +21,12 @@ protocol EditorialCell {
     func configure(with editorial: Editorial?, for index: Int)
 }
 
-protocol CarouselEditorial {
+protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {
     var layout: CollectionViewLayout { get }
     func editorial<T: ContentEditorial>(for index: Int) -> T?
+    
+    func append(content: [ContentEditorial])
+    
     var count: Int { get }
     
     // MARK: Editorial Layout
@@ -42,6 +45,8 @@ protocol CarouselEditorial {
     // MARK: General Layout
     var contentSideInset: CGFloat { get }
     var contentTopInset: CGFloat { get }
+    
+    func imageUrls(for index: Int) -> [URL]
 }
 
 protocol ContentEditorial {
@@ -62,9 +67,7 @@ class CarouselViewModel {
     fileprivate(set) var editorial: CarouselEditorial
     
     init(editorial: CarouselEditorial) {
-        
-//        layout.delegate = editorial
-//        layout.use(pagination: true)
+        self.editorial = editorial
     }
     
     // 1. Main Table View

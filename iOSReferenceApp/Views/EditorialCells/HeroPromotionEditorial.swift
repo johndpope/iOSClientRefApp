@@ -36,6 +36,12 @@ class HeroPromotionEditorial {
     // MARK: General Layout
     let contentSideInset: CGFloat = 30
     let contentTopInset: CGFloat = 10
+    
+    
+    func append(content: [ContentEditorial]) {
+        let filtered = content.flatMap{ $0 as? HeroItemPromotionEditorial }
+        self.content.append(contentsOf: filtered)
+    }
 }
 
 extension HeroPromotionEditorial {
@@ -65,15 +71,6 @@ extension HeroPromotionEditorial {
     var preferedImageOrientation: Exposure.Image.Orientation {
         return .landscape
     }
-    
-    func imageUrl(for index: Int) -> URL? {
-        return content[index]
-            .data
-            .images(locale: "en")
-            .prefere(orientation: preferedImageOrientation)
-            .validImageUrls()
-            .first
-    }
 }
 
 extension HeroPromotionEditorial: CarouselEditorial {
@@ -87,6 +84,14 @@ extension HeroPromotionEditorial: CarouselEditorial {
     
     var count: Int {
         return content.count
+    }
+    
+    func imageUrls(for index: Int) -> [URL] {
+        return content[index]
+            .data
+            .images(locale: "en")
+            .prefere(orientation: preferedImageOrientation)
+            .validImageUrls()
     }
 }
 
@@ -112,7 +117,13 @@ extension HeroPromotionEditorial: CarouselLayoutDelegate {
     }
 }
 
-class HeroItemPromotionEditorial: ContentEditorial {
+extension HeroPromotionEditorial: EmbeddedCarouselLayoutDelegate {
+    func carouselCellSize(for bounds: CGRect) -> CGSize {
+        return heroLayout.carouselCellSize(for: bounds)
+    }
+}
+
+struct HeroItemPromotionEditorial: ContentEditorial {
     init(title: String? = nil, text: String? = nil, data: Asset) {
         self.title = title
         self.text = text

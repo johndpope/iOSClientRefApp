@@ -8,8 +8,18 @@
 
 import Foundation
 import CoreGraphics
+import Exposure
 
-struct PortraitTrioPromotionEditorial {
+class PortraitTrioPromotionEditorial {
+    
+    fileprivate(set) var portraitLayout = PortraitTrioPromotionLayout()
+    var content: [PortraitTrioItemPromotionEditorial] = []
+    
+    init() {
+        portraitLayout.delegate = self
+        portraitLayout.use(pagination: true)
+    }
+    
     // MARK: Editorial Layout
     let usesCarouselSpecificEditorial: Bool = false
     let usesItemSpecificEditorials: Bool = true
@@ -26,6 +36,31 @@ struct PortraitTrioPromotionEditorial {
     // MARK: General Layout
     let contentSideInset: CGFloat = 30
     let contentTopInset: CGFloat = 10
+    
+    func append(content: [ContentEditorial]) {
+        let filtered = content.flatMap{ $0 as? PortraitTrioItemPromotionEditorial }
+        self.content.append(contentsOf: filtered)
+    }
+}
+
+
+extension PortraitTrioPromotionEditorial: CarouselEditorial {
+    var layout: CollectionViewLayout {
+        return portraitLayout
+    }
+    
+    func editorial<T>(for index: Int) -> T? where T : ContentEditorial {
+        return content[index] as? T
+    }
+    
+    var count: Int {
+        return content.count
+    }
+    
+    func imageUrls(for index: Int) -> [URL] {
+        return []
+    }
+    
 }
 
 extension PortraitTrioPromotionEditorial: CarouselLayoutDelegate {
@@ -50,13 +85,28 @@ extension PortraitTrioPromotionEditorial: CarouselLayoutDelegate {
     }
 }
 
+extension PortraitTrioPromotionEditorial: EmbeddedCarouselLayoutDelegate {
+    func carouselCellSize(for bounds: CGRect) -> CGSize {
+        return portraitLayout.carouselCellSize(for: bounds)
+    }
+}
+
 struct PortraitTrioItemPromotionEditorial {
-    init(title: String? = nil, text: String? = nil) {
+    struct Data {
+        let first: Asset
+        let second: Asset
+        let third: Asset
+    }
+    
+    init(title: String? = nil, text: String? = nil, data: Data) {
         self.title = title
         self.text = text
+        self.data = data
     }
     
     // Carousel Editorial
     let title: String?
     let text: String?
+    
+    let data: Data
 }

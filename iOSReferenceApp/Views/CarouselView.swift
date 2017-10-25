@@ -91,7 +91,7 @@ extension CarouselView: UICollectionViewDelegate {
 
 extension CarouselView: UICollectionViewDataSourcePrefetching {
     public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let urls = indexPaths.flatMap{ viewModel.imageUrl(for: $0.row) }
+        let urls = indexPaths.flatMap{ viewModel.editorial.imageUrls(for: $0.row) }
         ImagePrefetcher(urls: urls).start()
     }
 }
