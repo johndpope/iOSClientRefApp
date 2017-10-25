@@ -10,7 +10,7 @@ import UIKit
 
 class PortraitTrioPromotionLayout: CollectionViewLayout {
     /// Calculated
-    fileprivate func contentHeight(for width: CGFloat) -> CGFloat {
+    internal func contentHeight(for width: CGFloat) -> CGFloat {
         let cell = cellHeight(for: width)
         
         // Total promotional heigght
@@ -20,24 +20,33 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
         return cell + editorialHeight + footerHeight
     }
     
-    fileprivate func cellHeight(for width: CGFloat) -> CGFloat {
+    internal func cellHeight(for width: CGFloat) -> CGFloat {
         let thumbnail = thumbnailHeight(for: width)
         // Total cell height
         let itemEditorialHeight = (delegate.itemSpecificEditorialHeight ?? 0)
         return thumbnail + itemEditorialHeight
     }
     
-    fileprivate func thumbnailHeight(for width: CGFloat) -> CGFloat {
+    internal func cellWidth() -> CGFloat {
+        return pageWidth
+    }
+    
+    internal func thumbnailHeight(for width: CGFloat) -> CGFloat {
         // Thumbnail view is 3:2 aspect of width
         let aspect:CGFloat = 3 / 2
-        let thumbWidth = thumbnaiWidth(for: width)
+        let thumbWidth = thumbnailWidth(for: width)
         return thumbWidth * aspect
     }
     
-    fileprivate func thumbnaiWidth(for width: CGFloat) -> CGFloat {
+    internal func thumbnailWidth(for width: CGFloat) -> CGFloat {
         let cellWidth = width - delegate.carouselContentSideInset * 2
         let availableWidth = cellWidth - delegate.carouselContentSideInset * 2
         return availableWidth / 3
+    }
+    
+    internal func thumbnailSize(for width: CGFloat) -> CGSize {
+        return CGSize(width: thumbnailWidth(for: width),
+                      height: thumbnailHeight(for: width))
     }
     
     // MARK: - Overrides
@@ -89,5 +98,11 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return cache[indexPath.item]
+    }
+}
+
+extension PortraitTrioPromotionLayout: EmbeddedCarouselLayoutDelegate {
+    func carouselCellSize(for bounds: CGRect) -> CGSize {
+        return CGSize(width: bounds.size.width, height: contentHeight(for: bounds.size.width))
     }
 }

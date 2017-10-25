@@ -143,19 +143,41 @@ class HeroPromotionLayout: CollectionViewLayout {
     // MARK: - Internal
     
     /// Calculated
-    fileprivate func contentHeight(for width: CGFloat) -> CGFloat {
-        // Thumbnail view is 3:2 aspect of width
-        let aspect:CGFloat = 2 / 3
+    internal func contentHeight(for width: CGFloat) -> CGFloat {
+        let cell = cellHeight(for: width)
         
-        let cellWidth = width - delegate.carouselContentSideInset * 2
-        let thumbnailSize = CGSize(width: cellWidth, height: cellWidth * aspect)
-        let itemEditorialHeight = (delegate.itemSpecificEditorialHeight ?? 0)
-        let cellHeight = thumbnailSize.height + itemEditorialHeight
-        
+        // Total promotional heigght
         let editorialHeight = delegate.carouselSpecificEditorialHeight ?? 0
         let footerHeight = delegate.carouselFooterHeight
         
-        return cellHeight + editorialHeight + footerHeight
+        return cell + editorialHeight + footerHeight
+    }
+    
+    internal func cellHeight(for width: CGFloat) -> CGFloat {
+        let thumbnail = thumbnailHeight(for: width)
+        // Total cell height
+        let itemEditorialHeight = (delegate.itemSpecificEditorialHeight ?? 0)
+        return thumbnail + itemEditorialHeight
+    }
+    
+    internal func cellWidth() -> CGFloat {
+        return pageWidth
+    }
+    
+    internal func thumbnailHeight(for width: CGFloat) -> CGFloat {
+        // Thumbnail view is 3:2 aspect of width
+        let aspect:CGFloat = 2 / 3
+        let thumbWidth = thumbnailWidth(for: width)
+        return thumbWidth * aspect
+    }
+    
+    internal func thumbnailWidth(for width: CGFloat) -> CGFloat {
+        return width - delegate.carouselContentSideInset * 2
+    }
+    
+    internal func thumbnailSize(for width: CGFloat) -> CGSize {
+        return CGSize(width: thumbnailWidth(for: width),
+                      height: thumbnailHeight(for: width))
     }
     
     // MARK: - Overrides

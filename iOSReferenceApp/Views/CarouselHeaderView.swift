@@ -20,6 +20,11 @@ class CarouselHeaderView: UICollectionReusableView {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    func configure(with carousel: CarouselEditorial) {
+        title.text = carousel.title?.uppercased()
+        editorialText.text = carousel.text
+    }
 
 //    override func setSelected(_ selected: Bool, animated: Bool) {
 //        super.setSelected(selected, animated: animated)

@@ -15,25 +15,56 @@ protocol EmbeddedCarouselLayoutDelegate: class {
     func carouselCellSize(for bounds: CGRect) -> CGSize
 }
 
-protocol CarouselViewModelType {
-    associatedtype EditorialData
-    associatedtype Content: CarouselItemViewModelType
-    
-    var editorial: EditorialData { get }
-    var content: [Content] { get }
+
+protocol EditorialCell {
+    associatedtype Editorial
+    func configure(with editorial: Editorial?, for index: Int)
 }
 
-class CarouselViewModel<Editorial: CarouselLayoutDelegate, ItemEditorial>: CarouselViewModelType {
-    fileprivate(set) var editorial: Editorial
-    var content: [CarouselItemViewModel<ItemEditorial>]
-    let layout = HeroPromotionLayout()
+protocol CarouselEditorial {
+    var layout: CollectionViewLayout { get }
+    func editorial<T: ContentEditorial>(for index: Int) -> T?
+    var count: Int { get }
     
-    init(carousel: Editorial, data: [(Asset, ItemEditorial?)] = []) {
-        self.editorial = carousel
-        self.content = data.map{ CarouselItemViewModel(data: $0.0, editorial: $0.1) }
+    // MARK: Editorial Layout
+    var usesCarouselSpecificEditorial: Bool { get }
+    var usesItemSpecificEditorials: Bool { get }
+    
+    // Carousel Editorial
+    var title: String? { get }
+    var text: String? { get }
+    
+    // MARK: Header & Footer
+    var editorialHeight: CGFloat? { get }
+    var footerHeight: CGFloat { get }
+    var itemEditorialHeight: CGFloat? { get }
+    
+    // MARK: General Layout
+    var contentSideInset: CGFloat { get }
+    var contentTopInset: CGFloat { get }
+}
+
+protocol ContentEditorial {
+    
+}
+
+// Cell
+//
+// CellViewModel
+// Editorial
+// Data (asset(s))
+//
+// ViewModel
+// CarouselEditorial
+// Layout
+
+class CarouselViewModel {
+    fileprivate(set) var editorial: CarouselEditorial
+    
+    init(editorial: CarouselEditorial) {
         
-        layout.delegate = editorial
-        layout.use(pagination: true)
+//        layout.delegate = editorial
+//        layout.use(pagination: true)
     }
     
     // 1. Main Table View
@@ -55,44 +86,4 @@ class CarouselViewModel<Editorial: CarouselLayoutDelegate, ItemEditorial>: Carou
     //      - Editorial:
     //          * Promotional title (asset name?)
     //          * Promotional text
-}
-
-extension CarouselViewModel where Editorial == HeroPromotionEditorial {
-    func thumbnailSize(forCellWidth cellWidth: CGFloat) -> CGSize {
-        let size = cellWidth - 2 * editorial.contentSideInset
-        return CGSize(width: size, height: size / 9 * 6)
-    }
-    
-    func thumbnailCornerRadius(forCellWidth cellWidth: CGFloat) -> CGFloat {
-        return 10
-    }
-    
-    func thumbnailProcessor(forCellWidth cellWidth: CGFloat) -> ImageProcessor {
-        let cellSize = thumbnailSize(forCellWidth: cellWidth)
-        let resizeProcessor = CrispResizingImageProcessor(referenceSize: cellSize, mode: ContentMode.aspectFill)
-        let croppingProcessor = CroppingImageProcessor(size: cellSize)
-        let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: thumbnailCornerRadius(forCellWidth: cellWidth))
-        return (resizeProcessor>>croppingProcessor)>>roundedRectProcessor
-    }
-    
-    func thumbnailOptions(forCellWidth cellWidth: CGFloat) ->  KingfisherOptionsInfo {
-        return [
-            .backgroundDecode,
-            .cacheMemoryOnly,
-            .processor(thumbnailProcessor(forCellWidth: cellWidth))
-        ]
-    }
-    
-    var preferedImageOrientation: Exposure.Image.Orientation {
-        return .landscape
-    }
-    
-    func imageUrl(for index: Int) -> URL? {
-        return content[index]
-            .asset
-            .images(locale: "en")
-            .prefere(orientation: preferedImageOrientation)
-            .validImageUrls()
-            .first
-    }
 }

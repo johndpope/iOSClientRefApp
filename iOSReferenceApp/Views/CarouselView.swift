@@ -13,7 +13,7 @@ class CarouselView: UICollectionViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    fileprivate(set) var viewModel: CarouselViewModel<HeroPromotionEditorial, HeroItemPromotionEditorial>!
+    fileprivate(set) var viewModel: CarouselViewModel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,9 +33,9 @@ class CarouselView: UICollectionViewCell {
         
     }
     
-    func bind(viewModel: CarouselViewModel<HeroPromotionEditorial, HeroItemPromotionEditorial>) {
+    func bind(viewModel: CarouselViewModel) {
         self.viewModel = viewModel
-        collectionView.collectionViewLayout = viewModel.layout
+        collectionView.collectionViewLayout = viewModel.editorial.layout
         collectionView.reloadData()
     }
     
@@ -45,7 +45,7 @@ class CarouselView: UICollectionViewCell {
 
 extension CarouselView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.content.count
+        return viewModel.editorial.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -57,26 +57,8 @@ extension CarouselView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         preloadNextBatch(after: indexPath)
         if let cell = cell as? HeroPromotionCell {
-            cell.reset()
-            if viewModel.editorial.usesItemSpecificEditorials {
-                let vm = viewModel.content[indexPath.row]
-                cell.title.text = vm.editorial?.title?.uppercased()
-                cell.editorialText.text = vm.editorial?.text
-            }
-            
-            
-            // Promotional Art
-            let cellWidth = collectionView.bounds.size.width
-            if let url = viewModel.imageUrl(for: indexPath.row) {
-                let imageOptions = viewModel.thumbnailOptions(forCellWidth: cellWidth)
-                cell.heroBanner
-                    .kf
-                    .setImage(with: url, placeholder: #imageLiteral(resourceName: "assetPlaceholder"), options: imageOptions) { [weak self] (image, error, cache, url) in
-                        if let error = error {
-                            print("Kingfisher: ",error)
-                        }
-                }
-            }
+            cell.configure(with: viewModel.editorial as? HeroPromotionEditorial,
+                           for: indexPath.row)
         }
     }
     
@@ -87,8 +69,7 @@ extension CarouselView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionElementKindSectionHeader {
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselHeader", for: indexPath) as! CarouselHeaderView
-            view.title.text = viewModel.editorial.title?.uppercased()
-            view.editorialText.text = viewModel.editorial.text
+            view.configure(with: viewModel.editorial)
             return view
         }
         

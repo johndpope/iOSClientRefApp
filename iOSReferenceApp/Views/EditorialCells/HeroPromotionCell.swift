@@ -8,8 +8,10 @@
 
 import UIKit
 
-class HeroPromotionCell: UICollectionViewCell {
+class HeroPromotionCell: UICollectionViewCell, EditorialCell {
 
+    typealias ContentEditorial = HeroItemPromotionEditorial
+    
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var editorialText: UILabel!
     @IBOutlet weak var heroBanner: UIImageView!
@@ -23,4 +25,29 @@ class HeroPromotionCell: UICollectionViewCell {
         // Initialization code
     }
 
+    func configure(with carousel: HeroPromotionEditorial?, for index: Int) {
+        guard let carousel = carousel else { return }
+        reset()
+        
+        
+        if let editorial: HeroItemPromotionEditorial = carousel.editorial(for: index), carousel.usesItemSpecificEditorials {
+            title.text = editorial.title?.uppercased()
+            editorialText.text = editorial.text
+        }
+        
+        
+        // Promotional Art
+        let cellSize = carousel.thumbnailSize()
+        if let url = carousel.imageUrl(for: index) {
+            heroBanner
+                .kf
+                .setImage(with: url,
+                          placeholder: #imageLiteral(resourceName: "assetPlaceholder"),
+                          options: carousel.thumbnailOptions(for: cellSize)) { (image, error, cache, url) in
+                            if let error = error {
+                                print("Kingfisher: ",error)
+                            }
+            }
+        }
+    }
 }
