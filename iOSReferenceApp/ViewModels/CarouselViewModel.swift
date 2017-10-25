@@ -50,40 +50,10 @@ protocol ContentEditorial {
     func prefetchImageUrls() -> [URL]
 }
 
-// Cell
-//
-// CellViewModel
-// Editorial
-// Data (asset(s))
-//
-// ViewModel
-// CarouselEditorial
-// Layout
-
 class CarouselViewModel {
     fileprivate(set) var editorial: CarouselEditorial
     
     init(editorial: CarouselEditorial) {
         self.editorial = editorial
     }
-    
-    // 1. Main Table View
-    //      - CarouselListViewModel
-    //      - CarouselList
-    //          * One section per carousel
-    //
-    // 2. Row Collectionview
-    //      - CarouselViewModel
-    //      - CarouselItem (to be renamed) + AssetList
-    //      - Editorial:
-    //          * Promotional title (carousel name)
-    //          * Promotional text
-    //          * Promotional Type (Hero, New, Featured, etc)
-    //
-    // 3. Item in collectionView
-    //      - CarouselAssetViewModel
-    //      - Asset
-    //      - Editorial:
-    //          * Promotional title (asset name?)
-    //          * Promotional text
 }

@@ -84,7 +84,9 @@ extension CarouselListViewModel {
             guard editorial.usesItemSpecificEditorials else {
                 return assetList.map{ HeroItemPromotionEditorial(data: $0) }
             }
-            return assetList.map{ HeroItemPromotionEditorial(title: $0.anyTitle(locale: "en"), text: $0.anyDescription(locale: "en"), data: $0) }
+            
+            return assetList.map{
+                HeroItemPromotionEditorial(title: $0.anyTitle(locale: "en"), text: descriptionOrFake(for: $0), data: $0) }
         }
         else if let editorial = using as? PortraitTrioPromotionEditorial {
             let cellData = assetList
@@ -98,9 +100,17 @@ extension CarouselListViewModel {
             guard editorial.usesItemSpecificEditorials else {
                 return cellData.map{ PortraitTrioItemPromotionEditorial(data: $0) }
             }
-            return cellData.map{ PortraitTrioItemPromotionEditorial(title: $0.first.anyTitle(locale: "en"), text: $0.first.anyDescription(locale: "en"), data: $0) }
+            return cellData.map{ PortraitTrioItemPromotionEditorial(title: $0.first.anyTitle(locale: "en"), text: descriptionOrFake(for: $0.first), data: $0) }
         }
         return []
+    }
+    
+    func descriptionOrFake(for asset: Asset) -> String {
+        let desc = asset.anyDescription(locale: "en")
+        guard desc != "" else {
+            return "Some amazing promotional text here!"
+        }
+        return desc
     }
     
     fileprivate func fetchMetadata(type: Asset.AssetType, callback: @escaping (AssetList?, ExposureError?) -> Void) {

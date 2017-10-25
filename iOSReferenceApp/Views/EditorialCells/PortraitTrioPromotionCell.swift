@@ -22,9 +22,9 @@ class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
     @IBOutlet weak var third: UIImageView!
     
     func reset() {
-        first.image = nil
-        second.image = nil
-        third.image = nil
+        first.image = #imageLiteral(resourceName: "assetPlaceholder")
+        second.image = #imageLiteral(resourceName: "assetPlaceholder")
+        third.image = #imageLiteral(resourceName: "assetPlaceholder")
     }
     
     override func awakeFromNib() {
@@ -64,6 +64,9 @@ class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
                                 print("Kingfisher: ",error)
                             }
             }
+        }
+        else {
+            imageView.image = #imageLiteral(resourceName: "assetPlaceholder")
         }
     }
 }
