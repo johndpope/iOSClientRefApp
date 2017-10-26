@@ -191,7 +191,7 @@ extension PlayerViewController {
             .stream(live: channelId) { [unowned self] entitlement, error in
                 if let error = error {
                     // Workaround until EMP-10243 is fixed
-                    if case let .exposure(error: .exposureResponse(reason: reason)) = error, (reason.httpCode == 403 && reason.message == "NOT_ENABLED") {
+                    if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 403 && reason.message == "NOT_ENABLED") {
                         print("Workaround for EMP-10243 activated! - Testing vod endpoint")
                         self.player.stream(vod: channelId) { [unowned self] entitlement, error in
                             if let error = error {
