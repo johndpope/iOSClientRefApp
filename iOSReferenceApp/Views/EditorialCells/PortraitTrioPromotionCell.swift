@@ -13,6 +13,9 @@ import Kingfisher
 class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
     
     typealias ContentEditorial = PortraitTrioPromotionEditorial
+    
+    private var editorial: PortraitTrioItemPromotionEditorial?
+    var selectedAsset: (Asset) -> Void = { _ in }
 
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var text: UILabel!
@@ -21,15 +24,36 @@ class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
     @IBOutlet weak var second: UIImageView!
     @IBOutlet weak var third: UIImageView!
     
+    weak var tapGestureRecognizer: UITapGestureRecognizer!
+    func tapGestureAction(_ sender: UITapGestureRecognizer) {
+        let touchLocation = sender.location(in: sender.view)
+        if first.frame.contains(touchLocation) {
+            guard let asset = editorial?.data.first else { return }
+            selectedAsset(asset)
+        }
+        else if second.frame.contains(touchLocation) {
+            guard let asset = editorial?.data.second else { return }
+            selectedAsset(asset)
+        }
+        else if third.frame.contains(touchLocation) {
+            guard let asset = editorial?.data.third else { return }
+            selectedAsset(asset)
+        }
+    }
+    
     func reset() {
         first.image = #imageLiteral(resourceName: "assetPlaceholder")
         second.image = #imageLiteral(resourceName: "assetPlaceholder")
         third.image = #imageLiteral(resourceName: "assetPlaceholder")
+        editorial = nil
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureAction(_:)))
+        tapGestureRecognizer = gesture
+        addGestureRecognizer(gesture)
     }
     
     func configure(with carousel: PortraitTrioPromotionEditorial?, for index: Int) {
@@ -37,6 +61,7 @@ class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
         reset()
         
         guard let editorial: PortraitTrioItemPromotionEditorial = carousel.editorial(for: index) else { return }
+        self.editorial = editorial
         
         if carousel.usesItemSpecificEditorials {
             title.text = editorial.title?.uppercased()

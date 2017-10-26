@@ -18,6 +18,7 @@ protocol EmbeddedCarouselLayoutDelegate: class {
 protocol EditorialCell {
     associatedtype Editorial
     func configure(with editorial: Editorial?, for index: Int)
+    var selectedAsset: (Asset) -> Void { get set }
 }
 
 protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {

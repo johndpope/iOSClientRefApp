@@ -61,10 +61,10 @@ extension CarouselViewController: UICollectionViewDelegate {
         if let cell = cell as? CarouselView {
             let carouselViewModel = viewModel.content[indexPath.row]
             cell.bind(viewModel: carouselViewModel)
+            cell.selectedAsset = { [weak self] asset in
+                self?.presetDetails(for: asset, from: .other)
+            }
         }
-//        cell.cellSelected = { [weak self] asset in
-//            self?.presetDetails(for: asset, from: .other)
-//        }
     }
 }
 
@@ -85,5 +85,11 @@ extension CarouselViewController: AuthorizedEnvironment {
     
     var sessionToken: SessionToken {
         return viewModel.sessionToken
+    }
+}
+
+extension CarouselViewController: AssetDetailsPresenter {
+    var assetDetailsPresenter: UIViewController {
+        return self
     }
 }

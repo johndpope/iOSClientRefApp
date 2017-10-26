@@ -13,7 +13,6 @@ import Exposure
 class HorizontalScrollRow: UITableViewCell {
     
     var cellSelected: (Asset) -> Void = { _ in }
-//    var didScrollLoadImage: (UIImage) -> Void = { _ in }
     
     @IBOutlet weak var collectionView: UICollectionView!
     fileprivate(set) var viewModel: AssetListType!
