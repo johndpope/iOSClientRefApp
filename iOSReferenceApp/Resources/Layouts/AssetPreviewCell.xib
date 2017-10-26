@@ -23,13 +23,29 @@
                 <rect key="frame" x="0.0" y="0.0" width="108" height="186"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assetPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="ueJ-ft-p9X">
-                        <rect key="frame" x="0.0" y="0.0" width="108" height="162"/>
-                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wiv-qg-kzs" userLabel="Box View">
+                        <rect key="frame" x="0.0" y="0.0" width="108" height="186"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
+                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gFT-yh-x2T" userLabel="Shadow View">
+                        <rect key="frame" x="6" y="6" width="96" height="150"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assetPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="ueJ-ft-p9X">
+                                <rect key="frame" x="0.0" y="0.0" width="96" height="150"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ueJ-ft-p9X" firstAttribute="leading" secondItem="gFT-yh-x2T" secondAttribute="leading" id="GOs-2o-dmN"/>
+                            <constraint firstAttribute="trailing" secondItem="ueJ-ft-p9X" secondAttribute="trailing" id="J4B-YR-lt1"/>
+                            <constraint firstItem="ueJ-ft-p9X" firstAttribute="top" secondItem="gFT-yh-x2T" secondAttribute="top" id="Khe-HZ-xc2"/>
+                            <constraint firstAttribute="bottom" secondItem="ueJ-ft-p9X" secondAttribute="bottom" id="aV1-kQ-1hj"/>
+                        </constraints>
+                    </view>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sge-bn-gt6">
-                        <rect key="frame" x="0.0" y="164" width="108" height="14"/>
+                        <rect key="frame" x="6" y="164" width="96" height="14"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -37,15 +53,21 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Sge-bn-gt6" secondAttribute="bottom" constant="8" id="1JI-VB-exi"/>
-                <constraint firstAttribute="bottom" secondItem="ueJ-ft-p9X" secondAttribute="bottom" constant="24" id="9eQ-lr-yDx"/>
-                <constraint firstItem="ueJ-ft-p9X" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Lec-y2-TZ0"/>
-                <constraint firstItem="ueJ-ft-p9X" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Uff-RY-iIM"/>
-                <constraint firstItem="Sge-bn-gt6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="XKA-bS-9WC"/>
-                <constraint firstAttribute="trailing" secondItem="Sge-bn-gt6" secondAttribute="trailing" id="ykT-qP-8Pq"/>
-                <constraint firstAttribute="trailing" secondItem="ueJ-ft-p9X" secondAttribute="trailing" id="ytb-iw-9jA"/>
+                <constraint firstAttribute="trailing" secondItem="Wiv-qg-kzs" secondAttribute="trailing" id="Dgf-Xr-jCv"/>
+                <constraint firstAttribute="bottom" secondItem="gFT-yh-x2T" secondAttribute="bottom" constant="30" id="QkQ-Ct-sni"/>
+                <constraint firstItem="Wiv-qg-kzs" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="RPx-ml-tId"/>
+                <constraint firstAttribute="bottom" secondItem="Wiv-qg-kzs" secondAttribute="bottom" id="TYQ-YL-UdE"/>
+                <constraint firstItem="Sge-bn-gt6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="XKA-bS-9WC"/>
+                <constraint firstItem="Wiv-qg-kzs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="e3N-Og-2vN"/>
+                <constraint firstAttribute="trailing" secondItem="gFT-yh-x2T" secondAttribute="trailing" constant="6" id="pNN-lu-vdt"/>
+                <constraint firstItem="gFT-yh-x2T" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="rGp-oy-3l1"/>
+                <constraint firstAttribute="trailing" secondItem="Sge-bn-gt6" secondAttribute="trailing" constant="6" id="ykT-qP-8Pq"/>
+                <constraint firstItem="gFT-yh-x2T" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="zNC-Er-h5q"/>
             </constraints>
             <size key="customSize" width="233" height="231"/>
             <connections>
+                <outlet property="boxView" destination="Wiv-qg-kzs" id="82x-ev-b6o"/>
+                <outlet property="shadowView" destination="gFT-yh-x2T" id="BzB-ka-sIV"/>
                 <outlet property="thumbnailView" destination="ueJ-ft-p9X" id="BgF-OA-D60"/>
                 <outlet property="titleLabel" destination="Sge-bn-gt6" id="cdD-8u-MTq"/>
             </connections>

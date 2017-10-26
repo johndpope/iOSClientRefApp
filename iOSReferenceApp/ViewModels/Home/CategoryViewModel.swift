@@ -98,14 +98,6 @@ extension CategoryViewModel {
 }
 
 extension CategoryViewModel {
-    var preferredCellSize: CGSize {
-        return CGSize(width: 108, height: 186)
-    }
-    
-    var preferredThumbnailSize: CGSize {
-        return CGSize(width: 108, height: 162)
-    }
-    
     func preferredCellSize(forWidth width: CGFloat) -> CGSize {
         return preferredCellSize
     }
@@ -116,10 +108,6 @@ extension CategoryViewModel {
     
     var preferredCellsPerRow: CGFloat {
         return 3
-    }
-    
-    var previewCellPadding: CGFloat {
-        return 5
     }
     
     func anyTitle() -> String? {

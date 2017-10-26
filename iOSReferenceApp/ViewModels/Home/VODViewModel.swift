@@ -41,7 +41,7 @@ class VODViewModel: AuthorizedEnvironment {
             .validate()
             .response { (response: ExposureResponse<CarouselList>) in
                 guard let items = response.value?.items else { return }
-                self.carousels = items.map { CarouselItemViewModel(item: $0) }
+                self.carousels = items.map { BasicCarouselViewModel(item: $0) }
                 callback(response.error)
         }
     }
@@ -81,7 +81,7 @@ extension VODViewModel {
     // MARK: Exposure Assets
 }
 
-struct CarouselItemViewModel: AssetListType {
+struct BasicCarouselViewModel: AssetListType {
     var content: [AssetViewModel] {
         get {
             return item.items?.items?.flatMap { AssetViewModel(asset: $0) } ?? []
@@ -92,14 +92,6 @@ struct CarouselItemViewModel: AssetListType {
 
     init(item: CarouselItem) {
         self.item = item
-    }
-
-    var preferredCellSize: CGSize {
-        return CGSize(width: 108, height: 186)
-    }
-    
-    var preferredThumbnailSize: CGSize {
-        return CGSize(width: 108, height: 162)
     }
     
     func preferredCellSize(forWidth width: CGFloat) -> CGSize {
@@ -112,10 +104,6 @@ struct CarouselItemViewModel: AssetListType {
 
     var preferredCellsPerRow: CGFloat {
         return 3
-    }
-
-    var previewCellPadding: CGFloat {
-        return 5
     }
     
     func anyTitle() -> String? {
