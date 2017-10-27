@@ -10,8 +10,33 @@ import UIKit
 import Exposure
 import Kingfisher
 
+protocol SlidingMenuController {
+    func toggleSlidingMenu()
+}
+
+protocol SlidingMenuDelegate: class {
+    var slidingMenuController: SlidingMenuController? { get set }
+}
+
 class MasterViewController: UIViewController {
 
+    struct MenuConstants {
+        let defaultInset: CGFloat = 0
+        let maxInset: CGFloat = 320
+        let maxPercentInset: CGFloat = 0.70
+        
+        func inset(for width: CGFloat) -> CGFloat {
+            let percent = width*maxPercentInset
+            return percent > maxInset ? maxInset : percent
+        }
+    }
+    
+    fileprivate let menuConstants = MenuConstants()
+    @IBOutlet weak var leadingContentConstraint: NSLayoutConstraint!
+    @IBOutlet weak var trailingContentConstraint: NSLayoutConstraint!
+    
+    fileprivate var menuController: MainMenuViewController!
+    
     var config: ApplicationConfig?
     var dynamicCustomerConfig: DynamicCustomerConfig?
     var environment: Environment!
@@ -34,6 +59,8 @@ class MasterViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationItem.hidesBackButton = true
+        
+        menuController.constrain(logoWidth: menuConstants.inset(for: view.bounds.size.width))
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,11 +100,24 @@ class MasterViewController: UIViewController {
 //            .processor(CrispResizingImageProcessor(referenceSize: logoSize, mode: .aspectFit))
 //        ]
 //    }
-
     
     enum Segue: String {
         case masterToMainMenu = "masterToMainMenu"
         case masterToContent = "masterToContent"
+    }
+}
+
+extension MasterViewController: SlidingMenuController {
+    private var menuIsOpen: Bool {
+        return leadingContentConstraint.constant != menuConstants.defaultInset
+    }
+    func toggleSlidingMenu() {
+        leadingContentConstraint.constant = menuIsOpen ? menuConstants.defaultInset : menuConstants.inset(for: view.bounds.size.width)
+        trailingContentConstraint.constant = menuIsOpen ? menuConstants.defaultInset : -menuConstants.inset(for: view.bounds.size.width)
+        
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        })
     }
 }
 
@@ -97,6 +137,13 @@ extension MasterViewController {
                 destination.authorize(environment: environment,
                                       sessionToken: sessionToken)
             }
+            
+            if let destination = navController.viewControllers.first as? SlidingMenuDelegate {
+                destination.slidingMenuController = self
+            }
+        }
+        else if segue.identifier == Segue.masterToMainMenu.rawValue, let destination = segue.destination as? MainMenuViewController {
+            menuController = destination
         }
     }
 }

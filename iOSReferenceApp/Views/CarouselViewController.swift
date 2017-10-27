@@ -14,6 +14,7 @@ class CarouselViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var viewModel: CarouselListViewModel!
+    var slidingMenuController: SlidingMenuController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,14 @@ class CarouselViewController: UIViewController {
             self?.collectionView.reloadData()
         }
     }
+    
+    @IBAction func toggleSlidingMenuAction(_ sender: UIBarButtonItem) {
+        slidingMenuController?.toggleSlidingMenu()
+    }
+}
+
+extension CarouselViewController: SlidingMenuDelegate {
+    
 }
 
 

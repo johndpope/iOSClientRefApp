@@ -177,6 +177,7 @@ class MainMenuViewController: UIViewController {
 
     @IBOutlet weak var serviceLogo: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var logoWidthConstraint: NSLayoutConstraint!
     
     var viewModel: MainMenuViewModel!
     
@@ -197,6 +198,13 @@ class MainMenuViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension MainMenuViewController {
+    func constrain(logoWidth: CGFloat) {
+        logoWidthConstraint.constant = logoWidth
+        view.layoutIfNeeded()
     }
 }
 
