@@ -34,6 +34,9 @@ class MasterViewController: UIViewController {
     fileprivate let menuConstants = MenuConstants()
     @IBOutlet weak var leadingContentConstraint: NSLayoutConstraint!
     @IBOutlet weak var trailingContentConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leadingBlurConstraint: NSLayoutConstraint!
+    @IBOutlet weak var trailingBlurConstraint: NSLayoutConstraint!
+    @IBOutlet weak var blurView: UIVisualEffectView!
     
     fileprivate var menuController: MainMenuViewController!
     
@@ -46,7 +49,7 @@ class MasterViewController: UIViewController {
         super.viewDidLoad()
         
 //        applyDynamicConfigUI()
-        
+        blurView.effect = nil
         
         guard let env = UserInfo.environment else { return }
         config = ApplicationConfig(environment: env)
@@ -101,6 +104,15 @@ class MasterViewController: UIViewController {
 //        ]
 //    }
     
+    @IBAction func blurViewTapAction(_ sender: UITapGestureRecognizer) {
+        toggleSlidingMenu()
+    }
+    
+    @IBAction func blurViewSwipeAction(_ sender: UIPanGestureRecognizer) {
+        print(sender.translation(in: view))
+        print(sender.translation(in: blurView))
+    }
+    
     enum Segue: String {
         case masterToMainMenu = "masterToMainMenu"
         case masterToContent = "masterToContent"
@@ -111,14 +123,49 @@ extension MasterViewController: SlidingMenuController {
     private var menuIsOpen: Bool {
         return leadingContentConstraint.constant != menuConstants.defaultInset
     }
+    
+    func moveSlidingMenu(offset: CGFloat) {
+        
+    }
+    
     func toggleSlidingMenu() {
+        blurView.isUserInteractionEnabled = !menuIsOpen
+        
         leadingContentConstraint.constant = menuIsOpen ? menuConstants.defaultInset : menuConstants.inset(for: view.bounds.size.width)
         trailingContentConstraint.constant = menuIsOpen ? menuConstants.defaultInset : -menuConstants.inset(for: view.bounds.size.width)
         
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
-            self.view.layoutIfNeeded()
+        
+        leadingBlurConstraint.constant = !menuIsOpen ? menuConstants.defaultInset : menuConstants.inset(for: view.bounds.size.width)
+        
+        trailingBlurConstraint.constant = !menuIsOpen ? menuConstants.defaultInset : -menuConstants.inset(for: view.bounds.size.width)
+        
+        let menuEndsOpen = menuIsOpen
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: { [weak self] in
+            if menuEndsOpen {
+                self?.blurView.effect = UIBlurEffect(style: .dark)
+            }
+            else {
+                self?.blurView.effect = nil
+            }
+            self?.view.layoutIfNeeded()
         })
     }
+    
+//    func animate(blur: Bool) {
+//        leadingBlurConstraint.constant = !blur ? menuConstants.defaultInset : menuConstants.inset(for: view.bounds.size.width)
+//
+//        trailingBlurConstraint.constant = !blur ? menuConstants.defaultInset : -menuConstants.inset(for: view.bounds.size.width)
+//
+//        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: { [weak self] in
+//            if blur {
+//                self?.blurView.effect = UIBlurEffect(style: .dark)
+//            }
+//            else {
+//                self?.blurView.effect = nil
+//            }
+//            self?.view.layoutIfNeeded()
+//        })
+//    }
 }
 
 extension MasterViewController {

@@ -313,9 +313,24 @@
                                     <segue destination="aKm-pv-KWz" kind="embed" identifier="masterToContent" id="WSL-NY-dqV"/>
                                 </connections>
                             </containerView>
+                            <visualEffectView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uTd-Yv-QFF">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="a7B-im-zDG">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <gestureRecognizers/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="Sde-Gb-iqM" appends="YES" id="bzE-M9-pZm"/>
+                                        <outletCollection property="gestureRecognizers" destination="8iB-sA-tuN" appends="YES" id="QXj-P1-Gc0"/>
+                                    </connections>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" red="0.094117647060000004" green="0.094117647060000004" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="uTd-Yv-QFF" secondAttribute="trailing" id="5QO-OA-5XX"/>
+                            <constraint firstItem="uTd-Yv-QFF" firstAttribute="width" secondItem="9lZ-4J-mWQ" secondAttribute="width" id="5bu-Ce-7Gl"/>
                             <constraint firstItem="A9f-n2-s2v" firstAttribute="width" secondItem="9lZ-4J-mWQ" secondAttribute="width" id="5e4-qa-Yef"/>
                             <constraint firstItem="ATJ-Ro-qky" firstAttribute="top" secondItem="2ej-nB-l1x" secondAttribute="bottom" id="8zr-57-n4R"/>
                             <constraint firstAttribute="trailing" secondItem="A9f-n2-s2v" secondAttribute="trailing" id="9FZ-xH-7D3"/>
@@ -323,17 +338,34 @@
                             <constraint firstItem="ATJ-Ro-qky" firstAttribute="top" secondItem="A9f-n2-s2v" secondAttribute="bottom" id="TAa-xU-Q9l"/>
                             <constraint firstItem="2ej-nB-l1x" firstAttribute="top" secondItem="FNz-p7-nEg" secondAttribute="bottom" id="XPz-dl-k8X"/>
                             <constraint firstItem="A9f-n2-s2v" firstAttribute="leading" secondItem="9lZ-4J-mWQ" secondAttribute="leading" id="g7k-A2-V67"/>
+                            <constraint firstItem="uTd-Yv-QFF" firstAttribute="top" secondItem="FNz-p7-nEg" secondAttribute="bottom" id="kjZ-be-IJE"/>
                             <constraint firstItem="A9f-n2-s2v" firstAttribute="top" secondItem="FNz-p7-nEg" secondAttribute="bottom" id="krm-h6-kJD"/>
                             <constraint firstAttribute="trailing" secondItem="2ej-nB-l1x" secondAttribute="trailing" id="lOz-UL-Qoc"/>
+                            <constraint firstItem="uTd-Yv-QFF" firstAttribute="leading" secondItem="9lZ-4J-mWQ" secondAttribute="leading" id="oI4-1v-nIw"/>
+                            <constraint firstItem="ATJ-Ro-qky" firstAttribute="top" secondItem="uTd-Yv-QFF" secondAttribute="bottom" id="ty4-3a-QjB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="h28-AU-P52"/>
                     <connections>
+                        <outlet property="blurView" destination="uTd-Yv-QFF" id="wuq-VZ-u8m"/>
+                        <outlet property="leadingBlurConstraint" destination="oI4-1v-nIw" id="eOU-Iz-C2B"/>
                         <outlet property="leadingContentConstraint" destination="g7k-A2-V67" id="JRn-0c-Ttm"/>
+                        <outlet property="trailingBlurConstraint" destination="5QO-OA-5XX" id="0Dv-MQ-N9P"/>
                         <outlet property="trailingContentConstraint" destination="9FZ-xH-7D3" id="uMR-Ky-Uos"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fkD-x8-08S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Sde-Gb-iqM">
+                    <connections>
+                        <action selector="blurViewTapAction:" destination="uQN-Sn-i8n" id="xai-pr-fcU"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="nDG-iq-GXc"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="8iB-sA-tuN">
+                    <connections>
+                        <action selector="blurViewSwipeAction:" destination="uQN-Sn-i8n" id="g2e-vS-lDf"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="694.20289855072474" y="1385.8695652173915"/>
         </scene>
