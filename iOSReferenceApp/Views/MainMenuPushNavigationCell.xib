@@ -24,27 +24,30 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fkb-WF-Vqg">
-                        <rect key="frame" x="20" y="5" width="32" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="32" id="KYV-YI-HeV"/>
-                            <constraint firstAttribute="height" constant="32" id="faL-aN-UHH"/>
-                        </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-6m-ddu">
-                        <rect key="frame" x="62" y="12.5" width="248" height="19"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                        <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="IJi-Ps-5SF">
+                        <rect key="frame" x="20" y="5" width="290" height="32"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fkb-WF-Vqg">
+                                <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="KYV-YI-HeV"/>
+                                    <constraint firstAttribute="height" constant="32" id="faL-aN-UHH"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-6m-ddu">
+                                <rect key="frame" x="42" y="0.0" width="248" height="32"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <color key="backgroundColor" red="0.094117647060000004" green="0.094117647060000004" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="fkb-WF-Vqg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="C6f-BR-uHW"/>
-                    <constraint firstItem="fkb-WF-Vqg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="OHo-S5-gUs"/>
-                    <constraint firstItem="0kP-6m-ddu" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Yfn-CU-jZH"/>
-                    <constraint firstItem="0kP-6m-ddu" firstAttribute="leading" secondItem="fkb-WF-Vqg" secondAttribute="trailing" constant="10" id="mnm-Og-QsJ"/>
-                    <constraint firstAttribute="trailing" secondItem="0kP-6m-ddu" secondAttribute="trailing" constant="10" id="pTX-hL-dl8"/>
+                    <constraint firstItem="IJi-Ps-5SF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Fep-bV-iQs"/>
+                    <constraint firstItem="IJi-Ps-5SF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="NNR-ai-sqD"/>
+                    <constraint firstAttribute="trailing" secondItem="IJi-Ps-5SF" secondAttribute="trailing" constant="10" id="a6N-Dz-pF2"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

@@ -9,11 +9,11 @@
 import UIKit
 
 protocol MainMenuItemType {
-    var reuseIdentifier: String { get }
+    static var reuseIdentifier: String { get }
 }
 
 class MainMenuContentViewModel: MainMenuItemType {
-    var reuseIdentifier: String {
+    static var reuseIdentifier: String {
         return "contentCell"
     }
     
@@ -30,20 +30,22 @@ class MainMenuContentViewModel: MainMenuItemType {
 }
 
 class MainMenuStaticDataViewModel: MainMenuItemType {
-    var reuseIdentifier: String {
+    static var reuseIdentifier: String {
         return "staticDataCell"
     }
     
+    let text: String
     var textColor: UIColor {
         return UIColor.lightGray
     }
     
-    init() {
+    init(text: String) {
+        self.text = text
     }
 }
 
 class MainMenuPushNavigationViewModel: MainMenuItemType {
-    var reuseIdentifier: String {
+    static var reuseIdentifier: String {
         return "pushNavigationCell"
     }
     
@@ -110,7 +112,7 @@ class MainMenuViewModel {
         let appSettings = MainMenuPushNavigationViewModel(title: "App Settings")
         let account = MainMenuPushNavigationViewModel(title: "Account")
         let logOut = MainMenuPushNavigationViewModel(title: "Log out")
-        let version = MainMenuStaticDataViewModel()
+        let version = MainMenuStaticDataViewModel(text: "Fake Version 1.2.1")
         
         return MainMenuSectionViewModel(rows: [appSettings, account, logOut, version])
     }
@@ -125,6 +127,12 @@ class MainMenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        tableView.register(UINib(nibName: "MainMenuStaticDataCell", bundle: nil), forCellReuseIdentifier: MainMenuStaticDataViewModel.reuseIdentifier)
+        tableView.register(UINib(nibName: "MainMenuPushNavigationCell", bundle: nil), forCellReuseIdentifier: MainMenuPushNavigationViewModel.reuseIdentifier)
+        tableView.register(UINib(nibName: "MainMenuContentCell", bundle: nil), forCellReuseIdentifier: MainMenuContentViewModel.reuseIdentifier)
 
         let activeContentIndex = 0 // TODO: Fetch from where?
         viewModel = MainMenuViewModel()
@@ -159,7 +167,7 @@ extension MainMenuViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let vm = viewModel[indexPath.section].rows[indexPath.row]
-        return tableView.dequeueReusableCell(withIdentifier: vm.reuseIdentifier, for: indexPath)
+        return tableView.dequeueReusableCell(withIdentifier: type(of: vm).reuseIdentifier, for: indexPath)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -167,11 +175,11 @@ extension MainMenuViewController: UITableViewDataSource {
         if let vm = vm as? MainMenuContentViewModel, let cell = cell as? MainMenuContentCell {
             cell.bind(viewModel: vm)
         }
-        else if let vm = vm as? MainMenuPushNavigationViewModel, let cell = cell as? MainMenuContentCell {
-            
+        else if let vm = vm as? MainMenuPushNavigationViewModel, let cell = cell as? MainMenuPushNavigationCell {
+            cell.bind(viewModel: vm)
         }
-        else if let vm = vm as? MainMenuStaticDataViewModel, let cell = cell as? MainMenuContentCell {
-            
+        else if let vm = vm as? MainMenuStaticDataViewModel, let cell = cell as? MainMenuStaticDataCell {
+            cell.bind(viewModel: vm)
         }
     }
 }

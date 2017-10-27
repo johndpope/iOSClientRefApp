@@ -102,7 +102,7 @@ class LoginViewController: UIViewController {
             
             if let credentials = response.value {
                 UserInfo.update(credentials: credentials)
-                self.performSegue(withIdentifier: Constants.Storyboard.homeSegue, sender: credentials)
+                self.performSegue(withIdentifier: "segueLoginToMain", sender: credentials)
             }
         })
     }
