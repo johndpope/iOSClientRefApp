@@ -9,12 +9,19 @@
 import UIKit
 
 protocol MainMenuItemType {
-    var title: String { get }
+    var reuseIdentifier: String { get }
 }
 
 class MainMenuContentViewModel: MainMenuItemType {
+    var reuseIdentifier: String {
+        return "contentCell"
+    }
+    
     let title: String
     var isActive: Bool
+    var textColor: UIColor {
+        return isActive ? UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1) : UIColor.lightGray
+    }
     
     init(title: String, active: Bool = false) {
         self.title = title
@@ -22,21 +29,34 @@ class MainMenuContentViewModel: MainMenuItemType {
     }
 }
 
-class MainMenuVersionViewModel: MainMenuItemType {
-    let title: String
+class MainMenuStaticDataViewModel: MainMenuItemType {
+    var reuseIdentifier: String {
+        return "staticDataCell"
+    }
     
-    init(title: String) {
-        self.title = title
+    var textColor: UIColor {
+        return UIColor.lightGray
+    }
+    
+    init() {
     }
 }
 
 class MainMenuPushNavigationViewModel: MainMenuItemType {
-    let title: String
-    let imageUrl: URL?
+    var reuseIdentifier: String {
+        return "pushNavigationCell"
+    }
     
-    init(title: String, imageUrl: URL? = nil) {
+    let title: String
+    let image: UIImage?
+    
+    var textColor: UIColor {
+        return UIColor.lightGray
+    }
+    
+    init(title: String, image: UIImage? = nil) {
         self.title = title
-        self.imageUrl = imageUrl
+        self.image = image
     }
 }
 
@@ -72,8 +92,8 @@ class MainMenuViewModel {
     }
     
     private func configureUserPreferences() -> MainMenuSectionViewModel {
-        let download = MainMenuPushNavigationViewModel(title: "My downloads")
-        let favourites = MainMenuPushNavigationViewModel(title: "Favourites")
+        let download = MainMenuPushNavigationViewModel(title: "My downloads", image: #imageLiteral(resourceName: "download-list"))
+        let favourites = MainMenuPushNavigationViewModel(title: "Favourites", image: #imageLiteral(resourceName: "download-list"))
         return MainMenuSectionViewModel(rows: [download, favourites])
     }
     
@@ -90,8 +110,9 @@ class MainMenuViewModel {
         let appSettings = MainMenuPushNavigationViewModel(title: "App Settings")
         let account = MainMenuPushNavigationViewModel(title: "Account")
         let logOut = MainMenuPushNavigationViewModel(title: "Log out")
+        let version = MainMenuStaticDataViewModel()
         
-        return MainMenuSectionViewModel(rows: [appSettings, account, logOut])
+        return MainMenuSectionViewModel(rows: [appSettings, account, logOut, version])
     }
 }
 
@@ -137,13 +158,20 @@ extension MainMenuViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "HorizontalScrollRow") as! HorizontalScrollRow
-//        guard let carousel = viewModel?.carousels[indexPath.section] else { fatalError("No carousels") }
-//        cell.bind(viewModel: carousel)
-//        cell.cellSelected = { [weak self] asset in
-//            self?.presetDetails(for: asset, from: .other)
-//        }
-//
-//        return cell
+        let vm = viewModel[indexPath.section].rows[indexPath.row]
+        return tableView.dequeueReusableCell(withIdentifier: vm.reuseIdentifier, for: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let vm = viewModel[indexPath.section].rows[indexPath.row]
+        if let vm = vm as? MainMenuContentViewModel, let cell = cell as? MainMenuContentCell {
+            cell.bind(viewModel: vm)
+        }
+        else if let vm = vm as? MainMenuPushNavigationViewModel, let cell = cell as? MainMenuContentCell {
+            
+        }
+        else if let vm = vm as? MainMenuStaticDataViewModel, let cell = cell as? MainMenuContentCell {
+            
+        }
     }
 }

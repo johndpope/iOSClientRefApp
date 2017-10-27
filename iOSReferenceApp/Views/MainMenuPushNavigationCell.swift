@@ -1,5 +1,5 @@
 //
-//  MainMenuContentCell.swift
+//  MainMenuPushNavigationCell.swift
 //  iOSReferenceApp
 //
 //  Created by Fredrik Sjöberg on 2017-10-27.
@@ -8,12 +8,11 @@
 
 import UIKit
 
-class MainMenuContentCell: UITableViewCell {
+class MainMenuPushNavigationCell: UITableViewCell {
 
-    @IBOutlet weak var activeIndicator: UIView!
-    @IBOutlet weak var contentTitle: UILabel!
-    
-    private var viewModel: MainMenuContentViewModel?
+    @IBOutlet weak var icon: UIImageView!
+    @IBOutlet weak var title: UILabel!
+    private var viewModel: MainMenuPushNavigationViewModel?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,11 +25,14 @@ class MainMenuContentCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func bind(viewModel: MainMenuContentViewModel) {
+    
+    func bind(viewModel: MainMenuPushNavigationViewModel) {
         self.viewModel = viewModel
-        contentTitle.text = viewModel.title
-        activeIndicator.isHidden = !viewModel.isActive
         
-        contentTitle.textColor = viewModel.textColor
+        title.text = viewModel.title
+        title.textColor = viewModel.textColor
+        
+        icon.image = viewModel.image
     }
+    
 }
