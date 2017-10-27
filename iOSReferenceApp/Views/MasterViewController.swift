@@ -165,6 +165,7 @@ class MasterViewController: UIViewController {
     enum Segue: String {
         case masterToMainMenu = "masterToMainMenu"
         case masterToContent = "masterToContent"
+        case masterToMyDownloads = "masterToMyDownloads"
     }
     
     var menuOpen: Bool = false
@@ -234,6 +235,20 @@ extension MasterViewController {
         }
         else if segue.identifier == Segue.masterToMainMenu.rawValue, let destination = segue.destination as? MainMenuViewController {
             menuController = destination
+            destination.selectedOtherSegue = { [weak self] segue in
+                switch segue {
+                case .myDownloads: self?.performSegue(withIdentifier: Segue.masterToMyDownloads.rawValue, sender: nil)
+                }
+            }
+            destination.selectedContentSegue = { segue in
+                
+            }
+        }
+        else if segue.identifier == Segue.masterToMyDownloads.rawValue {
+            if let destination = segue.destination as? OfflineListViewController {
+            destination.authorize(environment: environment,
+                                  sessionToken: sessionToken)
+        }
         }
     }
 }

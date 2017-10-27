@@ -37,9 +37,13 @@ class OfflineListViewController: UIViewController, AssetDetailsPresenter {
     override func viewWillAppear(_ animated: Bool) {
         content = viewModel.fetchContent()
         
-        navigationItem.hidesBackButton = tabBarController != nil
+        navigationController?.setNavigationBarHidden(false, animated: true)
         
         tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     @IBAction func unwindListAction(_ sender: UIBarButtonItem) {
@@ -48,7 +52,7 @@ class OfflineListViewController: UIViewController, AssetDetailsPresenter {
     
     func unwind() {
         // This should be called ONLY when the list was presented modaly inside a navController, typically by a "back" button in the navBar (which wont be visible otherwise)
-        navigationController?.dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }
 

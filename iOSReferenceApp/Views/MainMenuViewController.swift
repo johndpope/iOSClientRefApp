@@ -14,26 +14,25 @@ protocol MainMenuItemType {
 }
 
 protocol MainMenuActionType {
-    var actionIdentifier: MainMenuContentViewModel.Action? { get }
+    var actionIdentifier: MainMenuViewController.Action? { get }
 }
 
 class MainMenuContentViewModel: MainMenuItemType {
-    enum Action {
-        case logout
-    }
     static var reuseIdentifier: String {
         return "contentCell"
     }
     
     let title: String
+    let actionIdentifier: MainMenuViewController.Action?
     var isActive: Bool
     var textColor: UIColor {
         return isActive ? UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1) : UIColor.lightGray
     }
     
-    init(title: String, active: Bool = false) {
+    init(title: String, active: Bool = false, action: MainMenuViewController.Action? = nil) {
         self.title = title
         self.isActive = active
+        self.actionIdentifier = action
     }
 }
 
@@ -53,11 +52,13 @@ class MainMenuStaticDataViewModel: MainMenuItemType {
 }
 
 class MainMenuPushNavigationViewModel: MainMenuItemType, MainMenuActionType {
+    
+    
     static var reuseIdentifier: String {
         return "pushNavigationCell"
     }
     
-    let actionIdentifier: MainMenuContentViewModel.Action?
+    let actionIdentifier: MainMenuViewController.Action?
     
     let title: String
     let image: UIImage?
@@ -66,7 +67,7 @@ class MainMenuPushNavigationViewModel: MainMenuItemType, MainMenuActionType {
         return UIColor.lightGray
     }
     
-    init(title: String, image: UIImage? = nil, action: MainMenuContentViewModel.Action? = nil) {
+    init(title: String, image: UIImage? = nil, action: MainMenuViewController.Action? = nil) {
         self.title = title
         self.image = image
         self.actionIdentifier = action
@@ -115,13 +116,13 @@ class MainMenuViewModel {
     }
     
     private func configureUserPreferences() -> MainMenuSectionViewModel {
-        let download = MainMenuPushNavigationViewModel(title: "My downloads", image: #imageLiteral(resourceName: "download"))
+        let download = MainMenuPushNavigationViewModel(title: "My downloads", image: #imageLiteral(resourceName: "download"), action: .other(segue: .myDownloads))
         let favourites = MainMenuPushNavigationViewModel(title: "Favourites", image: #imageLiteral(resourceName: "download-list"))
         return MainMenuSectionViewModel(rows: [download, favourites])
     }
     
     private func configureContentLists(activeIndex index: Int) -> MainMenuSectionViewModel {
-        let home = MainMenuContentViewModel(title: "Home")
+        let home = MainMenuContentViewModel(title: "Home", action: .content(segue: .home))
         let section = [home]
         
         section[index].isActive = true
@@ -157,6 +158,7 @@ class MainMenuViewModel {
         }
         return version + "-" + build
     }
+    
 }
 
 extension MainMenuViewModel {
@@ -175,6 +177,24 @@ extension MainMenuViewModel {
 
 class MainMenuViewController: UIViewController {
 
+    enum Action {
+        case other(segue: MainMenuViewController.Segue.Other)
+        case content(segue: MainMenuViewController.Segue.Content)
+        case logout
+    }
+    
+    enum Segue {
+        enum Other: String {
+            case myDownloads
+        }
+        enum Content: String {
+            case home
+        }
+    }
+    
+    var selectedOtherSegue: (Segue.Other) -> Void = { _ in }
+    var selectedContentSegue: (Segue.Content) -> Void = { _ in }
+    
     @IBOutlet weak var serviceLogo: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var logoWidthConstraint: NSLayoutConstraint!
@@ -231,6 +251,11 @@ extension MainMenuViewController: UITableViewDelegate {
             switch action {
             case .logout:
                 actionLogout()
+            case .content(segue: let segue):
+                fatalError("Replace content view controller!")
+                return
+            case .other(segue: let segue):
+                selectedOtherSegue(segue)
             }
         }
     }

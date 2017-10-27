@@ -60,6 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootNavigationController = self.window?.rootViewController as? UINavigationController
         
         rootNavigationController?.setNavigationBarHidden(true, animated: false)
+        rootNavigationController?.navigationBar.barStyle = .black
         let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loginId) as! LoginViewController
 
         // Check user validation
