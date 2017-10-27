@@ -178,6 +178,7 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var serviceLogo: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var logoWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewWIdthConstraint: NSLayoutConstraint!
     
     var viewModel: MainMenuViewModel!
     
@@ -202,8 +203,9 @@ class MainMenuViewController: UIViewController {
 }
 
 extension MainMenuViewController {
-    func constrain(logoWidth: CGFloat) {
-        logoWidthConstraint.constant = logoWidth
+    func constrain(width: CGFloat) {
+        logoWidthConstraint.constant = width
+        tableViewWIdthConstraint.constant = width
         view.layoutIfNeeded()
     }
 }

@@ -1763,6 +1763,9 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BDE-yY-7nN">
                                 <rect key="frame" x="0.0" y="148.33333333333331" width="414" height="567.66666666666674"/>
                                 <color key="backgroundColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.10196078431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="414" id="8ai-Z6-I48"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="4v5-QJ-BfW">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
@@ -1790,19 +1793,20 @@
                         </subviews>
                         <color key="backgroundColor" red="0.094117647060000004" green="0.094117647060000004" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="BDE-yY-7nN" secondAttribute="trailing" id="Hgm-6o-h2H"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BDE-yY-7nN" secondAttribute="trailing" priority="750" id="Hgm-6o-h2H"/>
                             <constraint firstItem="BDE-yY-7nN" firstAttribute="leading" secondItem="yXq-XE-dYt" secondAttribute="leading" id="Hos-rS-Y4N"/>
                             <constraint firstItem="QDR-aO-amd" firstAttribute="top" secondItem="BDE-yY-7nN" secondAttribute="bottom" id="XBW-2G-RYJ"/>
                             <constraint firstItem="N2a-OI-i5I" firstAttribute="top" secondItem="C8h-7m-BrT" secondAttribute="bottom" id="aCB-5u-wrx"/>
                             <constraint firstItem="N2a-OI-i5I" firstAttribute="leading" secondItem="yXq-XE-dYt" secondAttribute="leading" id="d3d-GG-d1M"/>
                             <constraint firstItem="BDE-yY-7nN" firstAttribute="top" secondItem="N2a-OI-i5I" secondAttribute="bottom" constant="10" id="duY-6s-kon"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="N2a-OI-i5I" secondAttribute="trailing" priority="999" id="o2X-gi-09P"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="N2a-OI-i5I" secondAttribute="trailing" priority="750" id="o2X-gi-09P"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="logoWidthConstraint" destination="es7-5t-OYE" id="UAu-DA-6IH"/>
                         <outlet property="serviceLogo" destination="N2a-OI-i5I" id="C77-UA-QfU"/>
                         <outlet property="tableView" destination="BDE-yY-7nN" id="JfZ-xU-4VZ"/>
+                        <outlet property="tableViewWIdthConstraint" destination="8ai-Z6-I48" id="S89-I4-CeQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eo7-T1-a5v" userLabel="First Responder" sceneMemberID="firstResponder"/>

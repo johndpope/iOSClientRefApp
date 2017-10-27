@@ -60,7 +60,7 @@ class MasterViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationItem.hidesBackButton = true
         
-        menuController.constrain(logoWidth: menuConstants.inset(for: view.bounds.size.width))
+        menuController.constrain(width: menuConstants.inset(for: view.bounds.size.width))
     }
 
     override func didReceiveMemoryWarning() {
