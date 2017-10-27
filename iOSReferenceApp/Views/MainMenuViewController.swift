@@ -76,6 +76,9 @@ class MainMenuPushNavigationViewModel: MainMenuItemType, MainMenuActionType {
 struct MainMenuSectionViewModel {
     let rows: [MainMenuItemType]
     
+    let backgroundColor: UIColor = UIColor(red: 0.047, green: 0.055, blue: 0.059, alpha: 1)
+    let height: CGFloat = 3
+    
     subscript(index: Int) -> MainMenuItemType {
         get {
             return rows[index]
@@ -112,7 +115,7 @@ class MainMenuViewModel {
     }
     
     private func configureUserPreferences() -> MainMenuSectionViewModel {
-        let download = MainMenuPushNavigationViewModel(title: "My downloads", image: #imageLiteral(resourceName: "download-list"))
+        let download = MainMenuPushNavigationViewModel(title: "My downloads", image: #imageLiteral(resourceName: "download"))
         let favourites = MainMenuPushNavigationViewModel(title: "Favourites", image: #imageLiteral(resourceName: "download-list"))
         return MainMenuSectionViewModel(rows: [download, favourites])
     }
@@ -130,9 +133,29 @@ class MainMenuViewModel {
         let appSettings = MainMenuPushNavigationViewModel(title: "App Settings")
         let account = MainMenuPushNavigationViewModel(title: "Account")
         let logOut = MainMenuPushNavigationViewModel(title: "Log out", action: .logout)
-        let version = MainMenuStaticDataViewModel(text: "Fake Version 1.2.1")
+        
+        // Version
+        let version = MainMenuStaticDataViewModel(text: versionData())
         
         return MainMenuSectionViewModel(rows: [appSettings, account, logOut, version])
+    }
+    
+    private func versionData() -> String {
+        return "Player: \(framework(identifier: "com.emp.Player"))"
+//        "Exposure: \(framework(identifier: "com.emp.Exposure"))"
+//        "Analytics: \(framework(identifier: "com.emp.Analytics"))"
+//        "Download: \(framework(identifier: "com.emp.Download"))"
+//        "Utilities: \(framework(identifier: "com.emp.Utilities"))"
+    }
+    
+    private func framework(identifier: String) -> String {
+        guard let bundleInfo = Bundle(identifier: identifier)?.infoDictionary else { return "?" }
+        
+        let version = (bundleInfo["CFBundleShortVersionString"] as? String) ?? ""
+        guard let build = bundleInfo["CFBundleVersion"] as? String else {
+            return version
+        }
+        return version + "-" + build
     }
 }
 
@@ -201,13 +224,13 @@ extension MainMenuViewController: UITableViewDelegate {
             }
         }
     }
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return viewModel?.headerHeight(index: section) ?? 0
-//    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return viewModel[section].height
+    }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return viewModel[indexPath.section][indexPath.row]
-//    }
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.backgroundColor = viewModel[section].backgroundColor
+    }
 }
 
 
@@ -218,6 +241,9 @@ extension MainMenuViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel[section].rows.count
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView() // TODO: Reusable view?
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
