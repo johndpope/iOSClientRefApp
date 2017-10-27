@@ -110,7 +110,7 @@ class MasterViewController: UIViewController {
     
     @IBAction func blurViewSwipeAction(_ sender: UIPanGestureRecognizer) {
         print(sender.translation(in: view))
-        print(sender.translation(in: blurView))
+        moveSlidingMenu(offset: sender.translation(in: view))
     }
     
     enum Segue: String {
@@ -125,7 +125,7 @@ extension MasterViewController: SlidingMenuController {
     }
     
     func moveSlidingMenu(offset: CGFloat) {
-        
+        let delta = leadingContentConstraint.constant + offset
     }
     
     func toggleSlidingMenu() {
@@ -150,22 +150,6 @@ extension MasterViewController: SlidingMenuController {
             self?.view.layoutIfNeeded()
         })
     }
-    
-//    func animate(blur: Bool) {
-//        leadingBlurConstraint.constant = !blur ? menuConstants.defaultInset : menuConstants.inset(for: view.bounds.size.width)
-//
-//        trailingBlurConstraint.constant = !blur ? menuConstants.defaultInset : -menuConstants.inset(for: view.bounds.size.width)
-//
-//        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: { [weak self] in
-//            if blur {
-//                self?.blurView.effect = UIBlurEffect(style: .dark)
-//            }
-//            else {
-//                self?.blurView.effect = nil
-//            }
-//            self?.view.layoutIfNeeded()
-//        })
-//    }
 }
 
 extension MasterViewController {
