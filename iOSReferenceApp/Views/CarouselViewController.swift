@@ -32,9 +32,9 @@ class CarouselViewController: UIViewController {
     }
     
     fileprivate func setupViewModel() {
-        guard let tabVC = self.tabBarController as? HomeTabBarController else {
-            fatalError("Unable to proceed without homeTabBarController")
-        }
+//        guard let tabVC = self.tabBarController as? HomeTabBarController else {
+//            fatalError("Unable to proceed without homeTabBarController")
+//        }
         
         let carouselGroupId = "fakeCarousels"//tabVC.dynamicCustomerConfig?.carouselGroupId ?? "fakeCarousels"
         

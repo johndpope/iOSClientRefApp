@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         enableAirplayInBackgroundMode()
         
-//        setupViews()
+        setupViews()
         
         return true
     }
@@ -55,17 +55,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(#function)
     }
 
-//    func setupViews() {
-//        let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let rootNavigationController = self.window?.rootViewController as? UINavigationController
-//
-//        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loginId) as UIViewController
-//
-//        // Check user validation
-//        let stack = UserInfo.isValidSession() ? [loginViewController, uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.mainView) as UIViewController] : [loginViewController]
-//
-//        rootNavigationController?.setViewControllers(stack, animated: false)
-//    }
+    func setupViews() {
+        let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let rootNavigationController = self.window?.rootViewController as? UINavigationController
+        
+        rootNavigationController?.setNavigationBarHidden(true, animated: false)
+        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loginId) as! LoginViewController
+
+        // Check user validation
+        let stack = UserInfo.isValidSession() ? [loginViewController, uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as UIViewController] : [loginViewController]
+
+        rootNavigationController?.setViewControllers(stack, animated: false)
+    }
 }
 
 // MARK: - Enable Airplay in Background Mode

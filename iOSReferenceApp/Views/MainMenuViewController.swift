@@ -7,12 +7,20 @@
 //
 
 import UIKit
+import Exposure
 
 protocol MainMenuItemType {
     static var reuseIdentifier: String { get }
 }
 
+protocol MainMenuActionType {
+    var actionIdentifier: MainMenuContentViewModel.Action? { get }
+}
+
 class MainMenuContentViewModel: MainMenuItemType {
+    enum Action {
+        case logout
+    }
     static var reuseIdentifier: String {
         return "contentCell"
     }
@@ -44,10 +52,12 @@ class MainMenuStaticDataViewModel: MainMenuItemType {
     }
 }
 
-class MainMenuPushNavigationViewModel: MainMenuItemType {
+class MainMenuPushNavigationViewModel: MainMenuItemType, MainMenuActionType {
     static var reuseIdentifier: String {
         return "pushNavigationCell"
     }
+    
+    let actionIdentifier: MainMenuContentViewModel.Action?
     
     let title: String
     let image: UIImage?
@@ -56,9 +66,10 @@ class MainMenuPushNavigationViewModel: MainMenuItemType {
         return UIColor.lightGray
     }
     
-    init(title: String, image: UIImage? = nil) {
+    init(title: String, image: UIImage? = nil, action: MainMenuContentViewModel.Action? = nil) {
         self.title = title
         self.image = image
+        self.actionIdentifier = action
     }
 }
 
@@ -78,6 +89,13 @@ class MainMenuViewModel {
     subscript(index: Int) -> MainMenuSectionViewModel {
         get {
             return sections[index]
+        }
+    }
+    
+    
+    subscript(indexPath: IndexPath) -> MainMenuItemType {
+        get {
+            return sections[indexPath.section].rows[indexPath.row]
         }
     }
     
@@ -111,10 +129,24 @@ class MainMenuViewModel {
     private func configureAppSettings() -> MainMenuSectionViewModel {
         let appSettings = MainMenuPushNavigationViewModel(title: "App Settings")
         let account = MainMenuPushNavigationViewModel(title: "Account")
-        let logOut = MainMenuPushNavigationViewModel(title: "Log out")
+        let logOut = MainMenuPushNavigationViewModel(title: "Log out", action: .logout)
         let version = MainMenuStaticDataViewModel(text: "Fake Version 1.2.1")
         
         return MainMenuSectionViewModel(rows: [appSettings, account, logOut, version])
+    }
+}
+
+extension MainMenuViewModel {
+    func logout(environment: Environment, sessionToken: SessionToken) {
+        Authenticate(environment: environment)
+            .logout(sessionToken: sessionToken)
+            .request()
+            .validate()
+            .response{ (exposureResponse: ExposureResponse<AnyJSONType>) in
+                if let error = exposureResponse.error {
+                    print(error)
+                }
+        }
     }
 }
 
@@ -145,7 +177,30 @@ class MainMenuViewController: UIViewController {
     }
 }
 
+extension MainMenuViewController {
+    func actionLogout() {
+        defer {
+            UserInfo.clear()
+            navigationController?.popViewController(animated: true)
+        }
+        guard let sessionToken = UserInfo.sessionToken, let environment = UserInfo.environment else {
+            return
+        }
+        viewModel.logout(environment: environment,
+                         sessionToken: sessionToken)
+    }
+}
+
 extension MainMenuViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if let actionable = viewModel[indexPath] as? MainMenuActionType, let action = actionable.actionIdentifier {
+            switch action {
+            case .logout:
+                actionLogout()
+            }
+        }
+    }
 //    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 //        return viewModel?.headerHeight(index: section) ?? 0
 //    }
