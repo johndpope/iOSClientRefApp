@@ -37,11 +37,15 @@ class CarouselViewController: UIViewController {
 //            fatalError("Unable to proceed without homeTabBarController")
 //        }
         
-        let carouselGroupId = "fakeCarousels"//tabVC.dynamicCustomerConfig?.carouselGroupId ?? "fakeCarousels"
+//        let carouselGroupId = "fakeCarousels"//tabVC.dynamicCustomerConfig?.carouselGroupId ?? "fakeCarousels"
+//
+//        viewModel.loadCarousel(group: carouselGroupId) { [weak self] error in
+//            print("ReloadData")
+//            self?.collectionView.reloadData()
+//        }
         
-        viewModel.loadCarousel(group: carouselGroupId) { [weak self] error in
-            self?.collectionView.invalidateIntrinsicContentSize()
-            self?.collectionView.reloadData()
+        viewModel.loadFakeCarousel{ [weak self] index, error in
+            self?.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
         }
     }
     
@@ -69,7 +73,7 @@ extension CarouselViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? CarouselView {
             let carouselViewModel = viewModel.content[indexPath.row]
-            cell.bind(viewModel: carouselViewModel)
+            cell.bind(viewModel: carouselViewModel, environment: viewModel.environment, sessionToken: viewModel.sessionToken)
             cell.selectedAsset = { [weak self] asset in
                 self?.presetDetails(for: asset, from: .other)
             }
@@ -79,6 +83,7 @@ extension CarouselViewController: UICollectionViewDelegate {
 
 extension CarouselViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        print(viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds))
         return viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds)
     }
 }

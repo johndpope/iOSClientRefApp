@@ -22,8 +22,8 @@ class CarouselView: UICollectionViewCell {
         // Initialization code
         
         collectionView.register(UINib(nibName: "HeroPromotionCell", bundle: nil), forCellWithReuseIdentifier: "heroCell")
-        
         collectionView.register(UINib(nibName: "PortraitTrioPromotionCell", bundle: nil), forCellWithReuseIdentifier: "portraitTrioCell")
+        collectionView.register(UINib(nibName: "PortraitPromotionCell", bundle: nil), forCellWithReuseIdentifier: "portraitCell")
 
         collectionView.register(UINib(nibName: "CarouselHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "carouselHeader")
         
@@ -37,10 +37,10 @@ class CarouselView: UICollectionViewCell {
         
     }
     
-    func bind(viewModel: CarouselViewModel) {
+    func bind(viewModel: CarouselViewModel, environment: Environment, sessionToken: SessionToken) {
+        print(#function)
         self.viewModel = viewModel
         collectionView.collectionViewLayout = viewModel.editorial.layout
-        collectionView.reloadData()
     }
     
 }
@@ -59,6 +59,9 @@ extension CarouselView: UICollectionViewDataSource {
         else if viewModel.editorial is PortraitTrioPromotionEditorial {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "portraitTrioCell", for: indexPath) as! PortraitTrioPromotionCell
         }
+        else if viewModel.editorial is PortraitPromotionEditorial {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "portraitCell", for: indexPath) as! PortraitPromotionCell
+        }
         return UICollectionViewCell()
     }
 }
@@ -75,6 +78,13 @@ extension CarouselView: UICollectionViewDelegate {
         }
         else if let cell = cell as? PortraitTrioPromotionCell {
             cell.configure(with: viewModel.editorial as? PortraitTrioPromotionEditorial,
+                           for: indexPath.row)
+            cell.selectedAsset = { [weak self]  asset in
+                self?.selectedAsset(asset)
+            }
+        }
+        else if let cell = cell as? PortraitPromotionCell {
+            cell.configure(with: viewModel.editorial as? PortraitPromotionEditorial,
                            for: indexPath.row)
             cell.selectedAsset = { [weak self]  asset in
                 self?.selectedAsset(asset)

@@ -1,14 +1,14 @@
 //
-//  PortraitTrioPromotionLayout.swift
+//  PortraitPromotionLayout.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-10-25.
+//  Created by Fredrik Sjöberg on 2017-10-28.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import UIKit
 
-class PortraitTrioPromotionLayout: CollectionViewLayout {
+class PortraitPromotionLayout: CollectionViewLayout {
     /// The full height of the content as bound by the underlying collectionView's width
     internal func contentHeight() -> CGFloat {
         let cell = cellHeight()
@@ -28,17 +28,16 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
     }
     
     internal func cellWidth() -> CGFloat {
-        return pageWidth - 2 * delegate.carouselContentSideInset
+        return (pageWidth - 2 * delegate.carouselContentSideInset)/3
     }
     
     internal func thumbnailHeight() -> CGFloat {
-        let aspect:CGFloat = 16 / 9
+        let aspect:CGFloat = 3 / 2
         return thumbnailWidth() * aspect
     }
     
     internal func thumbnailWidth() -> CGFloat {
-        let availableWidth = cellWidth() - delegate.carouselContentSideInset * 2
-        return availableWidth / 3
+        return cellWidth()
     }
     
     internal func thumbnailSize() -> CGSize {
@@ -56,6 +55,9 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
         cache = []
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         
+        let itemEditorialHeight = (delegate.itemSpecificEditorialHeight ?? 0)
+        let cellHeight = thumbnailSize().height + itemEditorialHeight
+        
         let editorialHeight = (delegate.carouselSpecificEditorialHeight ?? 0) + delegate.carouselContentTopInset
         if editorialHeight > 0 {
             carouselEditorialAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: 0))
@@ -64,11 +66,9 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
         }
         
         
-        let cellsHeight = cellHeight()
-        
         let footerHeight = delegate.carouselFooterHeight
         carouselFooterAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))
-        carouselFooterAttribute!.frame = CGRect(x: 0, y: cellsHeight+editorialHeight, width: pageWidth, height: footerHeight)
+        carouselFooterAttribute!.frame = CGRect(x: 0, y: cellHeight+editorialHeight, width: pageWidth, height: footerHeight)
         cache.append(carouselFooterAttribute!)
         
         var offset: CGFloat = delegate.carouselContentSideInset
@@ -76,7 +76,7 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
             let indexPath = IndexPath(item: $0, section: 0)
             
             // Item
-            let frame = CGRect(x: offset, y: editorialHeight, width: cellWidth(), height: cellsHeight)
+            let frame = CGRect(x: offset, y: editorialHeight, width: cellWidth(), height: cellHeight)
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = frame
             
@@ -84,6 +84,7 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
             
             // Update total offset
             contentWidth = max(contentWidth, frame.maxX)
+            
             
             return attributes
         }
@@ -96,7 +97,7 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
     }
 }
 
-extension PortraitTrioPromotionLayout: EmbeddedCarouselLayoutDelegate {
+extension PortraitPromotionLayout: EmbeddedCarouselLayoutDelegate {
     func estimatedCellSize(for bounds: CGRect) -> CGSize {
         return CGSize(width: bounds.width, height: contentHeight())
     }

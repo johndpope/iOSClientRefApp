@@ -1,50 +1,53 @@
 //
-//  PortraitTrioPromotionEditorial.swift
+//  PortraitPromotionEditorial.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-10-25.
+//  Created by Fredrik Sjöberg on 2017-10-28.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import Foundation
 import CoreGraphics
-import Exposure
 import Kingfisher
+import Exposure
 
-class PortraitTrioPromotionEditorial {
+class PortraitPromotionEditorial {
+    fileprivate(set) var portraitLayout = PortraitPromotionLayout()
+    fileprivate(set) var itemEditorials: [PortraitItemPromotionEditorial] = []
     
-    fileprivate(set) var portraitLayout = PortraitTrioPromotionLayout()
-    fileprivate var itemEditorials: [PortraitTrioItemPromotionEditorial] = []
-    
-    init() {
+    init(title: String) {
+        self.title = title
+        
         portraitLayout.delegate = self
         portraitLayout.use(pagination: true)
     }
     
+    
     // MARK: Editorial Layout
-    let usesCarouselSpecificEditorial: Bool = false
+    let usesCarouselSpecificEditorial: Bool = true
     let usesItemSpecificEditorials: Bool = true
     
     // Carousel Editorial
-    let title: String? = nil
+    let title: String?
     let text: String? = nil
     
     // MARK: Header & Footer
-    let editorialHeight: CGFloat? = nil
+    let editorialHeight: CGFloat? = 43
     let footerHeight: CGFloat = 50
-    let itemEditorialHeight: CGFloat? = 43
+    let itemEditorialHeight: CGFloat? = 28
     
     // MARK: General Layout
     let contentSideInset: CGFloat = 30
     let contentTopInset: CGFloat = 10
     
+    
     func append(content: [ContentEditorial]) {
-        let filtered = content.flatMap{ $0 as? PortraitTrioItemPromotionEditorial }
-        self.itemEditorials.append(contentsOf: filtered)
+        let filtered = content.flatMap{ $0 as? PortraitItemPromotionEditorial }
+        itemEditorials.append(contentsOf: filtered)
     }
 }
 
-extension PortraitTrioPromotionEditorial {
+extension PortraitPromotionEditorial {
     func thumbnailOptions(for size: CGSize) ->  KingfisherOptionsInfo {
         return [
             .backgroundDecode,
@@ -65,11 +68,11 @@ extension PortraitTrioPromotionEditorial {
     }
     
     fileprivate var preferedImageOrientation: Exposure.Image.Orientation {
-        return .landscape
+        return .portrait
     }
 }
 
-extension PortraitTrioPromotionEditorial: CarouselEditorial {
+extension PortraitPromotionEditorial: CarouselEditorial {
     var content: [ContentEditorial] {
         return itemEditorials
     }
@@ -87,7 +90,8 @@ extension PortraitTrioPromotionEditorial: CarouselEditorial {
     }
 }
 
-extension PortraitTrioPromotionEditorial: CarouselLayoutDelegate {
+
+extension PortraitPromotionEditorial: CarouselLayoutDelegate {
     var carouselSpecificEditorialHeight: CGFloat? {
         return editorialHeight
     }
@@ -109,7 +113,7 @@ extension PortraitTrioPromotionEditorial: CarouselLayoutDelegate {
     }
 }
 
-extension PortraitTrioPromotionEditorial: EmbeddedCarouselLayoutDelegate {
+extension PortraitPromotionEditorial: EmbeddedCarouselLayoutDelegate {
     func estimatedCellSize(for bounds: CGRect) -> CGSize {
         return portraitLayout.estimatedCellSize(for: bounds)
     }

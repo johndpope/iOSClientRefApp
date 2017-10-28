@@ -26,12 +26,6 @@ class CarouselListViewModel {
     }
     
     func loadCarousel(group: String, callback: @escaping (ExposureError?) -> Void) {
-//        if group == "fakeCarousels" {
-            loadFakeCarousel(callback: callback)
-//        }
-//        else {
-//            loadCarousels(for: group, callback: callback)
-//        }
     }
     
 //    fileprivate func loadCarousels(for groupId: String, callback: @escaping (ExposureError?) -> Void) {
@@ -60,80 +54,26 @@ class CarouselListViewModel {
 }
 
 extension CarouselListViewModel {
-    fileprivate func loadFakeCarousel(callback: @escaping (ExposureError?) -> Void) {
+    func loadFakeCarousel(callback: @escaping (Int, ExposureError?) -> Void) {
         let list: [(CarouselViewModel, Asset.AssetType)] = [
             (CarouselViewModel(editorial: HeroPromotionEditorial()), .movie),
-            (CarouselViewModel(editorial: PortraitTrioPromotionEditorial()), .clip)
+            (CarouselViewModel(editorial: PortraitTrioPromotionEditorial()), .clip),
+            (CarouselViewModel(editorial: PortraitPromotionEditorial(title: "Movies")), .movie)
         ]
         
         content = list.map{ $0.0 }
         
-        list.forEach{ vm, type in
-            fetchMetadata(type: type) { [weak self] list, error in
-                guard let weakSelf = self else { return }
-                guard let assets = list?.items else { return }
-                let editorials = weakSelf.fakeEditorials(using: vm.editorial, for: assets)
-                vm.editorial.append(content: editorials)
-                callback(error)
+        (0..<list.count).forEach{ index in
+            let conf = list[index]
+            let vm = conf.0
+            vm.fakeCarouselMetadataFetch(environment: environment,
+                                         sessionToken: sessionToken,
+                                         type: conf.1) { error in
+                                            callback(index, error)
             }
         }
     }
     
-    fileprivate func fakeEditorials(using: CarouselEditorial, for assetList: [Asset]) -> [ContentEditorial] {
-        if let editorial = using as? HeroPromotionEditorial {
-            guard editorial.usesItemSpecificEditorials else {
-                return assetList.map{ HeroItemPromotionEditorial(data: $0) }
-            }
-            
-            return assetList.map{
-                HeroItemPromotionEditorial(title: $0.anyTitle(locale: "en"), text: descriptionOrFake(for: $0), data: $0) }
-        }
-        else if let editorial = using as? PortraitTrioPromotionEditorial {
-            let cellData = assetList
-                .chuncked(by: 3)
-                .flatMap{ list -> (PortraitTrioItemPromotionEditorial.Data)? in
-                    guard let first = list.first else { return nil }
-                    return PortraitTrioItemPromotionEditorial.Data(first: first,
-                                                                   second: (list.count > 1 ? list[1] : nil),
-                                                                   third: (list.count > 2 ? list[2] : nil))
-            }
-            guard editorial.usesItemSpecificEditorials else {
-                return cellData.map{ PortraitTrioItemPromotionEditorial(data: $0) }
-            }
-            return cellData.map{ PortraitTrioItemPromotionEditorial(title: $0.first.anyTitle(locale: "en"), text: descriptionOrFake(for: $0.first), data: $0) }
-        }
-        return []
-    }
-    
-    func descriptionOrFake(for asset: Asset) -> String {
-        let desc = asset.anyDescription(locale: "en")
-        guard desc != "" else {
-            return "Some amazing promotional text here!"
-        }
-        return desc
-    }
-    
-    fileprivate func fetchMetadata(type: Asset.AssetType, callback: @escaping (AssetList?, ExposureError?) -> Void) {
-        FetchAsset(environment: environment)
-            .list()
-            .includeUserData(for: sessionToken)
-            //            .elasticSearch(query: "medias.drm:UNENCRYPTED AND medias.format:HLS")
-            .elasticSearch(query: "(medias.drm:FAIRPLAY OR medias.drm:UNENCRYPTED) AND medias.format:HLS")
-            .show(page: 1, spanning: 50)
-            .filter(on: type)
-            .filter(onlyPublished: true)
-            .sort(on: ["-assetId"])
-            .request()
-            .response{ (exposure: ExposureResponse<AssetList>) in
-                if let success = exposure.value {
-                    callback(success, nil)
-                }
-                
-                if let error = exposure.error {
-                    callback(nil, error)
-                }
-        }
-    }
 }
 
 extension CarouselListViewModel: AuthorizedEnvironment {
