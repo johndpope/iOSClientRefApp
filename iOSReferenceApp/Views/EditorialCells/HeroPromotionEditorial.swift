@@ -30,7 +30,7 @@ class HeroPromotionEditorial {
     
     // MARK: Header & Footer
     let editorialHeight: CGFloat? = nil
-    let footerHeight: CGFloat = 60
+    let footerHeight: CGFloat = 50
     let itemEditorialHeight: CGFloat? = 43
     
     // MARK: General Layout
