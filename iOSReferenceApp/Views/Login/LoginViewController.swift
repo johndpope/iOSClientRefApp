@@ -108,6 +108,10 @@ class LoginViewController: UIViewController {
     }
     
     
+    enum Segue: String {
+        case masterView = "masterView"
+    }
+    
     // MARK: TwoFactor
     fileprivate func handleTwoFactorLogin() {
         let alertController = UIAlertController(title: "Two Factor Authentication", message: "Please provide an MFA token", preferredStyle: .alert)
@@ -131,7 +135,7 @@ class LoginViewController: UIViewController {
                                 
                                 if let credentials = response.value {
                                     UserInfo.update(credentials: credentials)
-                                    self.performSegue(withIdentifier: Constants.Storyboard.homeSegue, sender: credentials)
+                                    self.performSegue(withIdentifier: Segue.masterView.rawValue, sender: credentials)
                                 }
                 }
             }

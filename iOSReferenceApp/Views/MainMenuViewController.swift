@@ -8,6 +8,7 @@
 
 import UIKit
 import Exposure
+import Kingfisher
 
 protocol MainMenuItemType {
     static var reuseIdentifier: String { get }
@@ -88,7 +89,12 @@ struct MainMenuSectionViewModel {
 }
 
 class MainMenuViewModel {
+    // MARK: Basics
+    let environment: Environment
+    let sessionToken: SessionToken
+    
     var sections: [MainMenuSectionViewModel] = []
+    var dynamicCustomerConfig: DynamicCustomerConfig?
     
     subscript(index: Int) -> MainMenuSectionViewModel {
         get {
@@ -103,9 +109,11 @@ class MainMenuViewModel {
         }
     }
     
-    init() {
-        
+    init(environment: Environment, sessionToken: SessionToken) {
+        self.environment = environment
+        self.sessionToken = sessionToken
     }
+    
     
     func configure(activeContentIndex index: Int) {
         let userPrefs = configureUserPreferences()
@@ -159,10 +167,18 @@ class MainMenuViewModel {
         return version + "-" + build
     }
     
+    
+    func logoImageOptions(size: CGSize) -> KingfisherOptionsInfo {
+        return [
+            .backgroundDecode,
+            .cacheMemoryOnly,
+            .processor(CrispResizingImageProcessor(referenceSize: size, mode: .aspectFit))
+        ]
+    }
 }
 
 extension MainMenuViewModel {
-    func logout(environment: Environment, sessionToken: SessionToken) {
+    func logout() {
         Authenticate(environment: environment)
             .logout(sessionToken: sessionToken)
             .request()
@@ -198,13 +214,13 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var serviceLogo: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var logoWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var logoAspectRationConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewWIdthConstraint: NSLayoutConstraint!
     
     var viewModel: MainMenuViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationController?.setNavigationBarHidden(true, animated: false)
         
         tableView.register(UINib(nibName: "MainMenuStaticDataCell", bundle: nil), forCellReuseIdentifier: MainMenuStaticDataViewModel.reuseIdentifier)
@@ -212,13 +228,45 @@ class MainMenuViewController: UIViewController {
         tableView.register(UINib(nibName: "MainMenuContentCell", bundle: nil), forCellReuseIdentifier: MainMenuContentViewModel.reuseIdentifier)
 
         let activeContentIndex = 0 // TODO: Fetch from where?
-        viewModel = MainMenuViewModel()
         viewModel.configure(activeContentIndex: activeContentIndex)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func apply(dynamicConfig: DynamicCustomerConfig) {
+        viewModel.dynamicCustomerConfig = dynamicConfig
+        
+        if let logoString = dynamicConfig.logoUrl, let logoUrl = URL(string: logoString) {
+            serviceLogo
+                .kf
+                .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in
+                    
+            }
+        }
+        else if let preconf = UserInfo.environment?.businessUnit {
+            title = preconf
+        }
+        else {
+            title = "My TV"
+        }
+    }
+}
+
+extension MainMenuViewController: AuthorizedEnvironment {
+    func authorize(environment: Environment, sessionToken: SessionToken) {
+        viewModel = MainMenuViewModel(environment: environment,
+                                      sessionToken: sessionToken)
+    }
+    var environment: Environment {
+        return viewModel.environment
+    }
+    
+    var sessionToken: SessionToken {
+        return viewModel.sessionToken
     }
 }
 
@@ -236,11 +284,7 @@ extension MainMenuViewController {
             UserInfo.clear()
             navigationController?.popViewController(animated: true)
         }
-        guard let sessionToken = UserInfo.sessionToken, let environment = UserInfo.environment else {
-            return
-        }
-        viewModel.logout(environment: environment,
-                         sessionToken: sessionToken)
+        viewModel.logout()
     }
 }
 

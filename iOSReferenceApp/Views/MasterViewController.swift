@@ -31,39 +31,7 @@ class MasterViewController: UIViewController {
         }
     }
     
-//    func loadDynamicConfig() {
-//        config?.fetchFile(fileName: "main.json") { [weak self] file in
-//            if let jsonData = file?.config {
-//                self?.dynamicCustomerConfig = DynamicCustomerConfig(json: jsonData)
-//                self?.applyDynamicConfigUI()
-//            }
-//        }
-//    }
-//
-//    func applyDynamicConfigUI() {
-//        // 1. Tab Bar Title
-//        if let logoString = dynamicCustomerConfig?.logoUrl, let logoUrl = URL(string: logoString) {
-//            KingfisherManager.shared.retrieveImage(with: logoUrl, options: logoImageOptions, progressBlock: nil, completionHandler: { [weak self] (image, error, _, _) in
-//                self?.navigationItem.titleView = UIImageView(image: image)
-//            })
-//        }
-//        else if let preconf = UserInfo.environment?.businessUnit {
-//            title = preconf
-//        }
-//        else {
-//            title = "My TV"
-//        }
-//    }
-//
-//    private var logoImageOptions: KingfisherOptionsInfo {
-//        let logoSize = CGSize(width: 200, height: 32)
-//        return [
-//            .backgroundDecode,
-//            .cacheMemoryOnly,
-//            .processor(CrispResizingImageProcessor(referenceSize: logoSize, mode: .aspectFit))
-//        ]
-//    }
-//
+
 
     fileprivate let menuConstants = MenuConstants()
     
@@ -74,10 +42,9 @@ class MasterViewController: UIViewController {
     var animator: UIDynamicAnimator!
     var itemBehavior: UIDynamicItemBehavior!
     var snapBehavior: UISnapBehavior!
-    var  attachmentBehavior: UIAttachmentBehavior!
+    var attachmentBehavior: UIAttachmentBehavior!
     
-    var config: ApplicationConfig?
-    var dynamicCustomerConfig: DynamicCustomerConfig?
+    var config: ApplicationConfig!
     var environment: Environment!
     var sessionToken: SessionToken!
     
@@ -91,13 +58,20 @@ class MasterViewController: UIViewController {
         blurView.effect = nil
         
         
-        
-//        applyDynamicConfigUI()
-        
         guard let env = UserInfo.environment else { return }
         config = ApplicationConfig(environment: env)
-        config?.setup { [weak self] in
-//            self?.loadDynamicConfig()
+        config?.request { [weak self] in
+            self?.loadDynamicConfig()
+        }
+    }
+    
+    var dynamicCustomerConfig: DynamicCustomerConfig?
+    func loadDynamicConfig() {
+        config.fetchFile(fileName: "main.json") { [weak self] file in
+            if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
+                self?.dynamicCustomerConfig = dynamicConfig
+                self?.menuController.apply(dynamicConfig: dynamicConfig)
+            }
         }
     }
     
@@ -235,6 +209,8 @@ extension MasterViewController {
         }
         else if segue.identifier == Segue.masterToMainMenu.rawValue, let destination = segue.destination as? MainMenuViewController {
             menuController = destination
+            destination.authorize(environment: environment,
+                                  sessionToken: sessionToken)
             destination.selectedOtherSegue = { [weak self] segue in
                 switch segue {
                 case .myDownloads: self?.performSegue(withIdentifier: Segue.masterToMyDownloads.rawValue, sender: nil)
