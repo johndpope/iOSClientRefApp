@@ -5,6 +5,7 @@ class Constants {
         static let rootNavId = "ROOT_NAV_ID"
         static let loginId = "LOGIN_VC_ID"
         static let homeId = "HOME_TBC_ID"
+        static let masterView = "masterView"
         
         static let homeSegue = "HOME_TBC_SEGUE"
     }

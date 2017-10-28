@@ -17,7 +17,7 @@ class ApplicationConfig {
     self.environment = environment
   }
 
-  func setup(completion: @escaping () -> Void) {
+  func request(completion: @escaping () -> Void) {
     CustomerConfigRequest(environment: environment)
       .request()
       .validate()

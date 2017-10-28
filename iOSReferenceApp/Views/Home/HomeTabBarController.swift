@@ -47,7 +47,7 @@ class HomeTabBarController: UITabBarController {
         
         guard let env = UserInfo.environment else { return }
         config = ApplicationConfig(environment: env)
-        config?.setup { [weak self] in
+        config?.request { [weak self] in
             self?.loadDynamicConfig()
         }
     }

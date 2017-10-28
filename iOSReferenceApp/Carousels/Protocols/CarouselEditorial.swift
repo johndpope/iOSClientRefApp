@@ -1,25 +1,12 @@
 //
-//  CarouselViewModel.swift
+//  CarouselEditorial.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-10-22.
+//  Created by Fredrik Sjöberg on 2017-10-28.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
-import Foundation
-import Exposure
-import Kingfisher
 import UIKit
-
-protocol EmbeddedCarouselLayoutDelegate: class {
-    func estimatedCellSize(for bounds: CGRect) -> CGSize
-}
-
-protocol EditorialCell {
-    associatedtype Editorial
-    func configure(with editorial: Editorial?, for index: Int)
-    var selectedAsset: (Asset) -> Void { get set }
-}
 
 protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {
     var layout: CollectionViewLayout { get }
@@ -45,16 +32,4 @@ protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {
     // MARK: General Layout
     var contentSideInset: CGFloat { get }
     var contentTopInset: CGFloat { get }
-}
-
-protocol ContentEditorial {
-    func prefetchImageUrls() -> [URL]
-}
-
-class CarouselViewModel {
-    fileprivate(set) var editorial: CarouselEditorial
-    
-    init(editorial: CarouselEditorial) {
-        self.editorial = editorial
-    }
 }

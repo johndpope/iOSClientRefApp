@@ -102,11 +102,15 @@ class LoginViewController: UIViewController {
             
             if let credentials = response.value {
                 UserInfo.update(credentials: credentials)
-                self.performSegue(withIdentifier: Constants.Storyboard.homeSegue, sender: credentials)
+                self.performSegue(withIdentifier: "test", sender: credentials)
             }
         })
     }
     
+    
+    enum Segue: String {
+        case masterView = "masterView"
+    }
     
     // MARK: TwoFactor
     fileprivate func handleTwoFactorLogin() {
@@ -131,7 +135,7 @@ class LoginViewController: UIViewController {
                                 
                                 if let credentials = response.value {
                                     UserInfo.update(credentials: credentials)
-                                    self.performSegue(withIdentifier: Constants.Storyboard.homeSegue, sender: credentials)
+                                    self.performSegue(withIdentifier: Segue.masterView.rawValue, sender: credentials)
                                 }
                 }
             }

@@ -14,6 +14,7 @@ class CarouselViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var viewModel: CarouselListViewModel!
+    var slidingMenuController: SlidingMenuController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +33,9 @@ class CarouselViewController: UIViewController {
     }
     
     fileprivate func setupViewModel() {
-        guard let tabVC = self.tabBarController as? HomeTabBarController else {
-            fatalError("Unable to proceed without homeTabBarController")
-        }
+//        guard let tabVC = self.tabBarController as? HomeTabBarController else {
+//            fatalError("Unable to proceed without homeTabBarController")
+//        }
         
         let carouselGroupId = "fakeCarousels"//tabVC.dynamicCustomerConfig?.carouselGroupId ?? "fakeCarousels"
         
@@ -43,6 +44,14 @@ class CarouselViewController: UIViewController {
             self?.collectionView.reloadData()
         }
     }
+    
+    @IBAction func toggleSlidingMenuAction(_ sender: UIBarButtonItem) {
+        slidingMenuController?.toggleSlidingMenu()
+    }
+}
+
+extension CarouselViewController: SlidingMenuDelegate {
+    
 }
 
 

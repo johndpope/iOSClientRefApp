@@ -59,11 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let rootNavigationController = self.window?.rootViewController as? UINavigationController
         
-        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loginId) as UIViewController
-        
+        rootNavigationController?.setNavigationBarHidden(true, animated: false)
+        rootNavigationController?.navigationBar.barStyle = .black
+        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loginId) as! LoginViewController
+
         // Check user validation
-        let stack = UserInfo.isValidSession() ? [loginViewController, uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.homeId) as UIViewController] : [loginViewController]
-        
+        let stack = UserInfo.isValidSession() ? [loginViewController, uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as UIViewController] : [loginViewController]
+
         rootNavigationController?.setViewControllers(stack, animated: false)
     }
 }
