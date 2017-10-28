@@ -280,7 +280,7 @@
                         <outlet property="loginButton" destination="Gay-l0-6DT" id="Sag-U8-ZHm"/>
                         <outlet property="passwordTextField" destination="omG-pk-7bJ" id="emm-Th-iS9"/>
                         <outlet property="usernameTextField" destination="gbi-d6-u7A" id="WEw-4E-MCU"/>
-                        <segue destination="uQN-Sn-i8n" kind="show" identifier="test" id="WP8-to-ZDM"/>
+                        <segue destination="uQN-Sn-i8n" kind="show" identifier="masterView" id="WP8-to-ZDM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gYD-js-H5F" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1518,7 +1518,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qGP-vf-Rlx">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="40" width="414" height="696"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
