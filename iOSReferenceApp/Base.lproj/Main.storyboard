@@ -368,7 +368,6 @@
                         <action selector="blurViewTapAction:" destination="uQN-Sn-i8n" id="xai-pr-fcU"/>
                     </connections>
                 </tapGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="nDG-iq-GXc"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="8iB-sA-tuN">
                     <connections>
                         <action selector="blurViewSwipeAction:" destination="uQN-Sn-i8n" id="g2e-vS-lDf"/>
