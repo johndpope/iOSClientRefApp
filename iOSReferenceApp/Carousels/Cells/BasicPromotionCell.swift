@@ -10,9 +10,9 @@ import UIKit
 import Exposure
 import Kingfisher
 
-class PortraitPromotionCell: UICollectionViewCell, EditorialCell {
+class BasicPromotionCell: UICollectionViewCell, EditorialCell {
 
-    typealias ContentEditorial = PortraitPromotionEditorial
+    typealias ContentEditorial = BasicPromotionEditorial
     
     private var editorial: PortraitItemPromotionEditorial?
     var selectedAsset: (Asset) -> Void = { _ in }
@@ -39,7 +39,7 @@ class PortraitPromotionCell: UICollectionViewCell, EditorialCell {
         selectedAsset(asset)
     }
     
-    func configure(with carousel: PortraitPromotionEditorial?, for index: Int) {
+    func configure(with carousel: BasicPromotionEditorial?, for index: Int) {
         guard let carousel = carousel else { return }
         reset()
         

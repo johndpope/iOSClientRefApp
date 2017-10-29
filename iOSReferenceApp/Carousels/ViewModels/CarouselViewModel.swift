@@ -46,7 +46,7 @@ extension CarouselViewModel {
             }
             return cellData.map{ PortraitTrioItemPromotionEditorial(title: $0.first.anyTitle(locale: "en"), text: descriptionOrFake(for: $0.first), data: $0) }
         }
-        else if let editorial = editorial as? PortraitPromotionEditorial {
+        else if let editorial = editorial as? BasicPromotionEditorial {
             guard editorial.usesItemSpecificEditorials else {
                 return assetList.map{ PortraitItemPromotionEditorial(data: $0) }
             }

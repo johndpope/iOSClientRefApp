@@ -23,7 +23,7 @@ class CarouselView: UICollectionViewCell {
         
         collectionView.register(UINib(nibName: "HeroPromotionCell", bundle: nil), forCellWithReuseIdentifier: "heroCell")
         collectionView.register(UINib(nibName: "PortraitTrioPromotionCell", bundle: nil), forCellWithReuseIdentifier: "portraitTrioCell")
-        collectionView.register(UINib(nibName: "PortraitPromotionCell", bundle: nil), forCellWithReuseIdentifier: "portraitCell")
+        collectionView.register(UINib(nibName: "PortraitPromotionCell", bundle: nil), forCellWithReuseIdentifier: "basicCell")
 
         collectionView.register(UINib(nibName: "CarouselHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "carouselHeader")
         
@@ -59,8 +59,8 @@ extension CarouselView: UICollectionViewDataSource {
         else if viewModel.editorial is PortraitTrioPromotionEditorial {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "portraitTrioCell", for: indexPath) as! PortraitTrioPromotionCell
         }
-        else if viewModel.editorial is PortraitPromotionEditorial {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "portraitCell", for: indexPath) as! PortraitPromotionCell
+        else if viewModel.editorial is BasicPromotionEditorial {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "basicCell", for: indexPath) as! BasicPromotionCell
         }
         return UICollectionViewCell()
     }
@@ -83,8 +83,8 @@ extension CarouselView: UICollectionViewDelegate {
                 self?.selectedAsset(asset)
             }
         }
-        else if let cell = cell as? PortraitPromotionCell {
-            cell.configure(with: viewModel.editorial as? PortraitPromotionEditorial,
+        else if let cell = cell as? BasicPromotionCell {
+            cell.configure(with: viewModel.editorial as? BasicPromotionEditorial,
                            for: indexPath.row)
             cell.selectedAsset = { [weak self]  asset in
                 self?.selectedAsset(asset)
