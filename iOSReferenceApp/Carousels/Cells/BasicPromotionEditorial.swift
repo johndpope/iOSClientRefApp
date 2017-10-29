@@ -47,7 +47,7 @@ class BasicPromotionEditorial {
     
     // MARK: Cell
     let titleHeight: CGFloat? = 28
-    let itemsPerRow: Int = 3
+    let itemsPerRow: Int = 2
     let aspectRatio: AspectRatio
     
     // MARK: General Layout

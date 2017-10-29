@@ -20,6 +20,10 @@ class BasicPromotionLayout: CollectionViewLayout {
         let footerHeight = editorial.footerHeight
         
         print(#function,cell + editorialHeight + footerHeight,cellHeight())
+        
+        print("thumbnailHeight",thumbnailHeight())
+        print("thumbnailWidth",thumbnailWidth())
+        
         return cell + editorialHeight + footerHeight
     }
     
@@ -31,12 +35,12 @@ class BasicPromotionLayout: CollectionViewLayout {
     }
     
     internal func cellWidth() -> CGFloat {
-        return (pageWidth - 2 * editorial.topInset)/3
+        let itemsPerRow = CGFloat(editorial.itemsPerRow)
+        return (pageWidth - 2 * editorial.sideInset - (itemsPerRow-1)*editorial.sideInset/2)/itemsPerRow
     }
     
     internal func thumbnailHeight() -> CGFloat {
         let aspectRatio = editorial.aspectRatio.height / editorial.aspectRatio.width
-        print(CGFloat(3)/CGFloat(2),aspectRatio)
         return thumbnailWidth() * aspectRatio
     }
     
@@ -59,9 +63,6 @@ class BasicPromotionLayout: CollectionViewLayout {
         cache = []
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         
-        let itemEditorialHeight = (editorial.titleHeight ?? 0)
-        let cellHeight = thumbnailSize().height + itemEditorialHeight
-        
         let editorialHeight = (editorial.headerHeight ?? 0) + editorial.topInset
         if editorialHeight > 0 {
             carouselEditorialAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: 0))
@@ -72,7 +73,7 @@ class BasicPromotionLayout: CollectionViewLayout {
         
         let footerHeight = editorial.footerHeight
         carouselFooterAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))
-        carouselFooterAttribute!.frame = CGRect(x: 0, y: cellHeight+editorialHeight, width: pageWidth, height: footerHeight)
+        carouselFooterAttribute!.frame = CGRect(x: 0, y: cellHeight()+editorialHeight, width: pageWidth, height: footerHeight)
         cache.append(carouselFooterAttribute!)
         
         var offset: CGFloat = editorial.sideInset
@@ -80,7 +81,7 @@ class BasicPromotionLayout: CollectionViewLayout {
             let indexPath = IndexPath(item: $0, section: 0)
             
             // Item
-            let frame = CGRect(x: offset, y: editorialHeight, width: cellWidth(), height: cellHeight)
+            let frame = CGRect(x: offset, y: editorialHeight, width: cellWidth(), height: cellHeight())
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = frame
             
