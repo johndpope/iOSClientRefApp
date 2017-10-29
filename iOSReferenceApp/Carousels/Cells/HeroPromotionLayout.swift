@@ -9,16 +9,8 @@
 import UIKit
 
 class HeroPromotionLayout: CollectionViewLayout {
-    unowned let editorial: HeroPromotionEditorial
+    var editorial: HeroPromotionEditorial!
     
-    init(editorial: HeroPromotionEditorial) {
-        self.editorial = editorial
-        super.init()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     /// The full height of the content as bound by the underlying collectionView's width
     internal func contentHeight() -> CGFloat {
@@ -79,7 +71,7 @@ class HeroPromotionLayout: CollectionViewLayout {
         if editorialHeight > 0 {
             carouselEditorialAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: 0))
             carouselEditorialAttribute!.frame = CGRect(x: 0, y: 0, width: width, height: editorialHeight)
-            cache = [carouselEditorialAttribute!]
+            cache.append(carouselEditorialAttribute!)
         }
         
         

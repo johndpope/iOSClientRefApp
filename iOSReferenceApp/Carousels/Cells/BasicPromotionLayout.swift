@@ -9,16 +9,7 @@
 import UIKit
 
 class BasicPromotionLayout: CollectionViewLayout {
-    unowned let editorial: BasicPromotionEditorial
-    
-    init(editorial: BasicPromotionEditorial) {
-        self.editorial = editorial
-        super.init()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var editorial: BasicPromotionEditorial!
     
     /// The full height of the content as bound by the underlying collectionView's width
     internal func contentHeight() -> CGFloat {
@@ -43,8 +34,9 @@ class BasicPromotionLayout: CollectionViewLayout {
     }
     
     internal func thumbnailHeight() -> CGFloat {
-        let aspect:CGFloat = 3 / 2
-        return thumbnailWidth() * aspect
+        let aspectRatio = editorial.aspectRatio.height / editorial.aspectRatio.width
+        print(CGFloat(3)/CGFloat(2),aspectRatio)
+        return thumbnailWidth() * aspectRatio
     }
     
     internal func thumbnailWidth() -> CGFloat {
@@ -73,7 +65,7 @@ class BasicPromotionLayout: CollectionViewLayout {
         if editorialHeight > 0 {
             carouselEditorialAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: 0))
             carouselEditorialAttribute!.frame = CGRect(x: 0, y: 0, width: pageWidth, height: editorialHeight)
-            cache = [carouselEditorialAttribute!]
+            cache.append(carouselEditorialAttribute!)
         }
         
         

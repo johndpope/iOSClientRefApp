@@ -16,6 +16,11 @@ class CarouselHeaderView: UICollectionReusableView {
     @IBOutlet weak var leadingInset: NSLayoutConstraint!
     @IBOutlet weak var trailingInset: NSLayoutConstraint!
     
+    func reset() {
+        title.text = nil
+        editorialText.text = nil
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

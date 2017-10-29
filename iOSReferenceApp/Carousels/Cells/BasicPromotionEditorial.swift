@@ -12,17 +12,15 @@ import Kingfisher
 import Exposure
 
 class BasicPromotionEditorial {
-    lazy var portraitLayout: BasicPromotionLayout = { [unowned self] in
-        return BasicPromotionLayout(editorial: self)
-    }()
+    let portraitLayout = BasicPromotionLayout()
+    
     
     fileprivate(set) var itemEditorials: [BasicItemPromotionEditorial] = []
     
     init(title: String, aspectRatio: AspectRatio = AspectRatio()) {
         self.title = title
         self.aspectRatio = aspectRatio
-        
-        portraitLayout.use(pagination: true)
+        portraitLayout.editorial = self
     }
     
     struct AspectRatio {

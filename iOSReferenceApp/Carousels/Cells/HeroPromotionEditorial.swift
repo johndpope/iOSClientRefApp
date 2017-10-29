@@ -12,14 +12,12 @@ import Exposure
 import Kingfisher
 
 class HeroPromotionEditorial {
-    lazy var heroLayout: HeroPromotionLayout = { [unowned self] in
-        return HeroPromotionLayout(editorial: self)
-        }()
+    let heroLayout = HeroPromotionLayout()
     
     fileprivate var itemEditorials: [HeroItemPromotionEditorial] = []
     
     init() {
-        heroLayout.use(pagination: true)
+        heroLayout.editorial = self
     }
     
     // MARK: Editorial Layout

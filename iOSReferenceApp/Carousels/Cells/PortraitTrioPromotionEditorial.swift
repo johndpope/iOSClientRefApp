@@ -12,14 +12,12 @@ import Exposure
 import Kingfisher
 
 class PortraitTrioPromotionEditorial {
-    lazy var portraitLayout: PortraitTrioPromotionLayout = { [unowned self] in
-        return PortraitTrioPromotionLayout(editorial: self)
-        }()
+    let portraitLayout = PortraitTrioPromotionLayout()
     
     fileprivate var itemEditorials: [PortraitTrioItemPromotionEditorial] = []
     
     init() {
-        portraitLayout.use(pagination: true)
+        portraitLayout.editorial = self
     }
     
     // MARK: Editorial Layout

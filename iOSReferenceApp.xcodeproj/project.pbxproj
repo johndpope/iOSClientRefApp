@@ -75,6 +75,7 @@
 		76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */; };
 		76AF2F171F13B6DB0014F007 /* EPGPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F151F13B6DB0014F007 /* EPGPreviewCell.swift */; };
 		76AF2F181F13B6DB0014F007 /* EPGPreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76AF2F161F13B6DB0014F007 /* EPGPreviewCell.xib */; };
+		76AF7FB51FA5DAB8008A893C /* BasicPromotionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 764392D21FA5C09C008DC1E8 /* BasicPromotionCell.xib */; };
 		76B0AFAD1FA51B8E0085C837 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B0AFA91FA51B880085C837 /* SearchViewController.swift */; };
 		76B0AFAE1FA51B8E0085C837 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B0AFAB1FA51B880085C837 /* SearchViewModel.swift */; };
 		76B0AFB31FA51BCA0085C837 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B0AFB01FA51BC60085C837 /* PlayerViewController.swift */; };
@@ -1017,6 +1018,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76AF7FB51FA5DAB8008A893C /* BasicPromotionCell.xib in Resources */,
 				F7061C6A1EC5BFAF0041E271 /* colors.plist in Resources */,
 				76EC8D701FA514F900F6FDB6 /* HeroPromotionCell.xib in Resources */,
 				F7061C6C1EC5BFAF0041E271 /* strings.plist in Resources */,

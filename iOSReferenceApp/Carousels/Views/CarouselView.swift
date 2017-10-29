@@ -93,20 +93,21 @@ extension CarouselView: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        
+        if let view = view as? CarouselHeaderView, elementKind == UICollectionElementKindSectionHeader {
+            view.configure(with: viewModel.editorial)
+        }
+        else if let view = view as? CarouselFooterView, elementKind == UICollectionElementKindSectionFooter {
+            view.setupFade()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionElementKindSectionHeader {
-            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselHeader", for: indexPath) as! CarouselHeaderView
-            view.configure(with: viewModel.editorial)
-            return view
+            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselHeader", for: indexPath) as! CarouselHeaderView
         }
         
         if kind == UICollectionElementKindSectionFooter {
-            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselFooter", for: indexPath) as! CarouselFooterView
-            view.setupFade()
-            return view
+            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselFooter", for: indexPath) as! CarouselFooterView
         }
         return UICollectionReusableView()
     }

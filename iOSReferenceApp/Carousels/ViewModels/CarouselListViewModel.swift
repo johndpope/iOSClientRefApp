@@ -59,7 +59,7 @@ extension CarouselListViewModel {
             (CarouselViewModel(editorial: HeroPromotionEditorial()), .movie),
             (CarouselViewModel(editorial: PortraitTrioPromotionEditorial()), .clip),
             (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Movies")), .movie),
-            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Movies", aspectRatio: BasicPromotionEditorial.AspectRatio(width: 3, height: 2))), .movie)
+//            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Landscape", aspectRatio: BasicPromotionEditorial.AspectRatio(width: 3, height: 2))), .movie)
         ]
         content = list.map{ $0.0 }
         
@@ -71,6 +71,7 @@ extension CarouselListViewModel {
                                          type: conf.1) { error in
                                             callback(index, error)
             }
+            vm.editorial.layout.use(pagination: true)
         }
     }
     
