@@ -19,6 +19,7 @@ class BasicPromotionLayout: CollectionViewLayout {
         let editorialHeight = editorial.headerHeight ?? 0
         let footerHeight = editorial.footerHeight
         
+        print(#function,cell + editorialHeight + footerHeight,cellHeight())
         return cell + editorialHeight + footerHeight
     }
     

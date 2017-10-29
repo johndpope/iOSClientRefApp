@@ -23,4 +23,5 @@ protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {
     // Carousel Editorial
     var title: String? { get }
     var text: String? { get }
+    var sideInset: CGFloat { get }
 }
