@@ -63,10 +63,10 @@ extension CarouselListViewModel {
 //        ]
         let list: [(CarouselViewModel, Asset.AssetType)] = [
             (CarouselViewModel(editorial: HeroPromotionEditorial()), .movie),
+            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Portrait", aspectRatio: BasicPromotionEditorial.AspectRatio(width: 2, height: 3))), .clip),
             (CarouselViewModel(editorial: PortraitTrioPromotionEditorial()), .clip),
             (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Landscape Title")), .movie),
             (CarouselViewModel(editorial: HeroPromotionEditorial()), .clip),
-//            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Portrait", aspectRatio: BasicPromotionEditorial.AspectRatio(width: 3, height: 2))), .clip)
         ]
         list.forEach{ (vm, type) in
             vm.fakeCarouselMetadataFetch(environment: environment,

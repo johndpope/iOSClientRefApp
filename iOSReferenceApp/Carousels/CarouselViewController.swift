@@ -68,7 +68,12 @@ extension CarouselViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print(#function,indexPath.row)
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "carousel", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "carousel", for: indexPath) as! CarouselView
+        
+        let carouselViewModel = viewModel.content[indexPath.row]
+        cell.bind(viewModel: carouselViewModel)
+        
+        return cell
     }
 }
 
@@ -76,8 +81,8 @@ extension CarouselViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print(#function,indexPath.row)
         if let cell = cell as? CarouselView {
-            let carouselViewModel = viewModel.content[indexPath.row]
-            cell.bind(viewModel: carouselViewModel)
+//            let carouselViewModel = viewModel.content[indexPath.row]
+//            cell.bind(viewModel: carouselViewModel)
             cell.selectedAsset = { [weak self] asset in
                 self?.presetDetails(for: asset, from: .other)
             }
