@@ -12,12 +12,13 @@ import Exposure
 import Kingfisher
 
 class PortraitTrioPromotionEditorial {
+    lazy var portraitLayout: PortraitTrioPromotionLayout = { [unowned self] in
+        return PortraitTrioPromotionLayout(editorial: self)
+        }()
     
-    fileprivate(set) var portraitLayout = PortraitTrioPromotionLayout()
     fileprivate var itemEditorials: [PortraitTrioItemPromotionEditorial] = []
     
     init() {
-        portraitLayout.delegate = self
         portraitLayout.use(pagination: true)
     }
     
@@ -25,18 +26,18 @@ class PortraitTrioPromotionEditorial {
     let usesCarouselSpecificEditorial: Bool = false
     let usesItemSpecificEditorials: Bool = true
     
-    // Carousel Editorial
-    let title: String? = nil
-    let text: String? = nil
+    // MARK: Header
+    var headerHeight: CGFloat? { return nil }
+    var title: String?  { return nil }
+    var text: String?  { return nil }
     
-    // MARK: Header & Footer
-    let editorialHeight: CGFloat? = nil
+    // MARK: Footer
     let footerHeight: CGFloat = 50
-    let itemEditorialHeight: CGFloat? = 43
     
     // MARK: General Layout
-    let contentSideInset: CGFloat = 30
-    let contentTopInset: CGFloat = 10
+    let cellEditorialHeight: CGFloat = 43
+    let sideInset: CGFloat = 30
+    let topInset: CGFloat = 10
     
     func append(content: [ContentEditorial]) {
         let filtered = content.flatMap{ $0 as? PortraitTrioItemPromotionEditorial }
@@ -84,28 +85,6 @@ extension PortraitTrioPromotionEditorial: CarouselEditorial {
     
     var count: Int {
         return content.count
-    }
-}
-
-extension PortraitTrioPromotionEditorial: CarouselLayoutDelegate {
-    var carouselSpecificEditorialHeight: CGFloat? {
-        return editorialHeight
-    }
-    
-    var carouselFooterHeight: CGFloat {
-        return footerHeight
-    }
-    
-    var carouselContentSideInset: CGFloat {
-        return contentSideInset
-    }
-    
-    var carouselContentTopInset: CGFloat {
-        return contentTopInset
-    }
-    
-    var itemSpecificEditorialHeight: CGFloat? {
-        return itemEditorialHeight
     }
 }
 

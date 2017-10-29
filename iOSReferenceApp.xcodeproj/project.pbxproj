@@ -127,7 +127,6 @@
 		76EC8D751FA514F900F6FDB6 /* PortraitTrioPromotionEditorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D511FA5138C00F6FDB6 /* PortraitTrioPromotionEditorial.swift */; };
 		76EC8D761FA514F900F6FDB6 /* PortraitTrioPromotionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D521FA5138C00F6FDB6 /* PortraitTrioPromotionLayout.swift */; };
 		76EC8D781FA5154700F6FDB6 /* HeroItemPromotionEditorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D771FA5154700F6FDB6 /* HeroItemPromotionEditorial.swift */; };
-		76EC8D7A1FA5156500F6FDB6 /* CarouselLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D791FA5156500F6FDB6 /* CarouselLayoutDelegate.swift */; };
 		76EC8D7C1FA5158B00F6FDB6 /* UICollectionViewLayoutPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D7B1FA5158B00F6FDB6 /* UICollectionViewLayoutPagination.swift */; };
 		76EC8D7E1FA515B200F6FDB6 /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D7D1FA515B200F6FDB6 /* CollectionViewLayout.swift */; };
 		F7061C5F1EC5AF760041E271 /* McPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7061C5E1EC5AF760041E271 /* McPicker.swift */; };
@@ -312,7 +311,6 @@
 		76EC8D621FA5149000F6FDB6 /* CarouselEditorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselEditorial.swift; sourceTree = "<group>"; };
 		76EC8D641FA514A800F6FDB6 /* ContentEditorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentEditorial.swift; sourceTree = "<group>"; };
 		76EC8D771FA5154700F6FDB6 /* HeroItemPromotionEditorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroItemPromotionEditorial.swift; sourceTree = "<group>"; };
-		76EC8D791FA5156500F6FDB6 /* CarouselLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayoutDelegate.swift; sourceTree = "<group>"; };
 		76EC8D7B1FA5158B00F6FDB6 /* UICollectionViewLayoutPagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLayoutPagination.swift; sourceTree = "<group>"; };
 		76EC8D7D1FA515B200F6FDB6 /* CollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
 		76F5154A1F5EC18C00BA8B01 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
@@ -731,7 +729,6 @@
 				76EC8D601FA5148100F6FDB6 /* EditorialCell.swift */,
 				76EC8D621FA5149000F6FDB6 /* CarouselEditorial.swift */,
 				76EC8D641FA514A800F6FDB6 /* ContentEditorial.swift */,
-				76EC8D791FA5156500F6FDB6 /* CarouselLayoutDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1164,7 +1161,6 @@
 				76A416FB1EDDCAD400677A46 /* VODViewController.swift in Sources */,
 				76EC8D731FA514F900F6FDB6 /* PortraitTrioPromotionCell.swift in Sources */,
 				7698622A1FA518D900A57213 /* AssetDetailsPresenter.swift in Sources */,
-				76EC8D7A1FA5156500F6FDB6 /* CarouselLayoutDelegate.swift in Sources */,
 				76A844031EA7886400BDAF2C /* LoginViewModel.swift in Sources */,
 				76EC8D631FA5149000F6FDB6 /* CarouselEditorial.swift in Sources */,
 				F7C209611EC9C41800662224 /* UserInfo.swift in Sources */,

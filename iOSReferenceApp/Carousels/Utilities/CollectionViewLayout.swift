@@ -9,9 +9,6 @@
 import UIKit
 
 class CollectionViewLayout: UICollectionViewLayout {
-    // MARK: - Configuration
-    var delegate: CarouselLayoutDelegate!
-    
     /// Quick access of the underlying collectionView page width
     var pageWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }

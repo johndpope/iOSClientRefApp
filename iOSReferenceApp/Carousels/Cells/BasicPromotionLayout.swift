@@ -9,7 +9,7 @@
 import UIKit
 
 class BasicPromotionLayout: CollectionViewLayout {
-    unowned var editorial: BasicPromotionEditorial
+    unowned let editorial: BasicPromotionEditorial
     
     init(editorial: BasicPromotionEditorial) {
         self.editorial = editorial
