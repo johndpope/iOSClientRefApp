@@ -9,7 +9,7 @@
 import Foundation
 import Exposure
 
-struct PortraitItemPromotionEditorial: ContentEditorial {
+struct BasicItemPromotionEditorial: ContentEditorial {
     let data: Asset
     
     init(data: Asset, title: String? = nil) {
@@ -30,7 +30,7 @@ struct PortraitItemPromotionEditorial: ContentEditorial {
     }
 }
 
-extension PortraitItemPromotionEditorial {
+extension BasicItemPromotionEditorial {
     func prefetchImageUrls() -> [URL] {
         let url = imageUrl()
         return url != nil ? [url!] : []

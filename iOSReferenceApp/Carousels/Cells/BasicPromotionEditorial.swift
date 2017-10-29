@@ -13,7 +13,7 @@ import Exposure
 
 class BasicPromotionEditorial {
     fileprivate(set) var portraitLayout = PortraitPromotionLayout()
-    fileprivate(set) var itemEditorials: [PortraitItemPromotionEditorial] = []
+    fileprivate(set) var itemEditorials: [BasicItemPromotionEditorial] = []
     
     init(title: String, aspectRatio: AspectRatio = AspectRatio()) {
         self.title = title
@@ -56,7 +56,7 @@ class BasicPromotionEditorial {
     
     
     func append(content: [ContentEditorial]) {
-        let filtered = content.flatMap{ $0 as? PortraitItemPromotionEditorial }
+        let filtered = content.flatMap{ $0 as? BasicItemPromotionEditorial }
         itemEditorials.append(contentsOf: filtered)
     }
 }

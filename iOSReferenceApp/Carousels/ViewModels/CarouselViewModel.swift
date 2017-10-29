@@ -48,10 +48,10 @@ extension CarouselViewModel {
         }
         else if let editorial = editorial as? BasicPromotionEditorial {
             guard editorial.usesItemSpecificEditorials else {
-                return assetList.map{ PortraitItemPromotionEditorial(data: $0) }
+                return assetList.map{ BasicItemPromotionEditorial(data: $0) }
             }
             
-            return assetList.map{ PortraitItemPromotionEditorial(data: $0, title: $0.anyTitle(locale: "en")) }
+            return assetList.map{ BasicItemPromotionEditorial(data: $0, title: $0.anyTitle(locale: "en")) }
         }
         return []
     }

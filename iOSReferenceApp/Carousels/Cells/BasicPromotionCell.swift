@@ -14,7 +14,7 @@ class BasicPromotionCell: UICollectionViewCell, EditorialCell {
 
     typealias ContentEditorial = BasicPromotionEditorial
     
-    private var editorial: PortraitItemPromotionEditorial?
+    private var editorial: BasicItemPromotionEditorial?
     var selectedAsset: (Asset) -> Void = { _ in }
     
     @IBOutlet weak var thumbnailView: UIImageView!
@@ -43,7 +43,7 @@ class BasicPromotionCell: UICollectionViewCell, EditorialCell {
         guard let carousel = carousel else { return }
         reset()
         
-        guard let editorial: PortraitItemPromotionEditorial = carousel.editorial(for: index) else { return }
+        guard let editorial: BasicItemPromotionEditorial = carousel.editorial(for: index) else { return }
         self.editorial = editorial
         
         if carousel.usesItemSpecificEditorials {
