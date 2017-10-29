@@ -12,54 +12,51 @@ class BasicPromotionLayout: CollectionViewLayout {
     var editorial: BasicPromotionEditorial!
     
     /// The full height of the content as bound by the underlying collectionView's width
-    internal func contentHeight() -> CGFloat {
-        let cell = cellHeight()
+    internal func contentHeight(width: CGFloat) -> CGFloat {
+        let cell = cellHeight(width: width)
         
         // Total promotional heigght
         let editorialHeight = editorial.headerHeight ?? 0
         let footerHeight = editorial.footerHeight
         
-        print(#function,cell + editorialHeight + footerHeight,cellHeight())
-        
-        print("thumbnailHeight",thumbnailHeight())
-        print("thumbnailWidth",thumbnailWidth())
-        
         return cell + editorialHeight + footerHeight
     }
     
-    internal func cellHeight() -> CGFloat {
-        let thumbHeight = thumbnailHeight()
+    internal func cellHeight(width: CGFloat) -> CGFloat {
+        let thumbHeight = thumbnailHeight(width: width)
         // Total cell height
         let itemEditorialHeight = (editorial.titleHeight ?? 0)
         return thumbHeight + itemEditorialHeight
     }
     
-    internal func cellWidth() -> CGFloat {
+    internal func cellWidth(width: CGFloat) -> CGFloat {
         let itemsPerRow = CGFloat(editorial.itemsPerRow)
-        return (pageWidth - 2 * editorial.sideInset - (itemsPerRow-1)*editorial.sideInset/2)/itemsPerRow
+        return (width - 2 * editorial.sideInset - (itemsPerRow-1)*editorial.sideInset/2)/itemsPerRow
     }
     
-    internal func thumbnailHeight() -> CGFloat {
+    internal func thumbnailHeight(width: CGFloat) -> CGFloat {
         let aspectRatio = editorial.aspectRatio.height / editorial.aspectRatio.width
-        return thumbnailWidth() * aspectRatio
+        return thumbnailWidth(width: width) * aspectRatio
     }
     
-    internal func thumbnailWidth() -> CGFloat {
-        return cellWidth()
+    internal func thumbnailWidth(width: CGFloat) -> CGFloat {
+        return cellWidth(width: width)
     }
     
-    internal func thumbnailSize() -> CGSize {
-        return CGSize(width: thumbnailWidth(),
-                      height: thumbnailHeight())
+    internal func thumbnailSize(width: CGFloat) -> CGSize {
+        return CGSize(width: thumbnailWidth(width: width),
+                      height: thumbnailHeight(width: width))
     }
     
     // MARK: - Overrides
     override var collectionViewContentSize: CGSize {
-        return CGSize(width: contentWidth, height: contentHeight())
+        guard let collectionView = collectionView else { return CGSize.zero }
+        return CGSize(width: contentWidth, height: contentHeight(width: collectionView.bounds.width))
     }
     
     override func prepare() {
         guard let collectionView = collectionView else { return }
+        let width = collectionView.bounds.width
         cache = []
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         
@@ -73,7 +70,7 @@ class BasicPromotionLayout: CollectionViewLayout {
         
         let footerHeight = editorial.footerHeight
         carouselFooterAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))
-        carouselFooterAttribute!.frame = CGRect(x: 0, y: cellHeight()+editorialHeight, width: pageWidth, height: footerHeight)
+        carouselFooterAttribute!.frame = CGRect(x: 0, y: cellHeight(width: width)+editorialHeight, width: pageWidth, height: footerHeight)
         cache.append(carouselFooterAttribute!)
         
         var offset: CGFloat = editorial.sideInset
@@ -81,11 +78,11 @@ class BasicPromotionLayout: CollectionViewLayout {
             let indexPath = IndexPath(item: $0, section: 0)
             
             // Item
-            let frame = CGRect(x: offset, y: editorialHeight, width: cellWidth(), height: cellHeight())
+            let frame = CGRect(x: offset, y: editorialHeight, width: cellWidth(width: width), height: cellHeight(width: width))
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = frame
             
-            offset += cellWidth() + editorial.sideInset/2
+            offset += cellWidth(width: width) + editorial.sideInset/2
             
             // Update total offset
             contentWidth = max(contentWidth, frame.maxX)
@@ -104,6 +101,6 @@ class BasicPromotionLayout: CollectionViewLayout {
 
 extension BasicPromotionLayout: EmbeddedCarouselLayoutDelegate {
     func estimatedCellSize(for bounds: CGRect) -> CGSize {
-        return CGSize(width: bounds.width, height: contentHeight())
+        return CGSize(width: bounds.width, height: contentHeight(width: bounds.width))
     }
 }

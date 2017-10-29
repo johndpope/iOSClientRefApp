@@ -45,7 +45,8 @@ class CarouselViewController: UIViewController {
 //        }
         
         viewModel.loadFakeCarousel{ [weak self] index, error in
-            self?.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+            self?.collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
+//            self?.collectionView.reloadItems(at: )
         }
     }
     
@@ -61,19 +62,22 @@ extension CarouselViewController: SlidingMenuDelegate {
 
 extension CarouselViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(#function,section)
         return viewModel.content.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print(#function,indexPath.row)
         return collectionView.dequeueReusableCell(withReuseIdentifier: "carousel", for: indexPath)
     }
 }
 
 extension CarouselViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(#function,indexPath.row)
         if let cell = cell as? CarouselView {
             let carouselViewModel = viewModel.content[indexPath.row]
-            cell.bind(viewModel: carouselViewModel, environment: viewModel.environment, sessionToken: viewModel.sessionToken)
+            cell.bind(viewModel: carouselViewModel)
             cell.selectedAsset = { [weak self] asset in
                 self?.presetDetails(for: asset, from: .other)
             }
@@ -83,7 +87,8 @@ extension CarouselViewController: UICollectionViewDelegate {
 
 extension CarouselViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        print(viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds))
+        print(#function,indexPath.row,viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds))
+        
         return viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds)
     }
 }

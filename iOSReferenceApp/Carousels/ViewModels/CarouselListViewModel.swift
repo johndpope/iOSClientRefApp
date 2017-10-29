@@ -55,23 +55,30 @@ class CarouselListViewModel {
 
 extension CarouselListViewModel {
     func loadFakeCarousel(callback: @escaping (Int, ExposureError?) -> Void) {
+//        content = [
+//            CarouselViewModel(editorial: HeroPromotionEditorial()),
+//            CarouselViewModel(editorial: PortraitTrioPromotionEditorial()),
+//            CarouselViewModel(editorial: BasicPromotionEditorial(title: "Landscape Title")),
+//            CarouselViewModel(editorial: HeroPromotionEditorial())
+//        ]
         let list: [(CarouselViewModel, Asset.AssetType)] = [
             (CarouselViewModel(editorial: HeroPromotionEditorial()), .movie),
             (CarouselViewModel(editorial: PortraitTrioPromotionEditorial()), .clip),
-            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Movies")), .movie),
-//            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Landscape", aspectRatio: BasicPromotionEditorial.AspectRatio(width: 3, height: 2))), .movie)
+            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Landscape Title")), .movie),
+            (CarouselViewModel(editorial: HeroPromotionEditorial()), .clip),
+//            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Portrait", aspectRatio: BasicPromotionEditorial.AspectRatio(width: 3, height: 2))), .clip)
         ]
-        content = list.map{ $0.0 }
-        
-        (0..<list.count).forEach{ index in
-            let conf = list[index]
-            let vm = conf.0
+        list.forEach{ (vm, type) in
             vm.fakeCarouselMetadataFetch(environment: environment,
                                          sessionToken: sessionToken,
-                                         type: conf.1) { error in
+                                         type: type) { [weak self] error in
+                                            guard let weakSelf = self else { return }
+                                            let index = weakSelf.content.count
+                                            vm.editorial.layout.use(pagination: true)
+                                            print("LOADED INDEX:",index)
+                                            weakSelf.content.append(vm)
                                             callback(index, error)
             }
-            vm.editorial.layout.use(pagination: true)
         }
     }
     

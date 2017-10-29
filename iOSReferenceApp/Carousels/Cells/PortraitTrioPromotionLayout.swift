@@ -12,8 +12,8 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
     var editorial: PortraitTrioPromotionEditorial!
     
     /// The full height of the content as bound by the underlying collectionView's width
-    internal func contentHeight() -> CGFloat {
-        let cell = cellHeight()
+    internal func contentHeight(width: CGFloat) -> CGFloat {
+        let cell = cellHeight(width: width)
         
         // Total promotional heigght
         let editorialHeight = editorial.headerHeight ?? 0
@@ -22,39 +22,41 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
         return cell + editorialHeight + footerHeight
     }
     
-    internal func cellHeight() -> CGFloat {
-        let thumbHeight = thumbnailHeight()
+    internal func cellHeight(width: CGFloat) -> CGFloat {
+        let thumbHeight = thumbnailHeight(width: width)
         // Total cell height
         let itemEditorialHeight = (editorial.cellEditorialHeight ?? 0)
         return thumbHeight + itemEditorialHeight
     }
     
-    internal func cellWidth() -> CGFloat {
-        return pageWidth - 2 * editorial.sideInset
+    internal func cellWidth(width: CGFloat) -> CGFloat {
+        return width - 2 * editorial.sideInset
     }
     
-    internal func thumbnailHeight() -> CGFloat {
+    internal func thumbnailHeight(width: CGFloat) -> CGFloat {
         let aspect:CGFloat = 16 / 9
-        return thumbnailWidth() * aspect
+        return thumbnailWidth(width: width) * aspect
     }
     
-    internal func thumbnailWidth() -> CGFloat {
-        let availableWidth = cellWidth() - editorial.sideInset * 2
+    internal func thumbnailWidth(width: CGFloat) -> CGFloat {
+        let availableWidth = cellWidth(width: width) - editorial.sideInset * 2
         return availableWidth / 3
     }
     
-    internal func thumbnailSize() -> CGSize {
-        return CGSize(width: thumbnailWidth(),
-                      height: thumbnailHeight())
+    internal func thumbnailSize(width: CGFloat) -> CGSize {
+        return CGSize(width: thumbnailWidth(width: width),
+                      height: thumbnailHeight(width: width))
     }
     
     // MARK: - Overrides
     override var collectionViewContentSize: CGSize {
-        return CGSize(width: contentWidth, height: contentHeight())
+        guard let collectionView = collectionView else { return CGSize.zero }
+        return CGSize(width: contentWidth, height: contentHeight(width: collectionView.bounds.width))
     }
     
     override func prepare() {
         guard let collectionView = collectionView else { return }
+        let width = collectionView.bounds.width
         cache = []
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         
@@ -66,7 +68,7 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
         }
         
         
-        let cellsHeight = cellHeight()
+        let cellsHeight = cellHeight(width: width)
         
         let footerHeight = editorial.footerHeight
         carouselFooterAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))
@@ -78,11 +80,11 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
             let indexPath = IndexPath(item: $0, section: 0)
             
             // Item
-            let frame = CGRect(x: offset, y: editorialHeight, width: cellWidth(), height: cellsHeight)
+            let frame = CGRect(x: offset, y: editorialHeight, width: cellWidth(width: width), height: cellsHeight)
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = frame
             
-            offset += cellWidth() + editorial.sideInset/2
+            offset += cellWidth(width: width) + editorial.sideInset/2
             
             // Update total offset
             contentWidth = max(contentWidth, frame.maxX)
@@ -100,6 +102,6 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
 
 extension PortraitTrioPromotionLayout: EmbeddedCarouselLayoutDelegate {
     func estimatedCellSize(for bounds: CGRect) -> CGSize {
-        return CGSize(width: bounds.width, height: contentHeight())
+        return CGSize(width: bounds.width, height: contentHeight(width: bounds.width))
     }
 }

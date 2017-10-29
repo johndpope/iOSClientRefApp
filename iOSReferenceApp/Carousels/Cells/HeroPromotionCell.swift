@@ -39,7 +39,7 @@ class HeroPromotionCell: UICollectionViewCell, EditorialCell {
         addGestureRecognizer(gesture)
     }
 
-    func configure(with carousel: HeroPromotionEditorial?, for index: Int) {
+    func configure(with carousel: HeroPromotionEditorial?, for index: Int, size: CGSize) {
         guard let carousel = carousel else { return }
         reset()
         
@@ -53,7 +53,7 @@ class HeroPromotionCell: UICollectionViewCell, EditorialCell {
         
         
         // Promotional Art
-        let cellSize = carousel.heroLayout.thumbnailSize()
+        let cellSize = carousel.heroLayout.thumbnailSize(width: size.width)
         if let url = editorial.imageUrl() {
             heroBanner
                 .kf

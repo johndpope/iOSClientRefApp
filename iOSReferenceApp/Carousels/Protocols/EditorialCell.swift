@@ -11,6 +11,6 @@ import Exposure
 
 protocol EditorialCell {
     associatedtype Editorial
-    func configure(with editorial: Editorial?, for index: Int)
+    func configure(with editorial: Editorial?, for index: Int, size: CGSize)
     var selectedAsset: (Asset) -> Void { get set }
 }

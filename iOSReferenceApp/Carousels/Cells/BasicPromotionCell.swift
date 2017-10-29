@@ -39,7 +39,7 @@ class BasicPromotionCell: UICollectionViewCell, EditorialCell {
         selectedAsset(asset)
     }
     
-    func configure(with carousel: BasicPromotionEditorial?, for index: Int) {
+    func configure(with carousel: BasicPromotionEditorial?, for index: Int, size: CGSize) {
         guard let carousel = carousel else { return }
         reset()
         
@@ -52,7 +52,7 @@ class BasicPromotionCell: UICollectionViewCell, EditorialCell {
         
         
         // Promotional Art
-        let cellSize = carousel.portraitLayout.thumbnailSize()
+        let cellSize = carousel.portraitLayout.thumbnailSize(width: size.width)
         if let url = editorial.imageUrl() {
             thumbnailView
                 .kf

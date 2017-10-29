@@ -37,10 +37,19 @@ class CarouselView: UICollectionViewCell {
         
     }
     
-    func bind(viewModel: CarouselViewModel, environment: Environment, sessionToken: SessionToken) {
+    func bind(viewModel: CarouselViewModel) {//},environment: Environment, sessionToken: SessionToken) {
         print(#function)
+        
         self.viewModel = viewModel
-        collectionView.collectionViewLayout = viewModel.editorial.layout
+        self.collectionView.collectionViewLayout = viewModel.editorial.layout
+//        UIView.animate(withDuration: 0.2) {
+//            self.collectionView.collectionViewLayout.invalidateLayout()
+//            self.collectionView.reloadData()
+//            self.collectionView.collectionViewLayout = viewModel.editorial.layout
+//        }
+//        viewModel.fakeCarouselMetadataFetch(environment: environment, sessionToken: sessionToken, type: .movie) {
+//
+//        }, callback: <#T##(ExposureError?) -> Void#>)
     }
     
 }
@@ -71,21 +80,21 @@ extension CarouselView: UICollectionViewDelegate {
         preloadNextBatch(after: indexPath)
         if let cell = cell as? HeroPromotionCell {
             cell.configure(with: viewModel.editorial as? HeroPromotionEditorial,
-                           for: indexPath.row)
+                           for: indexPath.row, size: collectionView.bounds.size)
             cell.selectedAsset = { [weak self] asset in
                 self?.selectedAsset(asset)
             }
         }
         else if let cell = cell as? PortraitTrioPromotionCell {
             cell.configure(with: viewModel.editorial as? PortraitTrioPromotionEditorial,
-                           for: indexPath.row)
+                           for: indexPath.row, size: collectionView.bounds.size)
             cell.selectedAsset = { [weak self]  asset in
                 self?.selectedAsset(asset)
             }
         }
         else if let cell = cell as? BasicPromotionCell {
             cell.configure(with: viewModel.editorial as? BasicPromotionEditorial,
-                           for: indexPath.row)
+                           for: indexPath.row, size: collectionView.bounds.size)
             cell.selectedAsset = { [weak self]  asset in
                 self?.selectedAsset(asset)
             }

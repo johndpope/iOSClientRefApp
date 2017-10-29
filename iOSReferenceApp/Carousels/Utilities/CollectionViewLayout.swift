@@ -44,6 +44,11 @@ class CollectionViewLayout: UICollectionViewLayout {
         return true
     }
     
+    override func invalidateLayout() {
+        super.invalidateLayout()
+        cache = []
+    }
+    
     override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         if elementKind == UICollectionElementKindSectionHeader {
             return carouselEditorialAttribute
