@@ -12,7 +12,7 @@ import Kingfisher
 import Exposure
 
 class BasicPromotionEditorial {
-    fileprivate(set) var portraitLayout = PortraitPromotionLayout()
+    fileprivate(set) var portraitLayout = BasicPromotionLayout()
     fileprivate(set) var itemEditorials: [BasicItemPromotionEditorial] = []
     
     init(title: String, aspectRatio: AspectRatio = AspectRatio()) {

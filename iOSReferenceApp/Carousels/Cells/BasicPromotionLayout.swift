@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PortraitPromotionLayout: CollectionViewLayout {
+class BasicPromotionLayout: CollectionViewLayout {
     /// The full height of the content as bound by the underlying collectionView's width
     internal func contentHeight() -> CGFloat {
         let cell = cellHeight()
@@ -97,7 +97,7 @@ class PortraitPromotionLayout: CollectionViewLayout {
     }
 }
 
-extension PortraitPromotionLayout: EmbeddedCarouselLayoutDelegate {
+extension BasicPromotionLayout: EmbeddedCarouselLayoutDelegate {
     func estimatedCellSize(for bounds: CGRect) -> CGSize {
         return CGSize(width: bounds.width, height: contentHeight())
     }
