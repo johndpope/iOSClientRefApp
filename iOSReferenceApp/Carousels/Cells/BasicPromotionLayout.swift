@@ -9,13 +9,24 @@
 import UIKit
 
 class BasicPromotionLayout: CollectionViewLayout {
+    unowned var editorial: BasicPromotionEditorial
+    
+    init(editorial: BasicPromotionEditorial) {
+        self.editorial = editorial
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     /// The full height of the content as bound by the underlying collectionView's width
     internal func contentHeight() -> CGFloat {
         let cell = cellHeight()
         
         // Total promotional heigght
-        let editorialHeight = delegate.carouselSpecificEditorialHeight ?? 0
-        let footerHeight = delegate.carouselFooterHeight
+        let editorialHeight = editorial.headerHeight ?? 0
+        let footerHeight = editorial.footerHeight
         
         return cell + editorialHeight + footerHeight
     }
@@ -23,12 +34,12 @@ class BasicPromotionLayout: CollectionViewLayout {
     internal func cellHeight() -> CGFloat {
         let thumbHeight = thumbnailHeight()
         // Total cell height
-        let itemEditorialHeight = (delegate.itemSpecificEditorialHeight ?? 0)
+        let itemEditorialHeight = (editorial.titleHeight ?? 0)
         return thumbHeight + itemEditorialHeight
     }
     
     internal func cellWidth() -> CGFloat {
-        return (pageWidth - 2 * delegate.carouselContentSideInset)/3
+        return (pageWidth - 2 * editorial.topInset)/3
     }
     
     internal func thumbnailHeight() -> CGFloat {
@@ -55,10 +66,10 @@ class BasicPromotionLayout: CollectionViewLayout {
         cache = []
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         
-        let itemEditorialHeight = (delegate.itemSpecificEditorialHeight ?? 0)
+        let itemEditorialHeight = (editorial.titleHeight ?? 0)
         let cellHeight = thumbnailSize().height + itemEditorialHeight
         
-        let editorialHeight = (delegate.carouselSpecificEditorialHeight ?? 0) + delegate.carouselContentTopInset
+        let editorialHeight = (editorial.headerHeight ?? 0) + editorial.topInset
         if editorialHeight > 0 {
             carouselEditorialAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: 0))
             carouselEditorialAttribute!.frame = CGRect(x: 0, y: 0, width: pageWidth, height: editorialHeight)
@@ -66,12 +77,12 @@ class BasicPromotionLayout: CollectionViewLayout {
         }
         
         
-        let footerHeight = delegate.carouselFooterHeight
+        let footerHeight = editorial.footerHeight
         carouselFooterAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 0, section: 0))
         carouselFooterAttribute!.frame = CGRect(x: 0, y: cellHeight+editorialHeight, width: pageWidth, height: footerHeight)
         cache.append(carouselFooterAttribute!)
         
-        var offset: CGFloat = delegate.carouselContentSideInset
+        var offset: CGFloat = editorial.sideInset
         let other:[UICollectionViewLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: 0)).map {
             let indexPath = IndexPath(item: $0, section: 0)
             
@@ -80,7 +91,7 @@ class BasicPromotionLayout: CollectionViewLayout {
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = frame
             
-            offset += cellWidth() + delegate.carouselContentSideInset/2
+            offset += cellWidth() + editorial.sideInset/2
             
             // Update total offset
             contentWidth = max(contentWidth, frame.maxX)

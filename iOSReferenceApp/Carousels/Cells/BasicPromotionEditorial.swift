@@ -12,14 +12,16 @@ import Kingfisher
 import Exposure
 
 class BasicPromotionEditorial {
-    fileprivate(set) var portraitLayout = BasicPromotionLayout()
+    lazy var portraitLayout: BasicPromotionLayout = { [unowned self] in
+        return BasicPromotionLayout(editorial: self)
+    }()
+    
     fileprivate(set) var itemEditorials: [BasicItemPromotionEditorial] = []
     
     init(title: String, aspectRatio: AspectRatio = AspectRatio()) {
         self.title = title
         self.aspectRatio = aspectRatio
         
-        portraitLayout.delegate = self
         portraitLayout.use(pagination: true)
     }
     
@@ -39,20 +41,20 @@ class BasicPromotionEditorial {
     
     // Carousel Editorial
     let title: String?
-    let text: String? = nil
+    var text: String? { return nil }
     
     // MARK: Header & Footer
-    let editorialHeight: CGFloat? = 43
+    let headerHeight: CGFloat? = 43
     let footerHeight: CGFloat = 50
     
     // MARK: Cell
-    let itemEditorialHeight: CGFloat? = 28
+    let titleHeight: CGFloat? = 28
     let itemsPerRow: Int = 3
     let aspectRatio: AspectRatio
     
     // MARK: General Layout
-    let contentSideInset: CGFloat = 30
-    let contentTopInset: CGFloat = 10
+    let sideInset: CGFloat = 30
+    let topInset: CGFloat = 10
     
     
     func append(content: [ContentEditorial]) {
@@ -107,29 +109,6 @@ extension BasicPromotionEditorial: CarouselEditorial {
     
     var count: Int {
         return content.count
-    }
-}
-
-
-extension BasicPromotionEditorial: CarouselLayoutDelegate {
-    var carouselSpecificEditorialHeight: CGFloat? {
-        return editorialHeight
-    }
-    
-    var carouselFooterHeight: CGFloat {
-        return footerHeight
-    }
-    
-    var carouselContentSideInset: CGFloat {
-        return contentSideInset
-    }
-    
-    var carouselContentTopInset: CGFloat {
-        return contentTopInset
-    }
-    
-    var itemSpecificEditorialHeight: CGFloat? {
-        return itemEditorialHeight
     }
 }
 

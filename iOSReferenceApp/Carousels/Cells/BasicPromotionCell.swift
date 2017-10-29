@@ -1,5 +1,5 @@
 //
-//  PortraitPromotionCell.swift
+//  BasicPromotionCell.swift
 //  iOSReferenceApp
 //
 //  Created by Fredrik Sjöberg on 2017-10-28.

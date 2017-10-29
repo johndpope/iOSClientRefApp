@@ -23,13 +23,4 @@ protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {
     // Carousel Editorial
     var title: String? { get }
     var text: String? { get }
-    
-    // MARK: Header & Footer
-    var editorialHeight: CGFloat? { get }
-    var footerHeight: CGFloat { get }
-    var itemEditorialHeight: CGFloat? { get }
-    
-    // MARK: General Layout
-    var contentSideInset: CGFloat { get }
-    var contentTopInset: CGFloat { get }
 }

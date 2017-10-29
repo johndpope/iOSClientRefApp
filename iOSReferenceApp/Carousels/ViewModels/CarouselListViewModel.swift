@@ -58,9 +58,9 @@ extension CarouselListViewModel {
         let list: [(CarouselViewModel, Asset.AssetType)] = [
             (CarouselViewModel(editorial: HeroPromotionEditorial()), .movie),
             (CarouselViewModel(editorial: PortraitTrioPromotionEditorial()), .clip),
-            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Movies")), .movie)
+            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Movies")), .movie),
+            (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Movies", aspectRatio: BasicPromotionEditorial.AspectRatio(width: 3, height: 2))), .movie)
         ]
-        
         content = list.map{ $0.0 }
         
         (0..<list.count).forEach{ index in

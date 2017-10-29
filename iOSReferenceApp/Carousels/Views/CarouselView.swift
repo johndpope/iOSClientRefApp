@@ -23,7 +23,7 @@ class CarouselView: UICollectionViewCell {
         
         collectionView.register(UINib(nibName: "HeroPromotionCell", bundle: nil), forCellWithReuseIdentifier: "heroCell")
         collectionView.register(UINib(nibName: "PortraitTrioPromotionCell", bundle: nil), forCellWithReuseIdentifier: "portraitTrioCell")
-        collectionView.register(UINib(nibName: "PortraitPromotionCell", bundle: nil), forCellWithReuseIdentifier: "basicCell")
+        collectionView.register(UINib(nibName: "BasicPromotionCell", bundle: nil), forCellWithReuseIdentifier: "basicCell")
 
         collectionView.register(UINib(nibName: "CarouselHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "carouselHeader")
         

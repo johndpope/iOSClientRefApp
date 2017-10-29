@@ -22,6 +22,7 @@ class CollectionViewLayout: UICollectionViewLayout {
     func use(pagination value: Bool) {
         pagination = (value ? UICollectionViewLayoutPagination(layout: self) : nil)
     }
+    
     fileprivate var pagination: UICollectionViewLayoutPagination?
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         if let pagination = pagination {
