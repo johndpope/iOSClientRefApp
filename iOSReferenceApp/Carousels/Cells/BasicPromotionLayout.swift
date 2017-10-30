@@ -55,6 +55,7 @@ class BasicPromotionLayout: CollectionViewLayout {
     }
     
     override func prepare() {
+        super.prepare()
         guard let collectionView = collectionView else { return }
         let width = collectionView.bounds.width
         cache = []

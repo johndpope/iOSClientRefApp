@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3E6B3B461F84D5100071C10A /* ApplicationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */; };
 		3E9882281F66E46E003467B3 /* AuthorizedEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */; };
+		762F0BF81FA7153D0051395E /* StretchyCarouselHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */; };
 		76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; };
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		764EDC491F5EADFB00569D5B /* environments.json in Resources */ = {isa = PBXBuildFile; fileRef = 764EDC481F5EADFB00569D5B /* environments.json */; };
@@ -22,6 +23,8 @@
 		7667AECD1EC5E21200C308FC /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 7667AECB1EC5E21200C308FC /* Fastfile */; };
 		7667AECF1EC5E29400C308FC /* .env in Resources */ = {isa = PBXBuildFile; fileRef = 7667AECE1EC5E29400C308FC /* .env */; };
 		7672F26D1F93EEB200F892C3 /* AssetListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672F26C1F93EEB200F892C3 /* AssetListType.swift */; };
+		767DC0DC1FA712B10021A17A /* StretchyCarouselHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767DC0DA1FA712B10021A17A /* StretchyCarouselHeaderView.swift */; };
+		767DC0DD1FA712B10021A17A /* StretchyCarouselHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 767DC0DB1FA712B10021A17A /* StretchyCarouselHeaderView.xib */; };
 		76808BDC1FA34BAB00646E8A /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76808BDB1FA34BAB00646E8A /* MasterViewController.swift */; };
 		768ED8AA1F0FAEE3008E8F9B /* update_dependency_graph.rb in Resources */ = {isa = PBXBuildFile; fileRef = 768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */; };
 		769862261FA518C500A57213 /* AssetDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769862201FA518BD00A57213 /* AssetDetailsViewController.swift */; };
@@ -47,6 +50,10 @@
 		76A4171D1EE0134100677A46 /* LiveListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A4171C1EE0134100677A46 /* LiveListViewModel.swift */; };
 		76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417221EE1518800677A46 /* AssetViewModel.swift */; };
 		76A44C9E1F1637A7008992E9 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A44C9D1F1637A7008992E9 /* MoreViewController.swift */; };
+		76A4AD481FA731C000D20743 /* BannerPromotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A4AD461FA731C000D20743 /* BannerPromotionCell.swift */; };
+		76A4AD491FA731C000D20743 /* BannerPromotionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76A4AD471FA731C000D20743 /* BannerPromotionCell.xib */; };
+		76A4AD4B1FA7352400D20743 /* BannerPromotionEditorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A4AD4A1FA7352400D20743 /* BannerPromotionEditorial.swift */; };
+		76A4AD4D1FA736C700D20743 /* BannerPromotionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A4AD4C1FA736C700D20743 /* BannerPromotionLayout.swift */; };
 		76A843AB1EA7856C00BDAF2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A843AA1EA7856C00BDAF2C /* AppDelegate.swift */; };
 		76A843B01EA7856C00BDAF2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76A843AE1EA7856C00BDAF2C /* Main.storyboard */; };
 		76A843B21EA7856C00BDAF2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76A843B11EA7856C00BDAF2C /* Assets.xcassets */; };
@@ -190,6 +197,7 @@
 /* Begin PBXFileReference section */
 		3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationConfig.swift; sourceTree = "<group>"; };
 		3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedEnvironment.swift; sourceTree = "<group>"; };
+		762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyCarouselHeaderLayout.swift; sourceTree = "<group>"; };
 		76344F481F7AB3BC0034AEC0 /* Download.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Download.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		764392D21FA5C09C008DC1E8 /* BasicPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasicPromotionCell.xib; sourceTree = "<group>"; };
 		764EDC481F5EADFB00569D5B /* environments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = environments.json; sourceTree = SOURCE_ROOT; };
@@ -205,6 +213,8 @@
 		7667AECB1EC5E21200C308FC /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7667AECE1EC5E29400C308FC /* .env */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .env; sourceTree = "<group>"; };
 		7672F26C1F93EEB200F892C3 /* AssetListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetListType.swift; sourceTree = "<group>"; };
+		767DC0DA1FA712B10021A17A /* StretchyCarouselHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyCarouselHeaderView.swift; sourceTree = "<group>"; };
+		767DC0DB1FA712B10021A17A /* StretchyCarouselHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StretchyCarouselHeaderView.xib; sourceTree = "<group>"; };
 		76808BDB1FA34BAB00646E8A /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = update_dependency_graph.rb; sourceTree = "<group>"; };
 		769862121FA517D800A57213 /* OfflineListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineListViewController.swift; sourceTree = "<group>"; };
@@ -229,6 +239,10 @@
 		76A4171C1EE0134100677A46 /* LiveListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveListViewModel.swift; sourceTree = "<group>"; };
 		76A417221EE1518800677A46 /* AssetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetViewModel.swift; sourceTree = "<group>"; };
 		76A44C9D1F1637A7008992E9 /* MoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
+		76A4AD461FA731C000D20743 /* BannerPromotionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerPromotionCell.swift; sourceTree = "<group>"; };
+		76A4AD471FA731C000D20743 /* BannerPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerPromotionCell.xib; sourceTree = "<group>"; };
+		76A4AD4A1FA7352400D20743 /* BannerPromotionEditorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerPromotionEditorial.swift; sourceTree = "<group>"; };
+		76A4AD4C1FA736C700D20743 /* BannerPromotionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerPromotionLayout.swift; sourceTree = "<group>"; };
 		76A843A71EA7856C00BDAF2C /* iOSReferenceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSReferenceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A843AA1EA7856C00BDAF2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76A843AF1EA7856C00BDAF2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -743,6 +757,9 @@
 				76EC8D561FA513A300F6FDB6 /* CarouselHeaderView.xib */,
 				76EC8D541FA513A300F6FDB6 /* CarouselView.swift */,
 				76EC8D551FA513A300F6FDB6 /* CarouselView.xib */,
+				767DC0DA1FA712B10021A17A /* StretchyCarouselHeaderView.swift */,
+				767DC0DB1FA712B10021A17A /* StretchyCarouselHeaderView.xib */,
+				762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -765,6 +782,10 @@
 				76B0AFBB1FA520670085C837 /* BasicPromotionEditorial.swift */,
 				76B0AFBD1FA5241B0085C837 /* BasicItemPromotionEditorial.swift */,
 				76B0AFBF1FA524570085C837 /* BasicPromotionLayout.swift */,
+				76A4AD461FA731C000D20743 /* BannerPromotionCell.swift */,
+				76A4AD471FA731C000D20743 /* BannerPromotionCell.xib */,
+				76A4AD4A1FA7352400D20743 /* BannerPromotionEditorial.swift */,
+				76A4AD4C1FA736C700D20743 /* BannerPromotionLayout.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1023,6 +1044,7 @@
 				76EC8D701FA514F900F6FDB6 /* HeroPromotionCell.xib in Resources */,
 				F7061C6C1EC5BFAF0041E271 /* strings.plist in Resources */,
 				76EC8D6D1FA514F200F6FDB6 /* CarouselView.xib in Resources */,
+				76A4AD491FA731C000D20743 /* BannerPromotionCell.xib in Resources */,
 				F7061C6B1EC5BFAF0041E271 /* icon_pure_512.png in Resources */,
 				76EC8D421FA5121600F6FDB6 /* MainMenuPushNavigationCell.xib in Resources */,
 				76A417121EDED17800677A46 /* AssetPreviewHeaderView.xib in Resources */,
@@ -1041,6 +1063,7 @@
 				76A843D91EA7859E00BDAF2C /* Cartfile in Resources */,
 				76A417061EDEBF1B00677A46 /* AssetPreviewCell.xib in Resources */,
 				76EC8D6B1FA514F200F6FDB6 /* CarouselHeaderView.xib in Resources */,
+				767DC0DD1FA712B10021A17A /* StretchyCarouselHeaderView.xib in Resources */,
 				76BBFB7E1EA8CF2E001DBDDB /* Cartfile.resolved in Resources */,
 				76EC8D691FA514F200F6FDB6 /* CarouselFooterView.xib in Resources */,
 				76AF2F181F13B6DB0014F007 /* EPGPreviewCell.xib in Resources */,
@@ -1069,12 +1092,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				762F0BF81FA7153D0051395E /* StretchyCarouselHeaderLayout.swift in Sources */,
 				76EC8D6A1FA514F200F6FDB6 /* CarouselHeaderView.swift in Sources */,
 				76A44C9E1F1637A7008992E9 /* MoreViewController.swift in Sources */,
 				76BB35A71F9A29C200C2B386 /* Asset+LocalizedEntity.swift in Sources */,
 				766502F91F99CA4E009A5BFE /* SessionManager+ExposureDownloadTask.swift in Sources */,
 				3E6B3B461F84D5100071C10A /* ApplicationConfig.swift in Sources */,
 				76B0AFB31FA51BCA0085C837 /* PlayerViewController.swift in Sources */,
+				76A4AD4D1FA736C700D20743 /* BannerPromotionLayout.swift in Sources */,
 				F793A8551EC5289E00DF7626 /* UITextField+fixCaretPosition.swift in Sources */,
 				F7061C691EC5BFAF0041E271 /* Constants.swift in Sources */,
 				76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */,
@@ -1125,6 +1150,7 @@
 				F7B710A81ECB369E00E9D324 /* ProgressIndicatorUtil.swift in Sources */,
 				76EC8D411FA5121600F6FDB6 /* MainMenuPushNavigationCell.swift in Sources */,
 				76AF2F171F13B6DB0014F007 /* EPGPreviewCell.swift in Sources */,
+				76A4AD481FA731C000D20743 /* BannerPromotionCell.swift in Sources */,
 				76EC8D671FA514ED00F6FDB6 /* CarouselViewModel.swift in Sources */,
 				F793A8541EC5289E00DF7626 /* SkyFloatingLabelTextFieldWithIcon.swift in Sources */,
 				7698622C1FA5197C00A57213 /* OfflineListCellViewModel.swift in Sources */,
@@ -1138,6 +1164,7 @@
 				76A416F91EDDCAC700677A46 /* VODViewModel.swift in Sources */,
 				76EC8D661FA514ED00F6FDB6 /* CarouselListViewModel.swift in Sources */,
 				76A4171D1EE0134100677A46 /* LiveListViewModel.swift in Sources */,
+				76A4AD4B1FA7352400D20743 /* BannerPromotionEditorial.swift in Sources */,
 				76EC8D761FA514F900F6FDB6 /* PortraitTrioPromotionLayout.swift in Sources */,
 				76B0AFBC1FA520670085C837 /* BasicPromotionEditorial.swift in Sources */,
 				76A843AB1EA7856C00BDAF2C /* AppDelegate.swift in Sources */,
@@ -1148,6 +1175,7 @@
 				76B0AFBA1FA520040085C837 /* PortraitTrioItemPromotionEditorial.swift in Sources */,
 				769862261FA518C500A57213 /* AssetDetailsViewController.swift in Sources */,
 				76A417101EDED09700677A46 /* AssetPreviewHeaderView.swift in Sources */,
+				767DC0DC1FA712B10021A17A /* StretchyCarouselHeaderView.swift in Sources */,
 				7698622D1FA5197C00A57213 /* OfflineListViewModel.swift in Sources */,
 				F7171A791EDC4ADC00140D2B /* LiveListViewController.swift in Sources */,
 				76AE64EB1F90217B0036933E /* GradientView.swift in Sources */,

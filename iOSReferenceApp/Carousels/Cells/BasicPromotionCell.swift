@@ -26,7 +26,7 @@ class BasicPromotionCell: UICollectionViewCell, EditorialCell {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureAction(_:)))
         tapGestureRecognizer = gesture
         addGestureRecognizer(gesture)

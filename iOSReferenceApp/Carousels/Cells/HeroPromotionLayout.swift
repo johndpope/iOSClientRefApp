@@ -57,6 +57,7 @@ class HeroPromotionLayout: CollectionViewLayout {
     }
     
     override func prepare() {
+        super.prepare()
         guard let collectionView = collectionView else { return }
         cache = []
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast

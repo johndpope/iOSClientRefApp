@@ -53,6 +53,13 @@ extension CarouselViewModel {
             
             return assetList.map{ BasicItemPromotionEditorial(data: $0, title: $0.anyTitle(locale: "en")) }
         }
+        else if let editorial = editorial as? BannerPromotionEditorial {
+            guard editorial.usesItemSpecificEditorials else {
+                return assetList.map{ BannerItemPromotionEditorial(data: $0) }
+            }
+            
+            return assetList.map{ BannerItemPromotionEditorial(data: $0, title: $0.anyTitle(locale: "en")) }
+        }
         return []
     }
     

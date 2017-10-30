@@ -18,6 +18,7 @@ class CarouselListViewModel {
         self.sessionToken = sessionToken
     }
     
+    fileprivate(set) var bannerEditorial: BannerPromotionEditorial?
     fileprivate(set) var content: [CarouselViewModel] = []
     
     init(environment: Environment, sessionToken: SessionToken) {
