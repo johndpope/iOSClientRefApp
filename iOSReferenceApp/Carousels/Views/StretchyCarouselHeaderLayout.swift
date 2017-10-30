@@ -88,26 +88,24 @@ class StretchyCarouselHeaderLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        guard let collectionView = collectionView else {
-            return nil
-        }
-        
         let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
         
-        var sectionOriginY = delegate.startingStretchyHeaderHeight + delegate.edgeInsets.top
+        var yOffset = delegate.startingStretchyHeaderHeight + delegate.edgeInsets.top
         
-        if indexPath.section > 0 {
-            let previousSection = indexPath.section - 1
-            let lastItem = collectionView.numberOfItems(inSection: previousSection) - 1
-            let previousCell = layoutAttributesForItem(at: IndexPath(item: lastItem, section: previousSection))
-            sectionOriginY = (previousCell?.frame.maxY ?? 0) + delegate.edgeInsets.bottom
+        if indexPath.item > 0 {
+//            let previousCell = layoutAttributesForItem(at: IndexPath(item: indexPath.item-1, section: 0))
+            let previous = (0..<indexPath.item).reduce(0) {  $0 + delegate.cellSize(for: IndexPath(item: $1, section: 0)).height }
+//            let previous = delegate.cellSize(for: IndexPath(item: indexPath.item-1, section: 0))
+            print(#function,"[\(indexPath.item)] previous",previous)
+            yOffset += previous
         }
         
+        print(#function,"[\(indexPath.item)] yOffset",yOffset)
+        
         let cellSize = delegate.cellSize(for: indexPath)
+//        print(#function,"[\(indexPath.item)] Current",cellSize)
         
-        let itemOriginY = sectionOriginY + CGFloat(indexPath.item) * (cellSize.height + delegate.itemSpacing)
-        
-        attribute.frame = CGRect(x: delegate.edgeInsets.left, y: itemOriginY, width: cellSize.width, height: cellSize.height)
+        attribute.frame = CGRect(x: delegate.edgeInsets.left, y: yOffset, width: cellSize.width, height: cellSize.height)
         
         return attribute
     }

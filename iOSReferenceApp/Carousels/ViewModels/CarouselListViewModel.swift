@@ -18,7 +18,7 @@ class CarouselListViewModel {
         self.sessionToken = sessionToken
     }
     
-    fileprivate(set) var bannerEditorial: BannerPromotionEditorial?
+    fileprivate(set) var bannerViewModel: CarouselViewModel?
     fileprivate(set) var content: [CarouselViewModel] = []
     
     init(environment: Environment, sessionToken: SessionToken) {
@@ -56,12 +56,20 @@ class CarouselListViewModel {
 
 extension CarouselListViewModel {
     func loadFakeCarousel(callback: @escaping (Int, ExposureError?) -> Void) {
-//        content = [
-//            CarouselViewModel(editorial: HeroPromotionEditorial()),
-//            CarouselViewModel(editorial: PortraitTrioPromotionEditorial()),
-//            CarouselViewModel(editorial: BasicPromotionEditorial(title: "Landscape Title")),
-//            CarouselViewModel(editorial: HeroPromotionEditorial())
-//        ]
+        let bannerEditorial = BannerPromotionEditorial()
+        bannerViewModel = CarouselViewModel(editorial: bannerEditorial)
+        bannerViewModel?.fakeCarouselMetadataFetch(environment: environment,
+                                                   sessionToken: sessionToken,
+                                                   type: .movie) { [weak self] error in
+                                                    guard let weakSelf = self else { return }
+                                                    
+                                                    bannerEditorial.layout.use(pagination: true)
+                                                    print("LOADED BANNER")
+                                                    weakSelf.fakeCarousel(callback: callback)
+        }
+    }
+    
+    private func fakeCarousel(callback: @escaping (Int, ExposureError?) -> Void) {
         let list: [(CarouselViewModel, Asset.AssetType)] = [
             (CarouselViewModel(editorial: HeroPromotionEditorial()), .movie),
             (CarouselViewModel(editorial: BasicPromotionEditorial(title: "Portrait", aspectRatio: BasicPromotionEditorial.AspectRatio(width: 2, height: 3))), .clip),

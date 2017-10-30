@@ -86,8 +86,6 @@ extension CarouselViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print(#function,indexPath.row)
         if let cell = cell as? CarouselView {
-//            let carouselViewModel = viewModel.content[indexPath.row]
-//            cell.bind(viewModel: carouselViewModel)
             cell.selectedAsset = { [weak self] asset in
                 self?.presetDetails(for: asset, from: .other)
             }
@@ -96,15 +94,17 @@ extension CarouselViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
         if let view = view as? StretchyCarouselHeaderView, elementKind == StretchyCollectionHeaderKind {
-            
+            view.selectedAsset = { [weak self] asset in
+                self?.presetDetails(for: asset, from: .other)
+            }
             // Customize
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionElementKindSectionHeader {
+        if let bannerViewModel = viewModel.bannerViewModel, kind == StretchyCollectionHeaderKind {
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "stretchyHeader", for: indexPath) as! StretchyCarouselHeaderView
-            //            view.configure(with: viewModel.editorial)
+            view.bind(viewModel: bannerViewModel)
             return view
         }
         return UICollectionReusableView()
@@ -113,14 +113,18 @@ extension CarouselViewController: UICollectionViewDelegate {
 
 extension CarouselViewController: StretchyCarouselHeaderLayoutDelegate {
     var usesStretchyHeader: Bool {
-        return viewModel.bannerEditorial != nil
+        return false //viewModel.bannerViewModel != nil
     }
     
     var startingStretchyHeaderHeight: CGFloat {
-        return viewModel.bannerEditorial?.estimatedCellSize(for: collectionView.bounds).height ?? 0
+        return 0
+        guard let bannerEditorial = viewModel.bannerViewModel?.editorial as? BannerPromotionEditorial else { return 0 }
+        return bannerEditorial.estimatedCellSize(for: collectionView.bounds).height
     }
     
     func cellSize(for indexPath: IndexPath) -> CGSize {
+        guard !viewModel.content.isEmpty else { return CGSize.zero }
+//        print("CarouselViewController",#function,"\([indexPath.item])",viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds))
         return viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds)
     }
     
@@ -132,13 +136,13 @@ extension CarouselViewController: StretchyCarouselHeaderLayoutDelegate {
         return 0
     }
 }
-//extension CarouselViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        print(#function,indexPath.row,viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds))
-//
-//        return viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds)
-//    }
-//}
+extension CarouselViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        print(#function,indexPath.row,viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds))
+
+        return viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds)
+    }
+}
 
 extension CarouselViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
