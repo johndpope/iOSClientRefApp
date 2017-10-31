@@ -37,7 +37,6 @@ class StretchyCarouselHeaderView: UICollectionReusableView {
 
 extension StretchyCarouselHeaderView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        preloadNextBatch(after: indexPath)
         if let cell = cell as? BannerPromotionCell {
             cell.configure(with: viewModel.editorial as? BannerPromotionEditorial,
                            for: indexPath.row, size: collectionView.bounds.size)
@@ -65,29 +64,3 @@ extension StretchyCarouselHeaderView: UICollectionViewDataSource {
         return 1
     }
 }
-
-//extension StretchyCarouselHeaderView: UICollectionViewDataSourcePrefetching {
-//    public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-//        let urls = viewModel.editorial.content.flatMap{ $0.prefetchImageUrls() }
-//        ImagePrefetcher(urls: urls).start()
-//    }
-//}
-//
-//extension StretchyCarouselHeaderView {
-//    func batch(for indexPath: IndexPath) -> Int {
-//        return  1 + indexPath.row / 50
-//    }
-//
-//    fileprivate func preloadNextBatch(after indexPath: IndexPath) {
-//        let currentBatch = batch(for: indexPath)
-//        //        viewModel.fetchMetadata(batch: currentBatch+1) { [unowned self] (batch, error) in
-//        //            if let error = error {
-//        //                print(error)
-//        //            }
-//        //            else if batch == currentBatch {
-//        //                self.collectionView.reloadData()
-//        //            }
-//        //        }
-//    }
-//}
-

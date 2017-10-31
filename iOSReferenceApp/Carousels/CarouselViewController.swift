@@ -38,20 +38,9 @@ class CarouselViewController: UIViewController {
     }
     
     fileprivate func setupViewModel() {
-//        guard let tabVC = self.tabBarController as? HomeTabBarController else {
-//            fatalError("Unable to proceed without homeTabBarController")
-//        }
-        
-//        let carouselGroupId = "fakeCarousels"//tabVC.dynamicCustomerConfig?.carouselGroupId ?? "fakeCarousels"
-//
-//        viewModel.loadCarousel(group: carouselGroupId) { [weak self] error in
-//            print("ReloadData")
-//            self?.collectionView.reloadData()
-//        }
-        
+        // TODO: Load carousels instead of faking it.
         viewModel.loadFakeCarousel{ [weak self] index, error in
             self?.collectionView.reloadData()
-//            self?.collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
         }
     }
     
@@ -96,7 +85,6 @@ extension CarouselViewController: UICollectionViewDelegate {
             view.selectedAsset = { [weak self] asset in
                 self?.presetDetails(for: asset, from: .other)
             }
-            // Customize
         }
     }
     
@@ -131,17 +119,6 @@ extension CarouselViewController: StretchyCarouselHeaderLayoutDelegate {
         return 0
     }
 }
-//extension CarouselViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        return viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds)
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        guard let bannerEditorial = viewModel.bannerViewModel?.editorial as? BannerPromotionEditorial else { return CGSize.zero }
-//        return bannerEditorial.estimatedCellSize(for: collectionView.bounds)
-//    }
-//}
 
 extension CarouselViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
