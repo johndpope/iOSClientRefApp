@@ -54,6 +54,7 @@
 		76A4AD491FA731C000D20743 /* BannerPromotionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76A4AD471FA731C000D20743 /* BannerPromotionCell.xib */; };
 		76A4AD4B1FA7352400D20743 /* BannerPromotionEditorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A4AD4A1FA7352400D20743 /* BannerPromotionEditorial.swift */; };
 		76A4AD4D1FA736C700D20743 /* BannerPromotionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A4AD4C1FA736C700D20743 /* BannerPromotionLayout.swift */; };
+		76A7E9941FA88D2800C4AF27 /* CarouselHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A7E9931FA88D2800C4AF27 /* CarouselHeaderViewModel.swift */; };
 		76A843AB1EA7856C00BDAF2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A843AA1EA7856C00BDAF2C /* AppDelegate.swift */; };
 		76A843B01EA7856C00BDAF2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76A843AE1EA7856C00BDAF2C /* Main.storyboard */; };
 		76A843B21EA7856C00BDAF2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76A843B11EA7856C00BDAF2C /* Assets.xcassets */; };
@@ -243,6 +244,7 @@
 		76A4AD471FA731C000D20743 /* BannerPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerPromotionCell.xib; sourceTree = "<group>"; };
 		76A4AD4A1FA7352400D20743 /* BannerPromotionEditorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerPromotionEditorial.swift; sourceTree = "<group>"; };
 		76A4AD4C1FA736C700D20743 /* BannerPromotionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerPromotionLayout.swift; sourceTree = "<group>"; };
+		76A7E9931FA88D2800C4AF27 /* CarouselHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselHeaderViewModel.swift; sourceTree = "<group>"; };
 		76A843A71EA7856C00BDAF2C /* iOSReferenceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSReferenceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A843AA1EA7856C00BDAF2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76A843AF1EA7856C00BDAF2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -804,6 +806,7 @@
 			children = (
 				76EC8D5C1FA5145300F6FDB6 /* CarouselListViewModel.swift */,
 				76EC8D5D1FA5145300F6FDB6 /* CarouselViewModel.swift */,
+				76A7E9931FA88D2800C4AF27 /* CarouselHeaderViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1111,6 +1114,7 @@
 				7698622B1FA5197C00A57213 /* OfflineListViewController.swift in Sources */,
 				76B0AFBE1FA5241B0085C837 /* BasicItemPromotionEditorial.swift in Sources */,
 				76B0AFAE1FA51B8E0085C837 /* SearchViewModel.swift in Sources */,
+				76A7E9941FA88D2800C4AF27 /* CarouselHeaderViewModel.swift in Sources */,
 				F7061C711EC5CF460041E271 /* UIColorExtension.swift in Sources */,
 				F7A6A15F1ECEDF4600C145E8 /* HomeTabBarController.swift in Sources */,
 				3E9882281F66E46E003467B3 /* AuthorizedEnvironment.swift in Sources */,

@@ -28,6 +28,10 @@ class CarouselHeaderView: UICollectionReusableView {
     
     func configure(with carousel: CarouselEditorial) {
         backgroundColor = UIColor.green
+        reset()
+        title.text = carousel.headerViewModel?.title
+        editorialText.text = carousel.headerViewModel?.text
+        leadingInset.constant = carousel.headerViewModel?.sideInset ?? 0
 //        reset()
 //        title.text = carousel.title?.uppercased()
 //        editorialText.text = carousel.text

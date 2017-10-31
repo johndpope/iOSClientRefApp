@@ -17,10 +17,11 @@ class BasicPromotionEditorial {
     fileprivate(set) var itemEditorials: [BasicItemPromotionEditorial] = []
     
     init(title: String, aspectRatio: AspectRatio = AspectRatio()) {
-        self.title = title
-        self.basicLayout = BasicPromotionLayout()
+        basicLayout = BasicPromotionLayout()
         basicLayout.configuration = CollectionViewLayout.Configuration(headerHeight: 43)
         basicLayout.aspectRatio = aspectRatio.height / aspectRatio.width
+        headerViewModel = CarouselHeaderViewModel(title: title, text: nil, sideInset: basicLayout.configuration.edgeInsets.left)
+        
     }
     
     struct AspectRatio {
@@ -33,11 +34,7 @@ class BasicPromotionEditorial {
         }
     }
     
-    // MARK: Editorial Layout
-    let usesCarouselSpecificEditorial: Bool = true
-    
-    // Carousel Editorial
-    let title: String?
+    let headerViewModel: CarouselHeaderViewModel?
     
     func append(content: [ContentEditorial]) {
         let filtered = content.flatMap{ $0 as? BasicItemPromotionEditorial }

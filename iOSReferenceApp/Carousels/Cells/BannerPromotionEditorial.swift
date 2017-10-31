@@ -23,9 +23,7 @@ extension BannerPromotionEditorial: CarouselEditorial {
         itemEditorials.append(contentsOf: filtered)
     }
     
-    var usesCarouselSpecificEditorial: Bool {
-        return false
-    }
+    var headerViewModel: CarouselHeaderViewModel? { return nil }
     
     func estimatedCellSize(for bounds: CGRect) -> CGSize {
         return bannerLayout.estimatedCellSize(for: bounds)
