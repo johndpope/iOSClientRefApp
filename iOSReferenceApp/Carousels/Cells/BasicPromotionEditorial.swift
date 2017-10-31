@@ -35,7 +35,6 @@ class BasicPromotionEditorial {
     
     // MARK: Editorial Layout
     let usesCarouselSpecificEditorial: Bool = true
-    let usesItemSpecificEditorials: Bool = true
     
     // Carousel Editorial
     let title: String?

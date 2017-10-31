@@ -46,9 +46,7 @@ class BasicPromotionCell: UICollectionViewCell, EditorialCell {
         guard let editorial: BasicItemPromotionEditorial = carousel.editorial(for: index) else { return }
         self.editorial = editorial
         
-        if carousel.usesItemSpecificEditorials {
-            title.text = editorial.title
-        }
+        title.text = editorial.title
         
         
         // Promotional Art

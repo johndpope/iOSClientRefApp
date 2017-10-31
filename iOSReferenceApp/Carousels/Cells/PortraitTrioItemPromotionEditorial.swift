@@ -16,15 +16,15 @@ struct PortraitTrioItemPromotionEditorial: ContentEditorial {
         let third: Asset?
     }
     
-    init(title: String? = nil, text: String? = nil, data: Data) {
+    init(title: String, text: String, data: Data) {
         self.title = title
         self.text = text
         self.data = data
     }
     
     // Carousel Editorial
-    let title: String?
-    let text: String?
+    let title: String
+    let text: String
     
     let data: Data
     

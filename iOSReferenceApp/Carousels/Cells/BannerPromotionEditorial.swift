@@ -27,22 +27,6 @@ extension BannerPromotionEditorial: CarouselEditorial {
         return false
     }
     
-    var usesItemSpecificEditorials: Bool {
-        return true
-    }
-    
-    var title: String? {
-        return nil
-    }
-    
-    var text: String? {
-        return nil
-    }
-    
-    var sideInset: CGFloat {
-        return 0
-    }
-    
     func estimatedCellSize(for bounds: CGRect) -> CGSize {
         return bannerLayout.estimatedCellSize(for: bounds)
     }
@@ -65,7 +49,7 @@ extension BannerPromotionEditorial: CarouselEditorial {
 }
 
 class BannerItemPromotionEditorial {
-    init(data: Asset, title: String? = nil, text: String? = nil) {
+    init(data: Asset, title: String, text: String) {
         self.title = title
         self.text = text
         self.data = data
@@ -74,8 +58,8 @@ class BannerItemPromotionEditorial {
     let data: Asset
     
     // Carousel Editorial
-    let title: String?
-    let text: String?
+    let title: String
+    let text: String
     
     func imageUrl() -> URL? {
         return data

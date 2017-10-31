@@ -12,13 +12,13 @@ import Exposure
 struct BasicItemPromotionEditorial: ContentEditorial {
     let data: Asset
     
-    init(data: Asset, title: String? = nil) {
+    init(data: Asset, title: String) {
         self.data = data
         self.title = title
     }
     
     // Carousel Editorial
-    let title: String?
+    let title: String
     
     
     func imageUrl() -> URL? {

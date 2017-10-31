@@ -63,10 +63,8 @@ class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
         guard let editorial: PortraitTrioItemPromotionEditorial = carousel.editorial(for: index) else { return }
         self.editorial = editorial
         
-        if carousel.usesItemSpecificEditorials {
-            title.text = editorial.title?.uppercased()
-            text.text = editorial.text
-        }
+        title.text = editorial.title.uppercased()
+        text.text = editorial.text
         
         
         // Promotional Art

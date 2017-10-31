@@ -10,7 +10,7 @@ import Foundation
 import Exposure
 
 struct HeroItemPromotionEditorial: ContentEditorial {
-    init(title: String? = nil, text: String? = nil, data: Asset) {
+    init(title: String, text: String, data: Asset) {
         self.title = title
         self.text = text
         self.data = data
@@ -19,8 +19,8 @@ struct HeroItemPromotionEditorial: ContentEditorial {
     let data: Asset
     
     // Carousel Editorial
-    let title: String?
-    let text: String?
+    let title: String
+    let text: String
     
     func imageUrl() -> URL? {
         return data

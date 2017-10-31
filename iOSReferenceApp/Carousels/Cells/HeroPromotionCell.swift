@@ -46,10 +46,8 @@ class HeroPromotionCell: UICollectionViewCell, EditorialCell {
         guard let editorial: HeroItemPromotionEditorial = carousel.editorial(for: index) else { return }
         self.editorial = editorial
         
-        if carousel.usesItemSpecificEditorials {
-            title.text = editorial.title?.uppercased()
-            editorialText.text = editorial.text
-        }
+        title.text = editorial.title.uppercased()
+        editorialText.text = editorial.text
         
         
         // Promotional Art

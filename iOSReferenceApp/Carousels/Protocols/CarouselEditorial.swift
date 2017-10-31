@@ -18,7 +18,6 @@ protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {
     
     // MARK: Editorial Layout
     var usesCarouselSpecificEditorial: Bool { get }
-    var usesItemSpecificEditorials: Bool { get }
     
     // Carousel Editorial
 //    var title: String? { get }

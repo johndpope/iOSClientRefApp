@@ -24,15 +24,11 @@ class CarouselViewModel {
 // MARK: - Fake Carousels
 extension CarouselViewModel {
     func fakeEditorials(for assetList: [Asset]) -> [ContentEditorial] {
-        if let editorial = editorial as? HeroPromotionEditorial {
-            guard editorial.usesItemSpecificEditorials else {
-                return assetList.map{ HeroItemPromotionEditorial(data: $0) }
-            }
-            
+        if editorial is HeroPromotionEditorial {
             return assetList.map{
                 HeroItemPromotionEditorial(title: $0.anyTitle(locale: "en"), text: descriptionOrFake(for: $0), data: $0) }
         }
-        else if let editorial = editorial as? PortraitTrioPromotionEditorial {
+        else if editorial is PortraitTrioPromotionEditorial {
             let cellData = assetList
                 .chuncked(by: 3)
                 .flatMap{ list -> (PortraitTrioItemPromotionEditorial.Data)? in
@@ -41,24 +37,14 @@ extension CarouselViewModel {
                                                                    second: (list.count > 1 ? list[1] : nil),
                                                                    third: (list.count > 2 ? list[2] : nil))
             }
-            guard editorial.usesItemSpecificEditorials else {
-                return cellData.map{ PortraitTrioItemPromotionEditorial(data: $0) }
-            }
+            
             return cellData.map{ PortraitTrioItemPromotionEditorial(title: $0.first.anyTitle(locale: "en"), text: descriptionOrFake(for: $0.first), data: $0) }
         }
-        else if let editorial = editorial as? BasicPromotionEditorial {
-            guard editorial.usesItemSpecificEditorials else {
-                return assetList.map{ BasicItemPromotionEditorial(data: $0) }
-            }
-            
+        else if editorial is BasicPromotionEditorial {
             return assetList.map{ BasicItemPromotionEditorial(data: $0, title: $0.anyTitle(locale: "en")) }
         }
-        else if let editorial = editorial as? BannerPromotionEditorial {
-            guard editorial.usesItemSpecificEditorials else {
-                return assetList.map{ BannerItemPromotionEditorial(data: $0) }
-            }
-            
-            return assetList.map{ BannerItemPromotionEditorial(data: $0, title: $0.anyTitle(locale: "en")) }
+        else if editorial is BannerPromotionEditorial {
+            return assetList.map{ BannerItemPromotionEditorial(data: $0, title: $0.anyTitle(locale: "en"), text: $0.anyDescription(locale: "en")) }
         }
         return []
     }

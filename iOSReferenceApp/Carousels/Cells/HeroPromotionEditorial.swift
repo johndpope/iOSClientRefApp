@@ -22,7 +22,6 @@ class HeroPromotionEditorial {
     
     // MARK: Editorial Layout
     let usesCarouselSpecificEditorial: Bool = false
-    let usesItemSpecificEditorials: Bool = true
     
     func append(content: [ContentEditorial]) {
         let filtered = content.flatMap{ $0 as? HeroItemPromotionEditorial }
