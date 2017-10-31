@@ -149,26 +149,15 @@ class CollectionViewLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let visibleAttributes = attributes.filter {
+        return attributes.filter {
+            if $0.representedElementKind == UICollectionElementKindSectionHeader || $0.representedElementKind == UICollectionElementKindSectionFooter {
+                if let collectionView = collectionView {
+                    let oldFrame = $0.frame
+                    $0.frame = CGRect(x: collectionView.contentOffset.x, y: oldFrame.minY, width: oldFrame.width, height: oldFrame.height)
+                }
+            }
             return rect.contains($0.frame) || rect.intersects($0.frame)
         }
-        
-        let header = visibleAttributes.filter{ $0.representedElementKind == UICollectionElementKindSectionHeader }.first
-        if let stickyHeader = header, let collectionView = collectionView {
-            let contentOffset = collectionView.contentOffset
-            let oldFrame = stickyHeader.frame
-            stickyHeader.frame = CGRect(x: contentOffset.x, y: oldFrame.minY, width: oldFrame.width, height: oldFrame.height)
-        }
-        
-        
-        let footer = visibleAttributes.filter{ $0.representedElementKind == UICollectionElementKindSectionFooter }.first
-        if let stickyFooter = footer, let collectionView = collectionView {
-            let contentOffset = collectionView.contentOffset
-            let oldFrame = stickyFooter.frame
-            stickyFooter.frame = CGRect(x: contentOffset.x, y: oldFrame.minY, width: oldFrame.width, height: oldFrame.height)
-        }
-        
-        return visibleAttributes
     }
 }
 
