@@ -8,6 +8,7 @@ NOT RELEASED
 
 #### Features
 * Content promotion through `Carousel` layout with editorial control.
+* `Featured` promotion through a topside, stretchable banner carousel.
 
 #### Bug Fixes
 * Offline media list now reloads when the view appears
