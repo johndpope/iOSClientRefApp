@@ -9,8 +9,6 @@
 import UIKit
 
 class BannerPromotionLayout: CollectionViewLayout {
-    var editorial: BannerPromotionEditorial!
-    
     override func contentHeight(width: CGFloat) -> CGFloat {
         return cellHeight(width: width)
     }
@@ -21,10 +19,15 @@ class BannerPromotionLayout: CollectionViewLayout {
         return thumbnailWidth(width: width) * aspect
     }
     
+    override func cellHeight(width: CGFloat) -> CGFloat {
+        return thumbnailHeight(width: width)
+    }
     
     override func prepare() {
-        super.prepare()
         guard let collectionView = collectionView else { return }
-        attributes = (0..<collectionView.numberOfItems(inSection: 0)).flatMap{ layoutAttributesForItem(at: IndexPath(item: $0, section: 0)) }
+        attributes = (0..<collectionView.numberOfItems(inSection: 0)).flatMap{
+            
+            layoutAttributesForItem(at: IndexPath(item: $0, section: 0))
+        }
     }
 }

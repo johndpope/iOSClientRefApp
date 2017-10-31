@@ -27,10 +27,12 @@ class StretchyCarouselHeaderView: UICollectionReusableView {
     }
     
     func bind(viewModel: CarouselViewModel) {
-        print(#function)
-        
+        print("StretchyCarouselHeaderView bind")
         self.viewModel = viewModel
+        
+        self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.collectionViewLayout = viewModel.editorial.layout
+        self.collectionView.reloadData()
     }
 }
 
@@ -48,7 +50,6 @@ extension StretchyCarouselHeaderView: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        print(#function)
     }
 }
 

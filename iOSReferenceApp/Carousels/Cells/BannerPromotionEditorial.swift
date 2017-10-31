@@ -10,11 +10,14 @@ import Foundation
 import Exposure
 
 class BannerPromotionEditorial {
-    let bannerLayout = BannerPromotionLayout()
+    let bannerLayout: BannerPromotionLayout
     
     fileprivate var itemEditorials: [BannerItemPromotionEditorial] = []
     
-    
+    init() {
+        bannerLayout = BannerPromotionLayout()
+        bannerLayout.configuration = CollectionViewLayout.Configuration(edgeInsets: UIEdgeInsets.zero, headerHeight: nil, footerHeight: 0, contentSpacing: 0)
+    }
 }
 
 extension BannerPromotionEditorial: CarouselEditorial {
