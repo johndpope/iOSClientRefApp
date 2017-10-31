@@ -8,6 +8,7 @@
 
 import Foundation
 import Exposure
+import Kingfisher
 
 class BannerPromotionEditorial {
     let bannerLayout: BannerPromotionLayout
@@ -46,6 +47,26 @@ extension BannerPromotionEditorial: CarouselEditorial {
     
     var count: Int {
         return content.count
+    }
+}
+
+extension BannerPromotionEditorial {
+    func thumbnailOptions(for size: CGSize) ->  KingfisherOptionsInfo {
+        return [
+            .backgroundDecode,
+            .cacheMemoryOnly,
+            .processor(thumbnailProcessor(for: size))
+        ]
+    }
+    
+    fileprivate func thumbnailProcessor(for size: CGSize) -> ImageProcessor {
+        let resizeProcessor = CrispResizingImageProcessor(referenceSize: size, mode: ContentMode.aspectFill)
+        let croppingProcessor = CroppingImageProcessor(size: size)
+        return resizeProcessor>>croppingProcessor
+    }
+    
+    fileprivate var preferedImageOrientation: Exposure.Image.Orientation {
+        return .landscape
     }
 }
 

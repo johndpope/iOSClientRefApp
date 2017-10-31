@@ -26,7 +26,6 @@ class BannerPromotionLayout: CollectionViewLayout {
     override func prepare() {
         guard let collectionView = collectionView else { return }
         attributes = (0..<collectionView.numberOfItems(inSection: 0)).flatMap{
-            
             layoutAttributesForItem(at: IndexPath(item: $0, section: 0))
         }
     }

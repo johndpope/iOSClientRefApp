@@ -47,6 +47,25 @@ class BannerPromotionCell: UICollectionViewCell, EditorialCell {
         guard let carousel = carousel else { return }
         reset()
         
+        guard let editorial: BannerItemPromotionEditorial = carousel.editorial(for: index) else { return }
+        self.editorial = editorial
         
+        
+        title.text = editorial.title
+        descriptionLabel.text = editorial.text
+        
+        // Promotional Art
+        let cellSize = carousel.bannerLayout.thumbnailSize(width: size.width)
+        if let url = editorial.imageUrl() {
+            banner
+                .kf
+                .setImage(with: url,
+                          placeholder: #imageLiteral(resourceName: "assetPlaceholder"),
+                          options: carousel.thumbnailOptions(for: cellSize)) { (image, error, cache, url) in
+                            if let error = error {
+                                print("Kingfisher: ",error)
+                            }
+            }
+        }
     }
 }
