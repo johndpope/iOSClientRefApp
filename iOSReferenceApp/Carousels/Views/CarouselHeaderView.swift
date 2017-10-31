@@ -27,15 +27,8 @@ class CarouselHeaderView: UICollectionReusableView {
     }
     
     func configure(with carousel: CarouselEditorial) {
-        title.text = carousel.title?.uppercased()
-        editorialText.text = carousel.text
-        leadingInset.constant = carousel.sideInset
+//        title.text = carousel.title?.uppercased()
+//        editorialText.text = carousel.text
+//        leadingInset.constant = carousel.sideInset
     }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
-    
 }

@@ -12,32 +12,17 @@ import Exposure
 import Kingfisher
 
 class HeroPromotionEditorial {
-    let heroLayout = HeroPromotionLayout()
+    let heroLayout:HeroPromotionLayout
     
     fileprivate var itemEditorials: [HeroItemPromotionEditorial] = []
     
     init() {
-        heroLayout.editorial = self
+        heroLayout = HeroPromotionLayout()
     }
     
     // MARK: Editorial Layout
     let usesCarouselSpecificEditorial: Bool = false
     let usesItemSpecificEditorials: Bool = true
-    
-    // MARK: Header
-    var headerHeight: CGFloat? { return nil }
-    var title: String?  { return nil }
-    var text: String?  { return nil }
-    
-    // MARK: Footer
-    let footerHeight: CGFloat = 50
-    
-    
-    // MARK: General Layout
-    let cellEditorialHeight: CGFloat = 43
-    let sideInset: CGFloat = 30
-    let topInset: CGFloat = 10
-    
     
     func append(content: [ContentEditorial]) {
         let filtered = content.flatMap{ $0 as? HeroItemPromotionEditorial }

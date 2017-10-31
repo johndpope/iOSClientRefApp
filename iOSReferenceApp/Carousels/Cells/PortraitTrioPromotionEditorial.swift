@@ -12,30 +12,17 @@ import Exposure
 import Kingfisher
 
 class PortraitTrioPromotionEditorial {
-    let portraitLayout = PortraitTrioPromotionLayout()
+    let portraitLayout: PortraitTrioPromotionLayout
     
     fileprivate var itemEditorials: [PortraitTrioItemPromotionEditorial] = []
     
     init() {
-        portraitLayout.editorial = self
+        self.portraitLayout = PortraitTrioPromotionLayout()
     }
     
     // MARK: Editorial Layout
     let usesCarouselSpecificEditorial: Bool = false
     let usesItemSpecificEditorials: Bool = true
-    
-    // MARK: Header
-    var headerHeight: CGFloat? { return nil }
-    var title: String?  { return nil }
-    var text: String?  { return nil }
-    
-    // MARK: Footer
-    let footerHeight: CGFloat = 50
-    
-    // MARK: General Layout
-    let cellEditorialHeight: CGFloat = 43
-    let sideInset: CGFloat = 30
-    let topInset: CGFloat = 10
     
     func append(content: [ContentEditorial]) {
         let filtered = content.flatMap{ $0 as? PortraitTrioItemPromotionEditorial }

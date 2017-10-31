@@ -25,14 +25,21 @@ class CollectionViewLayout: UICollectionViewLayout {
     
     // MARK: - Configuration
     internal struct Configuration {
-        var sideInset: CGFloat = 30
-        var topInset: CGFloat = 10
+        let edgeInsets: UIEdgeInsets
         
-        var headerHeight: CGFloat? = 43
-        var footerHeight: CGFloat = 50
+        let headerHeight: CGFloat?
+        let footerHeight: CGFloat
         
-        var contentSpacing: CGFloat {
-            return sideInset / 2
+        let contentSpacing: CGFloat
+        
+        init(edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 30, bottom: 0, right: 30),
+             headerHeight: CGFloat? = nil,
+             footerHeight: CGFloat = 50,
+             contentSpacing: CGFloat = 15) {
+            self.edgeInsets = edgeInsets
+            self.headerHeight = headerHeight
+            self.footerHeight = footerHeight
+            self.contentSpacing = contentSpacing
         }
     }
     internal var configuration: Configuration = Configuration()
@@ -56,7 +63,7 @@ class CollectionViewLayout: UICollectionViewLayout {
     }
     
     internal func cellWidth(width: CGFloat) -> CGFloat {
-        return width - 2 * configuration.sideInset
+        return width - (configuration.edgeInsets.left + configuration.edgeInsets.right)
     }
     
     internal func thumbnailHeight(width: CGFloat) -> CGFloat {
@@ -80,7 +87,7 @@ class CollectionViewLayout: UICollectionViewLayout {
     
     internal func contentOffset(at index: Int) -> CGFloat {
         guard let collectionView = collectionView else { return 0 }
-        return configuration.sideInset + CGFloat(index) * (cellWidth(width: collectionView.bounds.width) + configuration.contentSpacing)
+        return configuration.edgeInsets.left + CGFloat(index) * (cellWidth(width: collectionView.bounds.width) + configuration.contentSpacing)
     }
     
     // MARK: - Overrides
@@ -110,7 +117,7 @@ class CollectionViewLayout: UICollectionViewLayout {
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         guard let collectionView = collectionView else { return nil }
-        let editorialHeight = (configuration.headerHeight ?? 0) + configuration.topInset
+        let editorialHeight = (configuration.headerHeight ?? 0) + configuration.edgeInsets.top
         let height = cellHeight(width: collectionView.bounds.width)
         let width = cellWidth(width: collectionView.bounds.width)
         

@@ -21,7 +21,7 @@ protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {
     var usesItemSpecificEditorials: Bool { get }
     
     // Carousel Editorial
-    var title: String? { get }
-    var text: String? { get }
-    var sideInset: CGFloat { get }
+//    var title: String? { get }
+//    var text: String? { get }
+//    var sideInset: CGFloat { get }
 }

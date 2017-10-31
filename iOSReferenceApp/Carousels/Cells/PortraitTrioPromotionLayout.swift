@@ -9,14 +9,12 @@
 import UIKit
 
 class PortraitTrioPromotionLayout: CollectionViewLayout {
-    var editorial: PortraitTrioPromotionEditorial!
-    
+    var cellEditorialHeight: CGFloat = 43
     
     override func cellHeight(width: CGFloat) -> CGFloat {
         let thumbHeight = thumbnailHeight(width: width)
         // Total cell height
-        let itemEditorialHeight = (editorial.cellEditorialHeight ?? 0)
-        return thumbHeight + itemEditorialHeight
+        return thumbHeight + cellEditorialHeight
     }
     
     
@@ -27,7 +25,7 @@ class PortraitTrioPromotionLayout: CollectionViewLayout {
     }
     
     override func thumbnailWidth(width: CGFloat) -> CGFloat {
-        let availableWidth = cellWidth(width: width) - editorial.sideInset * 2
+        let availableWidth = cellWidth(width: width) - 2 * configuration.contentSpacing
         return availableWidth / 3
     }
 }

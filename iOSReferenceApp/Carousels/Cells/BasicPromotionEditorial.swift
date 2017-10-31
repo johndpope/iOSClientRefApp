@@ -12,15 +12,15 @@ import Kingfisher
 import Exposure
 
 class BasicPromotionEditorial {
-    let portraitLayout = BasicPromotionLayout()
-    
+    let basicLayout: BasicPromotionLayout
     
     fileprivate(set) var itemEditorials: [BasicItemPromotionEditorial] = []
     
     init(title: String, aspectRatio: AspectRatio = AspectRatio()) {
         self.title = title
-        self.aspectRatio = aspectRatio
-        portraitLayout.editorial = self
+        self.basicLayout = BasicPromotionLayout()
+        basicLayout.configuration = CollectionViewLayout.Configuration(headerHeight: 43)
+        basicLayout.aspectRatio = aspectRatio.height / aspectRatio.width
     }
     
     struct AspectRatio {
@@ -39,21 +39,6 @@ class BasicPromotionEditorial {
     
     // Carousel Editorial
     let title: String?
-    var text: String? { return nil }
-    
-    // MARK: Header & Footer
-    let headerHeight: CGFloat? = 43
-    let footerHeight: CGFloat = 50
-    
-    // MARK: Cell
-    let titleHeight: CGFloat? = 28
-    let itemsPerRow: Int = 2
-    let aspectRatio: AspectRatio
-    
-    // MARK: General Layout
-    let sideInset: CGFloat = 30
-    let topInset: CGFloat = 10
-    
     
     func append(content: [ContentEditorial]) {
         let filtered = content.flatMap{ $0 as? BasicItemPromotionEditorial }
@@ -82,10 +67,10 @@ extension BasicPromotionEditorial {
     }
     
     fileprivate var preferedImageOrientation: Exposure.Image.Orientation {
-        if aspectRatio.width > aspectRatio.height {
+        if basicLayout.aspectRatio > 0 {
             return .landscape
         }
-        else if aspectRatio.width < aspectRatio.height {
+        else if basicLayout.aspectRatio < 0 {
             return .portrait
         }
         return .square
@@ -98,7 +83,7 @@ extension BasicPromotionEditorial: CarouselEditorial {
     }
     
     var layout: CollectionViewLayout {
-        return portraitLayout
+        return basicLayout
     }
     
     func editorial<T>(for index: Int) -> T? where T : ContentEditorial {
@@ -112,6 +97,6 @@ extension BasicPromotionEditorial: CarouselEditorial {
 
 extension BasicPromotionEditorial: EmbeddedCarouselLayoutDelegate {
     func estimatedCellSize(for bounds: CGRect) -> CGSize {
-        return portraitLayout.estimatedCellSize(for: bounds)
+        return basicLayout.estimatedCellSize(for: bounds)
     }
 }

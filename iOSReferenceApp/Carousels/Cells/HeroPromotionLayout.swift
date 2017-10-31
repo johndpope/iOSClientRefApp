@@ -9,12 +9,12 @@
 import UIKit
 
 class HeroPromotionLayout: CollectionViewLayout {
-    var editorial: HeroPromotionEditorial!
+    var cellEditorialHeight: CGFloat = 43
     
     override func cellHeight(width: CGFloat) -> CGFloat {
         let thumbnail = thumbnailHeight(width: width)
         // Total cell height
-        let itemEditorialHeight = editorial.cellEditorialHeight
+        let itemEditorialHeight = cellEditorialHeight
         return thumbnail + itemEditorialHeight
     }
 }

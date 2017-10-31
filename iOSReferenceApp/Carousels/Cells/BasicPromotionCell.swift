@@ -52,7 +52,7 @@ class BasicPromotionCell: UICollectionViewCell, EditorialCell {
         
         
         // Promotional Art
-        let cellSize = carousel.portraitLayout.thumbnailSize(width: size.width)
+        let cellSize = carousel.basicLayout.thumbnailSize(width: size.width)
         if let url = editorial.imageUrl() {
             thumbnailView
                 .kf
