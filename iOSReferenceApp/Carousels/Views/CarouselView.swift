@@ -37,11 +37,11 @@ class CarouselView: UICollectionViewCell {
         
     }
     
-    func bind(viewModel: CarouselViewModel) {//},environment: Environment, sessionToken: SessionToken) {
-        print(#function)
-        
+    func bind(viewModel: CarouselViewModel) {
         self.viewModel = viewModel
+        self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.collectionViewLayout = viewModel.editorial.layout
+        self.collectionView.reloadData()
 //        UIView.animate(withDuration: 0.2) {
 //            self.collectionView.collectionViewLayout.invalidateLayout()
 //            self.collectionView.reloadData()
@@ -123,7 +123,6 @@ extension CarouselView: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        print(#function)
     }
 }
 

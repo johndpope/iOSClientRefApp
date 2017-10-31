@@ -133,6 +133,7 @@ class CollectionViewLayout: UICollectionViewLayout {
         if let headerHeight = configuration.headerHeight, elementKind == UICollectionElementKindSectionHeader {
             let attribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: indexPath)
             attribute.frame = CGRect(x: 0, y: 0, width: width, height: headerHeight)
+            attribute.zIndex = -1
             return attribute
         }
         
@@ -141,6 +142,7 @@ class CollectionViewLayout: UICollectionViewLayout {
         if elementKind == UICollectionElementKindSectionFooter {
             let attribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: indexPath)
             attribute.frame = CGRect(x: 0, y: height+headerHeight, width: width, height: configuration.footerHeight)
+            attribute.zIndex = -1
             return attribute
         }
         return nil

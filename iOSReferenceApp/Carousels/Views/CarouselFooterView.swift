@@ -29,7 +29,7 @@ class CarouselFooterView: UICollectionReusableView {
     }
     
     func setupFade() {
-        let colors = [fadeColor.cgColor, originalColor.cgColor]
+        let colors = [fadeColor.cgColor, UIColor.red.cgColor]//originalColor.cgColor]
         gradientLayer.colors = colors
         
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
@@ -40,7 +40,7 @@ class CarouselFooterView: UICollectionReusableView {
         
         let overFadeLayer = CAShapeLayer()
         overFadeLayer.path = UIBezierPath(rect: fadeView.bounds).cgPath
-        overFadeLayer.fillColor = originalColor.cgColor
+        overFadeLayer.fillColor = UIColor.red.cgColor//originalColor.cgColor
         fadeView.layer.addSublayer(overFadeLayer)
 
         let shadowLayer = CALayer()

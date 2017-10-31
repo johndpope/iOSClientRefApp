@@ -68,12 +68,10 @@ extension CarouselViewController: SlidingMenuDelegate {
 
 extension CarouselViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(#function,section)
         return viewModel.content.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print(#function,indexPath.row)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "carousel", for: indexPath) as! CarouselView
         
         let carouselViewModel = viewModel.content[indexPath.row]
@@ -86,7 +84,6 @@ extension CarouselViewController: UICollectionViewDataSource {
 
 extension CarouselViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(#function,indexPath.row)
         if let cell = cell as? CarouselView {
             cell.selectedAsset = { [weak self] asset in
                 self?.presetDetails(for: asset, from: .other)
@@ -139,7 +136,6 @@ extension CarouselViewController: StretchyCarouselHeaderLayoutDelegate {
 }
 extension CarouselViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        print(#function,indexPath.row,viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds))
 
         return viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds)
     }
