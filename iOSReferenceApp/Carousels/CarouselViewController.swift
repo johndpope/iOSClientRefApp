@@ -19,12 +19,14 @@ class CarouselViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.register(UINib(nibName: "StretchyCarouselHeaderView", bundle: nil), forSupplementaryViewOfKind: StretchyCollectionHeaderKind, withReuseIdentifier: "stretchyHeader")
+        collectionView.register(UINib(nibName: "StretchyCarouselHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "stretchyHeader")
+//        collectionView.register(UINib(nibName: "StretchyCarouselHeaderView", bundle: nil), forSupplementaryViewOfKind: StretchyCollectionHeaderKind, withReuseIdentifier: "stretchyHeader")
         collectionView.register(UINib(nibName: "CarouselView", bundle: nil), forCellWithReuseIdentifier: "carousel")
         
         collectionView.delegate = self
         collectionView.dataSource = self
         let layout = StretchyCarouselHeaderLayout()
+        
         layout.delegate = self
         collectionView.collectionViewLayout = layout
         
@@ -102,7 +104,7 @@ extension CarouselViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if let bannerViewModel = viewModel.bannerViewModel, kind == StretchyCollectionHeaderKind {
+        if let bannerViewModel = viewModel.bannerViewModel, kind == UICollectionElementKindSectionHeader {//StretchyCollectionHeaderKind {
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "stretchyHeader", for: indexPath) as! StretchyCarouselHeaderView
             view.bind(viewModel: bannerViewModel)
             return view
@@ -113,11 +115,10 @@ extension CarouselViewController: UICollectionViewDelegate {
 
 extension CarouselViewController: StretchyCarouselHeaderLayoutDelegate {
     var usesStretchyHeader: Bool {
-        return false //viewModel.bannerViewModel != nil
+        return viewModel.bannerViewModel != nil
     }
     
     var startingStretchyHeaderHeight: CGFloat {
-        return 0
         guard let bannerEditorial = viewModel.bannerViewModel?.editorial as? BannerPromotionEditorial else { return 0 }
         return bannerEditorial.estimatedCellSize(for: collectionView.bounds).height
     }
@@ -141,6 +142,11 @@ extension CarouselViewController: UICollectionViewDelegateFlowLayout {
         print(#function,indexPath.row,viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds))
 
         return viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard let bannerEditorial = viewModel.bannerViewModel?.editorial as? BannerPromotionEditorial else { return CGSize.zero }
+        return bannerEditorial.estimatedCellSize(for: collectionView.bounds)
     }
 }
 
