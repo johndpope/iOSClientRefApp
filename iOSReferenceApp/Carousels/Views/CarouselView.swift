@@ -22,8 +22,8 @@ class CarouselView: UICollectionViewCell {
         // Initialization code
         
         collectionView.register(UINib(nibName: "HeroPromotionCell", bundle: nil), forCellWithReuseIdentifier: "heroCell")
-        
         collectionView.register(UINib(nibName: "PortraitTrioPromotionCell", bundle: nil), forCellWithReuseIdentifier: "portraitTrioCell")
+        collectionView.register(UINib(nibName: "BasicPromotionCell", bundle: nil), forCellWithReuseIdentifier: "basicCell")
 
         collectionView.register(UINib(nibName: "CarouselHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "carouselHeader")
         
@@ -39,8 +39,17 @@ class CarouselView: UICollectionViewCell {
     
     func bind(viewModel: CarouselViewModel) {
         self.viewModel = viewModel
-        collectionView.collectionViewLayout = viewModel.editorial.layout
-        collectionView.reloadData()
+        self.collectionView.collectionViewLayout.invalidateLayout()
+        self.collectionView.collectionViewLayout = viewModel.editorial.layout
+        self.collectionView.reloadData()
+//        UIView.animate(withDuration: 0.2) {
+//            self.collectionView.collectionViewLayout.invalidateLayout()
+//            self.collectionView.reloadData()
+//            self.collectionView.collectionViewLayout = viewModel.editorial.layout
+//        }
+//        viewModel.fakeCarouselMetadataFetch(environment: environment, sessionToken: sessionToken, type: .movie) {
+//
+//        }, callback: <#T##(ExposureError?) -> Void#>)
     }
     
 }
@@ -59,6 +68,9 @@ extension CarouselView: UICollectionViewDataSource {
         else if viewModel.editorial is PortraitTrioPromotionEditorial {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "portraitTrioCell", for: indexPath) as! PortraitTrioPromotionCell
         }
+        else if viewModel.editorial is BasicPromotionEditorial {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "basicCell", for: indexPath) as! BasicPromotionCell
+        }
         return UICollectionViewCell()
     }
 }
@@ -68,14 +80,21 @@ extension CarouselView: UICollectionViewDelegate {
         preloadNextBatch(after: indexPath)
         if let cell = cell as? HeroPromotionCell {
             cell.configure(with: viewModel.editorial as? HeroPromotionEditorial,
-                           for: indexPath.row)
+                           for: indexPath.row, size: collectionView.bounds.size)
             cell.selectedAsset = { [weak self] asset in
                 self?.selectedAsset(asset)
             }
         }
         else if let cell = cell as? PortraitTrioPromotionCell {
             cell.configure(with: viewModel.editorial as? PortraitTrioPromotionEditorial,
-                           for: indexPath.row)
+                           for: indexPath.row, size: collectionView.bounds.size)
+            cell.selectedAsset = { [weak self]  asset in
+                self?.selectedAsset(asset)
+            }
+        }
+        else if let cell = cell as? BasicPromotionCell {
+            cell.configure(with: viewModel.editorial as? BasicPromotionEditorial,
+                           for: indexPath.row, size: collectionView.bounds.size)
             cell.selectedAsset = { [weak self]  asset in
                 self?.selectedAsset(asset)
             }
@@ -83,27 +102,27 @@ extension CarouselView: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        
+        if let view = view as? CarouselHeaderView, elementKind == UICollectionElementKindSectionHeader {
+            view.configure(with: viewModel.editorial)
+        }
+        else if let view = view as? CarouselFooterView, elementKind == UICollectionElementKindSectionFooter {
+            view.setupFade()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionElementKindSectionHeader {
-            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselHeader", for: indexPath) as! CarouselHeaderView
-            view.configure(with: viewModel.editorial)
-            return view
+            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselHeader", for: indexPath) as! CarouselHeaderView
         }
         
         if kind == UICollectionElementKindSectionFooter {
-            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselFooter", for: indexPath) as! CarouselFooterView
-            view.setupFade()
-            return view
+            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "carouselFooter", for: indexPath) as! CarouselFooterView
         }
         return UICollectionReusableView()
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        print(#function)
     }
 }
 

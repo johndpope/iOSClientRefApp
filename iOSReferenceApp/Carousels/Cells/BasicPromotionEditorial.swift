@@ -1,34 +1,48 @@
 //
-//  HeroPromotionEditorial.swift
+//  PortraitPromotionEditorial.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-10-24.
+//  Created by Fredrik Sjöberg on 2017-10-28.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import Foundation
 import CoreGraphics
-import Exposure
 import Kingfisher
+import Exposure
 
-class HeroPromotionEditorial {
-    let heroLayout:HeroPromotionLayout
+class BasicPromotionEditorial {
+    let basicLayout: BasicPromotionLayout
     
-    fileprivate var itemEditorials: [HeroItemPromotionEditorial] = []
+    fileprivate(set) var itemEditorials: [BasicItemPromotionEditorial] = []
     
-    init() {
-        heroLayout = HeroPromotionLayout()
+    init(title: String, aspectRatio: AspectRatio = AspectRatio()) {
+        basicLayout = BasicPromotionLayout()
+        basicLayout.configuration = CollectionViewLayout.Configuration(headerHeight: 43)
+        basicLayout.aspectRatio = aspectRatio.height / aspectRatio.width
+        headerViewModel = CarouselHeaderViewModel(title: title, text: nil, sideInset: basicLayout.configuration.edgeInsets.left)
+        
     }
     
-    var headerViewModel: CarouselHeaderViewModel? { return nil }
+    struct AspectRatio {
+        let width: CGFloat
+        let height: CGFloat
+        
+        init(width: CGFloat = 3, height: CGFloat = 2) {
+            self.width = width
+            self.height = height
+        }
+    }
+    
+    let headerViewModel: CarouselHeaderViewModel?
     
     func append(content: [ContentEditorial]) {
-        let filtered = content.flatMap{ $0 as? HeroItemPromotionEditorial }
+        let filtered = content.flatMap{ $0 as? BasicItemPromotionEditorial }
         itemEditorials.append(contentsOf: filtered)
     }
 }
 
-extension HeroPromotionEditorial {
+extension BasicPromotionEditorial {
     func thumbnailOptions(for size: CGSize) ->  KingfisherOptionsInfo {
         return [
             .backgroundDecode,
@@ -49,17 +63,23 @@ extension HeroPromotionEditorial {
     }
     
     fileprivate var preferedImageOrientation: Exposure.Image.Orientation {
-        return .landscape
+        if basicLayout.aspectRatio > 0 {
+            return .landscape
+        }
+        else if basicLayout.aspectRatio < 0 {
+            return .portrait
+        }
+        return .square
     }
 }
 
-extension HeroPromotionEditorial: CarouselEditorial {
+extension BasicPromotionEditorial: CarouselEditorial {
     var content: [ContentEditorial] {
         return itemEditorials
     }
     
     var layout: CollectionViewLayout {
-        return heroLayout
+        return basicLayout
     }
     
     func editorial<T>(for index: Int) -> T? where T : ContentEditorial {
@@ -71,8 +91,8 @@ extension HeroPromotionEditorial: CarouselEditorial {
     }
 }
 
-extension HeroPromotionEditorial: EmbeddedCarouselLayoutDelegate {
+extension BasicPromotionEditorial: EmbeddedCarouselLayoutDelegate {
     func estimatedCellSize(for bounds: CGRect) -> CGSize {
-        return heroLayout.estimatedCellSize(for: bounds)
+        return basicLayout.estimatedCellSize(for: bounds)
     }
 }

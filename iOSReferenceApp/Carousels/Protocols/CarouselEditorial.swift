@@ -17,19 +17,5 @@ protocol CarouselEditorial: EmbeddedCarouselLayoutDelegate {
     var count: Int { get }
     
     // MARK: Editorial Layout
-    var usesCarouselSpecificEditorial: Bool { get }
-    var usesItemSpecificEditorials: Bool { get }
-    
-    // Carousel Editorial
-    var title: String? { get }
-    var text: String? { get }
-    
-    // MARK: Header & Footer
-    var editorialHeight: CGFloat? { get }
-    var footerHeight: CGFloat { get }
-    var itemEditorialHeight: CGFloat? { get }
-    
-    // MARK: General Layout
-    var contentSideInset: CGFloat { get }
-    var contentTopInset: CGFloat { get }
+    var headerViewModel: CarouselHeaderViewModel? { get }
 }

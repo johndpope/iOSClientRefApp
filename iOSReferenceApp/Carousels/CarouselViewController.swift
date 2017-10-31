@@ -19,10 +19,15 @@ class CarouselViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView.register(UINib(nibName: "StretchyCarouselHeaderView", bundle: nil), forSupplementaryViewOfKind: StretchyCollectionHeaderKind, withReuseIdentifier: "stretchyHeader")
         collectionView.register(UINib(nibName: "CarouselView", bundle: nil), forCellWithReuseIdentifier: "carousel")
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        let layout = StretchyCarouselHeaderLayout()
+        layout.delegate = self
+        collectionView.collectionViewLayout = layout
         
         setupViewModel()
     }
@@ -33,14 +38,8 @@ class CarouselViewController: UIViewController {
     }
     
     fileprivate func setupViewModel() {
-//        guard let tabVC = self.tabBarController as? HomeTabBarController else {
-//            fatalError("Unable to proceed without homeTabBarController")
-//        }
-        
-        let carouselGroupId = "fakeCarousels"//tabVC.dynamicCustomerConfig?.carouselGroupId ?? "fakeCarousels"
-        
-        viewModel.loadCarousel(group: carouselGroupId) { [weak self] error in
-            self?.collectionView.invalidateIntrinsicContentSize()
+        // TODO: Load carousels instead of faking it.
+        viewModel.loadFakeCarousel{ [weak self] index, error in
             self?.collectionView.reloadData()
         }
     }
@@ -61,25 +60,63 @@ extension CarouselViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "carousel", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "carousel", for: indexPath) as! CarouselView
+        
+        let carouselViewModel = viewModel.content[indexPath.row]
+        cell.bind(viewModel: carouselViewModel)
+        
+        return cell
     }
+    
 }
 
 extension CarouselViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? CarouselView {
-            let carouselViewModel = viewModel.content[indexPath.row]
-            cell.bind(viewModel: carouselViewModel)
             cell.selectedAsset = { [weak self] asset in
                 self?.presetDetails(for: asset, from: .other)
             }
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        if let view = view as? StretchyCarouselHeaderView, let bannerViewModel = viewModel.bannerViewModel, elementKind == StretchyCollectionHeaderKind {
+            view.bind(viewModel: bannerViewModel)
+            view.selectedAsset = { [weak self] asset in
+                self?.presetDetails(for: asset, from: .other)
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == StretchyCollectionHeaderKind {
+            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "stretchyHeader", for: indexPath) as! StretchyCarouselHeaderView
+        }
+        return UICollectionReusableView()
+    }
 }
 
-extension CarouselViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+extension CarouselViewController: StretchyCarouselHeaderLayoutDelegate {
+    var usesStretchyHeader: Bool {
+        return viewModel.bannerViewModel != nil
+    }
+    
+    var startingStretchyHeaderHeight: CGFloat {
+        guard let bannerEditorial = viewModel.bannerViewModel?.editorial as? BannerPromotionEditorial else { return 0 }
+        return bannerEditorial.estimatedCellSize(for: collectionView.bounds).height
+    }
+    
+    func cellSize(for indexPath: IndexPath) -> CGSize {
+        guard !viewModel.content.isEmpty else { return CGSize.zero }
         return viewModel.content[indexPath.row].editorial.estimatedCellSize(for: collectionView.bounds)
+    }
+    
+    var edgeInsets: UIEdgeInsets {
+        return UIEdgeInsets.zero
+    }
+    
+    var itemSpacing: CGFloat {
+        return 0
     }
 }
 

@@ -16,20 +16,20 @@ class CarouselHeaderView: UICollectionReusableView {
     @IBOutlet weak var leadingInset: NSLayoutConstraint!
     @IBOutlet weak var trailingInset: NSLayoutConstraint!
     
+    func reset() {
+        title.text = nil
+        editorialText.text = nil
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
     func configure(with carousel: CarouselEditorial) {
-        title.text = carousel.title?.uppercased()
-        editorialText.text = carousel.text
+        reset()
+        title.text = carousel.headerViewModel?.title?.uppercased()
+        editorialText.text = carousel.headerViewModel?.text
+        leadingInset.constant = carousel.headerViewModel?.sideInset ?? 0
     }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
-    
 }

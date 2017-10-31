@@ -56,21 +56,19 @@ class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
         addGestureRecognizer(gesture)
     }
     
-    func configure(with carousel: PortraitTrioPromotionEditorial?, for index: Int) {
+    func configure(with carousel: PortraitTrioPromotionEditorial?, for index: Int, size: CGSize) {
         guard let carousel = carousel else { return }
         reset()
         
         guard let editorial: PortraitTrioItemPromotionEditorial = carousel.editorial(for: index) else { return }
         self.editorial = editorial
         
-        if carousel.usesItemSpecificEditorials {
-            title.text = editorial.title?.uppercased()
-            text.text = editorial.text
-        }
+        title.text = editorial.title.uppercased()
+        text.text = editorial.text
         
         
         // Promotional Art
-        let cellSize = carousel.portraitLayout.thumbnailSize()
+        let cellSize = carousel.portraitLayout.thumbnailSize(width: size.width)
         let imageOptions = carousel.thumbnailOptions(for: cellSize)
         
         load(imageView: first, options: imageOptions, editorial: editorial) { $0.first }

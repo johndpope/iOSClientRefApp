@@ -12,31 +12,15 @@ import Exposure
 import Kingfisher
 
 class PortraitTrioPromotionEditorial {
+    let portraitLayout: PortraitTrioPromotionLayout
     
-    fileprivate(set) var portraitLayout = PortraitTrioPromotionLayout()
     fileprivate var itemEditorials: [PortraitTrioItemPromotionEditorial] = []
     
     init() {
-        portraitLayout.delegate = self
-        portraitLayout.use(pagination: true)
+        self.portraitLayout = PortraitTrioPromotionLayout()
     }
     
-    // MARK: Editorial Layout
-    let usesCarouselSpecificEditorial: Bool = false
-    let usesItemSpecificEditorials: Bool = true
-    
-    // Carousel Editorial
-    let title: String? = nil
-    let text: String? = nil
-    
-    // MARK: Header & Footer
-    let editorialHeight: CGFloat? = nil
-    let footerHeight: CGFloat = 50
-    let itemEditorialHeight: CGFloat? = 43
-    
-    // MARK: General Layout
-    let contentSideInset: CGFloat = 30
-    let contentTopInset: CGFloat = 10
+    var headerViewModel: CarouselHeaderViewModel? { return nil }
     
     func append(content: [ContentEditorial]) {
         let filtered = content.flatMap{ $0 as? PortraitTrioItemPromotionEditorial }
@@ -87,69 +71,8 @@ extension PortraitTrioPromotionEditorial: CarouselEditorial {
     }
 }
 
-extension PortraitTrioPromotionEditorial: CarouselLayoutDelegate {
-    var carouselSpecificEditorialHeight: CGFloat? {
-        return editorialHeight
-    }
-    
-    var carouselFooterHeight: CGFloat {
-        return footerHeight
-    }
-    
-    var carouselContentSideInset: CGFloat {
-        return contentSideInset
-    }
-    
-    var carouselContentTopInset: CGFloat {
-        return contentTopInset
-    }
-    
-    var itemSpecificEditorialHeight: CGFloat? {
-        return itemEditorialHeight
-    }
-}
-
 extension PortraitTrioPromotionEditorial: EmbeddedCarouselLayoutDelegate {
     func estimatedCellSize(for bounds: CGRect) -> CGSize {
         return portraitLayout.estimatedCellSize(for: bounds)
-    }
-}
-
-struct PortraitTrioItemPromotionEditorial: ContentEditorial {
-    struct Data {
-        let first: Asset
-        let second: Asset?
-        let third: Asset?
-    }
-    
-    init(title: String? = nil, text: String? = nil, data: Data) {
-        self.title = title
-        self.text = text
-        self.data = data
-    }
-    
-    // Carousel Editorial
-    let title: String?
-    let text: String?
-    
-    let data: Data
-    
-    func imageUrl(callback: (Data) -> Asset?) -> URL? {
-        return callback(data)?
-            .images(locale: "en")
-            .prefere(orientation: .landscape)
-            .validImageUrls()
-            .first
-    }
-    
-    func prefetchImageUrls() -> [URL] {
-        return [data.first, data.second, data.third]
-            .flatMap{ $0 }
-            .flatMap{
-                $0.images(locale: "en")
-                    .prefere(orientation: .landscape)
-                    .validImageUrls()
-                    .first
-        }
     }
 }

@@ -1,24 +1,37 @@
 //
-//  HeroPromotionCell.swift
+//  BasicPromotionCell.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-10-22.
+//  Created by Fredrik Sjöberg on 2017-10-28.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import UIKit
 import Exposure
+import Kingfisher
 
-class HeroPromotionCell: UICollectionViewCell, EditorialCell {
+class BasicPromotionCell: UICollectionViewCell, EditorialCell {
 
-    typealias ContentEditorial = HeroItemPromotionEditorial
+    typealias ContentEditorial = BasicPromotionEditorial
     
-    private var editorial: HeroItemPromotionEditorial? = nil
+    private var editorial: BasicItemPromotionEditorial?
     var selectedAsset: (Asset) -> Void = { _ in }
     
+    @IBOutlet weak var thumbnailView: UIImageView!
     @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var editorialText: UILabel!
-    @IBOutlet weak var heroBanner: UIImageView!
+    
+    func reset() {
+        thumbnailView.image = #imageLiteral(resourceName: "assetPlaceholder")
+        editorial = nil
+    }
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureAction(_:)))
+        tapGestureRecognizer = gesture
+        addGestureRecognizer(gesture)
+    }
+
     
     weak var tapGestureRecognizer: UITapGestureRecognizer!
     func tapGestureAction(_ sender: UITapGestureRecognizer) {
@@ -26,34 +39,20 @@ class HeroPromotionCell: UICollectionViewCell, EditorialCell {
         selectedAsset(asset)
     }
     
-    func reset() {
-        heroBanner.image = #imageLiteral(resourceName: "assetPlaceholder")
-        editorial = nil
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureAction(_:)))
-        tapGestureRecognizer = gesture
-        addGestureRecognizer(gesture)
-    }
-
-    func configure(with carousel: HeroPromotionEditorial?, for index: Int, size: CGSize) {
+    func configure(with carousel: BasicPromotionEditorial?, for index: Int, size: CGSize) {
         guard let carousel = carousel else { return }
         reset()
         
-        guard let editorial: HeroItemPromotionEditorial = carousel.editorial(for: index) else { return }
+        guard let editorial: BasicItemPromotionEditorial = carousel.editorial(for: index) else { return }
         self.editorial = editorial
         
-        title.text = editorial.title.uppercased()
-        editorialText.text = editorial.text
+        title.text = editorial.title
         
         
         // Promotional Art
-        let cellSize = carousel.heroLayout.thumbnailSize(width: size.width)
+        let cellSize = carousel.basicLayout.thumbnailSize(width: size.width)
         if let url = editorial.imageUrl() {
-            heroBanner
+            thumbnailView
                 .kf
                 .setImage(with: url,
                           placeholder: #imageLiteral(resourceName: "assetPlaceholder"),

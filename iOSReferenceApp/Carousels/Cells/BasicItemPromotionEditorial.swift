@@ -1,5 +1,5 @@
 //
-//  HeroItemPromotionEditorial.swift
+//  PortraitItemPromotionEditorial.swift
 //  iOSReferenceApp
 //
 //  Created by Fredrik Sjöberg on 2017-10-28.
@@ -9,18 +9,17 @@
 import Foundation
 import Exposure
 
-struct HeroItemPromotionEditorial: ContentEditorial {
-    init(title: String, text: String, data: Asset) {
-        self.title = title
-        self.text = text
-        self.data = data
-    }
-    
+struct BasicItemPromotionEditorial: ContentEditorial {
     let data: Asset
+    
+    init(data: Asset, title: String) {
+        self.data = data
+        self.title = title
+    }
     
     // Carousel Editorial
     let title: String
-    let text: String
+    
     
     func imageUrl() -> URL? {
         return data
@@ -31,9 +30,10 @@ struct HeroItemPromotionEditorial: ContentEditorial {
     }
 }
 
-extension HeroItemPromotionEditorial {
+extension BasicItemPromotionEditorial {
     func prefetchImageUrls() -> [URL] {
         let url = imageUrl()
         return url != nil ? [url!] : []
     }
 }
+

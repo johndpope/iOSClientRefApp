@@ -23,9 +23,6 @@ class CarouselFooterView: UICollectionReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-//        UIColor(red: 0.047, green: 0.055, blue: 0.059, alpha: 1)
-//        UIColor(red: 0.094, green: 0.094, blue: 0.102, alpha: 1)
-//        UIColor(red: 0.133, green: 0.133, blue: 0.141, alpha: 1)
     }
     
     func setupFade() {
@@ -55,9 +52,4 @@ class CarouselFooterView: UICollectionReusableView {
         
         
     }
-    
-//    // Helper to return the main layer as CAGradientLayer
-//    var gradientLayer: CAGradientLayer {
-//        return layer as! CAGradientLayer
-//    }
 }
