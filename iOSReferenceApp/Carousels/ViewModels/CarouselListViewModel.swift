@@ -84,7 +84,6 @@ extension CarouselListViewModel {
                                             guard let weakSelf = self else { return }
                                             let index = weakSelf.content.count
                                             vm.editorial.layout.use(pagination: true)
-                                            print("LOADED INDEX:",index)
                                             weakSelf.content.append(vm)
                                             callback(index, error)
             }

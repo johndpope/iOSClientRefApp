@@ -24,7 +24,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="92"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="305-lM-HNk">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="305-lM-HNk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="92"/>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="emf-gW-UnG">
@@ -49,7 +49,7 @@
                     </stackView>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.047058823530000002" green="0.80809294870000004" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="emf-gW-UnG" secondAttribute="trailing" constant="8" id="5BI-W4-lbZ"/>
                 <constraint firstAttribute="trailing" secondItem="305-lM-HNk" secondAttribute="trailing" id="G6r-ZQ-NvD"/>

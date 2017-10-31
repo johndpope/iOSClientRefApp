@@ -44,30 +44,14 @@ class StretchyCarouselHeaderLayout: UICollectionViewLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        print("StretchyCarouselHeaderLayout",newBounds)
         return true
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-//        let vis = attributes.filter {
-//            if $0.representedElementKind == StretchyCollectionHeaderKind {
-//                let offset = collectionView?.contentOffset ?? CGPoint.zero
-//                let minY = -delegate.edgeInsets.top
-//                if offset.y < minY {
-//                    let extraOffset = fabs(offset.y - minY)
-//                    let headerSize = $0.frame.size
-//                    print("visibleAttributes",#function, $0.frame.size)
-//                    $0.frame.size.height = max(minY, headerSize.height + extraOffset)
-//                    $0.frame.origin.y = $0.frame.origin.y - extraOffset
-//                    print("visibleAttributes",#function,max(minY, headerSize.height + extraOffset))
-//                    print("visibleAttributes",#function,$0.frame.origin.y - extraOffset)
-//                }
-//
-//            }
-//            return rect.contains($0.frame) || rect.intersects($0.frame)
-//        }
-
+        
         let visibleAttributes = attributes.filter { return rect.contains($0.frame) || rect.intersects($0.frame) }
-
+        
         // Check for our Stretchy Header
         // We want to find a collectionHeader and stretch it while scrolling.
         // But first lets make sure we've scrolled far enough.
@@ -83,11 +67,8 @@ class StretchyCarouselHeaderLayout: UICollectionViewLayout {
 
             if let collectionHeader = stretchyHeader {
                 let headerSize = collectionHeader.frame.size
-                print(#function, collectionHeader.frame.size)
                 collectionHeader.frame.size.height = max(minY, headerSize.height + extraOffset)
                 collectionHeader.frame.origin.y = collectionHeader.frame.origin.y - extraOffset
-                print(#function,max(minY, headerSize.height + extraOffset))
-                print(#function,collectionHeader.frame.origin.y - extraOffset)
             }
         }
         return visibleAttributes

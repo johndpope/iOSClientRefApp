@@ -27,7 +27,6 @@ class StretchyCarouselHeaderView: UICollectionReusableView {
     }
     
     func bind(viewModel: CarouselViewModel) {
-        print("StretchyCarouselHeaderView bind")
         self.viewModel = viewModel
         
         self.collectionView.collectionViewLayout.invalidateLayout()

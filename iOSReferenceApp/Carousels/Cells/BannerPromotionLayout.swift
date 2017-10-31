@@ -23,6 +23,19 @@ class BannerPromotionLayout: CollectionViewLayout {
         return thumbnailHeight(width: width)
     }
     
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
+    }
+    
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        return attributes.filter{
+            if let collectionView = collectionView {
+                $0.frame.size.height = collectionView.frame.height
+            }
+            return rect.contains($0.frame) || rect.intersects($0.frame)
+        }
+    }
+    
     override func prepare() {
         guard let collectionView = collectionView else { return }
         attributes = (0..<collectionView.numberOfItems(inSection: 0)).flatMap{
