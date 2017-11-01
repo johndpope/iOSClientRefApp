@@ -57,8 +57,8 @@ extension OfflineListCellViewModel: LocalizedEntity {
     }
     
     func anyTitle(locale: String) -> String {
-        if let title = title(locale: locale) { return title }
-        else if let originalTitle = asset?.originalTitle { return originalTitle }
+        if let title = title(locale: locale), title != "" { return title }
+        else if let originalTitle = asset?.originalTitle, originalTitle != "" { return originalTitle }
         else if let assetId = asset?.assetId { return assetId }
         return "NO TITIE"
     }

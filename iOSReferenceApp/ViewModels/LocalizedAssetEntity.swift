@@ -26,7 +26,7 @@ extension LocalizedAssetEntity {
     }
     
     func anyTitle(locale: String) -> String {
-        return asset.anyTitle(locale: locale)
+        return asset.anyTitle(locale: locale) 
     }
     
     func anyDescription(locale: String) -> String {

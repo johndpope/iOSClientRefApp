@@ -39,8 +39,8 @@ extension ProgramViewModel: LocalizedEntity {
     }
     
     func anyTitle(locale: String) -> String {
-        if let title = title(locale: locale) { return title }
-        else if let originalTitle = program.asset?.originalTitle { return originalTitle }
+        if let title = title(locale: locale), title != "" { return title }
+        else if let originalTitle = program.asset?.originalTitle, originalTitle != "" { return originalTitle }
         else if let assetId = program.asset?.assetId { return assetId }
         return "NO TITIE"
     }
