@@ -24,6 +24,10 @@ class MainMenuViewController: UIViewController {
         }
         enum Content: String {
             case home
+            case movies
+            case documentaries
+            case kids
+            case clips
         }
     }
     
@@ -115,13 +119,14 @@ extension MainMenuViewController: UITableViewDelegate {
             case .logout:
                 actionLogout()
             case .content(segue: let segue):
-                fatalError("Replace content view controller!")
-                return
+                viewModel.select(content: segue)
+                selectedContentSegue(segue)
             case .other(segue: let segue):
                 selectedOtherSegue(segue)
             }
         }
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return viewModel[section].height
     }

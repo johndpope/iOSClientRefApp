@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainMenuContentViewModel: MainMenuItemType {
+class MainMenuContentViewModel: MainMenuItemType, MainMenuActionType {
     static var reuseIdentifier: String {
         return "contentCell"
     }

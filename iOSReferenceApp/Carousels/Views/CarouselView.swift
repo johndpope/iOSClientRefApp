@@ -39,17 +39,10 @@ class CarouselView: UICollectionViewCell {
     
     func bind(viewModel: CarouselViewModel) {
         self.viewModel = viewModel
-        self.collectionView.collectionViewLayout.invalidateLayout()
-        self.collectionView.collectionViewLayout = viewModel.editorial.layout
         self.collectionView.reloadData()
-//        UIView.animate(withDuration: 0.2) {
-//            self.collectionView.collectionViewLayout.invalidateLayout()
-//            self.collectionView.reloadData()
-//            self.collectionView.collectionViewLayout = viewModel.editorial.layout
-//        }
-//        viewModel.fakeCarouselMetadataFetch(environment: environment, sessionToken: sessionToken, type: .movie) {
-//
-//        }, callback: <#T##(ExposureError?) -> Void#>)
+        self.collectionView.layoutIfNeeded()
+//        self.collectionView.collectionViewLayout.invalidateLayout()
+        self.collectionView.collectionViewLayout = viewModel.editorial.layout
     }
     
 }

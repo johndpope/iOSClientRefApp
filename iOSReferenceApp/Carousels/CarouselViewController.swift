@@ -38,23 +38,64 @@ class CarouselViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    enum ContentType {
-        case fakeCarousels
+    enum ContentType: Equatable {
         case carouselGroup(groupId: String)
-    }
-    var contentType: ContentType = .fakeCarousels {
-        didSet {
-            switch contentType {
-            case .carouselGroup(groupId: let groupId):
-                viewModel.loadCarousels(for: groupId){ [weak self] error in
-                    self?.collectionView.reloadData()
-                }
-            case .fakeCarousels:
-                viewModel.loadFakeCarousel{ [weak self] index, error in
-                    self?.collectionView.reloadData()
-                }
+        case movies
+        case documentaries
+        case kids
+        case clips
+        
+        static func == (lhs: ContentType, rhs: ContentType) -> Bool {
+            switch (lhs,rhs) {
+            case (.carouselGroup(groupId: let lid), .carouselGroup(groupId: let rid)): return lid == rid
+            case (.movies, .movies): return true
+            case (.documentaries, .documentaries): return true
+            case (.kids, .kids): return true
+            case (.clips, .clips): return true
+            default: return false
             }
         }
+    }
+    var contentType: ContentType = .movies {
+        didSet {
+            if contentType != oldValue {
+                reloadCarousels()
+            }
+        }
+    }
+    
+    func reloadCarousels() {
+        viewModel.reset()
+        collectionView.reloadData()
+        collectionView.layoutIfNeeded()
+        switch contentType {
+        case .carouselGroup(groupId: let groupId):
+            viewModel.loadCarousels(for: groupId){ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        case .movies:
+            viewModel.loadFakeMovieCarousels{ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        case .documentaries:
+            viewModel.loadFakeDocumentariesCarousels{ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        case .kids:
+            viewModel.loadFakeKidsCarousels{ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        case .clips:
+            viewModel.loadFakeClipsCarousels{ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        }
+        
     }
     
     @IBAction func toggleSlidingMenuAction(_ sender: UIBarButtonItem) {

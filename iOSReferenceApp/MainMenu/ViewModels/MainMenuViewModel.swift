@@ -53,7 +53,11 @@ class MainMenuViewModel {
     
     private func configureContentLists(activeIndex index: Int) -> MainMenuSectionViewModel {
         let home = MainMenuContentViewModel(title: "Home", action: .content(segue: .home))
-        let section = [home]
+        let movies = MainMenuContentViewModel(title: "Movies", action: .content(segue: .movies))
+        let documentaries = MainMenuContentViewModel(title: "Documentaries", action: .content(segue: .documentaries))
+        let kids = MainMenuContentViewModel(title: "Kids", action: .content(segue: .kids))
+        let clips = MainMenuContentViewModel(title: "Clips", action: .content(segue: .clips))
+        let section = [home, movies, documentaries, kids, clips]
         
         section[index].isActive = true
         
@@ -96,6 +100,28 @@ class MainMenuViewModel {
             .cacheMemoryOnly,
             .processor(CrispResizingImageProcessor(referenceSize: size, mode: .aspectFit))
         ]
+    }
+}
+
+extension MainMenuViewModel {
+    func select(content: MainMenuViewController.Segue.Content) {
+        let targetIndex = index(for: content)
+        let rows = sections[1].rows
+        (0..<rows.count).forEach{
+            if let viewModel = rows[$0] as? MainMenuContentViewModel {
+                viewModel.isActive = $0 == targetIndex
+            }
+        }
+    }
+    
+    private func index(for content: MainMenuViewController.Segue.Content) -> Int {
+        switch content {
+        case .home: return 0
+        case .movies: return 1
+        case .documentaries: return 2
+        case .kids: return 3
+        case .clips: return 4
+        }
     }
 }
 

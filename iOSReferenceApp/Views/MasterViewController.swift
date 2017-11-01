@@ -158,12 +158,10 @@ extension MasterViewController: SlidingMenuController {
         if menuOpen {
             menuOpen = false
             blurView.isUserInteractionEnabled = false
-
-            print("toggle back")
+            
             let x = contentContainer.frame.midX - menuConstants.inset(for: view.bounds.size.width)
             let y = contentContainer.frame.midY
             
-            print("SnapToEND",CGPoint(x: x, y: y))
             snapBehavior.snapPoint = CGPoint(x: x, y: y)
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: { [weak self] in
                 self?.blurView.effect = nil
@@ -177,7 +175,6 @@ extension MasterViewController: SlidingMenuController {
             let x = contentContainer.frame.midX + menuConstants.inset(for: view.bounds.size.width)
             let y = contentContainer.frame.midY
 
-            print("SnapTo",CGPoint(x: x, y: y))
             snapBehavior = UISnapBehavior(item: contentContainer, snapTo: CGPoint(x: x, y: y))
             snapBehavior.damping = 0.75
             animator.addBehavior(snapBehavior)
@@ -210,7 +207,7 @@ extension MasterViewController {
             if let destination = navController.viewControllers.first as? SlidingMenuDelegate {
                 destination.slidingMenuController = self
             }
-//
+            
             if let destination = navController.viewControllers.first as? CarouselViewController {
                 contentController = destination
             }
@@ -224,15 +221,30 @@ extension MasterViewController {
                 case .myDownloads: self?.performSegue(withIdentifier: Segue.masterToMyDownloads.rawValue, sender: nil)
                 }
             }
-            destination.selectedContentSegue = { segue in
+            destination.selectedContentSegue = { [weak self] segue in
+                guard let weakSelf = self else { return }
+                weakSelf.toggleSlidingMenu()
+                switch segue {
+                case .home:
+                    if let carouselGroup = weakSelf.dynamicCustomerConfig?.carouselGroupId {
+                        weakSelf.contentController.contentType = .carouselGroup(groupId: carouselGroup)
+                    }
+                    else {
+                        weakSelf.contentController.contentType = .movies
+                    }
+                case .movies: weakSelf.contentController.contentType = .movies
+                case .documentaries: weakSelf.contentController.contentType = .documentaries
+                case .kids: weakSelf.contentController.contentType = .kids
+                case .clips: weakSelf.contentController.contentType = .clips
+                }
                 
             }
         }
         else if segue.identifier == Segue.masterToMyDownloads.rawValue {
             if let destination = segue.destination as? OfflineListViewController {
-            destination.authorize(environment: environment,
-                                  sessionToken: sessionToken)
-        }
+                destination.authorize(environment: environment,
+                                      sessionToken: sessionToken)
+            }
         }
     }
 }
