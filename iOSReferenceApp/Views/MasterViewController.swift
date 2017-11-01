@@ -39,6 +39,7 @@ class MasterViewController: UIViewController {
     @IBOutlet weak var contentContainer: UIView!
     
     fileprivate var menuController: MainMenuViewController!
+    fileprivate var contentController: CarouselViewController!
     var animator: UIDynamicAnimator!
     var itemBehavior: UIDynamicItemBehavior!
     var snapBehavior: UISnapBehavior!
@@ -71,6 +72,9 @@ class MasterViewController: UIViewController {
             if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
                 self?.dynamicCustomerConfig = dynamicConfig
                 self?.menuController.apply(dynamicConfig: dynamicConfig)
+                if let carouselGroup = dynamicConfig.carouselGroupId {
+                    self?.contentController.contentType = .carouselGroup(groupId: carouselGroup)
+                }
             }
         }
     }
@@ -205,6 +209,10 @@ extension MasterViewController {
             
             if let destination = navController.viewControllers.first as? SlidingMenuDelegate {
                 destination.slidingMenuController = self
+            }
+//
+            if let destination = navController.viewControllers.first as? CarouselViewController {
+                contentController = destination
             }
         }
         else if segue.identifier == Segue.masterToMainMenu.rawValue, let destination = segue.destination as? MainMenuViewController {
