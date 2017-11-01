@@ -21,7 +21,7 @@ class BasicPromotionCell: UICollectionViewCell, EditorialCell {
     @IBOutlet weak var title: UILabel!
     
     func reset() {
-        thumbnailView.image = #imageLiteral(resourceName: "assetPlaceholder")
+        thumbnailView.image = #imageLiteral(resourceName: "assetPlaceholder-3-2")
         editorial = nil
     }
     override func awakeFromNib() {
@@ -55,7 +55,7 @@ class BasicPromotionCell: UICollectionViewCell, EditorialCell {
             thumbnailView
                 .kf
                 .setImage(with: url,
-                          placeholder: #imageLiteral(resourceName: "assetPlaceholder"),
+                          placeholder: #imageLiteral(resourceName: "assetPlaceholder-3-2"),
                           options: carousel.thumbnailOptions(for: cellSize)) { (image, error, cache, url) in
                             if let error = error {
                                 print("Kingfisher: ",error)

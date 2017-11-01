@@ -56,30 +56,4 @@ extension CarouselViewModel {
         }
         return desc
     }
-    
-    func fakeCarouselMetadataFetch(environment: Environment, sessionToken: SessionToken, type: Asset.AssetType, callback: @escaping (ExposureError?) -> Void) {
-        FetchAsset(environment: environment)
-            .list()
-            .includeUserData(for: sessionToken)
-            //            .elasticSearch(query: "medias.drm:UNENCRYPTED AND medias.format:HLS")
-            .elasticSearch(query: "(medias.drm:FAIRPLAY OR medias.drm:UNENCRYPTED) AND medias.format:HLS")
-            .show(page: 1, spanning: 50)
-            .filter(on: type)
-            .filter(onlyPublished: true)
-            .sort(on: ["-assetId"])
-            .request()
-            .response{ [weak self] (exposure: ExposureResponse<AssetList>) in
-                if let success = exposure.value {
-                    guard let weakSelf = self else { return }
-                    guard let assets = success.items else { return }
-                    let editorials = weakSelf.fakeEditorials(for: assets)
-                    weakSelf.editorial.append(content: editorials)
-                    callback(nil)
-                }
-                
-                if let error = exposure.error {
-                    callback(error)
-                }
-        }
-    }
 }

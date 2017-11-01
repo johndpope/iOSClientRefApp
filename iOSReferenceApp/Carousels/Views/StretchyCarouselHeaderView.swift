@@ -26,12 +26,15 @@ class StretchyCarouselHeaderView: UICollectionReusableView {
         collectionView.dataSource = self
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.collectionView.collectionViewLayout.invalidateLayout()
+    }
     func bind(viewModel: CarouselViewModel) {
         self.viewModel = viewModel
-        
-        self.collectionView.collectionViewLayout.invalidateLayout()
-        self.collectionView.collectionViewLayout = viewModel.editorial.layout
         self.collectionView.reloadData()
+        self.collectionView.layoutIfNeeded()
+        self.collectionView.collectionViewLayout = viewModel.editorial.layout
     }
 }
 

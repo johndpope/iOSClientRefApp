@@ -38,24 +38,78 @@ class CarouselViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    enum ContentType {
+    enum ContentType: Equatable {
         case fakeCarousels
         case carouselGroup(groupId: String)
-    }
-    var contentType: ContentType = .fakeCarousels {
-        didSet {
-            switch contentType {
-            case .carouselGroup(groupId: let groupId):
-                viewModel.loadCarousels(for: groupId){ [weak self] error in
-                    self?.collectionView.reloadData()
-                }
-            case .fakeCarousels:
-                viewModel.loadFakeCarousel{ [weak self] index, error in
-                    self?.collectionView.reloadData()
-                }
+        case movies
+        case documentaries
+        case kids
+        case clips
+        
+        static func == (lhs: ContentType, rhs: ContentType) -> Bool {
+            switch (lhs,rhs) {
+            case (.fakeCarousels, .fakeCarousels): return true
+            case (.carouselGroup(groupId: let lid), .carouselGroup(groupId: let rid)): return lid == rid
+            case (.movies, .movies): return true
+            case (.documentaries, .documentaries): return true
+            case (.kids, .kids): return true
+            case (.clips, .clips): return true
+            default: return false
             }
         }
     }
+    var contentType: ContentType = .fakeCarousels {
+        didSet {
+            if contentType != oldValue {
+                reloadCarousels()
+            }
+        }
+    }
+    
+    func reloadCarousels() {
+        viewModel.reset()
+        collectionView.reloadData()
+        collectionView.layoutIfNeeded()
+        
+        updateNavigationTitle(with: contentType)
+        switch contentType {
+        case .fakeCarousels:
+            viewModel.loadFakeMovieCarousels{ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        case .carouselGroup(groupId: let groupId):
+            viewModel.loadCarousels(for: groupId){ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        case .movies:
+            viewModel.loadFakeMovieCarousels{ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        case .documentaries:
+            viewModel.loadFakeDocumentariesCarousels{ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        case .kids:
+            viewModel.loadFakeKidsCarousels{ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        case .clips:
+            viewModel.loadFakeClipsCarousels{ [weak self] error in
+                self?.collectionView.reloadData()
+                self?.collectionView.layoutIfNeeded()
+            }
+        }
+    }
+    
+    private func updateNavigationTitle(with contentType: CarouselViewController.ContentType) {
+        navigationItem.title = viewModel.navigationTitle(with: contentType)
+    }
+    
     
     @IBAction func toggleSlidingMenuAction(_ sender: UIBarButtonItem) {
         slidingMenuController?.toggleSlidingMenu()

@@ -28,6 +28,9 @@ class MainMenuContentCell: UITableViewCell {
     
     func bind(viewModel: MainMenuContentViewModel) {
         self.viewModel = viewModel
+        viewModel.didActivate = { [weak self] active in
+            self?.activeIndicator.isHidden = !active
+        }
         contentTitle.text = viewModel.title
         activeIndicator.isHidden = !viewModel.isActive
         
