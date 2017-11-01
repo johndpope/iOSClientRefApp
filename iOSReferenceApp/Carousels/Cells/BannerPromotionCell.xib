@@ -24,7 +24,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="92"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="305-lM-HNk">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assetPlaceholder-9-4" translatesAutoresizingMaskIntoConstraints="NO" id="305-lM-HNk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="92"/>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="emf-gW-UnG">
@@ -67,4 +67,7 @@
             </connections>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="assetPlaceholder-9-4" width="324" height="144"/>
+    </resources>
 </document>

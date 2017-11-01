@@ -85,6 +85,19 @@ class CarouselListViewModel {
 }
 
 extension CarouselListViewModel {
+    func navigationTitle(with contentType: CarouselViewController.ContentType) -> String {
+        switch contentType {
+        case .fakeCarousels: return "Home"
+        case .carouselGroup(groupId: _): return "Home"
+        case .movies: return "Movies"
+        case .documentaries: return "Documentaries"
+        case .kids: return "Kids"
+        case .clips: return "Clips"
+        }
+    }
+}
+
+extension CarouselListViewModel {
     func loadFakeMovieCarousels(callback: @escaping (ExposureError?) -> Void) {
         let fetch = FetchAsset(environment: environment)
             .list()
@@ -148,16 +161,18 @@ extension CarouselListViewModel {
                     
                     if let bannerAssets = chunks.first, let editorials = weakSelf.bannerViewModel?.fakeEditorials(for: bannerAssets) {
                         weakSelf.bannerViewModel?.editorial.append(content: editorials)
+                        
+                        if chunks.count > 1 {
+                            let carouselViewModels = (1..<chunks.count).map{ index -> CarouselViewModel in
+                                let vm =  CarouselViewModel(editorial: BasicPromotionEditorial(title: weakSelf.fakeCarouselTitle(for: index), aspectRatio: BasicPromotionEditorial.AspectRatio(width: 3, height: 2)))
+                                let editorials = vm.fakeEditorials(for: chunks[index])
+                                vm.editorial.append(content: editorials)
+                                return vm
+                            }
+                            
+                            weakSelf.content = carouselViewModels
+                        }
                     }
-                    
-                    let carouselViewModels = (1..<chunks.count).map{ index -> CarouselViewModel in
-                        let vm =  CarouselViewModel(editorial: BasicPromotionEditorial(title: weakSelf.fakeCarouselTitle(for: index), aspectRatio: BasicPromotionEditorial.AspectRatio(width: 3, height: 2)))
-                        let editorials = vm.fakeEditorials(for: chunks[index])
-                        vm.editorial.append(content: editorials)
-                        return vm
-                    }
-                    
-                    weakSelf.content = carouselViewModels
                     callback(nil)
                 }
                 

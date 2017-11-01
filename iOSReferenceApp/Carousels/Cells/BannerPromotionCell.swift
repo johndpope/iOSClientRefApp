@@ -36,7 +36,7 @@ class BannerPromotionCell: UICollectionViewCell, EditorialCell {
     }
     
     func reset() {
-        banner.image = #imageLiteral(resourceName: "assetPlaceholder")
+        banner.image = #imageLiteral(resourceName: "assetPlaceholder-9-4")
         title.text = nil
         descriptionLabel.text = nil
         descriptionLabel.isHidden = true
@@ -60,7 +60,7 @@ class BannerPromotionCell: UICollectionViewCell, EditorialCell {
             banner
                 .kf
                 .setImage(with: url,
-                          placeholder: #imageLiteral(resourceName: "assetPlaceholder"),
+                          placeholder: #imageLiteral(resourceName: "assetPlaceholder-9-4"),
                           options: carousel.thumbnailOptions(for: cellSize)) { (image, error, cache, url) in
                             if let error = error {
                                 print("Kingfisher: ",error)
