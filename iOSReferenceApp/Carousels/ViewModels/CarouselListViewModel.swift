@@ -12,6 +12,7 @@ import Exposure
 class CarouselListViewModel {
     struct Shared {
         let editorialHeight: CGFloat = 38
+        let slimEditorialHeight: CGFloat = 28
         let footerHeight: CGFloat = 40
         let edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 30, bottom: 0, right: 30)
         let contentSpacing: CGFloat = 15

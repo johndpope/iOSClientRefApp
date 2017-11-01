@@ -18,7 +18,7 @@ class BasicPromotionEditorial {
     
     init(title: String, aspectRatio: AspectRatio = AspectRatio()) {
         basicLayout = BasicPromotionLayout()
-        basicLayout.configuration = CollectionViewLayout.Configuration(headerHeight: CarouselListViewModel.Shared().editorialHeight)
+        basicLayout.configuration = CollectionViewLayout.Configuration(headerHeight: CarouselListViewModel.Shared().slimEditorialHeight)
         basicLayout.aspectRatio = aspectRatio.height / aspectRatio.width
         headerViewModel = CarouselHeaderViewModel(title: title, text: nil, sideInset: basicLayout.configuration.edgeInsets.left)
         

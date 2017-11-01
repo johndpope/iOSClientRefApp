@@ -30,6 +30,13 @@ class CarouselHeaderView: UICollectionReusableView {
         reset()
         title.text = carousel.headerViewModel?.title?.uppercased()
         editorialText.text = carousel.headerViewModel?.text
+//        if let text = carousel.headerViewModel?.text {
+//            editorialText.isHidden = false
+//            editorialText.text = text
+//        }
+//        else {
+//            editorialText.isHidden = true
+//        }
         leadingInset.constant = carousel.headerViewModel?.sideInset ?? 0
     }
 }
