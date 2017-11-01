@@ -36,3 +36,48 @@ extension Asset: LocalizedEntity {
         return localizations().flatMap{ $0.allDescriptions() }.last ?? ""
     }
 }
+
+extension Array where Element == LocalizedData {
+    func title(locale: String) -> String? {
+        if let result = localizedData(locale: locale)?.title {
+            return result
+        }
+        return flatMap{ $0.title }.first
+    }
+    
+    func tinyDescription(locale: String) -> String? {
+        return localizedData(locale: locale)?.tinyDescription
+    }
+    
+    func shortDescription(locale: String) -> String? {
+        return localizedData(locale: locale)?.shortDescription
+    }
+    
+    func description(locale: String) -> String? {
+        return localizedData(locale: locale)?.description
+    }
+    
+    func longDescription(locale: String) -> String? {
+        return localizedData(locale: locale)?.longDescription
+    }
+    
+    var locales: [String] {
+        return flatMap{ $0.locale }
+    }
+    
+    func localizedData(locale: String) -> LocalizedData? {
+        return filter{ $0.locale == locale }.first
+    }
+    
+    func anyTitle(locale: String) -> String {
+        if let title = title(locale: locale) { return title }
+        return "NO TITIE"
+    }
+    
+    func anyDescription(locale: String) -> String {
+        if let description = localizedData(locale: locale)?.allDescriptions().last {
+            return description
+        }
+        return flatMap{ $0.allDescriptions() }.last ?? ""
+    }
+}

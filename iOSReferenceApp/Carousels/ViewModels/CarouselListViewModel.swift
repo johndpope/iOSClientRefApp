@@ -10,6 +10,15 @@ import Foundation
 import Exposure
 
 class CarouselListViewModel {
+    struct Shared {
+        let editorialHeight: CGFloat = 38
+        let slimEditorialHeight: CGFloat = 28
+        let footerHeight: CGFloat = 40
+        let edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 30, bottom: 0, right: 30)
+        let contentSpacing: CGFloat = 15
+        let thumbnailRoundness: CGFloat? = nil
+    }
+    
     // MARK: Basics
     var environment: Environment
     var sessionToken: SessionToken
@@ -26,32 +35,48 @@ class CarouselListViewModel {
         self.sessionToken = sessionToken
     }
     
-    func loadCarousel(group: String, callback: @escaping (ExposureError?) -> Void) {
+    func loadCarousels(for groupId: String, callback: @escaping (ExposureError?) -> Void) {
+        FetchCarouselList(groupId: groupId,
+                          environment: environment)
+            .request()
+            .validate()
+            .response { [weak self] (response: ExposureResponse<CarouselList>) in
+                guard let weakSelf = self else { return }
+                guard let items = response.value?.items else { return }
+                
+                if let banner = items.first {
+                    let editorial = BannerPromotionEditorial()
+                    editorial.bannerLayout.use(pagination: true)
+                    let bannerCarousel = CarouselViewModel(editorial: editorial)
+                    
+                    if let list = banner.items?.items {
+                        let assets = bannerCarousel.fakeEditorials(for: list)
+                        editorial.append(content: assets)
+                    }
+                    weakSelf.bannerViewModel = bannerCarousel
+                    if items.count > 1 {
+                        weakSelf.content = (1..<items.count).map { index in
+                            let carouselItem = items[index]
+                            let title = carouselItem.titles?.anyTitle(locale: "en") ?? "Some Title"
+                            
+                            let editorial = BasicPromotionEditorial(title: title, aspectRatio: BasicPromotionEditorial.AspectRatio(width: 3, height: 2))
+                            editorial.basicLayout.use(pagination: true)
+                            let carousel = CarouselViewModel(editorial: editorial)
+                            
+                            let content = carouselItem
+                                .items?
+                                .items?
+                                .map{ return BasicItemPromotionEditorial(data: $0, title: $0.anyTitle(locale: "en")) } ?? []
+                            editorial.append(content: content)
+                            return carousel
+                        }
+                    }
+                }
+                
+                
+                callback(response.error)
+        }
     }
-    
-//    fileprivate func loadCarousels(for groupId: String, callback: @escaping (ExposureError?) -> Void) {
-//        FetchCarouselList(groupId: groupId,
-//                          environment: environment)
-//            .request()
-//            .validate()
-//            .response { [weak self] (response: ExposureResponse<CarouselList>) in
-//                guard let weakSelf = self else { return }
-//                guard let items = response.value?.items else { return }
-//
-//                weakSelf.content = items.map {
-//                    let carousel = CarouselViewModel(editorial: HeroPromotionEditorial())
-//
-//                    if carousel.editorial.usesItemSpecificEditorials {
-//                        carousel.content = $0
-//                            .items?
-//                            .items?
-//                            .map{ return CarouselItemViewModel(data: $0, editorial: weakSelf.fakeEditorial(for: $0)) } ?? []
-//                    }
-//                    return carousel
-//                }
-//                callback(response.error)
-//        }
-//    }
 }
 
 extension CarouselListViewModel {

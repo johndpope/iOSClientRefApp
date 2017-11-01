@@ -32,10 +32,10 @@ class CollectionViewLayout: UICollectionViewLayout {
         
         let contentSpacing: CGFloat
         
-        init(edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 30, bottom: 0, right: 30),
+        init(edgeInsets: UIEdgeInsets = CarouselListViewModel.Shared().edgeInsets,
              headerHeight: CGFloat? = nil,
-             footerHeight: CGFloat = 50,
-             contentSpacing: CGFloat = 15) {
+             footerHeight: CGFloat = CarouselListViewModel.Shared().footerHeight,
+             contentSpacing: CGFloat = CarouselListViewModel.Shared().contentSpacing) {
             self.edgeInsets = edgeInsets
             self.headerHeight = headerHeight
             self.footerHeight = footerHeight

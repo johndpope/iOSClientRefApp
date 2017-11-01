@@ -28,8 +28,9 @@ class CarouselViewController: UIViewController {
         let layout = StretchyCarouselHeaderLayout()
         layout.delegate = self
         collectionView.collectionViewLayout = layout
+        collectionView.alwaysBounceVertical = true
         
-        setupViewModel()
+//        setupViewModel()
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,10 +38,22 @@ class CarouselViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    fileprivate func setupViewModel() {
-        // TODO: Load carousels instead of faking it.
-        viewModel.loadFakeCarousel{ [weak self] index, error in
-            self?.collectionView.reloadData()
+    enum ContentType {
+        case fakeCarousels
+        case carouselGroup(groupId: String)
+    }
+    var contentType: ContentType = .fakeCarousels {
+        didSet {
+            switch contentType {
+            case .carouselGroup(groupId: let groupId):
+                viewModel.loadCarousels(for: groupId){ [weak self] error in
+                    self?.collectionView.reloadData()
+                }
+            case .fakeCarousels:
+                viewModel.loadFakeCarousel{ [weak self] index, error in
+                    self?.collectionView.reloadData()
+                }
+            }
         }
     }
     
