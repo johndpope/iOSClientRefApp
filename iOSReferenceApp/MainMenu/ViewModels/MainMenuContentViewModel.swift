@@ -13,9 +13,14 @@ class MainMenuContentViewModel: MainMenuItemType, MainMenuActionType {
         return "contentCell"
     }
     
+    var didActivate: (Bool) -> Void = { _ in }
     let title: String
     let actionIdentifier: MainMenuViewController.Action?
-    var isActive: Bool
+    var isActive: Bool {
+        didSet {
+            didActivate(isActive)
+        }
+    }
     var textColor: UIColor {
         return isActive ? UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1) : UIColor.lightGray
     }
