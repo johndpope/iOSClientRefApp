@@ -44,7 +44,6 @@ class StretchyCarouselHeaderLayout: UICollectionViewLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        print("StretchyCarouselHeaderLayout",newBounds)
         return true
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 
 class PortraitTrioPromotionLayout: CollectionViewLayout {
-    var cellEditorialHeight: CGFloat = 43
+    var cellEditorialHeight: CGFloat = CarouselListViewModel.Shared().editorialHeight
     
     override func cellHeight(width: CGFloat) -> CGFloat {
         let thumbHeight = thumbnailHeight(width: width)

@@ -10,6 +10,14 @@ import Foundation
 import Exposure
 
 class CarouselListViewModel {
+    struct Shared {
+        let editorialHeight: CGFloat = 38
+        let footerHeight: CGFloat = 40
+        let edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 30, bottom: 0, right: 30)
+        let contentSpacing: CGFloat = 15
+        let thumbnailRoundness: CGFloat? = nil
+    }
+    
     // MARK: Basics
     var environment: Environment
     var sessionToken: SessionToken

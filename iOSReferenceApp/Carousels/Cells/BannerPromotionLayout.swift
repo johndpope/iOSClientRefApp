@@ -14,8 +14,7 @@ class BannerPromotionLayout: CollectionViewLayout {
     }
     
     override func thumbnailHeight(width: CGFloat) -> CGFloat {
-        // Thumbnail view is 9:2 aspect of width
-        let aspect:CGFloat = 2 / 9
+        let aspect:CGFloat = 4 / 9
         return thumbnailWidth(width: width) * aspect
     }
     

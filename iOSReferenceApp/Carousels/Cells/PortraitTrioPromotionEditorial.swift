@@ -37,14 +37,14 @@ extension PortraitTrioPromotionEditorial {
         ]
     }
     
-    fileprivate func thumbnailCornerRadius(forCellWidth cellWidth: CGFloat) -> CGFloat {
-        return 10
-    }
     
     fileprivate func thumbnailProcessor(for size: CGSize) -> ImageProcessor {
         let resizeProcessor = CrispResizingImageProcessor(referenceSize: size, mode: ContentMode.aspectFill)
         let croppingProcessor = CroppingImageProcessor(size: size)
-        let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: thumbnailCornerRadius(forCellWidth: size.width))
+        guard let roundedCorners = CarouselListViewModel.Shared().thumbnailRoundness else {
+            return resizeProcessor>>croppingProcessor
+        }
+        let roundedRectProcessor = RoundCornerImageProcessor(cornerRadius: roundedCorners)
         return (resizeProcessor>>croppingProcessor)>>roundedRectProcessor
     }
     
