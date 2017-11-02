@@ -46,6 +46,11 @@ enum UserInfo {
                            businessUnit: businessUnit)
     }
     
+    static var environmentLoginMethod: CustomerConfig.PresetMethod? {
+        guard let string = TinyDB.getString(UserInfo.Lets.KEY_ENVIRONMENT_LOGIN_METHOD) else { return nil }
+        return CustomerConfig.PresetMethod(persistenceString: string)
+    }
+    
     struct Lets {
         // Credentials
         static let KEY_SESSION_TOKEN = "kSessionToken"
@@ -59,6 +64,7 @@ enum UserInfo {
         static let KEY_ENVIRONMENT_URL = "kEnvironmentUrl"
         static let KEY_CUSTOMER = "kCustomer"
         static let KEY_CUSTOMER_BUSINESS_UNIT = "kCustomerBusinessUnit"
+        static let KEY_ENVIRONMENT_LOGIN_METHOD = "kEnvironmentLoginMethod"
     }
     
 }
@@ -71,17 +77,13 @@ extension UserInfo {
     }
     
     static func clear() {
-        // Credentials
-        TinyDB.removeData(byKey: UserInfo.Lets.KEY_SESSION_TOKEN)
-        TinyDB.removeData(byKey: UserInfo.Lets.KEY_CRM_TOKEN)
-        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_ID)
-        TinyDB.removeData(byKey: UserInfo.Lets.KEY_EXPIRATION_DATE_TIME)
-        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_STATUS)
+        clearSession()
         
         // Environment
         TinyDB.removeData(byKey: UserInfo.Lets.KEY_ENVIRONMENT_URL)
         TinyDB.removeData(byKey: UserInfo.Lets.KEY_CUSTOMER)
         TinyDB.removeData(byKey: UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ENVIRONMENT_LOGIN_METHOD)
     }
 }
 
@@ -110,6 +112,15 @@ extension UserInfo {
         TinyDB.save(sessionToken.value, withKey: UserInfo.Lets.KEY_SESSION_TOKEN)
     }
     
+    static func clearSession() {
+        // Credentials
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_SESSION_TOKEN)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_CRM_TOKEN)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_ID)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_EXPIRATION_DATE_TIME)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_STATUS)
+    }
+    
     static func update(environment: Environment) {
         // Environment
         TinyDB.save(environment.baseUrl, withKey: UserInfo.Lets.KEY_ENVIRONMENT_URL)
@@ -119,4 +130,7 @@ extension UserInfo {
         TinyDB.save(environment.businessUnit, withKey: UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT)
     }
     
+    static func environment(loginMethod: CustomerConfig.PresetMethod) {
+        TinyDB.save(loginMethod.persistenceString, withKey: UserInfo.Lets.KEY_ENVIRONMENT_LOGIN_METHOD)
+    }
 }

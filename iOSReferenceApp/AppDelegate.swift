@@ -56,17 +56,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func setupViews() {
-        let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let rootNavigationController = self.window?.rootViewController as? UINavigationController
         
         rootNavigationController?.setNavigationBarHidden(true, animated: false)
         rootNavigationController?.navigationBar.barStyle = .black
-        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loginId) as! LoginViewController
-
-        // Check user validation
-        let stack = UserInfo.isValidSession() ? [loginViewController, uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as UIViewController] : [loginViewController]
-
+        
+        let stack = initialStack()
         rootNavigationController?.setViewControllers(stack, animated: false)
+    }
+        
+    func initialStack() -> [UIViewController] {
+        let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let environmentViewController = uiStoryboard.instantiateViewController(withIdentifier: "EnvironmentSelection") as! EnvironmentSelectionViewController
+        guard let environment = UserInfo.environment else {
+            return [environmentViewController]
+        }
+        
+        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
+        loginViewController.viewModel = LoginViewModel(environment: environment,
+                                                       loginMethod: UserInfo.environmentLoginMethod ?? .login(username: "", password: "", mfa: false))
+        
+        guard let sessionToken = UserInfo.sessionToken else {
+            return [environmentViewController, loginViewController]
+        }
+        
+        let masterViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as! MasterViewController
+        
+        return [environmentViewController, loginViewController, masterViewController]
     }
 }
 

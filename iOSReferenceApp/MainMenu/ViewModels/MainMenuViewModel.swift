@@ -98,7 +98,7 @@ class MainMenuViewModel {
         return [
             .backgroundDecode,
             .cacheMemoryOnly,
-            .processor(CrispResizingImageProcessor(referenceSize: size, mode: .aspectFit))
+//            .processor(CrispResizingImageProcessor(referenceSize: size, mode: .aspectFit))
         ]
     }
 }

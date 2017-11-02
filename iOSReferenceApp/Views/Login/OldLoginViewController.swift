@@ -9,9 +9,9 @@
 import UIKit
 import Exposure
 
-class LoginViewController: UIViewController {
+class OldLoginViewController: UIViewController {
 
-    let viewmodel = LoginViewModel()
+    let viewmodel = OldLoginViewModel()
     var app: AppDelegate!
     
     // MARK: UI
@@ -188,7 +188,7 @@ class LoginViewController: UIViewController {
 }
 
 // MARK: - Update UI
-extension LoginViewController {
+extension OldLoginViewController {
     
     func toggleLoginButton(enabled: Bool) {
         loginButton.isEnabled = enabled
@@ -197,7 +197,7 @@ extension LoginViewController {
 }
 
 // MARK: - Open PickerView
-extension LoginViewController {
+extension OldLoginViewController {
     
     func openEnvironmentSelection() {
         let picker = McPicker(data:[viewmodel.environmentsTitleArray])
@@ -270,7 +270,7 @@ extension LoginViewController {
 }
 
 // MARK: - Text Input Management
-extension LoginViewController: UITextFieldDelegate {
+extension OldLoginViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -285,7 +285,7 @@ extension LoginViewController: UITextFieldDelegate {
 }
 
 // MARK: - Info validation
-extension LoginViewController {
+extension OldLoginViewController {
     func isValidInfo() -> Bool {
         
         if self.viewmodel.selectedExposureEnvironment() == nil {

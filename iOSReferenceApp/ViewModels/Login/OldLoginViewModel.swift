@@ -9,7 +9,7 @@
 import Foundation
 import Exposure
 
-class LoginViewModel {
+class OldLoginViewModel {
     fileprivate(set) var environments: [EnvironmentConfig] = []
     var environmentsTitleArray: [String] = []
     var customersTitleArray: [String] = []
@@ -24,7 +24,7 @@ class LoginViewModel {
 }
 
 // MARK:- Data handling
-extension LoginViewModel {
+extension OldLoginViewModel {
     
     func loadData() {
         environmentsTitleArray.removeAll()
@@ -107,7 +107,7 @@ extension LoginViewModel {
 
 // MARK: - Exposure Integration
 /// Changes and customizations to the username and password should be stored here in the viewmodel
-extension LoginViewModel {
+extension OldLoginViewModel {
     func selectedExposureEnvironment() -> Environment? {
         if let environment = getSelectedEnvironmentConfig(), let customerConfig = getSelectedCustomerConfig() {
             return Environment(baseUrl: environment.url, customer: customerConfig.customer, businessUnit: customerConfig.businessUnit)

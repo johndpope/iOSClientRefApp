@@ -30,6 +30,7 @@ class MainMenuContentCell: UITableViewCell {
         self.viewModel = viewModel
         viewModel.didActivate = { [weak self] active in
             self?.activeIndicator.isHidden = !active
+            self?.contentTitle.textColor = viewModel.textColor
         }
         contentTitle.text = viewModel.title
         activeIndicator.isHidden = !viewModel.isActive

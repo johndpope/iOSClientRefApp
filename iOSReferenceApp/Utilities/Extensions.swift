@@ -34,42 +34,35 @@ extension UIViewController {
         super.touchesBegan(touches, with: event)
     }
     
-    func keyboardShow() {
+    func keyboardShow(notification: Notification) {
         if self.view.frame.origin.y >= 0 {
-            setViewMovedUp(movedUp: true)
+            setViewMovedUp(movedUp: true, notification: notification)
         }
     }
     
-    func keyboardHide() {
+    func keyboardHide(notification: Notification) {
         if self.view.frame.origin.y < 0 {
-            setViewMovedUp(movedUp: false)
+            setViewMovedUp(movedUp: false, notification: notification)
         }
     }
     
     func subscribe(keyboardNotifications subscribtion: Bool) {
         if subscribtion {
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide(notification:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
         }
         else {
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+            NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillShow, object: nil)
+            NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillHide, object: nil)
         }
     }
     
-    func setViewMovedUp(movedUp: Bool) {
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(0.3)
-        var rect = self.view.frame
-        if movedUp {
-            rect.origin.y -= 80
-            rect.size.height += 80
-        } else {
-            rect.origin.y += 80;
-            rect.size.height -= 80
+    func setViewMovedUp(movedUp: Bool, notification: Notification) {
+        let offset = notification.keyboardAnimationFrame.endFrame.height
+        print(notification.keyboardAnimationFrame.endFrame, notification.keyboardAnimationFrame.beginFrame)
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y += (movedUp ? -offset : offset)
         }
-        self.view.frame = rect
-        UIView.commitAnimations()
     }
 }
 
