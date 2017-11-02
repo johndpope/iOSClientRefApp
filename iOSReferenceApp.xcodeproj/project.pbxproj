@@ -12,6 +12,8 @@
 		762F0BF81FA7153D0051395E /* StretchyCarouselHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */; };
 		76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; };
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76391B411FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */; };
+		76391B431FAA6DDF0047447F /* EnvironmentSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76391B421FAA6DDF0047447F /* EnvironmentSelectionViewController.swift */; };
 		764EDC491F5EADFB00569D5B /* environments.json in Resources */ = {isa = PBXBuildFile; fileRef = 764EDC481F5EADFB00569D5B /* environments.json */; };
 		766502F41F99C8FD009A5BFE /* LocalizedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766502F31F99C8FD009A5BFE /* LocalizedEntity.swift */; };
 		766502F71F99CA34009A5BFE /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766502F61F99CA34009A5BFE /* Data+Extensions.swift */; };
@@ -200,6 +202,8 @@
 		3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedEnvironment.swift; sourceTree = "<group>"; };
 		762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyCarouselHeaderLayout.swift; sourceTree = "<group>"; };
 		76344F481F7AB3BC0034AEC0 /* Download.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Download.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewModel.swift; sourceTree = "<group>"; };
+		76391B421FAA6DDF0047447F /* EnvironmentSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewController.swift; sourceTree = "<group>"; };
 		764392D21FA5C09C008DC1E8 /* BasicPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasicPromotionCell.xib; sourceTree = "<group>"; };
 		764EDC481F5EADFB00569D5B /* environments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = environments.json; sourceTree = SOURCE_ROOT; };
 		764EDC4C1F5EB6B100569D5B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
@@ -383,6 +387,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		76391B3D1FAA6DAD0047447F /* EnvironmentSelection */ = {
+			isa = PBXGroup;
+			children = (
+				76391B3E1FAA6DAD0047447F /* ViewModels */,
+				76391B3F1FAA6DAD0047447F /* Views */,
+				76391B421FAA6DDF0047447F /* EnvironmentSelectionViewController.swift */,
+			);
+			path = EnvironmentSelection;
+			sourceTree = "<group>";
+		};
+		76391B3E1FAA6DAD0047447F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		76391B3F1FAA6DAD0047447F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		766502F51F99CA2B009A5BFE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,6 +564,7 @@
 				76EC8D231FA5102F00F6FDB6 /* MainMenu */,
 				76B0AFAF1FA51BC60085C837 /* Player */,
 				76B0AFA71FA51B880085C837 /* Search */,
+				76391B3D1FAA6DAD0047447F /* EnvironmentSelection */,
 				76A843F71EA7886400BDAF2C /* Views */,
 				3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */,
 			);
@@ -1122,6 +1152,7 @@
 				76AF2F041F139D040014F007 /* EPGDetailsViewController.swift in Sources */,
 				766502FB1F99CAA9009A5BFE /* ExposureSessionManager.swift in Sources */,
 				F793A8451EC516BC00DF7626 /* LazyScrollView.swift in Sources */,
+				76391B431FAA6DDF0047447F /* EnvironmentSelectionViewController.swift in Sources */,
 				76EC8D5F1FA5147000F6FDB6 /* EmbeddedCarouselLayoutDelegate.swift in Sources */,
 				76EC8D721FA514F900F6FDB6 /* HeroPromotionLayout.swift in Sources */,
 				76EC8D781FA5154700F6FDB6 /* HeroItemPromotionEditorial.swift in Sources */,
@@ -1151,6 +1182,7 @@
 				76AE64F71F91498D0036933E /* DynamicCustomerConfig.swift in Sources */,
 				76A843FF1EA7886400BDAF2C /* CustomerConfig.swift in Sources */,
 				76EC8D711FA514F900F6FDB6 /* HeroPromotionEditorial.swift in Sources */,
+				76391B411FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift in Sources */,
 				F7B710A81ECB369E00E9D324 /* ProgressIndicatorUtil.swift in Sources */,
 				76EC8D411FA5121600F6FDB6 /* MainMenuPushNavigationCell.swift in Sources */,
 				76AF2F171F13B6DB0014F007 /* EPGPreviewCell.swift in Sources */,

@@ -62,11 +62,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootNavigationController?.setNavigationBarHidden(true, animated: false)
         rootNavigationController?.navigationBar.barStyle = .black
         let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loginId) as! LoginViewController
-
+        
+        
         // Check user validation
-        let stack = UserInfo.isValidSession() ? [loginViewController, uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as UIViewController] : [loginViewController]
-
+//        let stack = UserInfo.isValidSession() ? [loginViewController, uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as UIViewController] : [loginViewController]
+        let stack = initialStack()
         rootNavigationController?.setViewControllers(stack, animated: false)
+    }
+        
+    func initialStack() -> [UIViewController] {
+        let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let environment = uiStoryboard.instantiateViewController(withIdentifier: "EnvironmentSelection") as! EnvironmentSelectionViewController
+        return [environment]
+//        if UserInfo.environment != nil {
+//            return [environment]
+//        }
+//        else {
+//            if UserInfo.isValidSession() {
+//
+//            }
+//
+//        }
     }
 }
 
