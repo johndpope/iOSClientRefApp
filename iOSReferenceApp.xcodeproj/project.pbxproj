@@ -68,7 +68,7 @@
 		76A844001EA7886400BDAF2C /* EnvironmentConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A843EE1EA7886400BDAF2C /* EnvironmentConfig.swift */; };
 		76A844011EA7886400BDAF2C /* KeyboardAnimationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A843F01EA7886400BDAF2C /* KeyboardAnimationFrame.swift */; };
 		76A844021EA7886400BDAF2C /* Notifications+KeyboardAnimationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A843F11EA7886400BDAF2C /* Notifications+KeyboardAnimationFrame.swift */; };
-		76A844031EA7886400BDAF2C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A843F41EA7886400BDAF2C /* LoginViewModel.swift */; };
+		76A844031EA7886400BDAF2C /* OldLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A843F41EA7886400BDAF2C /* OldLoginViewModel.swift */; };
 		76A844051EA7886400BDAF2C /* OldLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A843FA1EA7886400BDAF2C /* OldLoginViewController.swift */; };
 		76A8447C1EA7A23700BDAF2C /* Player.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8447B1EA7A23700BDAF2C /* Player.framework */; };
 		76A8447D1EA7A23700BDAF2C /* Player.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8447B1EA7A23700BDAF2C /* Player.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -266,7 +266,7 @@
 		76A843EE1EA7886400BDAF2C /* EnvironmentConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentConfig.swift; sourceTree = "<group>"; };
 		76A843F01EA7886400BDAF2C /* KeyboardAnimationFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAnimationFrame.swift; sourceTree = "<group>"; };
 		76A843F11EA7886400BDAF2C /* Notifications+KeyboardAnimationFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notifications+KeyboardAnimationFrame.swift"; sourceTree = "<group>"; };
-		76A843F41EA7886400BDAF2C /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		76A843F41EA7886400BDAF2C /* OldLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldLoginViewModel.swift; sourceTree = "<group>"; };
 		76A843FA1EA7886400BDAF2C /* OldLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldLoginViewController.swift; sourceTree = "<group>"; };
 		76A8447B1EA7A23700BDAF2C /* Player.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Player.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A8447E1EA7A23700BDAF2C /* Utilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -435,6 +435,21 @@
 			path = fastlane;
 			sourceTree = SOURCE_ROOT;
 		};
+		7683F18E1FAB4A1A0097BC23 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				7683F18F1FAB4A1A0097BC23 /* ViewModels */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		7683F18F1FAB4A1A0097BC23 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		768ED8A81F0FAEE3008E8F9B /* actions */ = {
 			isa = PBXGroup;
 			children = (
@@ -564,6 +579,7 @@
 				76EC8D231FA5102F00F6FDB6 /* MainMenu */,
 				76B0AFAF1FA51BC60085C837 /* Player */,
 				76B0AFA71FA51B880085C837 /* Search */,
+				7683F18E1FAB4A1A0097BC23 /* Login */,
 				76391B3D1FAA6DAD0047447F /* EnvironmentSelection */,
 				76A843F71EA7886400BDAF2C /* Views */,
 				3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */,
@@ -654,7 +670,7 @@
 		76A843F31EA7886400BDAF2C /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				76A843F41EA7886400BDAF2C /* LoginViewModel.swift */,
+				76A843F41EA7886400BDAF2C /* OldLoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1227,7 +1243,7 @@
 				76A416FB1EDDCAD400677A46 /* VODViewController.swift in Sources */,
 				76EC8D731FA514F900F6FDB6 /* PortraitTrioPromotionCell.swift in Sources */,
 				7698622A1FA518D900A57213 /* AssetDetailsPresenter.swift in Sources */,
-				76A844031EA7886400BDAF2C /* LoginViewModel.swift in Sources */,
+				76A844031EA7886400BDAF2C /* OldLoginViewModel.swift in Sources */,
 				76EC8D631FA5149000F6FDB6 /* CarouselEditorial.swift in Sources */,
 				F7C209611EC9C41800662224 /* UserInfo.swift in Sources */,
 				F75EDDC81EC63EEC0069CDEE /* StringsUtil.swift in Sources */,

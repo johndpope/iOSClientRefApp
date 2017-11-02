@@ -11,7 +11,7 @@ import Exposure
 
 class OldLoginViewController: UIViewController {
 
-    let viewmodel = LoginViewModel()
+    let viewmodel = OldLoginViewModel()
     var app: AppDelegate!
     
     // MARK: UI
