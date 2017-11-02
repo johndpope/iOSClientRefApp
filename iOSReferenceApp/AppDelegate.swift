@@ -67,19 +67,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     func initialStack() -> [UIViewController] {
         let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let environment = uiStoryboard.instantiateViewController(withIdentifier: "EnvironmentSelection") as! EnvironmentSelectionViewController
-        if UserInfo.environment == nil {
-            return [environment]
+        let environmentViewController = uiStoryboard.instantiateViewController(withIdentifier: "EnvironmentSelection") as! EnvironmentSelectionViewController
+        guard let environment = UserInfo.environment else {
+            return [environmentViewController]
         }
-        else {
-//            if UserInfo.isValidSession() {
-//
-//            }
-//            else {
-                let login = uiStoryboard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
-                return [environment, login]
-//            }
+        
+        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
+        loginViewController.viewModel = LoginViewModel(environment: environment,
+                                                       loginMethod: LoginViewModel.Method(persistenceString: UserInfo.environmentLoginMethod ?? ""))
+        
+        guard let sessionToken = UserInfo.sessionToken else {
+            return [environmentViewController, loginViewController]
         }
+        
+        let masterViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as! MasterViewController
+        
+        return [environmentViewController, loginViewController, masterViewController]
     }
 }
 

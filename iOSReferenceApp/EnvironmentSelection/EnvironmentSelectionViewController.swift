@@ -97,13 +97,25 @@ class EnvironmentSelectionViewController: UIViewController {
     }
 }
 
-
+extension EnvironmentSelectionViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Segue.environmentToLogin.rawValue, let destination = segue.destination as? LoginViewController {
+            guard let environment = viewModel.selectedExposureEnvironment else { return }
+            destination.viewModel = LoginViewModel(environment: environment,
+                                                   loginMethod: viewModel.preferedLoginMethod)
+//            destination.viewModel.prepareDynamicConfiguration{ config in
+//
+//            }
+        }
+    }
+}
 
 extension EnvironmentSelectionViewController {
     func applyEnvironment() {
         guard fieldsValid else { return }
         guard let environment = viewModel.selectedExposureEnvironment else { return }
         UserInfo.update(environment: environment)
+        UserInfo.environment(loginMethod: viewModel.preferedLoginMethod.persistenceString)
         performSegue(withIdentifier: Segue.environmentToLogin.rawValue, sender: environment)
         // TODO: Preload Logo?
     }

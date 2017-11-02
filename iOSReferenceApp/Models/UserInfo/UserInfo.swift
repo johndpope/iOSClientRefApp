@@ -46,6 +46,10 @@ enum UserInfo {
                            businessUnit: businessUnit)
     }
     
+    static var environmentLoginMethod: String? {
+        return TinyDB.getString(UserInfo.Lets.KEY_ENVIRONMENT_LOGIN_METHOD)
+    }
+    
     struct Lets {
         // Credentials
         static let KEY_SESSION_TOKEN = "kSessionToken"
@@ -59,6 +63,7 @@ enum UserInfo {
         static let KEY_ENVIRONMENT_URL = "kEnvironmentUrl"
         static let KEY_CUSTOMER = "kCustomer"
         static let KEY_CUSTOMER_BUSINESS_UNIT = "kCustomerBusinessUnit"
+        static let KEY_ENVIRONMENT_LOGIN_METHOD = "kEnvironmentLoginMethod"
     }
     
 }
@@ -77,6 +82,7 @@ extension UserInfo {
         TinyDB.removeData(byKey: UserInfo.Lets.KEY_ENVIRONMENT_URL)
         TinyDB.removeData(byKey: UserInfo.Lets.KEY_CUSTOMER)
         TinyDB.removeData(byKey: UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ENVIRONMENT_LOGIN_METHOD)
     }
 }
 
@@ -123,4 +129,7 @@ extension UserInfo {
         TinyDB.save(environment.businessUnit, withKey: UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT)
     }
     
+    static func environment(loginMethod: String) {
+        TinyDB.save(loginMethod, withKey: UserInfo.Lets.KEY_ENVIRONMENT_LOGIN_METHOD)
+    }
 }

@@ -10,6 +10,12 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    enum Segue: String {
+        case loginToMaster
+    }
+    
+    var viewModel: LoginViewModel!
+    
     @IBOutlet weak var serviceLogo: UIImageView!
     
     @IBOutlet weak var usernameTextField: SkyFloatingLabelTextField!
@@ -39,8 +45,27 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+        viewModel.prepareDynamicConfiguration{ [weak self] conf in
+            guard let weakSelf = self else { return }
+            if let conf = conf {
+                weakSelf.apply(dynamicConfiguration: conf)
+            }
+            else {
+                
+            }
+        }
+    }
+    
+    func apply(dynamicConfiguration: DynamicCustomerConfig) {
+        guard let logoString = dynamicConfiguration.logoUrl, let logoUrl = URL(string: logoString) else { return }
+        
+        serviceLogo
+            .kf
+            .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in
+                
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,12 +94,98 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     func login() {
+        guard fieldsValid else { return }
+        switch viewModel.loginMethod {
+        case .anonymous: handleAnonymousLogin()
+        case .login(mfa: let mfa): mfa ? handleTwoFactorLogin() : handleLogin()
+        }
+    }
+    
+    // MARK: Anonymous
+    fileprivate func handleAnonymousLogin() {
+        ProgressIndicatorUtil.shared.show(parentView: self.view)
+        viewModel.anonymous(callback: { (response) in
+            defer {
+                ProgressIndicatorUtil.shared.hide()
+            }
+            
+            if let error = response.error {
+                self.showMessage(title: "Login Error", message: error.localizedDescription)
+                return
+            }
+            
+            if let sessionToken = response.value {
+                UserInfo.update(sessionToken: sessionToken)
+                self.performSegue(withIdentifier: Segue.loginToMaster.rawValue, sender: sessionToken)
+            }
+        })
+    }
+    // MARK: Login
+    fileprivate func handleLogin() {
+        ProgressIndicatorUtil.shared.show(parentView: self.view)
+        viewModel.login(exposureUsername: usernameTextField.text!, exposurePassword: passwordTextField.text!, callback: { (response) in
+            defer {
+                ProgressIndicatorUtil.shared.hide()
+            }
+            
+            if let error = response.error {
+                self.showMessage(title: "Login Error", message: error.localizedDescription)
+                return
+            }
+            
+            if let credentials = response.value {
+                UserInfo.update(credentials: credentials)
+                self.performSegue(withIdentifier: Segue.loginToMaster.rawValue, sender: credentials)
+            }
+        })
+    }
+    
+    // MARK: TwoFactor
+    fileprivate func handleTwoFactorLogin() {
+        let alertController = UIAlertController(title: "Two Factor Authentication", message: "Please provide an MFA token", preferredStyle: .alert)
         
+        // Confirm
+        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [weak self] action in
+            guard let weakSelf = self else { return }
+            ProgressIndicatorUtil.shared.show(parentView: weakSelf.view)
+            if let mfa = alertController.textFields?.first?.text {
+                weakSelf.viewModel
+                    .twoFactor(exposureUsername: weakSelf.usernameTextField.text!,
+                               exposurePassword: weakSelf.passwordTextField.text!,
+                               mfa: mfa) { response in
+                                defer {
+                                    ProgressIndicatorUtil.shared.hide()
+                                }
+                                
+                                if let error = response.error {
+                                    weakSelf.showMessage(title: "Login Error", message: error.localizedDescription)
+                                    return
+                                }
+                                
+                                if let credentials = response.value {
+                                    UserInfo.update(credentials: credentials)
+                                    weakSelf.performSegue(withIdentifier: Segue.loginToMaster.rawValue, sender: credentials)
+                                }
+                }
+            }
+        }
+        
+        // Cancel
+        let cancelAciton = UIAlertAction(title: "Cancel", style: .destructive)
+        
+        alertController.addTextField{ textfield in
+            textfield.placeholder = "MFA"
+            textfield.keyboardType = UIKeyboardType.numberPad
+        }
+        
+        alertController.addAction(cancelAciton)
+        alertController.addAction(confirmAction)
+        
+        present(alertController, animated: true)
     }
 }
 
 extension LoginViewController: UITextFieldDelegate {
-    
     var fieldsValid: Bool {
         return valid(textField: usernameTextField) &&
             valid(textField: passwordTextField)
