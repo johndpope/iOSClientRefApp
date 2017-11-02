@@ -60,15 +60,12 @@ class EnvironmentSelectionViewModel {
                              environments[environmentIndex].customers[index].businessUnit)
     }
     
-    var preferedLoginMethod: LoginViewModel.Method {
-        guard let environmentIndex = selectedEnvironment, let customerIndex = selectedCustomer else { return .login(mfa: false) }
-        guard let presetMethod = environments[environmentIndex].customers[customerIndex].presetMethod else { return .login(mfa: false) }
-        switch presetMethod {
-        case .anonymous: return .anonymous
-        case .login(username: _, password: _, mfa: let mfa):
-            return .login(mfa: mfa)
-        }
+    var preferedLoginMethod: CustomerConfig.PresetMethod {
+        guard let environmentIndex = selectedEnvironment, let customerIndex = selectedCustomer else { return .login(username: "", password: "", mfa: false) }
+        guard let presetMethod = environments[environmentIndex].customers[customerIndex].presetMethod else { return .login(username: "", password: "", mfa: false) }
+        return presetMethod
     }
+    
     var selectedExposureEnvironment: Environment? {
         guard let environmentIndex = selectedEnvironment, let customerIndex = selectedCustomer else { return nil }
         let environmentConfig = environments[environmentIndex]

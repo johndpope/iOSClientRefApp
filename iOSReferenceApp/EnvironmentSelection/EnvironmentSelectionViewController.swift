@@ -115,7 +115,7 @@ extension EnvironmentSelectionViewController {
         guard fieldsValid else { return }
         guard let environment = viewModel.selectedExposureEnvironment else { return }
         UserInfo.update(environment: environment)
-        UserInfo.environment(loginMethod: viewModel.preferedLoginMethod.persistenceString)
+        UserInfo.environment(loginMethod: viewModel.preferedLoginMethod)
         performSegue(withIdentifier: Segue.environmentToLogin.rawValue, sender: environment)
         // TODO: Preload Logo?
     }

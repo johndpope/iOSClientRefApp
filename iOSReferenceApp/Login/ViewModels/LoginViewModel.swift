@@ -11,34 +11,14 @@ import Exposure
 import Kingfisher
 
 class LoginViewModel {
-    enum Method {
-        case anonymous
-        case login(mfa: Bool)
-        
-        init(persistenceString: String) {
-            switch persistenceString {
-            case "anonymous": self = .anonymous
-            case "mfa": self = .login(mfa: true)
-            case "login": self = .login(mfa: false)
-            default: self = .login(mfa: false)
-            }
-        }
-        var persistenceString: String {
-            switch self {
-            case .anonymous: return "anonymous"
-            case .login(mfa: let mfa): return mfa ? "mfa" : "login"
-            }
-        }
-    }
-    
     let environment: Environment
-    var loginMethod: Method
+    var loginMethod: CustomerConfig.PresetMethod
     fileprivate var applicationConfig: ApplicationConfig?
     fileprivate var dynamicCustomerConfig: DynamicCustomerConfig?
     
     var onServiceLogoUpdated: (UIImage?) -> Void = { _ in }
     
-    init(environment: Environment, loginMethod: Method = .login(mfa: false)) {
+    init(environment: Environment, loginMethod: CustomerConfig.PresetMethod) {
         self.environment = environment
         self.loginMethod = loginMethod
     }

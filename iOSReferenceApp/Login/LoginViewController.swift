@@ -97,7 +97,7 @@ extension LoginViewController {
         guard fieldsValid else { return }
         switch viewModel.loginMethod {
         case .anonymous: handleAnonymousLogin()
-        case .login(mfa: let mfa): mfa ? handleTwoFactorLogin() : handleLogin()
+        case .login(username: _, password: _, mfa: let mfa): mfa ? handleTwoFactorLogin() : handleLogin()
         }
     }
     

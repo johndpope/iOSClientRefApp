@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
         loginViewController.viewModel = LoginViewModel(environment: environment,
-                                                       loginMethod: LoginViewModel.Method(persistenceString: UserInfo.environmentLoginMethod ?? ""))
+                                                       loginMethod: UserInfo.environmentLoginMethod ?? .login(username: "", password: "", mfa: false))
         
         guard let sessionToken = UserInfo.sessionToken else {
             return [environmentViewController, loginViewController]

@@ -46,8 +46,9 @@ enum UserInfo {
                            businessUnit: businessUnit)
     }
     
-    static var environmentLoginMethod: String? {
-        return TinyDB.getString(UserInfo.Lets.KEY_ENVIRONMENT_LOGIN_METHOD)
+    static var environmentLoginMethod: CustomerConfig.PresetMethod? {
+        guard let string = TinyDB.getString(UserInfo.Lets.KEY_ENVIRONMENT_LOGIN_METHOD) else { return nil }
+        return CustomerConfig.PresetMethod(persistenceString: string)
     }
     
     struct Lets {
@@ -129,7 +130,7 @@ extension UserInfo {
         TinyDB.save(environment.businessUnit, withKey: UserInfo.Lets.KEY_CUSTOMER_BUSINESS_UNIT)
     }
     
-    static func environment(loginMethod: String) {
-        TinyDB.save(loginMethod, withKey: UserInfo.Lets.KEY_ENVIRONMENT_LOGIN_METHOD)
+    static func environment(loginMethod: CustomerConfig.PresetMethod) {
+        TinyDB.save(loginMethod.persistenceString, withKey: UserInfo.Lets.KEY_ENVIRONMENT_LOGIN_METHOD)
     }
 }

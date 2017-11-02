@@ -32,7 +32,21 @@ struct CustomerConfig: Decodable {
             }
         }
         
+        init(persistenceString: String) {
+            switch persistenceString {
+            case "anonymous": self = .anonymous
+            case "mfa": self = .login(username: "", password: "", mfa: true)
+            case "login": self = .login(username: "", password: "", mfa: false)
+            default: self = .login(username: "", password: "", mfa: false)
+            }
+        }
         
+        var persistenceString: String {
+            switch self {
+            case .anonymous: return "anonymous"
+            case .login(username: _, password: _, mfa: let mfa): return mfa ? "mfa":"login"
+            }
+        }
     }
     
     init(from decoder: Decoder) throws {
