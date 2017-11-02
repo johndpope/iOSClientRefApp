@@ -32,9 +32,12 @@ class StretchyCarouselHeaderView: UICollectionReusableView {
     }
     func bind(viewModel: CarouselViewModel) {
         self.viewModel = viewModel
-        self.collectionView.reloadData()
-        self.collectionView.layoutIfNeeded()
+        print("HEADER BEFORE bind(viewModel",collectionView.contentOffset)
+//        self.collectionView.reloadData()
+//        self.collectionView.layoutIfNeeded()
         self.collectionView.collectionViewLayout = viewModel.editorial.layout
+        self.collectionView.reloadData()
+        print("HEADER AFTER bind(viewModel",collectionView.contentOffset)
     }
 }
 

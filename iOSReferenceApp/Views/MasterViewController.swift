@@ -45,7 +45,6 @@ class MasterViewController: UIViewController {
     var snapBehavior: UISnapBehavior!
     var attachmentBehavior: UIAttachmentBehavior!
     
-    var config: ApplicationConfig!
     var environment: Environment!
     var sessionToken: SessionToken!
     
@@ -57,26 +56,14 @@ class MasterViewController: UIViewController {
         itemBehavior = UIDynamicItemBehavior(items: [contentContainer])
         itemBehavior.allowsRotation = false
         blurView.effect = nil
-        
-        
-        guard let env = UserInfo.environment else { return }
-        config = ApplicationConfig(environment: env)
-        config?.request { [weak self] in
-            self?.loadDynamicConfig()
-        }
     }
     
     var dynamicCustomerConfig: DynamicCustomerConfig?
-    func loadDynamicConfig() {
-        config.fetchFile(fileName: "main.json") { [weak self] file in
-            if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
-                self?.dynamicCustomerConfig = dynamicConfig
-                self?.menuController.apply(dynamicConfig: dynamicConfig)
-                if let carouselGroup = dynamicConfig.carouselGroupId {
-                    self?.contentController.contentType = .carouselGroup(groupId: carouselGroup)
-                }
-            }
-        }
+    
+    func apply(dynamicConfiguration: DynamicCustomerConfig) {
+        dynamicCustomerConfig = dynamicConfiguration
+        menuController.apply(dynamicConfig: dynamicConfiguration)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -184,7 +171,6 @@ extension MasterViewController: SlidingMenuController {
 
 extension MasterViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         guard let environment = UserInfo.environment,
             let sessionToken = UserInfo.sessionToken else {
                 // TODO: Fail gracefully
@@ -216,22 +202,25 @@ extension MasterViewController {
                 case .myDownloads: self?.performSegue(withIdentifier: Segue.masterToMyDownloads.rawValue, sender: nil)
                 }
             }
-            destination.selectedContentSegue = { [weak self] segue in
-                guard let weakSelf = self else { return }
-                weakSelf.toggleSlidingMenu()
-                switch segue {
-                case .home:
-                    if let carouselGroup = weakSelf.dynamicCustomerConfig?.carouselGroupId {
-                        weakSelf.contentController.contentType = .carouselGroup(groupId: carouselGroup)
-                    }
-                    else {
-                        weakSelf.contentController.contentType = .movies
-                    }
-                case .movies: weakSelf.contentController.contentType = .movies
-                case .documentaries: weakSelf.contentController.contentType = .documentaries
-                case .kids: weakSelf.contentController.contentType = .kids
-                case .clips: weakSelf.contentController.contentType = .clips
-                }
+            destination.selectedContentSegue = { [weak self] dynamicContentCategory in
+                // TODO: Replace the current CarouselViewController with a new one, fetching data specified by the dynamicContentCategory
+                
+                
+//                guard let weakSelf = self else { return }
+//                weakSelf.toggleSlidingMenu()
+//                switch segue {
+//                case .home:
+//                    if let carouselGroup = weakSelf.dynamicCustomerConfig?.carouselGroupId {
+//                        weakSelf.contentController.contentType = .carouselGroup(groupId: carouselGroup)
+//                    }
+//                    else {
+//                        weakSelf.contentController.contentType = .movies
+//                    }
+//                case .movies: weakSelf.contentController.contentType = .movies
+//                case .documentaries: weakSelf.contentController.contentType = .documentaries
+//                case .kids: weakSelf.contentController.contentType = .kids
+//                case .clips: weakSelf.contentController.contentType = .clips
+//                }
                 
             }
         }

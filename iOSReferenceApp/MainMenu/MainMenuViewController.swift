@@ -10,29 +10,45 @@ import UIKit
 import Exposure
 import Kingfisher
 
+protocol DynamicContentCategory {
+    var title: String { get }
+}
+
+struct DynamicContentCarousel: DynamicContentCategory {
+    let title: String
+    let carouselGroupId: String
+}
+
+struct FakeDynamicContentCarousel: DynamicContentCategory {
+    let title: String
+    let content: ContentType
+    
+    enum ContentType {
+        case home
+        case movies
+        case documentaries
+        case kids
+        case clips
+    }
+}
+
 class MainMenuViewController: UIViewController {
 
     enum Action {
         case other(segue: MainMenuViewController.Segue.Other)
-        case content(segue: MainMenuViewController.Segue.Content)
+        case content(segue: DynamicContentCategory)
         case logout
+        case none
     }
     
     enum Segue {
         enum Other: String {
             case myDownloads
         }
-        enum Content: String {
-            case home
-            case movies
-            case documentaries
-            case kids
-            case clips
-        }
     }
     
     var selectedOtherSegue: (Segue.Other) -> Void = { _ in }
-    var selectedContentSegue: (Segue.Content) -> Void = { _ in }
+    var selectedContentSegue: (DynamicContentCategory) -> Void = { _ in }
     
     @IBOutlet weak var serviceLogo: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -49,9 +65,6 @@ class MainMenuViewController: UIViewController {
         tableView.register(UINib(nibName: "MainMenuStaticDataCell", bundle: nil), forCellReuseIdentifier: MainMenuStaticDataViewModel.reuseIdentifier)
         tableView.register(UINib(nibName: "MainMenuPushNavigationCell", bundle: nil), forCellReuseIdentifier: MainMenuPushNavigationViewModel.reuseIdentifier)
         tableView.register(UINib(nibName: "MainMenuContentCell", bundle: nil), forCellReuseIdentifier: MainMenuContentViewModel.reuseIdentifier)
-
-        let activeContentIndex = 0 // TODO: Fetch from where?
-        viewModel.configure(activeContentIndex: activeContentIndex)
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,8 +74,7 @@ class MainMenuViewController: UIViewController {
     
     
     func apply(dynamicConfig: DynamicCustomerConfig) {
-        viewModel.dynamicCustomerConfig = dynamicConfig
-        
+        viewModel.updateDynamicContent(with: dynamicConfig)
         if let logoString = dynamicConfig.logoUrl, let logoUrl = URL(string: logoString) {
             serviceLogo
                 .kf
@@ -114,15 +126,16 @@ extension MainMenuViewController {
 extension MainMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let actionable = viewModel[indexPath] as? MainMenuActionType, let action = actionable.actionIdentifier {
-            switch action {
+        if let actionable = viewModel[indexPath] as? MainMenuActionType {
+            switch actionable.actionIdentifier {
             case .logout:
                 actionLogout()
             case .content(segue: let segue):
-                viewModel.select(content: segue)
+                viewModel.select(contentAt: indexPath.row)
                 selectedContentSegue(segue)
             case .other(segue: let segue):
                 selectedOtherSegue(segue)
+            case .none: return
             }
         }
     }

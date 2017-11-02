@@ -14,8 +14,13 @@ class MainMenuContentViewModel: MainMenuItemType, MainMenuActionType {
     }
     
     var didActivate: (Bool) -> Void = { _ in }
-    let title: String
-    let actionIdentifier: MainMenuViewController.Action?
+    var title: String {
+        return dynamicContent.title
+    }
+    let dynamicContent: DynamicContentCategory
+    var actionIdentifier: MainMenuViewController.Action {
+        return .content(segue: dynamicContent)
+    }
     var isActive: Bool {
         didSet {
             didActivate(isActive)
@@ -25,9 +30,8 @@ class MainMenuContentViewModel: MainMenuItemType, MainMenuActionType {
         return isActive ? UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1) : UIColor.lightGray
     }
     
-    init(title: String, active: Bool = false, action: MainMenuViewController.Action? = nil) {
-        self.title = title
+    init(dynamicContent: DynamicContentCategory, active: Bool = false) {
+        self.dynamicContent = dynamicContent
         self.isActive = active
-        self.actionIdentifier = action
     }
 }

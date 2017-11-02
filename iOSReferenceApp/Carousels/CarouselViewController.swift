@@ -68,40 +68,42 @@ class CarouselViewController: UIViewController {
     
     func reloadCarousels() {
         viewModel.reset()
-        collectionView.reloadData()
-        collectionView.layoutIfNeeded()
+//        collectionView.reloadData()
+//        collectionView.layoutIfNeeded()
         
         updateNavigationTitle(with: contentType)
         switch contentType {
         case .fakeCarousels:
             viewModel.loadFakeMovieCarousels{ [weak self] error in
                 self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
+//                self?.collectionView.layoutIfNeeded()
             }
         case .carouselGroup(groupId: let groupId):
             viewModel.loadCarousels(for: groupId){ [weak self] error in
+                print("reloadCarousels",self?.collectionView.contentOffset)
                 self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
+//                self?.collectionView.layoutIfNeeded()
             }
         case .movies:
             viewModel.loadFakeMovieCarousels{ [weak self] error in
                 self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
+//                self?.collectionView.layoutIfNeeded()
             }
         case .documentaries:
             viewModel.loadFakeDocumentariesCarousels{ [weak self] error in
                 self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
+//                self?.collectionView.layoutIfNeeded()
             }
         case .kids:
             viewModel.loadFakeKidsCarousels{ [weak self] error in
                 self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
+//                self?.collectionView.layoutIfNeeded()
             }
         case .clips:
             viewModel.loadFakeClipsCarousels{ [weak self] error in
+                print("reloadCarousels",self?.collectionView.contentOffset)
                 self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
+//                self?.collectionView.layoutIfNeeded()
             }
         }
     }

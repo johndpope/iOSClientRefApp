@@ -35,6 +35,10 @@ class BannerPromotionLayout: CollectionViewLayout {
         }
     }
     
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+         print("BANNER targetContentOffset:",proposedContentOffset,super.targetContentOffset(forProposedContentOffset: proposedContentOffset))
+        return super.targetContentOffset(forProposedContentOffset: proposedContentOffset)
+    }
     override func prepare() {
         guard let collectionView = collectionView else { return }
         attributes = (0..<collectionView.numberOfItems(inSection: 0)).flatMap{

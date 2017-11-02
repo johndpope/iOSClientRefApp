@@ -39,10 +39,13 @@ class CarouselView: UICollectionViewCell {
     
     func bind(viewModel: CarouselViewModel) {
         self.viewModel = viewModel
-        self.collectionView.reloadData()
-        self.collectionView.layoutIfNeeded()
+        print("Before bind(viewModel",collectionView.contentOffset)
+//        self.collectionView.reloadData()
+//        self.collectionView.layoutIfNeeded()
 //        self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.collectionViewLayout = viewModel.editorial.layout
+        self.collectionView.reloadData()
+        print("After bind(viewModel",collectionView.contentOffset)
     }
     
 }

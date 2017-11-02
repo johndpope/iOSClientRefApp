@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
     }
     
     var viewModel: LoginViewModel!
+    var dynamicCustomerConfig: DynamicCustomerConfig?
     
     @IBOutlet weak var serviceLogo: UIImageView!
     
@@ -47,16 +48,6 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         configureLoginControls()
-        
-        viewModel.prepareDynamicConfiguration{ [weak self] conf in
-            guard let weakSelf = self else { return }
-            if let conf = conf {
-                weakSelf.apply(dynamicConfiguration: conf)
-            }
-            else {
-                
-            }
-        }
     }
     
 
@@ -85,6 +76,16 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Segue.loginToMaster.rawValue, let destination = segue.destination as? MasterViewController {
+            if let conf = dynamicCustomerConfig {
+                destination.apply(dynamicConfiguration: conf)
+            }
+        }
+    }
+}
+
+extension LoginViewController {
     func configureLoginControls() {
         switch viewModel.loginMethod {
         case .anonymous:
@@ -101,7 +102,6 @@ extension LoginViewController {
     
     func apply(dynamicConfiguration: DynamicCustomerConfig) {
         guard let logoString = dynamicConfiguration.logoUrl, let logoUrl = URL(string: logoString) else { return }
-        
         serviceLogo
             .kf
             .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in

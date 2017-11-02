@@ -51,7 +51,7 @@ class CarouselListViewModel {
                 
                 if let banner = items.first {
                     let editorial = BannerPromotionEditorial()
-//                    editorial.bannerLayout.use(pagination: true)
+                    editorial.bannerLayout.use(pagination: true)
                     let bannerCarousel = CarouselViewModel(editorial: editorial)
                     
                     if let list = banner.items?.items {
@@ -145,7 +145,7 @@ extension CarouselListViewModel {
     
     private func createFakeCarousels(for fetch: FetchAssetList, callback: @escaping (ExposureError?) -> Void) {
         let bannerEditorial = BannerPromotionEditorial()
-//        bannerEditorial.layout.use(pagination: true)
+        bannerEditorial.layout.use(pagination: true)
         bannerViewModel = CarouselViewModel(editorial: bannerEditorial)
         
         let itemsPerCarousel = 10
