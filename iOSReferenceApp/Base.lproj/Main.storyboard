@@ -21,10 +21,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Login View Controller-->
+        <!--Old Login View Controller-->
         <scene sceneID="yRl-dv-UYG">
             <objects>
-                <viewController storyboardIdentifier="LOGIN_VC_ID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ggL-G2-oUb" customClass="LoginViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LOGIN_VC_ID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ggL-G2-oUb" customClass="OldLoginViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wW1-bt-mjN"/>
                         <viewControllerLayoutGuide type="bottom" id="DCs-oT-OLB"/>
@@ -303,10 +303,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G2H-tW-Zfx">
-                                <rect key="frame" x="20" y="30" width="374" height="706"/>
+                                <rect key="frame" x="20" y="50" width="374" height="686"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="sEg-Un-Cvl">
-                                        <rect key="frame" x="0.0" y="20" width="374" height="706"/>
+                                        <rect key="frame" x="0.0" y="20" width="374" height="686"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="IWZ-SO-xGo">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="494"/>
