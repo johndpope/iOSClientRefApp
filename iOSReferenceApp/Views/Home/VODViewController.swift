@@ -107,15 +107,15 @@ extension VODViewController: AssetDetailsPresenter {
 
 extension VODViewController {
     fileprivate func setupViewModel() {
-        guard let tabVC = self.tabBarController as? HomeTabBarController else {
-            fatalError("Unable to proceed without homeTabBarController")
-        }
-        
-        let carouselGroupId = tabVC.dynamicCustomerConfig?.carouselGroupId ?? "fakeCarousels"
-        
-        viewModel.loadCarousel(group: carouselGroupId) { [weak self] error in
-            self?.tableView.reloadData()
-        }
+//        guard let tabVC = self.tabBarController as? HomeTabBarController else {
+//            fatalError("Unable to proceed without homeTabBarController")
+//        }
+//        
+//        let carouselGroupId = tabVC.dynamicCustomerConfig?.carouselGroupId ?? "fakeCarousels"
+//        
+//        viewModel.loadCarousel(group: carouselGroupId) { [weak self] error in
+//            self?.tableView.reloadData()
+//        }
     }
 }
 

@@ -14,8 +14,8 @@ class CarouselListViewModel {
         let editorialHeight: CGFloat = 38
         let slimEditorialHeight: CGFloat = 28
         let footerHeight: CGFloat = 40
-        let edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 30, bottom: 0, right: 30)
-        let contentSpacing: CGFloat = 15
+        let edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 20, bottom: 0, right: 20)
+        let contentSpacing: CGFloat = 8
         let thumbnailRoundness: CGFloat? = nil
     }
     
@@ -51,7 +51,7 @@ class CarouselListViewModel {
                 
                 if let banner = items.first {
                     let editorial = BannerPromotionEditorial()
-                    editorial.bannerLayout.use(pagination: true)
+//                    editorial.bannerLayout.use(pagination: true)
                     let bannerCarousel = CarouselViewModel(editorial: editorial)
                     
                     if let list = banner.items?.items {
@@ -65,7 +65,7 @@ class CarouselListViewModel {
                             let title = carouselItem.titles?.anyTitle(locale: "en") ?? "Some Title"
                             
                             let editorial = BasicPromotionEditorial(title: title, aspectRatio: BasicPromotionEditorial.AspectRatio(width: 3, height: 2))
-                            editorial.basicLayout.use(pagination: true)
+//                            editorial.basicLayout.use(pagination: true)
                             let carousel = CarouselViewModel(editorial: editorial)
                             
                             let content = carouselItem
@@ -145,7 +145,7 @@ extension CarouselListViewModel {
     
     private func createFakeCarousels(for fetch: FetchAssetList, callback: @escaping (ExposureError?) -> Void) {
         let bannerEditorial = BannerPromotionEditorial()
-        bannerEditorial.layout.use(pagination: true)
+//        bannerEditorial.layout.use(pagination: true)
         bannerViewModel = CarouselViewModel(editorial: bannerEditorial)
         
         let itemsPerCarousel = 10

@@ -35,7 +35,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func changeEnvironmentAction(_ sender: UIButton) {
-        print(#function)
         UserInfo.clear()
         navigationController?.popViewController(animated: true)
     }

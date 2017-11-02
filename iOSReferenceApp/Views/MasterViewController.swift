@@ -108,7 +108,6 @@ class MasterViewController: UIViewController {
             
         case .ended:
             let maxOffset = menuConstants.inset(for: view.bounds.size.width)
-            print(maxOffset+location.x,maxOffset, 0.5*maxOffset)
             if maxOffset+location.x < 0.75*maxOffset {
                 // Hide menu
                 animator.removeBehavior(attachmentBehavior)
@@ -150,10 +149,6 @@ class MasterViewController: UIViewController {
 }
 
 extension MasterViewController: SlidingMenuController {
-    func moveSlidingMenu(offset: CGFloat) {
-        print(offset)
-    }
-    
     func toggleSlidingMenu() {
         if menuOpen {
             menuOpen = false
