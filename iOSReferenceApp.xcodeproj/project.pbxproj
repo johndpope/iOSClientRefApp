@@ -28,6 +28,8 @@
 		767DC0DC1FA712B10021A17A /* StretchyCarouselHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767DC0DA1FA712B10021A17A /* StretchyCarouselHeaderView.swift */; };
 		767DC0DD1FA712B10021A17A /* StretchyCarouselHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 767DC0DB1FA712B10021A17A /* StretchyCarouselHeaderView.xib */; };
 		76808BDC1FA34BAB00646E8A /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76808BDB1FA34BAB00646E8A /* MasterViewController.swift */; };
+		7683F1911FAB4A960097BC23 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7683F1901FAB4A960097BC23 /* LoginViewController.swift */; };
+		7683F1931FAB4AB60097BC23 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7683F1921FAB4AB60097BC23 /* LoginViewModel.swift */; };
 		768ED8AA1F0FAEE3008E8F9B /* update_dependency_graph.rb in Resources */ = {isa = PBXBuildFile; fileRef = 768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */; };
 		769862261FA518C500A57213 /* AssetDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769862201FA518BD00A57213 /* AssetDetailsViewController.swift */; };
 		769862271FA518C500A57213 /* AssetDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769862231FA518BD00A57213 /* AssetDetailsViewModel.swift */; };
@@ -221,6 +223,8 @@
 		767DC0DA1FA712B10021A17A /* StretchyCarouselHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyCarouselHeaderView.swift; sourceTree = "<group>"; };
 		767DC0DB1FA712B10021A17A /* StretchyCarouselHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StretchyCarouselHeaderView.xib; sourceTree = "<group>"; };
 		76808BDB1FA34BAB00646E8A /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		7683F1901FAB4A960097BC23 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		7683F1921FAB4AB60097BC23 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = update_dependency_graph.rb; sourceTree = "<group>"; };
 		769862121FA517D800A57213 /* OfflineListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineListViewController.swift; sourceTree = "<group>"; };
 		769862151FA517D800A57213 /* OfflineListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineListCellViewModel.swift; sourceTree = "<group>"; };
@@ -439,6 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				7683F18F1FAB4A1A0097BC23 /* ViewModels */,
+				7683F1901FAB4A960097BC23 /* LoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -446,6 +451,7 @@
 		7683F18F1FAB4A1A0097BC23 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				7683F1921FAB4AB60097BC23 /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1149,6 +1155,7 @@
 				3E6B3B461F84D5100071C10A /* ApplicationConfig.swift in Sources */,
 				76B0AFB31FA51BCA0085C837 /* PlayerViewController.swift in Sources */,
 				76A4AD4D1FA736C700D20743 /* BannerPromotionLayout.swift in Sources */,
+				7683F1931FAB4AB60097BC23 /* LoginViewModel.swift in Sources */,
 				F793A8551EC5289E00DF7626 /* UITextField+fixCaretPosition.swift in Sources */,
 				F7061C691EC5BFAF0041E271 /* Constants.swift in Sources */,
 				76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */,
@@ -1244,6 +1251,7 @@
 				76EC8D731FA514F900F6FDB6 /* PortraitTrioPromotionCell.swift in Sources */,
 				7698622A1FA518D900A57213 /* AssetDetailsPresenter.swift in Sources */,
 				76A844031EA7886400BDAF2C /* OldLoginViewModel.swift in Sources */,
+				7683F1911FAB4A960097BC23 /* LoginViewController.swift in Sources */,
 				76EC8D631FA5149000F6FDB6 /* CarouselEditorial.swift in Sources */,
 				F7C209611EC9C41800662224 /* UserInfo.swift in Sources */,
 				F75EDDC81EC63EEC0069CDEE /* StringsUtil.swift in Sources */,

@@ -71,12 +71,7 @@ extension UserInfo {
     }
     
     static func clear() {
-        // Credentials
-        TinyDB.removeData(byKey: UserInfo.Lets.KEY_SESSION_TOKEN)
-        TinyDB.removeData(byKey: UserInfo.Lets.KEY_CRM_TOKEN)
-        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_ID)
-        TinyDB.removeData(byKey: UserInfo.Lets.KEY_EXPIRATION_DATE_TIME)
-        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_STATUS)
+        clearSession()
         
         // Environment
         TinyDB.removeData(byKey: UserInfo.Lets.KEY_ENVIRONMENT_URL)
@@ -108,6 +103,15 @@ extension UserInfo {
     
     static func update(sessionToken: SessionToken) {
         TinyDB.save(sessionToken.value, withKey: UserInfo.Lets.KEY_SESSION_TOKEN)
+    }
+    
+    static func clearSession() {
+        // Credentials
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_SESSION_TOKEN)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_CRM_TOKEN)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_ID)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_EXPIRATION_DATE_TIME)
+        TinyDB.removeData(byKey: UserInfo.Lets.KEY_ACCOUNT_STATUS)
     }
     
     static func update(environment: Environment) {

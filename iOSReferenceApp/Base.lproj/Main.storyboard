@@ -302,7 +302,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G2H-tW-Zfx">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G2H-tW-Zfx" customClass="LazyScrollView" customModule="iOSReferenceApp" customModuleProvider="target">
                                 <rect key="frame" x="20" y="50" width="374" height="686"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="sEg-Un-Cvl">
@@ -561,10 +561,10 @@
             </objects>
             <point key="canvasLocation" x="-83" y="2089"/>
         </scene>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="Zap-1w-h93">
             <objects>
-                <viewController id="nky-xD-yxO" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginView" id="nky-xD-yxO" customClass="LoginViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="d9W-Tw-imc"/>
                         <viewControllerLayoutGuide type="bottom" id="pSW-Yn-9C9"/>
@@ -573,18 +573,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ru8-hB-SJl">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ru8-hB-SJl" customClass="LazyScrollView" customModule="iOSReferenceApp" customModuleProvider="target">
                                 <rect key="frame" x="20" y="30" width="374" height="706"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iil-BM-cWU">
-                                        <rect key="frame" x="154" y="678" width="67" height="28"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="13"/>
-                                        <state key="normal" title="Environment">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="daQ-S9-v4K">
-                                        <rect key="frame" x="0.0" y="20" width="374" height="706"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="daQ-S9-v4K">
+                                        <rect key="frame" x="0.0" y="19" width="374" height="706"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="NXH-1r-36g">
                                                 <rect key="frame" x="0.0" y="129" width="374" height="448.33333333333337"/>
@@ -619,9 +612,9 @@
                                                                 </constraints>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next" textContentType="username"/>
                                                                 <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Exposure URL"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username"/>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
                                                                         <color key="value" cocoaTouchSystemColor="lightTextColor"/>
                                                                     </userDefinedRuntimeAttribute>
@@ -654,8 +647,8 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                                 <connections>
-                                                                    <action selector="textFieldValueChanged:" destination="7sF-9h-cQm" eventType="editingChanged" id="4C6-vv-Kwg"/>
-                                                                    <outlet property="delegate" destination="7sF-9h-cQm" id="7Mt-bj-caG"/>
+                                                                    <action selector="textFieldValueChanged:" destination="nky-xD-yxO" eventType="editingChanged" id="fRf-Qp-VcG"/>
+                                                                    <outlet property="delegate" destination="nky-xD-yxO" id="Wr0-qF-nqx"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="eBa-up-WOP" userLabel="UsernameTextField" customClass="SkyFloatingLabelTextField" customModule="iOSReferenceApp" customModuleProvider="target">
@@ -666,9 +659,9 @@
                                                                 </constraints>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="go" textContentType="password"/>
                                                                 <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Business Unit"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
                                                                         <color key="value" cocoaTouchSystemColor="lightTextColor"/>
                                                                     </userDefinedRuntimeAttribute>
@@ -701,8 +694,8 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                                 <connections>
-                                                                    <action selector="textFieldValueChanged:" destination="7sF-9h-cQm" eventType="editingChanged" id="gBf-Bj-w1I"/>
-                                                                    <outlet property="delegate" destination="7sF-9h-cQm" id="qOe-hp-1Ce"/>
+                                                                    <action selector="textFieldValueChanged:" destination="nky-xD-yxO" eventType="editingChanged" id="E3X-l2-IcO"/>
+                                                                    <outlet property="delegate" destination="nky-xD-yxO" id="N6n-6e-eQM"/>
                                                                 </connections>
                                                             </textField>
                                                         </subviews>
@@ -717,7 +710,7 @@
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="continueAction:" destination="7sF-9h-cQm" eventType="touchUpInside" id="aKU-d2-Ysm"/>
+                                                                    <action selector="loginAction:" destination="nky-xD-yxO" eventType="touchUpInside" id="FPc-2C-ln3"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -730,16 +723,26 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2W7-8Z-mDB">
+                                        <rect key="frame" x="135.33333333333331" y="670" width="103.99999999999997" height="28"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="13"/>
+                                        <state key="normal" title="Select Environment">
+                                            <color key="titleColor" red="0.0" green="0.40000000000000002" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="changeEnvironmentAction:" destination="nky-xD-yxO" eventType="touchUpInside" id="oW1-WR-aFZ"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="bottomMargin" secondItem="2W7-8Z-mDB" secondAttribute="bottom" constant="20" id="2bl-xk-Amm"/>
                                     <constraint firstItem="daQ-S9-v4K" firstAttribute="height" secondItem="Ru8-hB-SJl" secondAttribute="height" id="CQn-XC-ZTv"/>
                                     <constraint firstAttribute="bottom" secondItem="daQ-S9-v4K" secondAttribute="bottom" id="JhJ-NN-r68"/>
                                     <constraint firstItem="daQ-S9-v4K" firstAttribute="width" secondItem="Ru8-hB-SJl" secondAttribute="width" id="LB1-dm-oVN"/>
-                                    <constraint firstItem="Iil-BM-cWU" firstAttribute="centerX" secondItem="Ru8-hB-SJl" secondAttribute="centerX" id="M1T-58-haE"/>
                                     <constraint firstItem="daQ-S9-v4K" firstAttribute="top" secondItem="Ru8-hB-SJl" secondAttribute="top" constant="20" id="Qal-mE-abm"/>
-                                    <constraint firstAttribute="bottom" secondItem="Iil-BM-cWU" secondAttribute="bottom" constant="20" id="Z4K-D7-3Gq"/>
                                     <constraint firstItem="daQ-S9-v4K" firstAttribute="leading" secondItem="Ru8-hB-SJl" secondAttribute="leading" id="aAx-qN-OiQ"/>
                                     <constraint firstAttribute="trailing" secondItem="daQ-S9-v4K" secondAttribute="trailing" id="gBX-gc-UhA"/>
+                                    <constraint firstItem="2W7-8Z-mDB" firstAttribute="centerX" secondItem="Ru8-hB-SJl" secondAttribute="centerX" id="yLN-r9-wTe"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -751,6 +754,12 @@
                             <constraint firstItem="Ru8-hB-SJl" firstAttribute="leading" secondItem="QHv-Rj-Fel" secondAttribute="leadingMargin" id="xNL-bw-Mzb"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="loginButton" destination="S91-QT-IdY" id="aWg-bC-GuR"/>
+                        <outlet property="passwordTextField" destination="eBa-up-WOP" id="sCh-qA-Ja8"/>
+                        <outlet property="serviceLogo" destination="pen-Y1-I7C" id="xlS-es-kdP"/>
+                        <outlet property="usernameTextField" destination="70v-gO-5ad" id="aZ0-cZ-fh9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aaM-2B-gmf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -864,7 +873,7 @@
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5aR-Wj-0Ra" customClass="HorizontalScrollRow" customModule="iOSReferenceApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="55" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5aR-Wj-0Ra" id="Ilf-4j-MKk">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1569,7 +1578,7 @@
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HorizontalScrollRow" id="3V1-NI-EQ7" customClass="HorizontalScrollRow" customModule="iOSReferenceApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="55" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3V1-NI-EQ7" id="uXn-qg-xre">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
