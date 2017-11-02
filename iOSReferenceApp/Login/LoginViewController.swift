@@ -18,6 +18,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var serviceLogo: UIImageView!
     
+    @IBOutlet weak var loginStackView: UIStackView!
     @IBOutlet weak var usernameTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
     
@@ -45,7 +46,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        configureLoginControls()
         
         viewModel.prepareDynamicConfiguration{ [weak self] conf in
             guard let weakSelf = self else { return }
@@ -58,15 +60,6 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func apply(dynamicConfiguration: DynamicCustomerConfig) {
-        guard let logoString = dynamicConfiguration.logoUrl, let logoUrl = URL(string: logoString) else { return }
-        
-        serviceLogo
-            .kf
-            .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in
-                
-        }
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -89,6 +82,32 @@ class LoginViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         navigationController?.isNavigationBarHidden = false
+    }
+}
+
+extension LoginViewController {
+    func configureLoginControls() {
+        switch viewModel.loginMethod {
+        case .anonymous:
+            usernameTextField.isHidden = true
+            passwordTextField.isHidden = true
+        case .login(username: let username, password: let password, mfa: _):
+            usernameTextField.isHidden = false
+            passwordTextField.isHidden = false
+            usernameTextField.text = username
+            passwordTextField.text = password
+        }
+        toggleLoginButton()
+    }
+    
+    func apply(dynamicConfiguration: DynamicCustomerConfig) {
+        guard let logoString = dynamicConfiguration.logoUrl, let logoUrl = URL(string: logoString) else { return }
+        
+        serviceLogo
+            .kf
+            .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in
+                
+        }
     }
 }
 

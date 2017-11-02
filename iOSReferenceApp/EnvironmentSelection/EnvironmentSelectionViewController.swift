@@ -103,9 +103,6 @@ extension EnvironmentSelectionViewController {
             guard let environment = viewModel.selectedExposureEnvironment else { return }
             destination.viewModel = LoginViewModel(environment: environment,
                                                    loginMethod: viewModel.preferedLoginMethod)
-//            destination.viewModel.prepareDynamicConfiguration{ config in
-//
-//            }
         }
     }
 }
@@ -116,8 +113,7 @@ extension EnvironmentSelectionViewController {
         guard let environment = viewModel.selectedExposureEnvironment else { return }
         UserInfo.update(environment: environment)
         UserInfo.environment(loginMethod: viewModel.preferedLoginMethod)
-        performSegue(withIdentifier: Segue.environmentToLogin.rawValue, sender: environment)
-        // TODO: Preload Logo?
+        performSegue(withIdentifier: Segue.environmentToLogin.rawValue, sender: nil)
     }
     
     var fieldsValid: Bool {

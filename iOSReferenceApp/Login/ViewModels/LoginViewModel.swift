@@ -40,7 +40,6 @@ extension LoginViewModel {
         conf.fetchFile(fileName: "main.json") { [weak self] file in
             if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
                 self?.dynamicCustomerConfig = dynamicConfig
-//                self?.apply(dynamicConfig: dynamicConfig)
                 callback(dynamicConfig)
             }
         }

@@ -510,6 +510,7 @@
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJT-gv-kZS">
                                                                 <rect key="frame" x="305" y="0.0" width="69" height="32"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <state key="normal" title="Continue">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
@@ -662,7 +663,7 @@
                                                                 </constraints>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="go" textContentType="password"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
@@ -709,6 +710,7 @@
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S91-QT-IdY">
                                                                 <rect key="frame" x="331" y="0.0" width="43" height="32"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <state key="normal" title="Login">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
@@ -760,6 +762,7 @@
                     </view>
                     <connections>
                         <outlet property="loginButton" destination="S91-QT-IdY" id="aWg-bC-GuR"/>
+                        <outlet property="loginStackView" destination="Xfg-qQ-C6P" id="5Yz-Y2-mp9"/>
                         <outlet property="passwordTextField" destination="eBa-up-WOP" id="sCh-qA-Ja8"/>
                         <outlet property="serviceLogo" destination="pen-Y1-I7C" id="xlS-es-kdP"/>
                         <outlet property="usernameTextField" destination="70v-gO-5ad" id="aZ0-cZ-fh9"/>
