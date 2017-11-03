@@ -13,7 +13,7 @@ class MainMenuPushNavigationViewModel: MainMenuItemType, MainMenuActionType {
         return "pushNavigationCell"
     }
     
-    let actionIdentifier: MainMenuViewController.Action?
+    let actionIdentifier: MainMenuViewController.Action
     
     let title: String
     let image: UIImage?
@@ -22,7 +22,7 @@ class MainMenuPushNavigationViewModel: MainMenuItemType, MainMenuActionType {
         return UIColor.lightGray
     }
     
-    init(title: String, image: UIImage? = nil, action: MainMenuViewController.Action? = nil) {
+    init(title: String, action: MainMenuViewController.Action, image: UIImage? = nil) {
         self.title = title
         self.image = image
         self.actionIdentifier = action

@@ -17,24 +17,16 @@ class StretchyCarouselHeaderView: UICollectionReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-        
         collectionView.register(UINib(nibName: "BannerPromotionCell", bundle: nil), forCellWithReuseIdentifier: "bannerCell")
         
         collectionView.delegate = self
         collectionView.dataSource = self
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.collectionView.collectionViewLayout.invalidateLayout()
-    }
     func bind(viewModel: CarouselViewModel) {
         self.viewModel = viewModel
-        self.collectionView.reloadData()
-        self.collectionView.layoutIfNeeded()
         self.collectionView.collectionViewLayout = viewModel.editorial.layout
+        self.collectionView.reloadData()
     }
 }
 

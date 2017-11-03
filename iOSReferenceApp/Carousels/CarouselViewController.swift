@@ -30,7 +30,9 @@ class CarouselViewController: UIViewController {
         collectionView.collectionViewLayout = layout
         collectionView.alwaysBounceVertical = true
         
-//        setupViewModel()
+        if let conf = dynamicContentCategory {
+            prepare(contentFrom: conf)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,56 +60,45 @@ class CarouselViewController: UIViewController {
             }
         }
     }
-    var contentType: ContentType = .fakeCarousels {
-        didSet {
-            if contentType != oldValue {
-                reloadCarousels()
+    
+    
+    var dynamicContentCategory: DynamicContentCategory?
+    fileprivate func prepare(contentFrom dynamicContentCategory: DynamicContentCategory) {
+        updateNavigationTitle(with: dynamicContentCategory)
+        if let contentCarousels = dynamicContentCategory as? DynamicContentCarousel {
+            viewModel.loadCarousels(for: contentCarousels.carouselGroupId){ [weak self] error in
+                self?.collectionView.reloadData()
+            }
+        }
+        else if let fakeCarousels = dynamicContentCategory as? FakeDynamicContentCarousel {
+            switch fakeCarousels.content {
+            case .home:
+                viewModel.loadFakeMovieCarousels{ [weak self] error in
+                    self?.collectionView.reloadData()
+                }
+            case .movies:
+                viewModel.loadFakeMovieCarousels{ [weak self] error in
+                    self?.collectionView.reloadData()
+                }
+            case .documentaries:
+                viewModel.loadFakeDocumentariesCarousels{ [weak self] error in
+                    self?.collectionView.reloadData()
+                }
+            case .kids:
+                viewModel.loadFakeKidsCarousels{ [weak self] error in
+                    self?.collectionView.reloadData()
+                }
+            case .clips:
+                viewModel.loadFakeClipsCarousels{ [weak self] error in
+                    print("reloadCarousels",self?.collectionView.contentOffset)
+                    self?.collectionView.reloadData()
+                }
             }
         }
     }
     
-    func reloadCarousels() {
-        viewModel.reset()
-        collectionView.reloadData()
-        collectionView.layoutIfNeeded()
-        
-        updateNavigationTitle(with: contentType)
-        switch contentType {
-        case .fakeCarousels:
-            viewModel.loadFakeMovieCarousels{ [weak self] error in
-                self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
-            }
-        case .carouselGroup(groupId: let groupId):
-            viewModel.loadCarousels(for: groupId){ [weak self] error in
-                self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
-            }
-        case .movies:
-            viewModel.loadFakeMovieCarousels{ [weak self] error in
-                self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
-            }
-        case .documentaries:
-            viewModel.loadFakeDocumentariesCarousels{ [weak self] error in
-                self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
-            }
-        case .kids:
-            viewModel.loadFakeKidsCarousels{ [weak self] error in
-                self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
-            }
-        case .clips:
-            viewModel.loadFakeClipsCarousels{ [weak self] error in
-                self?.collectionView.reloadData()
-                self?.collectionView.layoutIfNeeded()
-            }
-        }
-    }
-    
-    private func updateNavigationTitle(with contentType: CarouselViewController.ContentType) {
-        navigationItem.title = viewModel.navigationTitle(with: contentType)
+    private func updateNavigationTitle(with contentCategory: DynamicContentCategory) {
+        navigationItem.title = contentCategory.title
     }
     
     

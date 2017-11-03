@@ -77,12 +77,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                        loginMethod: UserInfo.environmentLoginMethod ?? .login(username: "", password: "", mfa: false))
         
         guard let sessionToken = UserInfo.sessionToken else {
+            retrieveDynamicCustomerConfig(for: environment) { conf in
+                if let conf = conf {
+                    loginViewController.dynamicCustomerConfig = conf
+                }
+            }
             return [environmentViewController, loginViewController]
         }
         
         let masterViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as! MasterViewController
-        
+        retrieveDynamicCustomerConfig(for: environment) { conf in
+            if let conf = conf {
+                loginViewController.dynamicCustomerConfig = conf
+                masterViewController.dynamicCustomerConfig = conf
+            }
+        }
         return [environmentViewController, loginViewController, masterViewController]
+    }
+    
+    func retrieveDynamicCustomerConfig(for environment: Environment, callback: @escaping (DynamicCustomerConfig?) -> Void) {
+        
+        ApplicationConfig(environment: environment)
+            .fetchFile(fileName: "main.json") { [weak self] file in
+                if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
+                    callback(dynamicConfig)
+                }
+        }
     }
 }
 

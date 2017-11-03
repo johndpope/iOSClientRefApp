@@ -10,14 +10,6 @@ import UIKit
 import Exposure
 import Kingfisher
 
-protocol SlidingMenuController {
-    func toggleSlidingMenu()
-}
-
-protocol SlidingMenuDelegate: class {
-    var slidingMenuController: SlidingMenuController? { get set }
-}
-
 class MasterViewController: UIViewController {
 
     struct MenuConstants {
@@ -39,13 +31,15 @@ class MasterViewController: UIViewController {
     @IBOutlet weak var contentContainer: UIView!
     
     fileprivate var menuController: MainMenuViewController!
+    
+    fileprivate var contentNavContainer: UINavigationController!
     fileprivate var contentController: CarouselViewController!
+    
     var animator: UIDynamicAnimator!
     var itemBehavior: UIDynamicItemBehavior!
     var snapBehavior: UISnapBehavior!
     var attachmentBehavior: UIAttachmentBehavior!
     
-    var config: ApplicationConfig!
     var environment: Environment!
     var sessionToken: SessionToken!
     
@@ -57,26 +51,31 @@ class MasterViewController: UIViewController {
         itemBehavior = UIDynamicItemBehavior(items: [contentContainer])
         itemBehavior.allowsRotation = false
         blurView.effect = nil
-        
-        
-        guard let env = UserInfo.environment else { return }
-        config = ApplicationConfig(environment: env)
-        config?.request { [weak self] in
-            self?.loadDynamicConfig()
+    }
+    
+    var dynamicCustomerConfig: DynamicCustomerConfig? {
+        didSet {
+            menuController.dynamicCustomerConfig = dynamicCustomerConfig
         }
     }
     
-    var dynamicCustomerConfig: DynamicCustomerConfig?
-    func loadDynamicConfig() {
-        config.fetchFile(fileName: "main.json") { [weak self] file in
-            if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
-                self?.dynamicCustomerConfig = dynamicConfig
-                self?.menuController.apply(dynamicConfig: dynamicConfig)
-                if let carouselGroup = dynamicConfig.carouselGroupId {
-                    self?.contentController.contentType = .carouselGroup(groupId: carouselGroup)
-                }
-            }
-        }
+    func createNewCarousel(from dynamicContent: DynamicContentCategory) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let carouselViewController = storyboard.instantiateViewController(withIdentifier: "CarouselViewController") as! CarouselViewController
+        
+        configure(carouselController: carouselViewController, dynamicContent: dynamicContent)
+        
+        contentNavContainer.setViewControllers([carouselViewController], animated: true)
+    }
+    
+    func configure(carouselController: CarouselViewController, dynamicContent: DynamicContentCategory? = nil) {
+        contentController = carouselController
+        
+        carouselController.authorize(environment: environment,
+                                  sessionToken: sessionToken)
+        carouselController.slidingMenuController = self
+        carouselController.dynamicContentCategory = dynamicContent
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -151,40 +150,47 @@ class MasterViewController: UIViewController {
 extension MasterViewController: SlidingMenuController {
     func toggleSlidingMenu() {
         if menuOpen {
-            menuOpen = false
-            blurView.isUserInteractionEnabled = false
-            
-            let x = contentContainer.frame.midX - menuConstants.inset(for: view.bounds.size.width)
-            let y = contentContainer.frame.midY
-            
-            snapBehavior.snapPoint = CGPoint(x: x, y: y)
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: { [weak self] in
-                self?.blurView.effect = nil
-            })
+            closeMenu()
         }
         else {
-            menuOpen = true
-            blurView.isUserInteractionEnabled = true
-            animator.removeAllBehaviors()
-
-            let x = contentContainer.frame.midX + menuConstants.inset(for: view.bounds.size.width)
-            let y = contentContainer.frame.midY
-
-            snapBehavior = UISnapBehavior(item: contentContainer, snapTo: CGPoint(x: x, y: y))
-            snapBehavior.damping = 0.75
-            animator.addBehavior(snapBehavior)
-
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: { [weak self] in
-                self?.blurView.effect = UIBlurEffect(style: .dark)
-            })
-
+            openMenu()
         }
+    }
+    func openMenu() {
+        guard !menuOpen else { return }
+        menuOpen = true
+        blurView.isUserInteractionEnabled = true
+        animator.removeAllBehaviors()
+        
+        let x = contentContainer.frame.midX + menuConstants.inset(for: view.bounds.size.width)
+        let y = contentContainer.frame.midY
+        
+        snapBehavior = UISnapBehavior(item: contentContainer, snapTo: CGPoint(x: x, y: y))
+        snapBehavior.damping = 0.75
+        animator.addBehavior(snapBehavior)
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: { [weak self] in
+            self?.blurView.effect = UIBlurEffect(style: .dark)
+        })
+
+    }
+    func closeMenu() {
+        guard menuOpen else { return }
+        menuOpen = false
+        blurView.isUserInteractionEnabled = false
+        
+        let x = contentContainer.frame.midX - menuConstants.inset(for: view.bounds.size.width)
+        let y = contentContainer.frame.midY
+        
+        snapBehavior.snapPoint = CGPoint(x: x, y: y)
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: { [weak self] in
+            self?.blurView.effect = nil
+        })
     }
 }
 
 extension MasterViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         guard let environment = UserInfo.environment,
             let sessionToken = UserInfo.sessionToken else {
                 // TODO: Fail gracefully
@@ -193,19 +199,10 @@ extension MasterViewController {
         self.environment = environment
         self.sessionToken = sessionToken
         
-        if segue.identifier == Segue.masterToContent.rawValue, let navController = segue.destination as? UINavigationController {
-            if let destination = navController.viewControllers.first as? AuthorizedEnvironment {
-                destination.authorize(environment: environment,
-                                      sessionToken: sessionToken)
-            }
-            
-            if let destination = navController.viewControllers.first as? SlidingMenuDelegate {
-                destination.slidingMenuController = self
-            }
-            
-            if let destination = navController.viewControllers.first as? CarouselViewController {
-                contentController = destination
-            }
+        if segue.identifier == Segue.masterToContent.rawValue, let navController = segue.destination as? UINavigationController, let destination = navController.viewControllers.first as? CarouselViewController {
+            contentNavContainer = navController
+            contentNavContainer.delegate = self
+            configure(carouselController: destination)
         }
         else if segue.identifier == Segue.masterToMainMenu.rawValue, let destination = segue.destination as? MainMenuViewController {
             menuController = destination
@@ -216,23 +213,9 @@ extension MasterViewController {
                 case .myDownloads: self?.performSegue(withIdentifier: Segue.masterToMyDownloads.rawValue, sender: nil)
                 }
             }
-            destination.selectedContentSegue = { [weak self] segue in
-                guard let weakSelf = self else { return }
-                weakSelf.toggleSlidingMenu()
-                switch segue {
-                case .home:
-                    if let carouselGroup = weakSelf.dynamicCustomerConfig?.carouselGroupId {
-                        weakSelf.contentController.contentType = .carouselGroup(groupId: carouselGroup)
-                    }
-                    else {
-                        weakSelf.contentController.contentType = .movies
-                    }
-                case .movies: weakSelf.contentController.contentType = .movies
-                case .documentaries: weakSelf.contentController.contentType = .documentaries
-                case .kids: weakSelf.contentController.contentType = .kids
-                case .clips: weakSelf.contentController.contentType = .clips
-                }
-                
+            destination.selectedContentSegue = { [weak self] dynamicContentCategory in
+                self?.closeMenu()
+                self?.createNewCarousel(from: dynamicContentCategory)
             }
         }
         else if segue.identifier == Segue.masterToMyDownloads.rawValue {
@@ -240,6 +223,21 @@ extension MasterViewController {
                 destination.authorize(environment: environment,
                                       sessionToken: sessionToken)
             }
+        }
+    }
+}
+
+extension MasterViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let frame = fromVC.view.frame
+        
+        switch operation {
+        case .push:
+            return ContentCarouselTransition(duration: TimeInterval(UINavigationControllerHideShowBarDuration), isPresenting: true, originFrame: frame)
+        case .pop:
+            return ContentCarouselTransition(duration: TimeInterval(UINavigationControllerHideShowBarDuration), isPresenting: false, originFrame: frame)
+        case .none:
+            return ContentCarouselTransition(duration: TimeInterval(UINavigationControllerHideShowBarDuration), isPresenting: false, originFrame: frame)
         }
     }
 }

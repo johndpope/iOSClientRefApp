@@ -8,8 +8,12 @@
 
 import UIKit
 
-struct MainMenuSectionViewModel {
-    let rows: [MainMenuItemType]
+class MainMenuSectionViewModel {
+    var rows: [MainMenuItemType]
+    
+    init(rows: [MainMenuItemType]) {
+        self.rows = rows
+    }
     
     let backgroundColor: UIColor = UIColor(red: 0.047, green: 0.055, blue: 0.059, alpha: 1)
     let height: CGFloat = 3

@@ -16,7 +16,6 @@ class MainMenuViewModel {
     let sessionToken: SessionToken
     
     var sections: [MainMenuSectionViewModel] = []
-    var dynamicCustomerConfig: DynamicCustomerConfig?
     
     subscript(index: Int) -> MainMenuSectionViewModel {
         get {
@@ -31,42 +30,61 @@ class MainMenuViewModel {
         }
     }
     
+    var homeContentViewModel: MainMenuContentViewModel {
+        return sections[1].rows.first! as! MainMenuContentViewModel
+    }
+    
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
     }
     
     
-    func configure(activeContentIndex index: Int) {
+    func configure() {
         let userPrefs = configureUserPreferences()
-        let contentList = configureContentLists(activeIndex: index)
+        let contentList = emptyContentList()
         let appSettings = configureAppSettings()
         
         sections = [userPrefs, contentList, appSettings]
     }
     
     private func configureUserPreferences() -> MainMenuSectionViewModel {
-        let download = MainMenuPushNavigationViewModel(title: "My downloads", image: #imageLiteral(resourceName: "download"), action: .other(segue: .myDownloads))
-        let favourites = MainMenuPushNavigationViewModel(title: "Favourites", image: #imageLiteral(resourceName: "download-list"))
+        let download = MainMenuPushNavigationViewModel(title: "My downloads", action: .other(segue: .myDownloads), image: #imageLiteral(resourceName: "download"))
+        let favourites = MainMenuPushNavigationViewModel(title: "Favourites", action: .none, image: #imageLiteral(resourceName: "download-list"))
         return MainMenuSectionViewModel(rows: [download, favourites])
     }
     
-    private func configureContentLists(activeIndex index: Int) -> MainMenuSectionViewModel {
-        let home = MainMenuContentViewModel(title: "Home", action: .content(segue: .home))
-        let movies = MainMenuContentViewModel(title: "Movies", action: .content(segue: .movies))
-        let documentaries = MainMenuContentViewModel(title: "Documentaries", action: .content(segue: .documentaries))
-        let kids = MainMenuContentViewModel(title: "Kids", action: .content(segue: .kids))
-        let clips = MainMenuContentViewModel(title: "Clips", action: .content(segue: .clips))
-        let section = [home, movies, documentaries, kids, clips]
+    private func emptyContentList() -> MainMenuSectionViewModel {
+        return MainMenuSectionViewModel(rows: [])
+    }
+    
+    
+    func updateDynamicContent(with dynamicConfig: DynamicCustomerConfig) {
+        // TODO: This is where we parse all the different carousel categories
+        let rows = fakeCarouselResponse(with: dynamicConfig.carouselGroupId)
+        sections[1].rows = rows
+    }
+    
+    private func fakeCarouselResponse(with carouselId: String?) -> [MainMenuContentViewModel] {
+        let home = MainMenuContentViewModel(dynamicContent: resolveHomeCategory(with: carouselId), active: true)
+        let movies = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Movies", content: .movies))
+        let documentaries = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Documentaries", content: .documentaries))
+        let kids = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Kids", content: .kids))
+        let clips = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Clips", content: .clips))
         
-        section[index].isActive = true
-        
-        return MainMenuSectionViewModel(rows: section)
+       return [home, movies, documentaries, kids, clips]
+    }
+    
+    private func resolveHomeCategory(with carouselId: String?) -> DynamicContentCategory {
+        guard let carouselId = carouselId else {
+            return FakeDynamicContentCarousel(title: "Home", content: .home)
+        }
+        return DynamicContentCarousel(title: "Home", carouselGroupId: carouselId)
     }
     
     private func configureAppSettings() -> MainMenuSectionViewModel {
-        let appSettings = MainMenuPushNavigationViewModel(title: "App Settings")
-        let account = MainMenuPushNavigationViewModel(title: "Account")
+        let appSettings = MainMenuPushNavigationViewModel(title: "App Settings", action: .none)
+        let account = MainMenuPushNavigationViewModel(title: "Account", action: .none)
         let logOut = MainMenuPushNavigationViewModel(title: "Log out", action: .logout)
         
         // Version
@@ -104,23 +122,12 @@ class MainMenuViewModel {
 }
 
 extension MainMenuViewModel {
-    func select(content: MainMenuViewController.Segue.Content) {
-        let targetIndex = index(for: content)
+    func select(contentAt index: Int) {
         let rows = sections[1].rows
         (0..<rows.count).forEach{
             if let viewModel = rows[$0] as? MainMenuContentViewModel {
-                viewModel.isActive = $0 == targetIndex
+                viewModel.isActive = $0 == index
             }
-        }
-    }
-    
-    private func index(for content: MainMenuViewController.Segue.Content) -> Int {
-        switch content {
-        case .home: return 0
-        case .movies: return 1
-        case .documentaries: return 2
-        case .kids: return 3
-        case .clips: return 4
         }
     }
 }

@@ -11,6 +11,8 @@ NOT RELEASED
 * `Featured` promotion through a topside, stretchable banner carousel.
 * Additional *"carousels"* added to menu
 * Separated *login* and *environment* selection.
+*`EMP-10600` Dynamic loading of content groups in sidebar menu based on `CustomerConfig`
+*`EMP-10601` Dynamic content presentation based on `CustomerConfig`
 
 #### Bug Fixes
 * Offline media list now reloads when the view appears

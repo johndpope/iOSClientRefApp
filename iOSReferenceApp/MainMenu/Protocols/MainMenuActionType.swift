@@ -9,5 +9,5 @@
 import Foundation
 
 protocol MainMenuActionType {
-    var actionIdentifier: MainMenuViewController.Action? { get }
+    var actionIdentifier: MainMenuViewController.Action { get }
 }

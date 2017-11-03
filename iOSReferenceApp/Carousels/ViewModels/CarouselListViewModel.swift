@@ -51,7 +51,7 @@ class CarouselListViewModel {
                 
                 if let banner = items.first {
                     let editorial = BannerPromotionEditorial()
-//                    editorial.bannerLayout.use(pagination: true)
+                    editorial.bannerLayout.use(pagination: true)
                     let bannerCarousel = CarouselViewModel(editorial: editorial)
                     
                     if let list = banner.items?.items {
@@ -80,19 +80,6 @@ class CarouselListViewModel {
                 
                 
                 callback(response.error)
-        }
-    }
-}
-
-extension CarouselListViewModel {
-    func navigationTitle(with contentType: CarouselViewController.ContentType) -> String {
-        switch contentType {
-        case .fakeCarousels: return "Home"
-        case .carouselGroup(groupId: _): return "Home"
-        case .movies: return "Movies"
-        case .documentaries: return "Documentaries"
-        case .kids: return "Kids"
-        case .clips: return "Clips"
         }
     }
 }
@@ -145,7 +132,7 @@ extension CarouselListViewModel {
     
     private func createFakeCarousels(for fetch: FetchAssetList, callback: @escaping (ExposureError?) -> Void) {
         let bannerEditorial = BannerPromotionEditorial()
-//        bannerEditorial.layout.use(pagination: true)
+        bannerEditorial.layout.use(pagination: true)
         bannerViewModel = CarouselViewModel(editorial: bannerEditorial)
         
         let itemsPerCarousel = 10
