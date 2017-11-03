@@ -32,10 +32,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G2H-tW-Zfx" customClass="LazyScrollView" customModule="iOSReferenceApp" customModuleProvider="target">
-                                <rect key="frame" x="20" y="30" width="374" height="706"/>
+                                <rect key="frame" x="20" y="50" width="374" height="686"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="sEg-Un-Cvl">
-                                        <rect key="frame" x="0.0" y="20" width="374" height="706"/>
+                                        <rect key="frame" x="0.0" y="20" width="374" height="686"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="IWZ-SO-xGo">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="494"/>
@@ -528,7 +528,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="aKm-pv-KWz" kind="embed" identifier="masterToContent" id="WSL-NY-dqV"/>
+                                            <segue destination="aKm-pv-KWz" kind="embed" identifier="masterToContent" id="e81-SR-DMO"/>
                                         </connections>
                                     </containerView>
                                     <visualEffectView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uTd-Yv-QFF">
@@ -610,7 +610,7 @@
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5aR-Wj-0Ra" customClass="HorizontalScrollRow" customModule="iOSReferenceApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5aR-Wj-0Ra" id="Ilf-4j-MKk">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1315,7 +1315,7 @@
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HorizontalScrollRow" id="3V1-NI-EQ7" customClass="HorizontalScrollRow" customModule="iOSReferenceApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3V1-NI-EQ7" id="uXn-qg-xre">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1473,7 +1473,7 @@
         <!--Navigation Controller-->
         <scene sceneID="AwQ-EM-H7P">
             <objects>
-                <navigationController storyboardIdentifier="BaseNavController" automaticallyAdjustsScrollViewInsets="NO" id="aKm-pv-KWz" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="CarouselBaseNavController" automaticallyAdjustsScrollViewInsets="NO" id="aKm-pv-KWz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="UkT-9e-mLJ">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
@@ -1483,7 +1483,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Ef5-sN-eb6" kind="relationship" relationship="rootViewController" id="H3E-JC-Y7R"/>
+                        <segue destination="Ef5-sN-eb6" kind="relationship" relationship="rootViewController" id="osm-X5-esv"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="geu-Os-QeC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1607,7 +1607,7 @@
         <!--Carousel View Controller-->
         <scene sceneID="RGj-ff-P6O">
             <objects>
-                <viewController storyboardIdentifier="carouselView" id="Ef5-sN-eb6" customClass="CarouselViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CarouselViewController" id="Ef5-sN-eb6" customClass="CarouselViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vjK-cE-WEh"/>
                         <viewControllerLayoutGuide type="bottom" id="MFl-Nl-6lF"/>
@@ -1663,7 +1663,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="69Q-Af-t27" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4822" y="2217"/>
+            <point key="canvasLocation" x="4652" y="2226"/>
         </scene>
         <!--Offline-->
         <scene sceneID="krl-5P-rP2">

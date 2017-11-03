@@ -27,7 +27,6 @@
 		7672F26D1F93EEB200F892C3 /* AssetListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672F26C1F93EEB200F892C3 /* AssetListType.swift */; };
 		767DC0DC1FA712B10021A17A /* StretchyCarouselHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767DC0DA1FA712B10021A17A /* StretchyCarouselHeaderView.swift */; };
 		767DC0DD1FA712B10021A17A /* StretchyCarouselHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 767DC0DB1FA712B10021A17A /* StretchyCarouselHeaderView.xib */; };
-		76808BDC1FA34BAB00646E8A /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76808BDB1FA34BAB00646E8A /* MasterViewController.swift */; };
 		7683F1911FAB4A960097BC23 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7683F1901FAB4A960097BC23 /* LoginViewController.swift */; };
 		7683F1931FAB4AB60097BC23 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7683F1921FAB4AB60097BC23 /* LoginViewModel.swift */; };
 		768ED8AA1F0FAEE3008E8F9B /* update_dependency_graph.rb in Resources */ = {isa = PBXBuildFile; fileRef = 768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */; };
@@ -95,6 +94,10 @@
 		76B0AFBE1FA5241B0085C837 /* BasicItemPromotionEditorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B0AFBD1FA5241B0085C837 /* BasicItemPromotionEditorial.swift */; };
 		76B0AFC01FA524570085C837 /* BasicPromotionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B0AFBF1FA524570085C837 /* BasicPromotionLayout.swift */; };
 		76B217B61EEAC6DB006F334F /* ManualPlaybackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B217B51EEAC6DB006F334F /* ManualPlaybackView.swift */; };
+		76BA44381FAC88E300E92AD1 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA44371FAC88CD00E92AD1 /* MasterViewController.swift */; };
+		76BA443A1FAC88F600E92AD1 /* SlidingMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA44391FAC88F600E92AD1 /* SlidingMenuController.swift */; };
+		76BA443C1FAC890700E92AD1 /* SlidingMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA443B1FAC890700E92AD1 /* SlidingMenuDelegate.swift */; };
+		76BA443E1FAC891600E92AD1 /* ContentCarouselTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA443D1FAC891600E92AD1 /* ContentCarouselTransition.swift */; };
 		76BB35A71F9A29C200C2B386 /* Asset+LocalizedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */; };
 		76BB35A91F9A2A7100C2B386 /* LocalizedAssetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */; };
 		76BBFB7E1EA8CF2E001DBDDB /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */; };
@@ -218,7 +221,6 @@
 		7672F26C1F93EEB200F892C3 /* AssetListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetListType.swift; sourceTree = "<group>"; };
 		767DC0DA1FA712B10021A17A /* StretchyCarouselHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyCarouselHeaderView.swift; sourceTree = "<group>"; };
 		767DC0DB1FA712B10021A17A /* StretchyCarouselHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StretchyCarouselHeaderView.xib; sourceTree = "<group>"; };
-		76808BDB1FA34BAB00646E8A /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		7683F1901FAB4A960097BC23 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7683F1921FAB4AB60097BC23 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = update_dependency_graph.rb; sourceTree = "<group>"; };
@@ -288,6 +290,10 @@
 		76B0AFBD1FA5241B0085C837 /* BasicItemPromotionEditorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicItemPromotionEditorial.swift; sourceTree = "<group>"; };
 		76B0AFBF1FA524570085C837 /* BasicPromotionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicPromotionLayout.swift; sourceTree = "<group>"; };
 		76B217B51EEAC6DB006F334F /* ManualPlaybackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualPlaybackView.swift; sourceTree = "<group>"; };
+		76BA44371FAC88CD00E92AD1 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		76BA44391FAC88F600E92AD1 /* SlidingMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingMenuController.swift; sourceTree = "<group>"; };
+		76BA443B1FAC890700E92AD1 /* SlidingMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingMenuDelegate.swift; sourceTree = "<group>"; };
+		76BA443D1FAC891600E92AD1 /* ContentCarouselTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCarouselTransition.swift; sourceTree = "<group>"; };
 		76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Asset+LocalizedEntity.swift"; sourceTree = "<group>"; };
 		76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedAssetEntity.swift; sourceTree = "<group>"; };
 		76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = SOURCE_ROOT; };
@@ -575,6 +581,7 @@
 				769862111FA517D800A57213 /* MyDownloads */,
 				76EC8D451FA512C100F6FDB6 /* Carousels */,
 				76EC8D231FA5102F00F6FDB6 /* MainMenu */,
+				76BA44341FAC88B800E92AD1 /* MasterView */,
 				76B0AFAF1FA51BC60085C837 /* Player */,
 				76B0AFA71FA51B880085C837 /* Search */,
 				7683F18E1FAB4A1A0097BC23 /* Login */,
@@ -668,7 +675,6 @@
 			isa = PBXGroup;
 			children = (
 				F7B710A01ECAF05400E9D324 /* Home */,
-				76808BDB1FA34BAB00646E8A /* MasterViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -705,6 +711,33 @@
 				76B0AFB21FA51BC60085C837 /* PlayerViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		76BA44341FAC88B800E92AD1 /* MasterView */ = {
+			isa = PBXGroup;
+			children = (
+				76BA44351FAC88B800E92AD1 /* Protocols */,
+				76BA44361FAC88B800E92AD1 /* Transitions */,
+				76BA44371FAC88CD00E92AD1 /* MasterViewController.swift */,
+			);
+			path = MasterView;
+			sourceTree = "<group>";
+		};
+		76BA44351FAC88B800E92AD1 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				76BA44391FAC88F600E92AD1 /* SlidingMenuController.swift */,
+				76BA443B1FAC890700E92AD1 /* SlidingMenuDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		76BA44361FAC88B800E92AD1 /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				76BA443D1FAC891600E92AD1 /* ContentCarouselTransition.swift */,
+			);
+			path = Transitions;
 			sourceTree = "<group>";
 		};
 		76EC8D231FA5102F00F6FDB6 /* MainMenu */ = {
@@ -1129,6 +1162,7 @@
 				7683F1931FAB4AB60097BC23 /* LoginViewModel.swift in Sources */,
 				F793A8551EC5289E00DF7626 /* UITextField+fixCaretPosition.swift in Sources */,
 				F7061C691EC5BFAF0041E271 /* Constants.swift in Sources */,
+				76BA443C1FAC890700E92AD1 /* SlidingMenuDelegate.swift in Sources */,
 				76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */,
 				76B0AFAD1FA51B8E0085C837 /* SearchViewController.swift in Sources */,
 				76BB35A91F9A2A7100C2B386 /* LocalizedAssetEntity.swift in Sources */,
@@ -1161,7 +1195,6 @@
 				76AF2F061F13A0A00014F007 /* EPGDetailsViewModel.swift in Sources */,
 				76A844001EA7886400BDAF2C /* EnvironmentConfig.swift in Sources */,
 				F7061C731EC5CF8F0041E271 /* Logging.swift in Sources */,
-				76808BDC1FA34BAB00646E8A /* MasterViewController.swift in Sources */,
 				76EC8D371FA510FA00F6FDB6 /* MainMenuStaticDataViewModel.swift in Sources */,
 				76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */,
 				F793A8531EC5289E00DF7626 /* SkyFloatingLabelTextField.swift in Sources */,
@@ -1184,6 +1217,7 @@
 				7698622C1FA5197C00A57213 /* OfflineListCellViewModel.swift in Sources */,
 				76EC8D7E1FA515B200F6FDB6 /* CollectionViewLayout.swift in Sources */,
 				76A844021EA7886400BDAF2C /* Notifications+KeyboardAnimationFrame.swift in Sources */,
+				76BA44381FAC88E300E92AD1 /* MasterViewController.swift in Sources */,
 				76EC8D6E1FA514F400F6FDB6 /* CarouselViewController.swift in Sources */,
 				76EC8D3D1FA5114700F6FDB6 /* MainMenuViewModel.swift in Sources */,
 				76EC8D6C1FA514F200F6FDB6 /* CarouselView.swift in Sources */,
@@ -1198,6 +1232,7 @@
 				76A843AB1EA7856C00BDAF2C /* AppDelegate.swift in Sources */,
 				76B0AFB71FA51FD60085C837 /* BasicPromotionCell.swift in Sources */,
 				76B217B61EEAC6DB006F334F /* ManualPlaybackView.swift in Sources */,
+				76BA443A1FAC88F600E92AD1 /* SlidingMenuController.swift in Sources */,
 				766502F41F99C8FD009A5BFE /* LocalizedEntity.swift in Sources */,
 				F7129CB11EC9AB970033B3FF /* Extensions.swift in Sources */,
 				76B0AFBA1FA520040085C837 /* PortraitTrioItemPromotionEditorial.swift in Sources */,
@@ -1211,6 +1246,7 @@
 				769862281FA518C500A57213 /* DownloadAssetViewModel.swift in Sources */,
 				76A417161EDEDAA800677A46 /* CategoryViewModel.swift in Sources */,
 				76EC8D3B1FA5113600F6FDB6 /* MainMenuSectionViewModel.swift in Sources */,
+				76BA443E1FAC891600E92AD1 /* ContentCarouselTransition.swift in Sources */,
 				F7061C6E1EC5C0960041E271 /* ColorsUtil.swift in Sources */,
 				76EC8D651FA514A900F6FDB6 /* ContentEditorial.swift in Sources */,
 				76B0AFB41FA51BCA0085C837 /* PlayerViewModel.swift in Sources */,

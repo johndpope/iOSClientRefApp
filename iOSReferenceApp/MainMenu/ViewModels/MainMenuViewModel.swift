@@ -30,6 +30,10 @@ class MainMenuViewModel {
         }
     }
     
+    var homeContentViewModel: MainMenuContentViewModel {
+        return sections[1].rows.first! as! MainMenuContentViewModel
+    }
+    
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
@@ -57,7 +61,6 @@ class MainMenuViewModel {
     
     func updateDynamicContent(with dynamicConfig: DynamicCustomerConfig) {
         // TODO: This is where we parse all the different carousel categories
-        
         let rows = fakeCarouselResponse(with: dynamicConfig.carouselGroupId)
         sections[1].rows = rows
     }

@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let sessionToken = UserInfo.sessionToken else {
             retrieveDynamicCustomerConfig(for: environment) { conf in
                 if let conf = conf {
-                    loginViewController.apply(dynamicConfiguration: conf)
+                    loginViewController.dynamicCustomerConfig = conf
                 }
             }
             return [environmentViewController, loginViewController]
@@ -88,8 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let masterViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as! MasterViewController
         retrieveDynamicCustomerConfig(for: environment) { conf in
             if let conf = conf {
-                loginViewController.apply(dynamicConfiguration: conf)
-                masterViewController.apply(dynamicConfiguration: conf)
+                loginViewController.dynamicCustomerConfig = conf
+                masterViewController.dynamicCustomerConfig = conf
             }
         }
         return [environmentViewController, loginViewController, masterViewController]

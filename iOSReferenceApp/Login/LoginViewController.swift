@@ -48,6 +48,19 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         configureLoginControls()
+        
+        if let conf = dynamicCustomerConfig {
+            process(dynamicCustomerConfig: conf)
+        }
+        else {
+            ApplicationConfig(environment: viewModel.environment)
+                .fetchFile(fileName: "main.json") { [weak self] file in
+                    if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
+                        self?.dynamicCustomerConfig = dynamicConfig
+                        self?.process(dynamicCustomerConfig: dynamicConfig)
+                    }
+            }
+        }
     }
     
 
@@ -76,10 +89,23 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController {
+    
+    fileprivate func process(dynamicCustomerConfig: DynamicCustomerConfig) {
+        guard let logoString = dynamicCustomerConfig.logoUrl, let logoUrl = URL(string: logoString) else { return }
+        serviceLogo
+            .kf
+            .setImage(with: logoUrl,
+                      options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in
+                        
+        }
+    }
+}
+
+extension LoginViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segue.loginToMaster.rawValue, let destination = segue.destination as? MasterViewController {
             if let conf = dynamicCustomerConfig {
-                destination.apply(dynamicConfiguration: conf)
+                destination.dynamicCustomerConfig = conf
             }
         }
     }
@@ -98,15 +124,6 @@ extension LoginViewController {
             passwordTextField.text = password
         }
         toggleLoginButton()
-    }
-    
-    func apply(dynamicConfiguration: DynamicCustomerConfig) {
-        guard let logoString = dynamicConfiguration.logoUrl, let logoUrl = URL(string: logoString) else { return }
-        serviceLogo
-            .kf
-            .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in
-                
-        }
     }
 }
 

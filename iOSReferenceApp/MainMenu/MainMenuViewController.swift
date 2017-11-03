@@ -56,6 +56,7 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var logoAspectRationConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewWIdthConstraint: NSLayoutConstraint!
     
+    var dynamicCustomerConfig: DynamicCustomerConfig?
     var viewModel: MainMenuViewModel!
     
     override func viewDidLoad() {
@@ -65,17 +66,37 @@ class MainMenuViewController: UIViewController {
         tableView.register(UINib(nibName: "MainMenuStaticDataCell", bundle: nil), forCellReuseIdentifier: MainMenuStaticDataViewModel.reuseIdentifier)
         tableView.register(UINib(nibName: "MainMenuPushNavigationCell", bundle: nil), forCellReuseIdentifier: MainMenuPushNavigationViewModel.reuseIdentifier)
         tableView.register(UINib(nibName: "MainMenuContentCell", bundle: nil), forCellReuseIdentifier: MainMenuContentViewModel.reuseIdentifier)
+        
+        
+        
+        if let conf = dynamicCustomerConfig {
+            process(dynamicCustomerConfig: conf)
+        }
+        else {
+            ApplicationConfig(environment: viewModel.environment)
+                .fetchFile(fileName: "main.json") { [weak self] file in
+                    if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
+                        self?.dynamicCustomerConfig = dynamicConfig
+                        self?.process(dynamicCustomerConfig: dynamicConfig)
+                    }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    func apply(dynamicConfig: DynamicCustomerConfig) {
-        viewModel.updateDynamicContent(with: dynamicConfig)
-        if let logoString = dynamicConfig.logoUrl, let logoUrl = URL(string: logoString) {
+}
+
+extension MainMenuViewController {
+    fileprivate func process(dynamicCustomerConfig: DynamicCustomerConfig) {
+        viewModel.updateDynamicContent(with: dynamicCustomerConfig)
+        tableView.reloadData()
+        viewModel.select(contentAt: 0)
+        triggerAction(for: viewModel.homeContentViewModel, at: IndexPath(item: 0, section: 1))
+        
+        if let logoString = dynamicCustomerConfig.logoUrl, let logoUrl = URL(string: logoString) {
             serviceLogo
                 .kf
                 .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in
@@ -95,6 +116,7 @@ extension MainMenuViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
         viewModel = MainMenuViewModel(environment: environment,
                                       sessionToken: sessionToken)
+        viewModel.configure()
     }
     var environment: Environment {
         return viewModel.environment
@@ -126,7 +148,11 @@ extension MainMenuViewController {
 extension MainMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let actionable = viewModel[indexPath] as? MainMenuActionType {
+        triggerAction(for: viewModel[indexPath], at: indexPath)
+    }
+    
+    fileprivate func triggerAction(for menuItemType: MainMenuItemType, at indexPath: IndexPath) {
+        if let actionable = menuItemType as? MainMenuActionType {
             switch actionable.actionIdentifier {
             case .logout:
                 actionLogout()

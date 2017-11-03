@@ -85,19 +85,6 @@ class CarouselListViewModel {
 }
 
 extension CarouselListViewModel {
-    func navigationTitle(with contentType: CarouselViewController.ContentType) -> String {
-        switch contentType {
-        case .fakeCarousels: return "Home"
-        case .carouselGroup(groupId: _): return "Home"
-        case .movies: return "Movies"
-        case .documentaries: return "Documentaries"
-        case .kids: return "Kids"
-        case .clips: return "Clips"
-        }
-    }
-}
-
-extension CarouselListViewModel {
     func loadFakeMovieCarousels(callback: @escaping (ExposureError?) -> Void) {
         let fetch = FetchAsset(environment: environment)
             .list()
