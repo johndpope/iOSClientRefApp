@@ -3,8 +3,7 @@
 * `0.2.x` Releases - [0.2.0](#020) | [0.2.1](#021) | [0.2.2](#022)
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.6](#016)
 
-## 0.2.1
-NOT RELEASED
+## 0.2.2
 
 #### Features
 * Content promotion through `Carousel` layout with editorial control.
