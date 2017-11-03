@@ -1604,10 +1604,10 @@
             </objects>
             <point key="canvasLocation" x="8242.0289855072479" y="1906.7934782608697"/>
         </scene>
-        <!--Carousel View Controller-->
+        <!--Carousel List View Controller-->
         <scene sceneID="RGj-ff-P6O">
             <objects>
-                <viewController storyboardIdentifier="CarouselListViewController" id="Ef5-sN-eb6" customClass="CarouselViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CarouselListViewController" id="Ef5-sN-eb6" customClass="CarouselListViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vjK-cE-WEh"/>
                         <viewControllerLayoutGuide type="bottom" id="MFl-Nl-6lF"/>
@@ -1802,6 +1802,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="zdv-5g-EHu"/>
-        <segue reference="JGB-CF-Tfa"/>
+        <segue reference="f4H-my-9wa"/>
     </inferredMetricsTieBreakers>
 </document>

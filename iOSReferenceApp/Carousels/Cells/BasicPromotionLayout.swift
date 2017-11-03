@@ -29,9 +29,4 @@ class BasicPromotionLayout: CollectionViewLayout {
 //        let aspectRatio = editorial.aspectRatio.height / editorial.aspectRatio.width
         return thumbnailWidth(width: width) * aspectRatio
     }
-    
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-        print("LANDSCAPE targetContentOffset:",proposedContentOffset,super.targetContentOffset(forProposedContentOffset: proposedContentOffset))
-        return super.targetContentOffset(forProposedContentOffset: proposedContentOffset)
-    }
 }
