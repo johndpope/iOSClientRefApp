@@ -24,6 +24,12 @@ class SingleCarouselViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumInteritemSpacing = 2*viewModel.preferredCellSpacing
+        flowLayout.minimumLineSpacing = 0
+        collectionView.contentInset = viewModel.edgeInsets
+//        collectionView.isPagingEnabled = true
         if #available(iOS 10.0, *) {
             collectionView.prefetchDataSource = self
         }

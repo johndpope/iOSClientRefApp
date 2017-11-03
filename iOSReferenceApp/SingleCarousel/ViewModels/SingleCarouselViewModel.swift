@@ -24,10 +24,11 @@ class SingleCarouselViewModel: AuthorizedEnvironment {
         self.sessionToken = sessionToken
     }
     
-    var aspectRatio: CGFloat = 3/2
+    var aspectRatio: CGFloat = 2/3
     var preferredCellSpacing: CGFloat = 0
     var preferredCellsPerRow: Int = 1
     var labelHeight: CGFloat = 20
+    var edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     
     fileprivate(set) var content: [AssetViewModel] = []
     
@@ -41,7 +42,7 @@ extension SingleCarouselViewModel {
     
     func preferredThumbnailSize(forWidth width: CGFloat) -> CGSize {
         let cellsPerRow = CGFloat(preferredCellsPerRow)
-        let cellWidth = width/cellsPerRow - (cellsPerRow - 1)*preferredCellSpacing
+        let cellWidth = (width - edgeInsets.left - edgeInsets.right)/cellsPerRow - (cellsPerRow - 1)*preferredCellSpacing
         let cellHeight =  cellWidth * aspectRatio
         return CGSize(width: cellWidth, height: cellHeight)
     }
