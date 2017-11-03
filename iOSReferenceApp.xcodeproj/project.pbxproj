@@ -98,6 +98,7 @@
 		76BA443A1FAC88F600E92AD1 /* SlidingMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA44391FAC88F600E92AD1 /* SlidingMenuController.swift */; };
 		76BA443C1FAC890700E92AD1 /* SlidingMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA443B1FAC890700E92AD1 /* SlidingMenuDelegate.swift */; };
 		76BA443E1FAC891600E92AD1 /* ContentCarouselTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA443D1FAC891600E92AD1 /* ContentCarouselTransition.swift */; };
+		76BA44401FAC937000E92AD1 /* CarouselListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA443F1FAC937000E92AD1 /* CarouselListViewController.swift */; };
 		76BB35A71F9A29C200C2B386 /* Asset+LocalizedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */; };
 		76BB35A91F9A2A7100C2B386 /* LocalizedAssetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */; };
 		76BBFB7E1EA8CF2E001DBDDB /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */; };
@@ -294,6 +295,7 @@
 		76BA44391FAC88F600E92AD1 /* SlidingMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingMenuController.swift; sourceTree = "<group>"; };
 		76BA443B1FAC890700E92AD1 /* SlidingMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingMenuDelegate.swift; sourceTree = "<group>"; };
 		76BA443D1FAC891600E92AD1 /* ContentCarouselTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCarouselTransition.swift; sourceTree = "<group>"; };
+		76BA443F1FAC937000E92AD1 /* CarouselListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselListViewController.swift; sourceTree = "<group>"; };
 		76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Asset+LocalizedEntity.swift"; sourceTree = "<group>"; };
 		76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedAssetEntity.swift; sourceTree = "<group>"; };
 		76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = SOURCE_ROOT; };
@@ -794,6 +796,7 @@
 				76EC8D5B1FA5142700F6FDB6 /* ViewModels */,
 				76EC8D481FA512C100F6FDB6 /* Views */,
 				76EC8D531FA5139C00F6FDB6 /* CarouselViewController.swift */,
+				76BA443F1FAC937000E92AD1 /* CarouselListViewController.swift */,
 			);
 			path = Carousels;
 			sourceTree = "<group>";
@@ -1224,6 +1227,7 @@
 				7672F26D1F93EEB200F892C3 /* AssetListType.swift in Sources */,
 				76EC8D611FA5148100F6FDB6 /* EditorialCell.swift in Sources */,
 				76A416F91EDDCAC700677A46 /* VODViewModel.swift in Sources */,
+				76BA44401FAC937000E92AD1 /* CarouselListViewController.swift in Sources */,
 				76EC8D661FA514ED00F6FDB6 /* CarouselListViewModel.swift in Sources */,
 				76A4171D1EE0134100677A46 /* LiveListViewModel.swift in Sources */,
 				76A4AD4B1FA7352400D20743 /* BannerPromotionEditorial.swift in Sources */,
