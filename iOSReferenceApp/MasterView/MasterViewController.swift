@@ -33,7 +33,6 @@ class MasterViewController: UIViewController {
     fileprivate var menuController: MainMenuViewController!
     
     fileprivate var contentNavContainer: UINavigationController!
-    fileprivate var contentController: CarouselListViewController!
     
     var animator: UIDynamicAnimator!
     var itemBehavior: UIDynamicItemBehavior!
@@ -62,16 +61,27 @@ class MasterViewController: UIViewController {
     func createNewCarousel(from dynamicContent: DynamicContentCategory) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let CarouselListViewController = storyboard.instantiateViewController(withIdentifier: "CarouselListViewController") as! CarouselListViewController
+        if dynamicContent is SingleCarouselDynamicContentCategory {
+            let CarouselListViewController = storyboard.instantiateViewController(withIdentifier: "SingleCarouselViewController") as! SingleCarouselViewController
+            configure(carouselController: CarouselListViewController, dynamicContent: dynamicContent)
+            contentNavContainer.setViewControllers([CarouselListViewController], animated: true)
+        }
+        else {
+            let CarouselListViewController = storyboard.instantiateViewController(withIdentifier: "CarouselListViewController") as! CarouselListViewController
+            configure(carouselController: CarouselListViewController, dynamicContent: dynamicContent)
+            contentNavContainer.setViewControllers([CarouselListViewController], animated: true)
+        }
         
-        configure(carouselController: CarouselListViewController, dynamicContent: dynamicContent)
-        
-        contentNavContainer.setViewControllers([CarouselListViewController], animated: true)
+    }
+    
+    func configure(carouselController: SingleCarouselViewController, dynamicContent: DynamicContentCategory? = nil) {
+        carouselController.authorize(environment: environment,
+                                     sessionToken: sessionToken)
+        carouselController.slidingMenuController = self
+        carouselController.dynamicContentCategory = dynamicContent
     }
     
     func configure(carouselController: CarouselListViewController, dynamicContent: DynamicContentCategory? = nil) {
-        contentController = carouselController
-        
         carouselController.authorize(environment: environment,
                                   sessionToken: sessionToken)
         carouselController.slidingMenuController = self

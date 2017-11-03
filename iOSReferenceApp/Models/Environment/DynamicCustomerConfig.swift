@@ -31,16 +31,26 @@ struct DynamicCustomerConfig {
 //    }
     
     init?(json: AnyJSONType) {
-        guard let dataArray = json.jsonValue as? [AnyJSONType],
-            let configData = dataArray.first?.jsonValue as? [String: AnyJSONType] else {
-                return nil
-        }
         
-        serviceName = configData["serviceName"]?.jsonValue as? String
-        serviceSlogan = configData["serviceSlogan"]?.jsonValue as? String
-        logoUrl = configData["logoUrl"]?.jsonValue as? String
-        mfaRequired = configData["mfaRequired"]?.jsonValue as? Bool ?? false
-        lastViewed = configData["lastViewed"]?.jsonValue as? Bool ?? false
-        carouselGroupId = configData["carouselGroupId"]?.jsonValue as? String
+        if let dataArray = json.jsonValue as? [AnyJSONType],
+            let configData = dataArray.first?.jsonValue as? [String: AnyJSONType] {
+            serviceName = configData["serviceName"]?.jsonValue as? String
+            serviceSlogan = configData["serviceSlogan"]?.jsonValue as? String
+            logoUrl = configData["logoUrl"]?.jsonValue as? String
+            mfaRequired = configData["mfaRequired"]?.jsonValue as? Bool ?? false
+            lastViewed = configData["lastViewed"]?.jsonValue as? Bool ?? false
+            carouselGroupId = configData["carouselGroupId"]?.jsonValue as? String
+        }
+        else if let configData = json.jsonValue as? [String: AnyJSONType] {
+            serviceName = configData["serviceName"]?.jsonValue as? String
+            serviceSlogan = configData["serviceSlogan"]?.jsonValue as? String
+            logoUrl = configData["logoUrl"]?.jsonValue as? String
+            mfaRequired = configData["mfaRequired"]?.jsonValue as? Bool ?? false
+            lastViewed = configData["lastViewed"]?.jsonValue as? Bool ?? false
+            carouselGroupId = configData["carouselGroupId"]?.jsonValue as? String
+        }
+        else {
+            return nil
+        }
     }
 }

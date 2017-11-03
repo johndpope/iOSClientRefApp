@@ -32,10 +32,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G2H-tW-Zfx" customClass="LazyScrollView" customModule="iOSReferenceApp" customModuleProvider="target">
-                                <rect key="frame" x="20" y="30" width="374" height="706"/>
+                                <rect key="frame" x="20" y="50" width="374" height="686"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="sEg-Un-Cvl">
-                                        <rect key="frame" x="0.0" y="20" width="374" height="706"/>
+                                        <rect key="frame" x="0.0" y="20" width="374" height="686"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="IWZ-SO-xGo">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="494"/>
@@ -515,26 +515,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ej-nB-l1x" userLabel="MainMenu">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="40" width="414" height="696"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="wAt-G7-gSI" kind="embed" identifier="masterToMainMenu" id="tIM-co-2Xn"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MKa-Ju-Utk">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="40" width="414" height="696"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A9f-n2-s2v" userLabel="ContentContainer">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="696"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <segue destination="aKm-pv-KWz" kind="embed" identifier="masterToContent" id="e81-SR-DMO"/>
                                         </connections>
                                     </containerView>
                                     <visualEffectView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uTd-Yv-QFF">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="696"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="a7B-im-zDG">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="696"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <gestureRecognizers/>
                                             <connections>
@@ -1613,11 +1613,11 @@
                         <viewControllerLayoutGuide type="bottom" id="MFl-Nl-6lF"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="UxI-wt-i8y">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="652"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="632"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Zj-mg-1X9">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="652"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="632"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ZNI-j9-PkT">
                                     <size key="itemSize" width="50" height="50"/>
@@ -1665,6 +1665,55 @@
             </objects>
             <point key="canvasLocation" x="4652" y="2226"/>
         </scene>
+        <!--Single Carousel View Controller-->
+        <scene sceneID="dGW-aP-QXe">
+            <objects>
+                <viewController storyboardIdentifier="SingleCarouselViewController" id="RN4-va-Wig" customClass="SingleCarouselViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7my-bz-tB9"/>
+                        <viewControllerLayoutGuide type="bottom" id="6VH-QW-sSK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gQm-aG-atH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="s18-Vg-wnw">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eoK-VI-iB3">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Um3-v4-NAG">
+                                        <rect key="frame" x="10" y="10" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="s18-Vg-wnw" firstAttribute="top" secondItem="7my-bz-tB9" secondAttribute="bottom" id="0Z7-Y5-BLc"/>
+                            <constraint firstItem="s18-Vg-wnw" firstAttribute="leading" secondItem="gQm-aG-atH" secondAttribute="leading" id="14b-jp-ugA"/>
+                            <constraint firstItem="6VH-QW-sSK" firstAttribute="top" secondItem="s18-Vg-wnw" secondAttribute="bottom" id="8ra-x1-0G9"/>
+                            <constraint firstAttribute="trailing" secondItem="s18-Vg-wnw" secondAttribute="trailing" id="U83-SS-FCe"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="s18-Vg-wnw" id="cbj-vy-aQa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="od3-sz-CFg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4651" y="2910"/>
+        </scene>
         <!--Offline-->
         <scene sceneID="krl-5P-rP2">
             <objects>
@@ -1694,11 +1743,11 @@
                         <viewControllerLayoutGuide type="bottom" id="QDR-aO-amd"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yXq-XE-dYt">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="696"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BDE-yY-7nN">
-                                <rect key="frame" x="0.0" y="148.33333333333331" width="414" height="567.66666666666674"/>
+                                <rect key="frame" x="0.0" y="148.33333333333331" width="414" height="547.66666666666674"/>
                                 <color key="backgroundColor" red="0.094117647058823528" green="0.094117647058823528" blue="0.10196078431372549" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="414" id="8ai-Z6-I48"/>
