@@ -82,6 +82,10 @@ class SingleCarouselViewController: UIViewController {
     private func updateNavigationTitle(with contentCategory: DynamicContentCategory) {
         navigationItem.title = contentCategory.title
     }
+    
+    @IBAction func toggleSlidingMenuAction(_ sender: UIBarButtonItem) {
+        slidingMenuController?.toggleSlidingMenu()
+    }
 }
 
 

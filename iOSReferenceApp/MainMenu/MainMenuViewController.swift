@@ -89,8 +89,6 @@ class MainMenuViewController: UIViewController {
         tableView.register(UINib(nibName: "MainMenuPushNavigationCell", bundle: nil), forCellReuseIdentifier: MainMenuPushNavigationViewModel.reuseIdentifier)
         tableView.register(UINib(nibName: "MainMenuContentCell", bundle: nil), forCellReuseIdentifier: MainMenuContentViewModel.reuseIdentifier)
         
-        
-        
         if let conf = dynamicCustomerConfig {
             process(dynamicCustomerConfig: conf)
         }
@@ -216,6 +214,7 @@ extension MainMenuViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.selectionStyle = .none
         let vm = viewModel[indexPath.section].rows[indexPath.row]
         if let vm = vm as? MainMenuContentViewModel, let cell = cell as? MainMenuContentCell {
             cell.bind(viewModel: vm)

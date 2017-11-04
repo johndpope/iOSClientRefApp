@@ -1665,7 +1665,7 @@
             </objects>
             <point key="canvasLocation" x="4652" y="2226"/>
         </scene>
-        <!--Single Carousel View Controller-->
+        <!--Title-->
         <scene sceneID="dGW-aP-QXe">
             <objects>
                 <viewController storyboardIdentifier="SingleCarouselViewController" id="RN4-va-Wig" customClass="SingleCarouselViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -1706,6 +1706,13 @@
                             <constraint firstAttribute="trailing" secondItem="s18-Vg-wnw" secondAttribute="trailing" id="U83-SS-FCe"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="vu0-2f-84c">
+                        <barButtonItem key="leftBarButtonItem" image="download-list" id="Nvg-6N-BMs">
+                            <connections>
+                                <action selector="toggleSlidingMenuAction:" destination="RN4-va-Wig" id="WBS-bg-JBw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="s18-Vg-wnw" id="cbj-vy-aQa"/>
                     </connections>
