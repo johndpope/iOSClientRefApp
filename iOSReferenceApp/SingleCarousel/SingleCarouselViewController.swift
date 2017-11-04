@@ -142,6 +142,11 @@ extension SingleCarouselViewController: UICollectionViewDelegate {
 //        }
 //        return UICollectionReusableView()
 //    }
+    
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let asset = viewModel.content[indexPath.row].asset
+        presetDetails(for: asset, from: .other)
+    }
 }
 
 extension SingleCarouselViewController: UICollectionViewDelegateFlowLayout {

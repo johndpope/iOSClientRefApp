@@ -82,6 +82,14 @@ class AssetDetailsViewController: UIViewController {
         }
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait //return the value as per the required orientation
+    }
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     func determineDownloadUIForAsset() {
         downloadStackView.isHidden = true
         downloadProgressStackView.isHidden = true
