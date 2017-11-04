@@ -35,8 +35,8 @@ class VODViewModel: AuthorizedEnvironment {
     }
     
     fileprivate func loadCarousels(for groupId: String, callback: @escaping (ExposureError?) -> Void) {
-        FetchCarouselList(groupId: groupId,
-                          environment: environment)
+        FetchCarousel(environment: environment)
+            .group(id: groupId)
             .request()
             .validate()
             .response { (response: ExposureResponse<CarouselList>) in

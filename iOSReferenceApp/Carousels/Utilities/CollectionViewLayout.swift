@@ -20,7 +20,7 @@ class CollectionViewLayout: UICollectionViewLayout {
         if let pagination = pagination {
             return pagination.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity:velocity)
         }
-        print("targetContentOffset:velocity",proposedContentOffset,super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity))
+        
         return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
     }
     

@@ -14,12 +14,34 @@ protocol DynamicContentCategory {
     var title: String { get }
 }
 
+protocol SingleCarouselDynamicContentCategory {
+    
+}
+
 struct DynamicContentCarousel: DynamicContentCategory {
     let title: String
     let carouselGroupId: String
 }
 
 struct FakeDynamicContentCarousel: DynamicContentCategory {
+    let title: String
+    let content: ContentType
+    
+    enum ContentType {
+        case home
+        case movies
+        case documentaries
+        case kids
+        case clips
+    }
+}
+
+struct SingleDynamicContentCarousel: DynamicContentCategory, SingleCarouselDynamicContentCategory {
+    let title: String
+    let carouselId: String
+}
+
+struct FakeSingleDynamicContentCarousel: DynamicContentCategory, SingleCarouselDynamicContentCategory {
     let title: String
     let content: ContentType
     
@@ -66,8 +88,6 @@ class MainMenuViewController: UIViewController {
         tableView.register(UINib(nibName: "MainMenuStaticDataCell", bundle: nil), forCellReuseIdentifier: MainMenuStaticDataViewModel.reuseIdentifier)
         tableView.register(UINib(nibName: "MainMenuPushNavigationCell", bundle: nil), forCellReuseIdentifier: MainMenuPushNavigationViewModel.reuseIdentifier)
         tableView.register(UINib(nibName: "MainMenuContentCell", bundle: nil), forCellReuseIdentifier: MainMenuContentViewModel.reuseIdentifier)
-        
-        
         
         if let conf = dynamicCustomerConfig {
             process(dynamicCustomerConfig: conf)
@@ -194,6 +214,7 @@ extension MainMenuViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.selectionStyle = .none
         let vm = viewModel[indexPath.section].rows[indexPath.row]
         if let vm = vm as? MainMenuContentViewModel, let cell = cell as? MainMenuContentCell {
             cell.bind(viewModel: vm)

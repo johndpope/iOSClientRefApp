@@ -1,16 +1,16 @@
 //
-//  CarouselViewController.swift
+//  CarouselListViewController.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-10-22.
+//  Created by Fredrik Sjöberg on 2017-11-03.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import UIKit
 import Exposure
 
-class CarouselViewController: UIViewController {
-
+class CarouselListViewController: UIViewController {
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     var viewModel: CarouselListViewModel!
@@ -34,33 +34,11 @@ class CarouselViewController: UIViewController {
             prepare(contentFrom: conf)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    enum ContentType: Equatable {
-        case fakeCarousels
-        case carouselGroup(groupId: String)
-        case movies
-        case documentaries
-        case kids
-        case clips
-        
-        static func == (lhs: ContentType, rhs: ContentType) -> Bool {
-            switch (lhs,rhs) {
-            case (.fakeCarousels, .fakeCarousels): return true
-            case (.carouselGroup(groupId: let lid), .carouselGroup(groupId: let rid)): return lid == rid
-            case (.movies, .movies): return true
-            case (.documentaries, .documentaries): return true
-            case (.kids, .kids): return true
-            case (.clips, .clips): return true
-            default: return false
-            }
-        }
-    }
-    
     
     var dynamicContentCategory: DynamicContentCategory?
     fileprivate func prepare(contentFrom dynamicContentCategory: DynamicContentCategory) {
@@ -90,7 +68,6 @@ class CarouselViewController: UIViewController {
                 }
             case .clips:
                 viewModel.loadFakeClipsCarousels{ [weak self] error in
-                    print("reloadCarousels",self?.collectionView.contentOffset)
                     self?.collectionView.reloadData()
                 }
             }
@@ -107,12 +84,12 @@ class CarouselViewController: UIViewController {
     }
 }
 
-extension CarouselViewController: SlidingMenuDelegate {
+extension CarouselListViewController: SlidingMenuDelegate {
     
 }
 
 
-extension CarouselViewController: UICollectionViewDataSource {
+extension CarouselListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.content.count
     }
@@ -128,7 +105,7 @@ extension CarouselViewController: UICollectionViewDataSource {
     
 }
 
-extension CarouselViewController: UICollectionViewDelegate {
+extension CarouselListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? CarouselView {
             cell.selectedAsset = { [weak self] asset in
@@ -154,7 +131,7 @@ extension CarouselViewController: UICollectionViewDelegate {
     }
 }
 
-extension CarouselViewController: StretchyCarouselHeaderLayoutDelegate {
+extension CarouselListViewController: StretchyCarouselHeaderLayoutDelegate {
     var usesStretchyHeader: Bool {
         return viewModel.bannerViewModel != nil
     }
@@ -178,7 +155,7 @@ extension CarouselViewController: StretchyCarouselHeaderLayoutDelegate {
     }
 }
 
-extension CarouselViewController: AuthorizedEnvironment {
+extension CarouselListViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
         viewModel = CarouselListViewModel(environment: environment,
                                           sessionToken: sessionToken)
@@ -192,7 +169,7 @@ extension CarouselViewController: AuthorizedEnvironment {
     }
 }
 
-extension CarouselViewController: AssetDetailsPresenter {
+extension CarouselListViewController: AssetDetailsPresenter {
     var assetDetailsPresenter: UIViewController {
         return self
     }
