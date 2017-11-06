@@ -71,7 +71,7 @@ class MasterViewController: UIViewController {
             configure(carouselController: viewController, dynamicContent: dynamicContent)
             contentNavContainer.setViewControllers([viewController], animated: true)
         case .tabbedEpg:
-            let viewController = storyboard.instantiateViewController(withIdentifier: "ChannelListViewController") as! ChannelListViewController
+            let viewController = storyboard.instantiateViewController(withIdentifier: "ChannelListViewController") as! PagedChannelViewController
             configure(carouselController: viewController, dynamicContent: dynamicContent)
             contentNavContainer.setViewControllers([viewController], animated: true)
         }
@@ -85,7 +85,7 @@ class MasterViewController: UIViewController {
         carouselController.dynamicContentCategory = dynamicContent
     }
     
-    func configure(carouselController: ChannelListViewController, dynamicContent: DynamicContentCategory? = nil) {
+    func configure(carouselController: PagedChannelViewController, dynamicContent: DynamicContentCategory? = nil) {
         carouselController.authorize(environment: environment,
                                      sessionToken: sessionToken)
         carouselController.slidingMenuController = self

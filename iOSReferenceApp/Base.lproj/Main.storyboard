@@ -1165,15 +1165,15 @@
                         <viewControllerLayoutGuide type="bottom" id="wG7-dj-0WZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PpH-gF-frz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P3g-vc-8Zu">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cT0-ZH-YCI">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODm-0D-l9Z">
                                         <rect key="frame" x="10" y="10" width="32" height="32"/>
@@ -1183,7 +1183,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oPc-cF-Q5E">
-                                        <rect key="frame" x="10" y="674" width="74" height="32"/>
+                                        <rect key="frame" x="10" y="191" width="74" height="32"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wla-qx-aq5">
                                                 <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -1204,7 +1204,7 @@
                                         </subviews>
                                     </stackView>
                                     <slider opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="XQS-W0-3wY">
-                                        <rect key="frame" x="92" y="675" width="223" height="31"/>
+                                        <rect key="frame" x="92" y="192" width="223" height="31"/>
                                         <color key="minimumTrackTintColor" red="0.0" green="0.40000000000000002" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="maximumTrackTintColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="thumbTintColor" red="0.0" green="0.40000000000000002" blue="0.70196078431372544" alpha="1" colorSpace="calibratedRGB"/>
@@ -1216,7 +1216,7 @@
                                         </connections>
                                     </slider>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uz8-JQ-vl3">
-                                        <rect key="frame" x="323" y="674" width="81" height="32"/>
+                                        <rect key="frame" x="323" y="191" width="81" height="32"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJu-g1-pHZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -1668,7 +1668,7 @@
         <!--TV-->
         <scene sceneID="SuH-nn-pVd">
             <objects>
-                <viewController storyboardIdentifier="ChannelListViewController" id="noa-Eo-iVm" customClass="ChannelListViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChannelListViewController" id="noa-Eo-iVm" customClass="PagedChannelViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sHS-PC-4ka"/>
                         <viewControllerLayoutGuide type="bottom" id="9I3-DA-ME1"/>
@@ -1901,6 +1901,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="zdv-5g-EHu"/>
-        <segue reference="f4H-my-9wa"/>
+        <segue reference="et0-xq-iYY"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -27,8 +27,9 @@ extension ChannelListViewModel {
             .elasticSearch(query: "(medias.drm:FAIRPLAY OR medias.drm:UNENCRYPTED) AND medias.format:HLS")
             .filter(on: .tvChannel)
             .filter(onlyPublished: true)
-            .sort(on: ["-originalTitle"])
+            .sort(on: ["assetId","originalTitle"])
             .request()
+            .validate()
             .response{ [unowned self] (exposure: ExposureResponse<AssetList>) in
                 if let assets = exposure.value?.items {
                     callback(assets, nil)

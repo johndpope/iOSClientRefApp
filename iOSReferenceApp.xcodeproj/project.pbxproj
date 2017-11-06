@@ -12,7 +12,7 @@
 		7623B2391FB07CAA0027A6B9 /* ChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7623B2371FB075500027A6B9 /* ChannelViewModel.swift */; };
 		7623B23A1FB07CAA0027A6B9 /* ChannelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76466FE21FB0698C007ECD5C /* ChannelListViewModel.swift */; };
 		7623B23B1FB07CAA0027A6B9 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76466FDE1FB05ECA007ECD5C /* ChannelViewController.swift */; };
-		7623B23C1FB07CAA0027A6B9 /* ChannelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76466FE41FB06B82007ECD5C /* ChannelListViewController.swift */; };
+		7623B23C1FB07CAA0027A6B9 /* PagedChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76466FE41FB06B82007ECD5C /* PagedChannelViewController.swift */; };
 		762F0BF81FA7153D0051395E /* StretchyCarouselHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */; };
 		76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; };
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -227,7 +227,7 @@
 		76466FCB1FB05C17007ECD5C /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76466FDE1FB05ECA007ECD5C /* ChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
 		76466FE21FB0698C007ECD5C /* ChannelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListViewModel.swift; sourceTree = "<group>"; };
-		76466FE41FB06B82007ECD5C /* ChannelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListViewController.swift; sourceTree = "<group>"; };
+		76466FE41FB06B82007ECD5C /* PagedChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedChannelViewController.swift; sourceTree = "<group>"; };
 		764EDC481F5EADFB00569D5B /* environments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = environments.json; sourceTree = SOURCE_ROOT; };
 		764EDC4C1F5EB6B100569D5B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		764EDC4E1F5EB6E400569D5B /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
@@ -447,7 +447,7 @@
 				76466FDC1FB05E8F007ECD5C /* ViewModels */,
 				76466FDD1FB05E8F007ECD5C /* Views */,
 				76466FDE1FB05ECA007ECD5C /* ChannelViewController.swift */,
-				76466FE41FB06B82007ECD5C /* ChannelListViewController.swift */,
+				76466FE41FB06B82007ECD5C /* PagedChannelViewController.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -1062,8 +1062,8 @@
 				7672F26C1F93EEB200F892C3 /* AssetListType.swift */,
 				76A416F81EDDCAC700677A46 /* VODViewModel.swift */,
 				76A417151EDEDAA800677A46 /* CategoryViewModel.swift */,
-				76A4171C1EE0134100677A46 /* LiveListViewModel.swift */,
 				76A417221EE1518800677A46 /* AssetViewModel.swift */,
+				76A4171C1EE0134100677A46 /* LiveListViewModel.swift */,
 				76AF2F051F13A0A00014F007 /* EPGDetailsViewModel.swift */,
 				76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */,
 			);
@@ -1357,7 +1357,7 @@
 				76EC8D3B1FA5113600F6FDB6 /* MainMenuSectionViewModel.swift in Sources */,
 				76BA443E1FAC891600E92AD1 /* ContentCarouselTransition.swift in Sources */,
 				F7061C6E1EC5C0960041E271 /* ColorsUtil.swift in Sources */,
-				7623B23C1FB07CAA0027A6B9 /* ChannelListViewController.swift in Sources */,
+				7623B23C1FB07CAA0027A6B9 /* PagedChannelViewController.swift in Sources */,
 				76EC8D651FA514A900F6FDB6 /* ContentEditorial.swift in Sources */,
 				76B0AFB41FA51BCA0085C837 /* PlayerViewModel.swift in Sources */,
 				76EC8D351FA510E500F6FDB6 /* MainMenuContentViewModel.swift in Sources */,
