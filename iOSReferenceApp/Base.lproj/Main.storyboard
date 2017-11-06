@@ -1468,7 +1468,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CAW-ue-M8Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6294.202898550725" y="782.60869565217399"/>
+            <point key="canvasLocation" x="6391" y="783"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="AwQ-EM-H7P">
@@ -1544,7 +1544,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZiT-pl-5HG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6107" y="2226"/>
+            <point key="canvasLocation" x="4822" y="1500"/>
         </scene>
         <!--Offline Assets-->
         <scene sceneID="Ss7-02-YTd">
@@ -1746,24 +1746,6 @@
             </objects>
             <point key="canvasLocation" x="4651" y="2910"/>
         </scene>
-        <!--Channel View Controller-->
-        <scene sceneID="cqx-UE-cWH">
-            <objects>
-                <viewController storyboardIdentifier="ChannelViewController" id="ntd-4Q-6K2" customClass="ChannelViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eHj-qs-HQ1"/>
-                        <viewControllerLayoutGuide type="bottom" id="ATF-45-b9A"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="hTn-tY-OGh">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wfh-3a-TMp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5370" y="2910"/>
-        </scene>
         <!--Offline-->
         <scene sceneID="krl-5P-rP2">
             <objects>
@@ -1881,6 +1863,119 @@
             </objects>
             <point key="canvasLocation" x="745" y="1741"/>
         </scene>
+        <!--Channel View Controller-->
+        <scene sceneID="Ht1-1P-qa9">
+            <objects>
+                <viewController storyboardIdentifier="ChannelViewController" id="1zV-E9-gYg" customClass="ChannelViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7gk-wI-Mcd"/>
+                        <viewControllerLayoutGuide type="bottom" id="dNw-ML-0Jb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tQW-TE-JpT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oOF-l1-5aX">
+                                <rect key="frame" x="0.0" y="243" width="414" height="493"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="343" id="Sqq-GT-34A"/>
+                                </constraints>
+                                <color key="sectionIndexColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="x04-Vz-VnH" customClass="EPGPreviewCell" customModule="iOSReferenceApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x04-Vz-VnH" id="AVj-kU-3zR">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Sqq-GT-34A"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Sqq-GT-34A"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="Sqq-GT-34A"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <outlet property="dataSource" destination="1zV-E9-gYg" id="0rv-Rc-0aG"/>
+                                    <outlet property="delegate" destination="1zV-E9-gYg" id="r9d-nA-97Q"/>
+                                </connections>
+                            </tableView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sg0-cJ-709">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Sg0-cJ-709" secondAttribute="height" multiplier="16:9" id="xon-bZ-5Kv"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="xon-bZ-5Kv"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="xon-bZ-5Kv"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="rhs-OU-IKm" kind="embed" identifier="embeddedPlayerView" id="VZE-H4-r1d"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="oOF-l1-5aX" secondAttribute="trailing" id="0BA-zr-Azd"/>
+                            <constraint firstItem="oOF-l1-5aX" firstAttribute="leading" secondItem="tQW-TE-JpT" secondAttribute="leading" id="F9u-o4-p6f"/>
+                            <constraint firstItem="Sg0-cJ-709" firstAttribute="leading" secondItem="tQW-TE-JpT" secondAttribute="leading" id="aPv-St-brk"/>
+                            <constraint firstAttribute="trailing" secondItem="Sg0-cJ-709" secondAttribute="trailing" id="fEX-cM-agF"/>
+                            <constraint firstItem="dNw-ML-0Jb" firstAttribute="top" secondItem="Sg0-cJ-709" secondAttribute="bottom" id="gpw-XI-qZG"/>
+                            <constraint firstItem="Sg0-cJ-709" firstAttribute="top" secondItem="tQW-TE-JpT" secondAttribute="top" id="jqf-hM-SDi"/>
+                            <constraint firstItem="dNw-ML-0Jb" firstAttribute="top" secondItem="oOF-l1-5aX" secondAttribute="bottom" id="pR7-jc-vmK"/>
+                            <constraint firstItem="oOF-l1-5aX" firstAttribute="top" secondItem="Sg0-cJ-709" secondAttribute="bottom" constant="10" id="ppX-hm-XWR"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="gpw-XI-qZG"/>
+                                <exclude reference="pR7-jc-vmK"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="gpw-XI-qZG"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="gpw-XI-qZG"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="pR7-jc-vmK"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="epgTableView" destination="oOF-l1-5aX" id="eEi-LC-DfB"/>
+                        <outlet property="topContentInset" destination="jqf-hM-SDi" id="hWX-7K-ulg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VmH-qw-tRt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5370" y="2910"/>
+        </scene>
     </scenes>
     <resources>
         <image name="close" width="32" height="32"/>
@@ -1901,6 +1996,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="zdv-5g-EHu"/>
-        <segue reference="et0-xq-iYY"/>
+        <segue reference="VZE-H4-r1d"/>
     </inferredMetricsTieBreakers>
 </document>

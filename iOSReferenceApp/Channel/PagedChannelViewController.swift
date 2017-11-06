@@ -86,7 +86,37 @@ class PagedChannelViewController: TabmanViewController {
         
         bar.items = viewControllers.map{ Item(title: $0.viewModel.asset.anyTitle(locale: "en")) }
         reloadPages()
+        
     }
+    
+//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
+//                                        willScrollToPageAt index: PageboyViewController.PageIndex,
+//                                        direction: PageboyViewController.NavigationDirection,
+//                                        animated: Bool) {
+//        super
+//    }
+//
+//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
+//                                        didScrollTo position: CGPoint,
+//                                        direction: PageboyViewController.NavigationDirection,
+//                                        animated: Bool) {
+//
+//    }
+//
+//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
+//                                        didScrollToPageAt index: PageboyViewController.PageIndex,
+//                                        direction: PageboyViewController.NavigationDirection,
+//                                        animated: Bool) {
+//
+//    }
+//
+//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
+//                                        didReloadWith currentViewController: UIViewController,
+//                                        currentPageIndex: PageboyViewController.PageIndex) {
+//        super.pageboyViewController(pageboyViewController,
+//                                    didReloadWith: currentViewController,
+//                                    currentPageIndex: currentPageIndex)
+//    }
 }
 
 extension PagedChannelViewController: PageboyViewControllerDataSource {
@@ -96,7 +126,14 @@ extension PagedChannelViewController: PageboyViewControllerDataSource {
     
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
-        return viewControllers[index]
+        let inset = bar.requiredInsets.bar
+        print("OFFSET",inset)
+        let vc = viewControllers[index]
+        if let channelVC = vc as? ChannelViewController {
+            channelVC.topContentInsetConstant = inset
+        }
+        
+        return vc
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
@@ -107,6 +144,7 @@ extension PagedChannelViewController: PageboyViewControllerDataSource {
         return .at(index: viewControllers.count / 2)
     }
 }
+
 
 extension PagedChannelViewController: SlidingMenuDelegate {
 
