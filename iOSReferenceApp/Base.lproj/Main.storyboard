@@ -1665,6 +1665,31 @@
             </objects>
             <point key="canvasLocation" x="4652" y="2226"/>
         </scene>
+        <!--TV-->
+        <scene sceneID="SuH-nn-pVd">
+            <objects>
+                <viewController storyboardIdentifier="ChannelListViewController" id="noa-Eo-iVm" customClass="ChannelListViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sHS-PC-4ka"/>
+                        <viewControllerLayoutGuide type="bottom" id="9I3-DA-ME1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Uh-Q3-ffM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="TV" id="o59-SI-uFQ">
+                        <barButtonItem key="leftBarButtonItem" image="download-list" id="qSL-YS-Fb1">
+                            <connections>
+                                <action selector="toggleSlidingMenuAction:" destination="noa-Eo-iVm" id="FOo-0z-Ed9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gSO-Ay-pJ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5371" y="2234"/>
+        </scene>
         <!--Title-->
         <scene sceneID="dGW-aP-QXe">
             <objects>
@@ -1720,6 +1745,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="od3-sz-CFg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4651" y="2910"/>
+        </scene>
+        <!--Channel View Controller-->
+        <scene sceneID="cqx-UE-cWH">
+            <objects>
+                <viewController storyboardIdentifier="ChannelViewController" id="ntd-4Q-6K2" customClass="ChannelViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eHj-qs-HQ1"/>
+                        <viewControllerLayoutGuide type="bottom" id="ATF-45-b9A"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hTn-tY-OGh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wfh-3a-TMp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5370" y="2910"/>
         </scene>
         <!--Offline-->
         <scene sceneID="krl-5P-rP2">

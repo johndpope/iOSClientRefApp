@@ -44,7 +44,7 @@ class CarouselListViewController: UIViewController {
     fileprivate func prepare(contentFrom dynamicContentCategory: DynamicContentCategory) {
         updateNavigationTitle(with: dynamicContentCategory)
         if let contentCarousels = dynamicContentCategory as? DynamicContentCarousel {
-            viewModel.loadCarousels(for: contentCarousels.carouselGroupId){ [weak self] error in
+            viewModel.loadCarousels(for: contentCarousels.contentId){ [weak self] error in
                 self?.collectionView.reloadData()
             }
         }
@@ -70,6 +70,9 @@ class CarouselListViewController: UIViewController {
                 viewModel.loadFakeClipsCarousels{ [weak self] error in
                     self?.collectionView.reloadData()
                 }
+            case .channels:
+                print(#function,"Dont display EPG in carousels")
+                return
             }
         }
     }

@@ -67,20 +67,21 @@ class MainMenuViewModel {
     
     private func fakeCarouselResponse(with carouselId: String?) -> [MainMenuContentViewModel] {
         let home = MainMenuContentViewModel(dynamicContent: resolveHomeCategory(with: carouselId), active: true)
-        let movies = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Movies", content: .movies))
-        let documentaries = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Documentaries", content: .documentaries))
-        let kids = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Kids", content: .kids))
-        let clips = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Clips", content: .clips))
-        let omegaPoint = MainMenuContentViewModel(dynamicContent: FakeSingleDynamicContentCarousel(title: "OmegaPoint", content: .clips))
+        let tv = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "TV", presentation: .tabbedEpg, content: .channels))
+        let movies = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Movies", presentation: .multiCarousel, content: .movies))
+        let documentaries = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Documentaries", presentation: .multiCarousel, content: .documentaries))
+        let kids = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Kids", presentation: .multiCarousel, content: .kids))
+        let clips = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Clips", presentation: .multiCarousel, content: .clips))
+        let omegaPoint = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "OmegaPoint", presentation: .singleCarousel, content: .clips))
         
-        return [home, movies, documentaries, kids, clips, omegaPoint]
+        return [home, tv, movies, documentaries, kids, clips, omegaPoint]
     }
     
     private func resolveHomeCategory(with carouselId: String?) -> DynamicContentCategory {
         guard let carouselId = carouselId else {
-            return FakeDynamicContentCarousel(title: "Home", content: .home)
+            return FakeDynamicContentCarousel(title: "Home", presentation: .multiCarousel, content: .home)
         }
-        return DynamicContentCarousel(title: "Home", carouselGroupId: carouselId)
+        return DynamicContentCarousel(title: "Home", presentation: .multiCarousel, contentId: carouselId)
     }
     
     private func configureAppSettings() -> MainMenuSectionViewModel {
