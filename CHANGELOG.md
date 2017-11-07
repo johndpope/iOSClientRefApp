@@ -8,13 +8,16 @@
 #### Features
 * Content promotion through `Carousel` layout with editorial control.
 * `Featured` promotion through a topside, stretchable banner carousel.
-* Additional *"carousels"* added to menu
+* Additional *"carousels"* added to menu.
 * Separated *login* and *environment* selection.
-*`EMP-10600` Dynamic loading of content groups in sidebar menu based on `CustomerConfig`
-*`EMP-10601` Dynamic content presentation based on `CustomerConfig`
+*`EMP-10600` Dynamic loading of content groups in sidebar menu based on `CustomerConfig`.
+*`EMP-10601` Dynamic content presentation based on `CustomerConfig`.
 
 #### Bug Fixes
-* Offline media list now reloads when the view appears
+* Offline media list now reloads when the view appears.
+
+#### Changes
+*`EMP-10605` Live and catchup through touch navigation.
 
 ## 0.2.1
 Released 20 Oct 2017

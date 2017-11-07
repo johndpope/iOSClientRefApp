@@ -17,7 +17,7 @@ import MediaPlayer
 
 class PlayerViewController: UIViewController {
     
-    fileprivate var player: Player = Player()
+    fileprivate(set) var player: Player = Player()
     var viewModel: PlayerViewModel!
     
     @IBOutlet weak var overlayView: UIView!

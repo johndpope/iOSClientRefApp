@@ -48,12 +48,12 @@ class SingleCarouselViewController: UIViewController {
     var dynamicContentCategory: DynamicContentCategory?
     fileprivate func prepare(contentFrom dynamicContentCategory: DynamicContentCategory) {
         updateNavigationTitle(with: dynamicContentCategory)
-        if let contentCarousel = dynamicContentCategory as? SingleDynamicContentCarousel {
-            viewModel.loadCarousel(for: contentCarousel.carouselId){ [weak self] error in
+        if let contentCarousel = dynamicContentCategory as? DynamicContentCarousel {
+            viewModel.loadCarousel(for: contentCarousel.contentId){ [weak self] error in
                 self?.collectionView.reloadData()
             }
         }
-        else if let fakeCarousel = dynamicContentCategory as? FakeSingleDynamicContentCarousel {
+        else if let fakeCarousel = dynamicContentCategory as? FakeDynamicContentCarousel {
             switch fakeCarousel.content {
             case .home:
                 viewModel.loadFakeMovieCarousel{ [weak self] error in
@@ -75,6 +75,9 @@ class SingleCarouselViewController: UIViewController {
                 viewModel.loadFakeClipsCarousel{ [weak self] error in
                     self?.collectionView.reloadData()
                 }
+            case .channels:
+                print(#function,"Dont display EPG in single carousel")
+                return
             }
         }
     }

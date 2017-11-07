@@ -61,15 +61,19 @@ class MasterViewController: UIViewController {
     func createNewCarousel(from dynamicContent: DynamicContentCategory) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        if dynamicContent is SingleCarouselDynamicContentCategory {
-            let CarouselListViewController = storyboard.instantiateViewController(withIdentifier: "SingleCarouselViewController") as! SingleCarouselViewController
-            configure(carouselController: CarouselListViewController, dynamicContent: dynamicContent)
-            contentNavContainer.setViewControllers([CarouselListViewController], animated: true)
-        }
-        else {
-            let CarouselListViewController = storyboard.instantiateViewController(withIdentifier: "CarouselListViewController") as! CarouselListViewController
-            configure(carouselController: CarouselListViewController, dynamicContent: dynamicContent)
-            contentNavContainer.setViewControllers([CarouselListViewController], animated: true)
+        switch dynamicContent.presentation {
+        case .singleCarousel:
+            let viewController = storyboard.instantiateViewController(withIdentifier: "SingleCarouselViewController") as! SingleCarouselViewController
+            configure(carouselController: viewController, dynamicContent: dynamicContent)
+            contentNavContainer.setViewControllers([viewController], animated: true)
+        case .multiCarousel:
+            let viewController = storyboard.instantiateViewController(withIdentifier: "CarouselListViewController") as! CarouselListViewController
+            configure(carouselController: viewController, dynamicContent: dynamicContent)
+            contentNavContainer.setViewControllers([viewController], animated: true)
+        case .tabbedEpg:
+            let viewController = storyboard.instantiateViewController(withIdentifier: "ChannelListViewController") as! PagedChannelViewController
+            configure(carouselController: viewController, dynamicContent: dynamicContent)
+            contentNavContainer.setViewControllers([viewController], animated: true)
         }
         
     }
@@ -81,9 +85,16 @@ class MasterViewController: UIViewController {
         carouselController.dynamicContentCategory = dynamicContent
     }
     
+    func configure(carouselController: PagedChannelViewController, dynamicContent: DynamicContentCategory? = nil) {
+        carouselController.authorize(environment: environment,
+                                     sessionToken: sessionToken)
+        carouselController.slidingMenuController = self
+        carouselController.dynamicContentCategory = dynamicContent
+    }
+    
     func configure(carouselController: CarouselListViewController, dynamicContent: DynamicContentCategory? = nil) {
         carouselController.authorize(environment: environment,
-                                  sessionToken: sessionToken)
+                                     sessionToken: sessionToken)
         carouselController.slidingMenuController = self
         carouselController.dynamicContentCategory = dynamicContent
     }

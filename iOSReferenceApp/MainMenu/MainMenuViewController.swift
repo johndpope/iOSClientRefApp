@@ -12,41 +12,29 @@ import Kingfisher
 
 protocol DynamicContentCategory {
     var title: String { get }
+    var presentation: DynamicContentPresentation { get }
 }
 
-protocol SingleCarouselDynamicContentCategory {
-    
+enum DynamicContentPresentation {
+    case singleCarousel
+    case multiCarousel
+    case tabbedEpg
 }
 
 struct DynamicContentCarousel: DynamicContentCategory {
     let title: String
-    let carouselGroupId: String
+    let presentation: DynamicContentPresentation
+    let contentId: String
 }
 
 struct FakeDynamicContentCarousel: DynamicContentCategory {
     let title: String
+    let presentation: DynamicContentPresentation
     let content: ContentType
     
     enum ContentType {
         case home
-        case movies
-        case documentaries
-        case kids
-        case clips
-    }
-}
-
-struct SingleDynamicContentCarousel: DynamicContentCategory, SingleCarouselDynamicContentCategory {
-    let title: String
-    let carouselId: String
-}
-
-struct FakeSingleDynamicContentCarousel: DynamicContentCategory, SingleCarouselDynamicContentCategory {
-    let title: String
-    let content: ContentType
-    
-    enum ContentType {
-        case home
+        case channels
         case movies
         case documentaries
         case kids
