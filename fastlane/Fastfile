@@ -43,8 +43,11 @@ platform :ios do
     
     
     lane :update_app_icon do
-       appicon(appicon_image_file: 'fastlane/metadata/RedBee-1024.png',
-               appicon_devices: [:ipad, :iphone, :ios_marketing])
+       appicon(
+               appicon_image_file: 'fastlane/metadata/RedBee-1024.png',
+               appicon_devices: [:ipad, :iphone, :ios_marketing],
+               appicon_path: 'iOSReferenceApp/Assets.xcassets'
+               )
     end
     
     
