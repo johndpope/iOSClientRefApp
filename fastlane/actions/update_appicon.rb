@@ -1,7 +1,12 @@
 
 module Fastlane
     module Actions
-        class UpdateAppIconAction < Action
+        
+        module SharedValues
+            ##COMMIT_CARTHAGE_DEPENDENCIES_CUSTOM_VALUE = :COMMIT_CARTHAGE_DEPENDENCIES_CUSTOM_VALUE
+        end
+        
+        class UpdateAppiconAction < Action
             def self.run(params)
                 #require 'xcodeproj'
                 require 'pathname'
@@ -19,16 +24,17 @@ module Fastlane
                 
                 asset_files_changed = git_dirty_files.select { |i| i.start_with?(icon_files) }
                 
-                valid_changed_files = Array.new(asset_files_changed)
+                valid_changed_files = asset_files_changed
                 
                 UI.success("changes #{valid_changed_files}")
                 changed_files_as_expected = (Set.new(git_dirty_files.map(&:downcase)) == Set.new(valid_changed_files.map(&:downcase)))
                 unless changed_files_as_expected
                     unexpected_files_changed = Set.new(git_dirty_files.map(&:downcase)) - Set.new(valid_changed_files.map(&:downcase))
+                    
                     error = [
                         "Found unexpected uncommited changes in the working directory.",
                         "The following files not related to App Icons:",
-                        "#{unexpected_files_changed.join("\n")}",
+                        "#{unexpected_files_changed.to_a.join("\n")}",
                         "Make sure you have a clean working directory",
                     ].join("\n")
                     UI.user_error!(error)
@@ -43,6 +49,7 @@ module Fastlane
                     File.expand_path(File.join(repo_pathname, updated))
                 end
     
+                UI.success("valid_changed_files")
                 # then create a commit with a message
                 Actions.sh("git add #{git_add_paths.map(&:shellescape).join(' ')}")
                 
