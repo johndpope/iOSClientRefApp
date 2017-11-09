@@ -54,8 +54,6 @@ module Fastlane
                 Actions.sh("git add #{git_add_paths.map(&:shellescape).join(' ')}")
                 
                 begin
-                    # TODO: Find version + build number for each submodule and include that in the commit message
-                    module_names = submodule_changes.map{|x| x.gsub(submodule_directory,"")}.join(" ")
                     message = "AppIcon updated"
                     
                     Actions.sh("git commit -m '#{message}'")
