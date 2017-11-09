@@ -50,11 +50,13 @@ class MasterViewController: UIViewController {
         itemBehavior = UIDynamicItemBehavior(items: [contentContainer])
         itemBehavior.allowsRotation = false
         blurView.effect = nil
+        
+        menuController.dynamicCustomerConfig = dynamicCustomerConfig
     }
     
     var dynamicCustomerConfig: DynamicCustomerConfig? {
         didSet {
-            menuController.dynamicCustomerConfig = dynamicCustomerConfig
+            menuController?.dynamicCustomerConfig = dynamicCustomerConfig
         }
     }
     

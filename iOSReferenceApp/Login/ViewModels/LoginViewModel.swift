@@ -43,22 +43,22 @@ extension LoginViewModel {
         }
     }
     
-    func login(exposureUsername: String, exposurePassword: String, callback: @escaping (ExposureResponse<Credentials>) -> Void) {
+//    func login(exposureUsername: String, exposurePassword: String, callback: @escaping (ExposureResponse<Credentials>) -> Void) {
+//        Authenticate(environment: environment)
+//            .login(username: exposureUsername,
+//                   password: exposurePassword)
+//            .request()
+//            .validate()
+//            .response { (dataResponse: ExposureResponse<Credentials>) in
+//                callback(dataResponse)
+//        }
+//    }
+    
+    func login(exposureUsername: String, exposurePassword: String, mfa: String? = nil, callback: @escaping (ExposureResponse<Credentials>) -> Void) {
         Authenticate(environment: environment)
             .login(username: exposureUsername,
-                   password: exposurePassword)
-            .request()
-            .validate()
-            .response { (dataResponse: ExposureResponse<Credentials>) in
-                callback(dataResponse)
-        }
-    }
-    
-    func twoFactor(exposureUsername: String, exposurePassword: String, mfa: String, callback: @escaping (ExposureResponse<Credentials>) -> Void) {
-        Authenticate(environment: environment)
-            .twoFactor(username: exposureUsername,
-                       password: exposurePassword,
-                       twoFactor: mfa)
+                   password: exposurePassword,
+                   twoFactor: mfa)
             .request()
             .validate()
             .response { (dataResponse: ExposureResponse<Credentials>) in

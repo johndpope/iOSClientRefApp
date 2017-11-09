@@ -64,7 +64,7 @@ class ManualPlaybackView: UIViewController {
 extension ManualPlaybackView {
     func togglePlayButton(enabled: Bool) {
         playButton.isEnabled = enabled
-        playButton.backgroundColor = enabled ? UIColor.ericssonBlue : UIColor.lightGray
+        playButton.backgroundColor = enabled ? UIColor.redBeeRed : UIColor.lightGray
     }
 }
 
