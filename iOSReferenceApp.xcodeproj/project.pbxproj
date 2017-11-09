@@ -116,6 +116,7 @@
 		76BBFB7E1EA8CF2E001DBDDB /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */; };
 		76C7DDE61F235D74008FE955 /* Analytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7DDE51F235D74008FE955 /* Analytics.framework */; };
 		76C7DDE71F235D74008FE955 /* Analytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7DDE51F235D74008FE955 /* Analytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76C9B4711FB49CEB0058045F /* update_appicon.rb in Resources */ = {isa = PBXBuildFile; fileRef = 76C9B4701FB49CEB0058045F /* update_appicon.rb */; };
 		76D704561F92273400D6FC6B /* CrispResizingImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D704551F92273400D6FC6B /* CrispResizingImageProcessor.swift */; };
 		76EC8D311FA510A500F6FDB6 /* MainMenuItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D301FA510A500F6FDB6 /* MainMenuItemType.swift */; };
 		76EC8D331FA510BF00F6FDB6 /* MainMenuActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D321FA510BF00F6FDB6 /* MainMenuActionType.swift */; };
@@ -322,6 +323,7 @@
 		76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedAssetEntity.swift; sourceTree = "<group>"; };
 		76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = SOURCE_ROOT; };
 		76C7DDE51F235D74008FE955 /* Analytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Analytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76C9B4701FB49CEB0058045F /* update_appicon.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = update_appicon.rb; sourceTree = "<group>"; };
 		76D704551F92273400D6FC6B /* CrispResizingImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrispResizingImageProcessor.swift; sourceTree = "<group>"; };
 		76EC8D271FA5106B00F6FDB6 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		76EC8D281FA5107A00F6FDB6 /* MainMenuPushNavigationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuPushNavigationCell.swift; sourceTree = "<group>"; };
@@ -519,6 +521,7 @@
 			isa = PBXGroup;
 			children = (
 				768ED8A91F0FAEE3008E8F9B /* update_dependency_graph.rb */,
+				76C9B4701FB49CEB0058045F /* update_appicon.rb */,
 			);
 			path = actions;
 			sourceTree = "<group>";
@@ -1218,6 +1221,7 @@
 				76EC8D741FA514F900F6FDB6 /* PortraitTrioPromotionCell.xib in Resources */,
 				7698622F1FA5197C00A57213 /* OfflineListCell.xib in Resources */,
 				7667AECC1EC5E21200C308FC /* Appfile in Resources */,
+				76C9B4711FB49CEB0058045F /* update_appicon.rb in Resources */,
 				76EC8D441FA5121600F6FDB6 /* MainMenuStaticDataCell.xib in Resources */,
 				7667AECD1EC5E21200C308FC /* Fastfile in Resources */,
 				76A843B51EA7856C00BDAF2C /* LaunchScreen.storyboard in Resources */,
