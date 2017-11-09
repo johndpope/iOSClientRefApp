@@ -42,6 +42,12 @@ platform :ios do
     end
     
     
+    lane :update_app_icon do
+       appicon(appicon_image_file: 'fastlane/metadata/RedBee-1024.png',
+               appicon_devices: [:ipad, :iphone, :ios_marketing])
+    end
+    
+    
     desc "Runs all the tests"
     lane :run_unit_tests do
         ws = ENV["CLIENT_WORKSPACE"]
@@ -159,7 +165,7 @@ platform :ios do
     end
     
     error do |lane, exception|
-        
+        UI.error("====> #{exception.message}")
         slack(
               message: exception.message,
               success: false
