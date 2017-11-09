@@ -28,13 +28,13 @@ class PagedChannelViewController: TabmanViewController {
         
         bar.style = .scrollingButtonBar
         bar.appearance = TabmanBar.Appearance({ (appearance) in
-            appearance.indicator.color = UIColor.ericssonBlue
+            appearance.indicator.color = UIColor.redBeeRed
             appearance.indicator.lineWeight = .thin
             appearance.indicator.compresses = true
             
             appearance.layout.itemDistribution = .centered
             
-            appearance.state.selectedColor = UIColor.ericssonBlue
+            appearance.state.selectedColor = UIColor.redBeeRed
             appearance.state.color = UIColor.white
             
             appearance.style.background = .solid(color: UIColor(red: 0.071, green: 0.075, blue: 0.078, alpha: 1)) //.blur(style: .dark)

@@ -152,7 +152,7 @@ extension EnvironmentSelectionViewController: UITextFieldDelegate {
     
     fileprivate func toggleContinueButton() {
         continueButton.isEnabled = fieldsValid
-        let color = fieldsValid ? UIColor.ericssonBlue : UIColor.lightGray
+        let color = fieldsValid ? UIColor.redBeeRed : UIColor.lightGray
         continueButton.setTitleColor(color, for: .normal)
     }
     
@@ -189,8 +189,8 @@ extension EnvironmentSelectionViewController: UITextFieldDelegate {
 extension EnvironmentSelectionViewController {
     func displayEnvironmentSelection() {
         let picker = McPicker(data: [viewModel.environmentSelections])
-        picker.selectionIndicatorColor = UIColor.ericssonBlue
-        picker.toolBarButtonsColor = UIColor.ericssonBlue
+        picker.selectionIndicatorColor = UIColor.redBeeRed
+        picker.toolBarButtonsColor = UIColor.redBeeRed
         picker.show{ [weak self] selections in
             guard let weakSelf = self else { return }
             if let title = selections[0] {
@@ -202,8 +202,8 @@ extension EnvironmentSelectionViewController {
     func displayCustomerSelection() {
         guard let environmentIndex = viewModel.selectedEnvironment else { return }
         let picker = McPicker(data: [viewModel.customerSelections(index: environmentIndex)])
-        picker.selectionIndicatorColor = UIColor.ericssonBlue
-        picker.toolBarButtonsColor = UIColor.ericssonBlue
+        picker.selectionIndicatorColor = UIColor.redBeeRed
+        picker.toolBarButtonsColor = UIColor.redBeeRed
         picker.show{ [weak self] selections in
             guard let weakSelf = self else { return }
             if let title = selections[0] {

@@ -27,7 +27,7 @@
                 <subviews>
                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EYa-37-zA5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="71.5"/>
-                        <color key="progressTintColor" red="0.0" green="0.40000000000000002" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="progressTintColor" red="0.92156862750000001" green="0.066666666669999999" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </progressView>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="A09-Hh-zRZ">

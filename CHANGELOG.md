@@ -12,6 +12,7 @@
 * Separated *login* and *environment* selection.
 *`EMP-10600` Dynamic loading of content groups in sidebar menu based on `CustomerConfig`.
 *`EMP-10601` Dynamic content presentation based on `CustomerConfig`.
+*`EMP-10621` Player rebranding to `Red Bee`
 
 #### Bug Fixes
 * Offline media list now reloads when the view appears.

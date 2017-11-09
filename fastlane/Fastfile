@@ -27,6 +27,7 @@ platform :ios do
         ensure_git_status_clean
         
         update_graph
+        update_app_icon
         
         bump_build_number
         
@@ -40,6 +41,8 @@ platform :ios do
         
         testflight_beta
     end
+    
+    
     
     
     desc "Runs all the tests"
@@ -77,8 +80,18 @@ platform :ios do
                  use_binaries: false,
                  no_build: true
                  )
-                 update_dependency_graph()
+        update_dependency_graph()
     end
+    
+    lane :update_app_icon do
+        appicon(
+                appicon_image_file: 'fastlane/metadata/RedBee-1024.png',
+                appicon_devices: [:ipad, :iphone, :ios_marketing],
+                appicon_path: 'iOSReferenceApp/Assets.xcassets'
+                )
+        update_appicon()
+    end
+    
     
     lane :testflight_beta do
         cert
@@ -159,7 +172,7 @@ platform :ios do
     end
     
     error do |lane, exception|
-        
+        UI.error("====> #{exception.message}")
         slack(
               message: exception.message,
               success: false

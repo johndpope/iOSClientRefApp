@@ -88,13 +88,3 @@ extension String {
         return emailTest.evaluate(with: self)
     }
 }
-
-extension UIColor {
-    static var ericssonBlue: UIColor {
-        return ColorsUtil.shared.getColor(key: Constants.Colors.Ericsson.blue)
-    }
-    
-    static var ericssonBlack: UIColor {
-        return ColorsUtil.shared.getColor(key: Constants.Colors.Ericsson.black)
-    }
-}

@@ -158,7 +158,8 @@ extension LoginViewController {
     // MARK: Login
     fileprivate func handleLogin() {
         ProgressIndicatorUtil.shared.show(parentView: self.view)
-        viewModel.login(exposureUsername: usernameTextField.text!, exposurePassword: passwordTextField.text!, callback: { (response) in
+        viewModel.login(exposureUsername: usernameTextField.text!,
+                        exposurePassword: passwordTextField.text!, callback: { (response) in
             defer {
                 ProgressIndicatorUtil.shared.hide()
             }
@@ -185,22 +186,22 @@ extension LoginViewController {
             ProgressIndicatorUtil.shared.show(parentView: weakSelf.view)
             if let mfa = alertController.textFields?.first?.text {
                 weakSelf.viewModel
-                    .twoFactor(exposureUsername: weakSelf.usernameTextField.text!,
-                               exposurePassword: weakSelf.passwordTextField.text!,
-                               mfa: mfa) { response in
-                                defer {
-                                    ProgressIndicatorUtil.shared.hide()
-                                }
-                                
-                                if let error = response.error {
-                                    weakSelf.showMessage(title: "Login Error", message: error.localizedDescription)
-                                    return
-                                }
-                                
-                                if let credentials = response.value {
-                                    UserInfo.update(credentials: credentials)
-                                    weakSelf.performSegue(withIdentifier: Segue.loginToMaster.rawValue, sender: credentials)
-                                }
+                    .login(exposureUsername: weakSelf.usernameTextField.text!,
+                           exposurePassword: weakSelf.passwordTextField.text!,
+                           mfa: mfa) { response in
+                            defer {
+                                ProgressIndicatorUtil.shared.hide()
+                            }
+                            
+                            if let error = response.error {
+                                weakSelf.showMessage(title: "Login Error", message: error.localizedDescription)
+                                return
+                            }
+                            
+                            if let credentials = response.value {
+                                UserInfo.update(credentials: credentials)
+                                weakSelf.performSegue(withIdentifier: Segue.loginToMaster.rawValue, sender: credentials)
+                            }
                 }
             }
         }
@@ -248,7 +249,7 @@ extension LoginViewController: UITextFieldDelegate {
     
     fileprivate func toggleLoginButton() {
         loginButton.isEnabled = fieldsValid
-        let color = fieldsValid ? UIColor.ericssonBlue : UIColor.lightGray
+        let color = fieldsValid ? UIColor.redBeeRed : UIColor.lightGray
         loginButton.setTitleColor(color, for: .normal)
     }
     
