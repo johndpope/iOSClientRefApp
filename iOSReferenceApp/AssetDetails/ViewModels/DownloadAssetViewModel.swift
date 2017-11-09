@@ -80,15 +80,14 @@ extension DownloadAssetViewModel {
 
 extension DownloadAssetViewModel {
     func createDownloadTask(for assetId: String) -> ExposureDownloadTask {
-        
         let bps = selectedBitrate?.bitrate != nil ? selectedBitrate!.bitrate!*1000 : nil
         
         task = ExposureSessionManager
             .shared
             .manager
             .download(assetId: assetId,
-                      environment: environment,
-                      sessionToken: sessionToken)
+                      using: sessionToken,
+                      in: environment)
             .use(drm: .fairplay)
             .use(bitrate: bps)
         
