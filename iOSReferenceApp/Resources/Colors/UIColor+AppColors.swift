@@ -10,14 +10,42 @@ import UIKit
 
 extension UIColor {
     static var redBeeRed: UIColor {
-        return UIColor(red: 0.922, green: 0.067, blue: 0.035, alpha: 1)
+        return UIColor("#dc281e")
+    }
+    
+    static var redBeeMaroon: UIColor {
+        return UIColor("#781428")
+    }
+    
+    static var redBeeSalmon: UIColor {
+        return UIColor("#f0645a")
     }
     
     static var redBeeBlack: UIColor {
-        return UIColor(red: 0.047, green: 0.055, blue: 0.059, alpha: 1)
+        return UIColor("#000000")
+    }
+    
+    static var redBeeCharcoal: UIColor {
+        return UIColor("#323232")
     }
     
     static var redBeeDarkGrey: UIColor {
-        return UIColor(red: 0.094, green: 0.094, blue: 0.102, alpha: 1)
+        return UIColor("#3c505a")
+    }
+    
+    static var redBeeMidGrey: UIColor {
+        return UIColor("#a0a0a0")
+    }
+    
+    static var redBeeLightGrey: UIColor {
+        return UIColor("#dcdcdc")
+    }
+    
+    static var redBeePaper: UIColor {
+        return UIColor("#f5f5f5")
+    }
+    
+    static var redBeeWhite: UIColor {
+        return UIColor("#ffffff")
     }
 }
