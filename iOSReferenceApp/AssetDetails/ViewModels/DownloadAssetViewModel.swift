@@ -87,8 +87,8 @@ extension DownloadAssetViewModel {
             .shared
             .manager
             .download(assetId: assetId,
-                      environment: environment,
-                      sessionToken: sessionToken)
+                      using: sessionToken,
+                      in: environment)
             .use(drm: .fairplay)
             .use(bitrate: bps)
         

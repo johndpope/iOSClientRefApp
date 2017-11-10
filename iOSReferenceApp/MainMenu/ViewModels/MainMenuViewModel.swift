@@ -72,7 +72,7 @@ class MainMenuViewModel {
         let documentaries = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Documentaries", presentation: .multiCarousel, content: .documentaries))
         let kids = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Kids", presentation: .multiCarousel, content: .kids))
         let clips = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Clips", presentation: .multiCarousel, content: .clips))
-        let omegaPoint = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "OmegaPoint", presentation: .singleCarousel, content: .clips))
+        let omegaPoint = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Single Carousel", presentation: .singleCarousel, content: .clips))
         
         return [home, tv, movies, documentaries, kids, clips, omegaPoint]
     }
