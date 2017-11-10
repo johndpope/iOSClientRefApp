@@ -96,15 +96,26 @@ class MainMenuViewModel {
     }
     
     private func versionData() -> String {
-        return "Player: \(framework(identifier: "com.emp.Player"))"
+        return "Version: \(versionId())"
+//        return "Player: \(framework(identifier: "com.emp.Player"))"
         //        "Exposure: \(framework(identifier: "com.emp.Exposure"))"
         //        "Analytics: \(framework(identifier: "com.emp.Analytics"))"
         //        "Download: \(framework(identifier: "com.emp.Download"))"
         //        "Utilities: \(framework(identifier: "com.emp.Utilities"))"
     }
     
-    private func framework(identifier: String) -> String {
-        guard let bundleInfo = Bundle(identifier: identifier)?.infoDictionary else { return "?" }
+    private func versionId(identifier: String? = nil) -> String {
+        if let identifier = identifier, let bundle = Bundle(identifier: identifier) {
+            return framework(bundle: bundle)
+        }
+        else {
+            return framework(bundle: Bundle.main)
+        }
+        
+    }
+    
+    private func framework(bundle: Bundle) -> String {
+        guard let bundleInfo = bundle.infoDictionary else { return "?" }
         
         let version = (bundleInfo["CFBundleShortVersionString"] as? String) ?? ""
         guard let build = bundleInfo["CFBundleVersion"] as? String else {

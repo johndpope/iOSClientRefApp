@@ -45,6 +45,10 @@ class EnvironmentSelectionViewModel {
         
         updatedPresets(environmentSelections[index], "Customer", true)
         updatedDefaultValues(environments[index].url, nil, nil)
+        
+        if let preselectedCustomer = customerSelections(index: 0).first {
+            select(customer: preselectedCustomer)
+        }
     }
     
     func select(customer: String) {

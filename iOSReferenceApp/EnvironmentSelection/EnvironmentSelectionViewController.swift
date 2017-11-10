@@ -195,6 +195,7 @@ extension EnvironmentSelectionViewController {
             guard let weakSelf = self else { return }
             if let title = selections[0] {
                 weakSelf.viewModel.select(environment: title)
+                
             }
         }
     }
