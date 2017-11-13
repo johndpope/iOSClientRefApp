@@ -28,5 +28,6 @@ class MainMenuStaticDataCell: UITableViewCell {
         self.viewModel = viewModel
         
         title.text = viewModel.text
+        title.textColor = viewModel.textColor
     }
 }

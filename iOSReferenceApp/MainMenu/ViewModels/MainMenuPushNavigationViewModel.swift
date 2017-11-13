@@ -19,8 +19,10 @@ class MainMenuPushNavigationViewModel: MainMenuItemType, MainMenuActionType {
     let image: UIImage?
     
     var textColor: UIColor {
-        return UIColor.lightGray
+        return brand.text.secondary
     }
+    
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
     init(title: String, action: MainMenuViewController.Action, image: UIImage? = nil) {
         self.title = title
@@ -28,3 +30,4 @@ class MainMenuPushNavigationViewModel: MainMenuItemType, MainMenuActionType {
         self.actionIdentifier = action
     }
 }
+

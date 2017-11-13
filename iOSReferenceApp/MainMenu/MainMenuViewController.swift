@@ -78,12 +78,20 @@ class MainMenuViewController: UIViewController {
         tableView.register(UINib(nibName: "MainMenuContentCell", bundle: nil), forCellReuseIdentifier: MainMenuContentViewModel.reuseIdentifier)
         
         if let conf = dynamicCustomerConfig {
+            // Fake Dynamic Color Scheme
+            apply(brand: Branding.ColorScheme.test)
+            
             process(dynamicCustomerConfig: conf)
         }
         else {
             ApplicationConfig(environment: viewModel.environment)
                 .fetchFile(fileName: "main.json") { [weak self] file in
                     if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
+                        
+                        // Fake Dynamic Color Scheme
+                        self?.apply(brand: Branding.ColorScheme.test)
+                        
+                        
                         self?.dynamicCustomerConfig = dynamicConfig
                         self?.process(dynamicCustomerConfig: dynamicConfig)
                     }
@@ -213,5 +221,12 @@ extension MainMenuViewController: UITableViewDataSource {
         else if let vm = vm as? MainMenuStaticDataViewModel, let cell = cell as? MainMenuStaticDataCell {
             cell.bind(viewModel: vm)
         }
+    }
+}
+
+extension MainMenuViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        viewModel.brand = brand
+        view.backgroundColor = brand.backdrop.primary
     }
 }

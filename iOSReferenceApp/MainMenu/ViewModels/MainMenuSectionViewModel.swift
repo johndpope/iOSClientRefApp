@@ -11,11 +11,18 @@ import UIKit
 class MainMenuSectionViewModel {
     var rows: [MainMenuItemType]
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default {
+        didSet { rows.forEach { $0.brand = brand } }
+    }
+    
     init(rows: [MainMenuItemType]) {
         self.rows = rows
     }
     
-    let backgroundColor: UIColor = UIColor(red: 0.047, green: 0.055, blue: 0.059, alpha: 1)
+    var backgroundColor: UIColor {
+        return brand.backdrop.secondary
+    }
+    
     let height: CGFloat = 3
     
     subscript(index: Int) -> MainMenuItemType {

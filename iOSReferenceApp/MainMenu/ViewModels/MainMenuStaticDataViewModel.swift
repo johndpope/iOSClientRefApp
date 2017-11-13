@@ -13,9 +13,11 @@ class MainMenuStaticDataViewModel: MainMenuItemType {
         return "staticDataCell"
     }
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     let text: String
     var textColor: UIColor {
-        return UIColor.lightGray
+        return brand.text.secondary
     }
     
     init(text: String) {
