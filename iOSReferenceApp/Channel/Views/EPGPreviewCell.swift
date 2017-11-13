@@ -119,7 +119,8 @@ extension EPGPreviewCell: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
         titleLabel.textColor = brand.text.primary
         durationLabel.textColor = brand.text.secondary
-        liveProgressView.apply(brand: brand)
+        liveProgressView.progressTintColor = brand.accent
+        
         contentView.backgroundColor = brand.backdrop.primary
     }
 }

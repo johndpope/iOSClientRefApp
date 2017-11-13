@@ -42,7 +42,7 @@ class PagedChannelViewController: TabmanViewController {
             appearance.style.background = .solid(color: brand.backdrop.primary)
             appearance.style.showEdgeFade = true
             
-            appearance.text.font = UIFont.systemFont(ofSize: 16)
+            appearance.text.font = UIFont(name: "OpenSans-Light", size: 16)
             
         })
         
