@@ -26,6 +26,13 @@ struct Branding {
         let accent: UIColor
         let text: Text
         let backdrop: Backdrop
+        let fade: Gradient
+        
+        struct Gradient {
+            let start: CGPoint
+            let end: CGPoint
+            let colors: [UIColor]
+        }
         
         struct Text {
             let primary: UIColor
@@ -36,6 +43,7 @@ struct Branding {
             let primary: UIColor
             let secondary: UIColor
         }
+        
         
         
         static var `default`: ColorScheme {
@@ -50,9 +58,14 @@ struct Branding {
                                                          secondary: UIColor.brown)
             let primary = UIColor.gray
             
+            let fadeGradient = Branding.ColorScheme.Gradient(start: CGPoint(x: 0.5, y: 0),
+                                                             end: CGPoint(x: 0.5, y: 1),
+                                                             colors: [UIColor("#222224"), UIColor.cyan])
+            
             return Branding.ColorScheme(accent: primary,
                                         text: text,
-                                        backdrop: backdrop)
+                                        backdrop: backdrop,
+                                        fade: fadeGradient)
         }
         
         static var test: ColorScheme {
@@ -62,9 +75,14 @@ struct Branding {
                                                          secondary: UIColor.orange)
             let primary = UIColor.green
             
+            let fadeGradient = Branding.ColorScheme.Gradient(start: CGPoint(x: 0.5, y: 0),
+                                                             end: CGPoint(x: 0.5, y: 1),
+                                                             colors: [UIColor("#222224"), UIColor.red])
+            
             return Branding.ColorScheme(accent: primary,
                                         text: text,
-                                        backdrop: backdrop)
+                                        backdrop: backdrop,
+                                        fade: fadeGradient)
         }
     }
     

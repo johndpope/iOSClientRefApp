@@ -118,6 +118,8 @@ extension CarouselListViewController: UICollectionViewDataSource {
 extension CarouselListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? CarouselView {
+            cell.brand = brand
+            cell.apply(brand: brand)
             cell.selectedAsset = { [weak self] asset in
                 self?.presetDetails(for: asset, from: .other)
             }
@@ -126,7 +128,9 @@ extension CarouselListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
         if let view = view as? StretchyCarouselHeaderView, let bannerViewModel = viewModel.bannerViewModel, elementKind == StretchyCollectionHeaderKind {
+            view.brand = brand
             view.bind(viewModel: bannerViewModel)
+            view.apply(brand: brand)
             view.selectedAsset = { [weak self] asset in
                 self?.presetDetails(for: asset, from: .other)
             }

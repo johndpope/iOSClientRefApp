@@ -64,3 +64,10 @@ class BasicPromotionCell: UICollectionViewCell, EditorialCell {
         }
     }
 }
+
+extension BasicPromotionCell: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        title.textColor = brand.text.primary
+        contentView.backgroundColor = brand.backdrop.primary
+    }
+}
