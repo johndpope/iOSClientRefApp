@@ -26,6 +26,7 @@
 		76466FCC1FB05C17007ECD5C /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FCB1FB05C17007ECD5C /* PureLayout.framework */; };
 		76466FCD1FB05C17007ECD5C /* PureLayout.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FCB1FB05C17007ECD5C /* PureLayout.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		764EDC491F5EADFB00569D5B /* environments.json in Resources */ = {isa = PBXBuildFile; fileRef = 764EDC481F5EADFB00569D5B /* environments.json */; };
+		76619E761FBA3C09000676A9 /* Google Fonts - Open Sans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76619E751FBA3BF7000676A9 /* Google Fonts - Open Sans Light.ttf */; };
 		7661F8771FACB24F00643FDB /* SingleCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA44461FACA8E800E92AD1 /* SingleCarouselViewController.swift */; };
 		766502F41F99C8FD009A5BFE /* LocalizedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766502F31F99C8FD009A5BFE /* LocalizedEntity.swift */; };
 		766502F71F99CA34009A5BFE /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766502F61F99CA34009A5BFE /* Data+Extensions.swift */; };
@@ -53,8 +54,6 @@
 		7698622F1FA5197C00A57213 /* OfflineListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 769862191FA517D800A57213 /* OfflineListCell.xib */; };
 		76A417051EDEBF1B00677A46 /* AssetPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417031EDEBF1B00677A46 /* AssetPreviewCell.swift */; };
 		76A417061EDEBF1B00677A46 /* AssetPreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76A417041EDEBF1B00677A46 /* AssetPreviewCell.xib */; };
-		76A417101EDED09700677A46 /* AssetPreviewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A4170F1EDED09700677A46 /* AssetPreviewHeaderView.swift */; };
-		76A417121EDED17800677A46 /* AssetPreviewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76A417111EDED17800677A46 /* AssetPreviewHeaderView.xib */; };
 		76A4171A1EDFEB2000677A46 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A417191EDFEB2000677A46 /* Kingfisher.framework */; };
 		76A4171B1EDFEB2000677A46 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A417191EDFEB2000677A46 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417221EE1518800677A46 /* AssetViewModel.swift */; };
@@ -222,6 +221,7 @@
 		764EDC481F5EADFB00569D5B /* environments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = environments.json; sourceTree = SOURCE_ROOT; };
 		764EDC4C1F5EB6B100569D5B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		764EDC4E1F5EB6E400569D5B /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
+		76619E751FBA3BF7000676A9 /* Google Fonts - Open Sans Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Google Fonts - Open Sans Light.ttf"; sourceTree = "<group>"; };
 		766502F31F99C8FD009A5BFE /* LocalizedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedEntity.swift; sourceTree = "<group>"; };
 		766502F61F99CA34009A5BFE /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		766502F81F99CA4E009A5BFE /* SessionManager+ExposureDownloadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionManager+ExposureDownloadTask.swift"; sourceTree = "<group>"; };
@@ -248,8 +248,6 @@
 		769862291FA518D900A57213 /* AssetDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetDetailsPresenter.swift; sourceTree = "<group>"; };
 		76A417031EDEBF1B00677A46 /* AssetPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetPreviewCell.swift; sourceTree = "<group>"; };
 		76A417041EDEBF1B00677A46 /* AssetPreviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AssetPreviewCell.xib; sourceTree = "<group>"; };
-		76A4170F1EDED09700677A46 /* AssetPreviewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetPreviewHeaderView.swift; sourceTree = "<group>"; };
-		76A417111EDED17800677A46 /* AssetPreviewHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AssetPreviewHeaderView.xib; sourceTree = "<group>"; };
 		76A417191EDFEB2000677A46 /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A417221EE1518800677A46 /* AssetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetViewModel.swift; sourceTree = "<group>"; };
 		76A4AD461FA731C000D20743 /* BannerPromotionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerPromotionCell.swift; sourceTree = "<group>"; };
@@ -440,6 +438,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		76619E741FBA3BF7000676A9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				76619E751FBA3BF7000676A9 /* Google Fonts - Open Sans Light.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		766502F51F99CA2B009A5BFE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -549,8 +555,6 @@
 			children = (
 				76A417031EDEBF1B00677A46 /* AssetPreviewCell.swift */,
 				76A417041EDEBF1B00677A46 /* AssetPreviewCell.xib */,
-				76A4170F1EDED09700677A46 /* AssetPreviewHeaderView.swift */,
-				76A417111EDED17800677A46 /* AssetPreviewHeaderView.xib */,
 				76AE64EA1F90217B0036933E /* GradientView.swift */,
 			);
 			path = Layouts;
@@ -925,6 +929,7 @@
 		F7061C611EC5BFAF0041E271 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				76619E741FBA3BF7000676A9 /* Fonts */,
 				F7061C621EC5BFAF0041E271 /* Colors */,
 				76A416FE1EDEBE2200677A46 /* Layouts */,
 				F7061C671EC5BFAF0041E271 /* Strings */,
@@ -1125,7 +1130,6 @@
 				76EC8D6D1FA514F200F6FDB6 /* CarouselView.xib in Resources */,
 				76A4AD491FA731C000D20743 /* BannerPromotionCell.xib in Resources */,
 				76EC8D421FA5121600F6FDB6 /* MainMenuPushNavigationCell.xib in Resources */,
-				76A417121EDED17800677A46 /* AssetPreviewHeaderView.xib in Resources */,
 				76EC8D401FA5121600F6FDB6 /* MainMenuContentCell.xib in Resources */,
 				76EC8D741FA514F900F6FDB6 /* PortraitTrioPromotionCell.xib in Resources */,
 				7698622F1FA5197C00A57213 /* OfflineListCell.xib in Resources */,
@@ -1140,6 +1144,7 @@
 				76A843B21EA7856C00BDAF2C /* Assets.xcassets in Resources */,
 				764EDC491F5EADFB00569D5B /* environments.json in Resources */,
 				76A843D91EA7859E00BDAF2C /* Cartfile in Resources */,
+				76619E761FBA3C09000676A9 /* Google Fonts - Open Sans Light.ttf in Resources */,
 				76A417061EDEBF1B00677A46 /* AssetPreviewCell.xib in Resources */,
 				76EC8D6B1FA514F200F6FDB6 /* CarouselHeaderView.xib in Resources */,
 				767DC0DD1FA712B10021A17A /* StretchyCarouselHeaderView.xib in Resources */,
@@ -1251,7 +1256,6 @@
 				F7129CB11EC9AB970033B3FF /* Extensions.swift in Sources */,
 				76B0AFBA1FA520040085C837 /* PortraitTrioItemPromotionEditorial.swift in Sources */,
 				769862261FA518C500A57213 /* AssetDetailsViewController.swift in Sources */,
-				76A417101EDED09700677A46 /* AssetPreviewHeaderView.swift in Sources */,
 				767DC0DC1FA712B10021A17A /* StretchyCarouselHeaderView.swift in Sources */,
 				7698622D1FA5197C00A57213 /* OfflineListViewModel.swift in Sources */,
 				76BA44481FACA91E00E92AD1 /* SingleCarouselViewModel.swift in Sources */,

@@ -17,7 +17,7 @@ class MainMenuStaticDataViewModel: MainMenuItemType {
     
     let text: String
     var textColor: UIColor {
-        return brand.text.secondary
+        return brand.text.tertiary
     }
     
     init(text: String) {

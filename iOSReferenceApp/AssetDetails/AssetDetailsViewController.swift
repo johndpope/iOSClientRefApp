@@ -67,7 +67,6 @@ class AssetDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         defer { refreshUserDataUI() }
         loadAssetMetaData()
         determineDownloadUIForAsset()

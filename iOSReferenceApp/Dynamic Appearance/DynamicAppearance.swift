@@ -22,11 +22,35 @@ protocol DynamicAppearance {
 
 
 struct Branding {
+//    let colorScheme: ColorScheme
+//    let typography: Typography
+//
+//    static var redBee: Branding {
+//        return Branding(colorScheme: Branding.ColorScheme.redBee,
+//                        typography: Branding.Typography.redBee)
+//    }
+//
+//    static var nuvu: Branding {
+//        return Branding(colorScheme: Branding.ColorScheme.nuvu,
+//                        typography: Branding.Typography.nuvu)
+//    }
+    
+    struct Typography {
+        let header: String
+        let copyText: String
+        
+        static var redBee: Typography {
+            return Typography(header: "OpenSans-Light",
+                              copyText: "OpenSans-Light")
+        }
+    }
+    
     struct ColorScheme {
         let accent: UIColor
         let text: Text
         let backdrop: Backdrop
         let fade: Gradient
+        let error: UIColor
         
         struct Gradient {
             let start: CGPoint
@@ -37,6 +61,7 @@ struct Branding {
         struct Text {
             let primary: UIColor
             let secondary: UIColor
+            let tertiary: UIColor
         }
         
         struct Backdrop {
@@ -54,7 +79,8 @@ struct Branding {
         /// Used to indicate missing or malconfigured ui elements. Apply to `default`
         static var testScheme: ColorScheme {
             let text = Branding.ColorScheme.Text(primary: UIColor.blue,
-                                                 secondary: UIColor.magenta)
+                                                 secondary: UIColor.magenta,
+                                                 tertiary: UIColor.brown)
             let backdrop = Branding.ColorScheme.Backdrop(primary: UIColor.red,
                                                          secondary: UIColor.orange)
             let primary = UIColor.green
@@ -66,12 +92,14 @@ struct Branding {
             return Branding.ColorScheme(accent: primary,
                                         text: text,
                                         backdrop: backdrop,
-                                        fade: fadeGradient)
+                                        fade: fadeGradient,
+                                        error: UIColor.cyan)
         }
         
         static var redBee: ColorScheme {
             let text = Branding.ColorScheme.Text(primary: UIColor.redBeePaper,
-                                                 secondary: UIColor.redBeeLightGrey)
+                                                 secondary: UIColor.redBeeLightGrey,
+                                                 tertiary: UIColor.redBeeMidGrey)
             let backdrop = Branding.ColorScheme.Backdrop(primary: UIColor.redBeeBlack,
                                                          secondary: UIColor.redBeeCharcoal)
             let primary = UIColor.redBeeRed
@@ -82,15 +110,31 @@ struct Branding {
             return Branding.ColorScheme(accent: primary,
                                         text: text,
                                         backdrop: backdrop,
-                                        fade: fadeGradient)
+                                        fade: fadeGradient,
+                                        error: UIColor.redBeeMaroon)
+        }
+        
+        static var nuvu: ColorScheme {
+            let nuvuYellow = UIColor(red: 254/255, green: 203/255, blue: 0, alpha: 1)
+            let text = Branding.ColorScheme.Text(primary: UIColor.redBeePaper,
+                                                 secondary: UIColor.redBeeLightGrey,
+                                                 tertiary: UIColor.redBeeMidGrey)
+            let backdrop = Branding.ColorScheme.Backdrop(primary: UIColor.redBeeBlack,
+                                                         secondary: UIColor.redBeeCharcoal)
+            let primary = nuvuYellow
+            let fadeGradient = Branding.ColorScheme.Gradient(start: CGPoint(x: 0.5, y: 0),
+                                                             end: CGPoint(x: 0.5, y: 1),
+                                                             colors: [UIColor("#222224"), UIColor.redBeeBlack])
+            
+            return Branding.ColorScheme(accent: primary,
+                                        text: text,
+                                        backdrop: backdrop,
+                                        fade: fadeGradient,
+                                        error: UIColor.redBeeMaroon)
         }
     }
     
     
-    struct Typography {
-        let header: String
-        let copyText: String
-    }
 //    let logo: String
 //
 //
@@ -167,6 +211,7 @@ extension UINavigationBar: DynamicAppearance {
         tintColor = brand.text.primary
         barTintColor = brand.backdrop.primary
         titleColor = brand.text.primary
+        titleFont = UIFont(name: "OpenSans-Light", size: 24)
     }
     
     var titleColor: UIColor? {

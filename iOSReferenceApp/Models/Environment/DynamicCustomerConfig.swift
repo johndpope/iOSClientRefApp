@@ -18,7 +18,7 @@ struct DynamicCustomerConfig {
     let lastViewed: Bool
     let carouselGroupId: String?
     
-    let colorScheme: Branding.ColorScheme = Branding.ColorScheme.redBee
+    let colorScheme: Branding.ColorScheme = Branding.ColorScheme.nuvu
 //{
 //    "serviceName": "Enigma TV",
 //    "serviceSlogan": "Enigmatic Video Streaming",
