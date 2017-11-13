@@ -32,10 +32,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G2H-tW-Zfx" customClass="LazyScrollView" customModule="iOSReferenceApp" customModuleProvider="target">
-                                <rect key="frame" x="20" y="30" width="374" height="706"/>
+                                <rect key="frame" x="20" y="50" width="374" height="686"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="sEg-Un-Cvl">
-                                        <rect key="frame" x="0.0" y="20" width="374" height="706"/>
+                                        <rect key="frame" x="0.0" y="20" width="374" height="686"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="IWZ-SO-xGo">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="494"/>
@@ -570,7 +570,6 @@
                     <connections>
                         <outlet property="blurView" destination="uTd-Yv-QFF" id="wuq-VZ-u8m"/>
                         <outlet property="contentContainer" destination="MKa-Ju-Utk" id="gZW-sw-0sh"/>
-                        <segue destination="qZW-VQ-sPH" kind="show" identifier="masterToMyDownloads" id="zdv-5g-EHu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fkD-x8-08S" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1161,15 +1160,15 @@
                         <viewControllerLayoutGuide type="bottom" id="wG7-dj-0WZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PpH-gF-frz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P3g-vc-8Zu">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cT0-ZH-YCI">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODm-0D-l9Z">
                                         <rect key="frame" x="10" y="10" width="32" height="32"/>
@@ -1179,7 +1178,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oPc-cF-Q5E">
-                                        <rect key="frame" x="10" y="191" width="74" height="32"/>
+                                        <rect key="frame" x="10" y="674" width="74" height="32"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wla-qx-aq5">
                                                 <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -1200,7 +1199,7 @@
                                         </subviews>
                                     </stackView>
                                     <slider opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="XQS-W0-3wY">
-                                        <rect key="frame" x="92" y="192" width="223" height="31"/>
+                                        <rect key="frame" x="92" y="675" width="223" height="31"/>
                                         <color key="minimumTrackTintColor" red="0.92156862750000001" green="0.066666666669999999" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="maximumTrackTintColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="thumbTintColor" red="0.92156862745098034" green="0.066666666666666666" blue="0.035294117647058823" alpha="1" colorSpace="calibratedRGB"/>
@@ -1212,7 +1211,7 @@
                                         </connections>
                                     </slider>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uz8-JQ-vl3">
-                                        <rect key="frame" x="323" y="191" width="81" height="32"/>
+                                        <rect key="frame" x="323" y="674" width="81" height="32"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJu-g1-pHZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -1545,17 +1544,17 @@
         <!--Offline Assets-->
         <scene sceneID="Ss7-02-YTd">
             <objects>
-                <viewController id="qZW-VQ-sPH" customClass="OfflineListViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OfflineListViewController" id="qZW-VQ-sPH" customClass="OfflineListViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="byQ-FL-PIU"/>
                         <viewControllerLayoutGuide type="bottom" id="xls-Of-P79"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="CkJ-Dq-pOL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qGP-vf-Rlx">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1584,10 +1583,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Offline Assets" id="hLW-j1-wTE">
-                        <barButtonItem key="leftBarButtonItem" image="nav-back" id="xCW-Wf-r8I">
+                        <barButtonItem key="leftBarButtonItem" image="download-list" id="xCW-Wf-r8I">
                             <color key="tintColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="unwindListAction:" destination="qZW-VQ-sPH" id="GfM-ii-z9x"/>
+                                <action selector="toggleSlidingMenuAction:" destination="qZW-VQ-sPH" id="XOf-bc-7jE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1981,7 +1980,6 @@
         <image name="download-pause" width="32" height="32"/>
         <image name="download-play" width="32" height="32"/>
         <image name="download-remove" width="32" height="32"/>
-        <image name="nav-back" width="22" height="22"/>
         <image name="overlay-back" width="32" height="32"/>
         <image name="overlay-ff-10" width="32" height="32"/>
         <image name="overlay-play" width="32" height="32"/>
@@ -1991,7 +1989,6 @@
         <image name="star-unfilled" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zdv-5g-EHu"/>
-        <segue reference="et0-xq-iYY"/>
+        <segue reference="JGB-CF-Tfa"/>
     </inferredMetricsTieBreakers>
 </document>

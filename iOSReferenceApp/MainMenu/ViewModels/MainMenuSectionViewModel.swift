@@ -20,7 +20,7 @@ class MainMenuSectionViewModel {
     }
     
     var backgroundColor: UIColor {
-        return brand.backdrop.secondary
+        return brand.backdrop.primary
     }
     
     let height: CGFloat = 3

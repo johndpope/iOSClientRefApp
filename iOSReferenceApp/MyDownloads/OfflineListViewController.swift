@@ -13,11 +13,14 @@ import Exposure
 class OfflineListViewController: UIViewController, AssetDetailsPresenter {
     var assetDetailsPresenter: UIViewController { return self }
     
+    var slidingMenuController: SlidingMenuController?
     var viewModel: OfflineListViewModel!
     
     fileprivate var content: [OfflineListCellViewModel] = []
     
     @IBOutlet weak var tableView: UITableView!
+    
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
     var presentedFrom: PresentedFrom = .other
     enum PresentedFrom {
@@ -37,22 +40,21 @@ class OfflineListViewController: UIViewController, AssetDetailsPresenter {
     override func viewWillAppear(_ animated: Bool) {
         content = viewModel.fetchContent()
         
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        
+        apply(brand: brand)
+//        navigationController?.setNavigationBarHidden(false, animated: true)
+//        navigationController?.navigationBar.apply(brand: viewModel.brand)
+//        navigationItem.leftBarButtonItems?.forEach { $0.apply(brand: viewModel.brand) }
         tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(true, animated: true)
+//        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
-    @IBAction func unwindListAction(_ sender: UIBarButtonItem) {
-        unwind()
-    }
     
-    func unwind() {
-        // This should be called ONLY when the list was presented modaly inside a navController, typically by a "back" button in the navBar (which wont be visible otherwise)
-        navigationController?.popViewController(animated: true)
+    
+    @IBAction func toggleSlidingMenuAction(_ sender: UIBarButtonItem) {
+        slidingMenuController?.toggleSlidingMenu()
     }
 }
 
@@ -113,7 +115,9 @@ extension OfflineListViewController: UITableViewDelegate {
         switch presentedFrom {
         case .assetDetails(onSelected: let callback):
             callback(vm.offlineAsset, vm.asset)
-            unwind()
+            
+            // This should be called ONLY when the list was presented modaly inside a navController, typically by a "back" button in the navBar (which wont be visible otherwise)
+            navigationController?.popViewController(animated: true)
         case .other:
             guard let asset = vm.asset else { return }
             presetDetails(for: asset, from: .offlineList)
@@ -159,5 +163,11 @@ extension OfflineListViewController: AuthorizedEnvironment {
     
     var sessionToken: SessionToken {
         return viewModel.sessionToken
+    }
+}
+
+extension OfflineListViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        view.backgroundColor = brand.backdrop.primary
     }
 }

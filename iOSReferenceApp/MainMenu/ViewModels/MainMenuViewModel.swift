@@ -64,11 +64,13 @@ class MainMenuViewModel {
     
     
     func updateDynamicContent(with dynamicConfig: DynamicCustomerConfig) {
+        brand = dynamicConfig.colorScheme
+        
         // TODO: This is where we parse all the different carousel categories
         let rows = fakeCarouselResponse(with: dynamicConfig.carouselGroupId)
+        
         sections[1].rows = rows
         
-        // HACK:
         rows.forEach{ $0.brand = brand }
     }
     

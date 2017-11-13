@@ -69,6 +69,10 @@ class MainMenuViewController: UIViewController {
     var dynamicCustomerConfig: DynamicCustomerConfig?
     var viewModel: MainMenuViewModel!
     
+    var brand: Branding.ColorScheme {
+        return dynamicCustomerConfig?.colorScheme ?? Branding.ColorScheme.default
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -78,20 +82,12 @@ class MainMenuViewController: UIViewController {
         tableView.register(UINib(nibName: "MainMenuContentCell", bundle: nil), forCellReuseIdentifier: MainMenuContentViewModel.reuseIdentifier)
         
         if let conf = dynamicCustomerConfig {
-            // Fake Dynamic Color Scheme
-            apply(brand: Branding.ColorScheme.test)
-            
             process(dynamicCustomerConfig: conf)
         }
         else {
             ApplicationConfig(environment: viewModel.environment)
                 .fetchFile(fileName: "main.json") { [weak self] file in
                     if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
-                        
-                        // Fake Dynamic Color Scheme
-                        self?.apply(brand: Branding.ColorScheme.test)
-                        
-                        
                         self?.dynamicCustomerConfig = dynamicConfig
                         self?.process(dynamicCustomerConfig: dynamicConfig)
                     }
@@ -103,10 +99,15 @@ class MainMenuViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        apply(brand: brand)
+    }
 }
 
 extension MainMenuViewController {
     fileprivate func process(dynamicCustomerConfig: DynamicCustomerConfig) {
+        apply(brand: dynamicCustomerConfig.colorScheme)
         viewModel.updateDynamicContent(with: dynamicCustomerConfig)
         tableView.reloadData()
         viewModel.select(contentAt: 0)
@@ -226,7 +227,7 @@ extension MainMenuViewController: UITableViewDataSource {
 
 extension MainMenuViewController: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
-        viewModel.brand = brand
+        tableView.backgroundColor = brand.backdrop.primary
         view.backgroundColor = brand.backdrop.primary
     }
 }

@@ -30,6 +30,7 @@ class MainMenuPushNavigationCell: UITableViewCell {
         
         title.text = viewModel.title
         title.textColor = viewModel.textColor
+        contentView.backgroundColor = viewModel.brand.backdrop.secondary
         
         icon.image = viewModel.image
         icon.isHidden = viewModel.image == nil

@@ -38,6 +38,8 @@ class OfflineListCell: UITableViewCell {
         sizeLabel.text = viewModel.downloadSize
         expirationLabel.text = viewModel.expiration
         
+        apply(brand: viewModel.brand)
+        
         if let metaData = ExposureSessionManager
             .shared
             .manager
@@ -65,5 +67,14 @@ class OfflineListCell: UITableViewCell {
     
     @IBAction func showDetailsAction(_ sender: UIButton) {
         
+    }
+}
+
+extension OfflineListCell: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        titleLabel.textColor = brand.text.primary
+        sizeLabel.textColor = brand.text.secondary
+        expirationLabel.textColor = brand.text.secondary
+        contentView.backgroundColor = brand.backdrop.primary
     }
 }

@@ -37,5 +37,6 @@ class MainMenuContentCell: UITableViewCell {
         activeIndicator.backgroundColor = viewModel.activeColor
         
         contentTitle.textColor = viewModel.textColor
+        contentView.backgroundColor = viewModel.brand.backdrop.secondary
     }
 }
