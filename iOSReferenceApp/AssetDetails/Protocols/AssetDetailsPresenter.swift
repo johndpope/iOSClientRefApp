@@ -15,11 +15,6 @@ protocol AssetDetailsPresenter: class, AuthorizedEnvironment {
 
 extension AssetDetailsPresenter {
     func presetDetails(for asset: Asset, from origin: AssetDetailsViewController.PresentedFrom, with brand: Branding.ColorScheme) {
-        guard let assetType = asset.type else {
-            assetDetailsPresenter.showMessage(title: "AssetType missing", message: "Please check Exposure response")
-            return
-        }
-        
         let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
         if let vc = uiStoryboard.instantiateViewController(withIdentifier: "AssetDetailsViewController") as? AssetDetailsViewController {
             vc.bind(viewModel: AssetDetailsViewModel(asset: asset,

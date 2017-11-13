@@ -103,7 +103,7 @@ extension LoginViewController {
         serviceLogo
             .kf
             .setImage(with: logoUrl,
-                      options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in
+                      options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { (image, error, _, _) in
                         
         }
     }

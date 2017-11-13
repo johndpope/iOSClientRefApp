@@ -85,6 +85,29 @@ extension AssetDetailsViewModel {
     }
 }
 
+// MARK: Rating
+extension AssetDetailsViewModel {
+    
+    var starRating: Double? {
+        guard let rating = asset.rating else { return nil }
+        return Double(rating * 5)
+    }
+    
+    func rate(value: Double) {
+        guard let assetId = asset.assetId else { return }
+        let rating = Float(value/5)
+        Rating(environment: environment, sessionToken: sessionToken)
+            .rate(assetId: assetId, to: rating)
+            .request()
+            .validate()
+            .response{ error in
+                if let error = error {
+                    print(error)
+                }
+        }
+    }
+}
+
 // MARK: Production Year
 extension AssetDetailsViewModel {
     var productionYear: String {

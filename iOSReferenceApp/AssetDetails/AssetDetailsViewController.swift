@@ -22,6 +22,7 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var gradientView: GradientView!
     @IBOutlet weak var titleLabel: UILabel!
     
+    @IBOutlet weak var ratingsView: CosmosView!
     @IBOutlet weak var ratingStarStackView: UIStackView!
     @IBOutlet weak var productionYearLabel: UILabel!
     @IBOutlet weak var parentalRatingLabel: UILabel!
@@ -70,16 +71,24 @@ class AssetDetailsViewController: UIViewController {
         defer { refreshUserDataUI() }
         loadAssetMetaData()
         determineDownloadUIForAsset()
+        
+        ratingsView.settings.updateOnTouch = true
+        ratingsView.settings.fillMode = .full
+        ratingsView.didFinishTouchingCosmos = { [weak self] rating in
+            self?.viewModel.rate(value: rating)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         apply(brand: brand)
+        ratingsView.isUserInteractionEnabled = false
         viewModel.refreshAssetMetaData{ [weak self] error in
             if let error = error {
                 self?.showMessage(title: "Refresh Asset Metadata", message: error.localizedDescription)
             }
             self?.refreshUserDataUI()
+            self?.ratingsView.isUserInteractionEnabled = true
         }
     }
     
@@ -216,6 +225,8 @@ extension AssetDetailsViewController {
     func refreshUserDataUI() {
         // Update last viewed progress
         update(lastViewedOffset: viewModel.lastViewedOffset)
+        
+        ratingsView.rating = viewModel.starRating ?? 0
     }
     
     func update(lastViewedOffset: AssetDetailsViewModel.LastViewedOffset?) {
@@ -520,5 +531,10 @@ extension AssetDetailsViewController: DynamicAppearance {
         
         productionYearLabel.textColor = brand.text.secondary
         parentalRatingLabel.textColor = brand.text.secondary
+        
+        ratingsView.settings.filledColor = brand.accent
+        ratingsView.settings.filledBorderColor = brand.accent
+        ratingsView.settings.emptyColor = brand.text.tertiary
+        ratingsView.settings.emptyBorderColor = brand.text.tertiary
     }
 }

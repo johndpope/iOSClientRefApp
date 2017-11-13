@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loginViewController.viewModel = LoginViewModel(environment: environment,
                                                        loginMethod: UserInfo.environmentLoginMethod ?? .login(username: "", password: "", mfa: false))
         
-        guard let sessionToken = UserInfo.sessionToken else {
+        guard UserInfo.sessionToken != nil else {
             retrieveDynamicCustomerConfig(for: environment) { conf in
                 if let conf = conf {
                     loginViewController.dynamicCustomerConfig = conf

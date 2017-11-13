@@ -116,15 +116,17 @@ struct Branding {
         
         static var nuvu: ColorScheme {
             let nuvuYellow = UIColor(red: 254/255, green: 203/255, blue: 0, alpha: 1)
+            let almostBlack = UIColor("#0C0E0F")
+            let notQuiteBlack = UIColor("#121314")
             let text = Branding.ColorScheme.Text(primary: UIColor.redBeePaper,
                                                  secondary: UIColor.redBeeLightGrey,
                                                  tertiary: UIColor.redBeeMidGrey)
-            let backdrop = Branding.ColorScheme.Backdrop(primary: UIColor.redBeeBlack,
-                                                         secondary: UIColor.redBeeCharcoal)
+            let backdrop = Branding.ColorScheme.Backdrop(primary: almostBlack,
+                                                         secondary: notQuiteBlack)
             let primary = nuvuYellow
             let fadeGradient = Branding.ColorScheme.Gradient(start: CGPoint(x: 0.5, y: 0),
                                                              end: CGPoint(x: 0.5, y: 1),
-                                                             colors: [UIColor("#222224"), UIColor.redBeeBlack])
+                                                             colors: [UIColor("#222224"), almostBlack])
             
             return Branding.ColorScheme(accent: primary,
                                         text: text,
@@ -168,14 +170,14 @@ struct Branding {
 extension UIProgressView: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
         progressTintColor = brand.accent
-        trackTintColor = brand.text.secondary
+        trackTintColor = brand.text.tertiary
     }
 }
 extension UISlider: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
         minimumTrackTintColor = brand.accent
         thumbTintColor = brand.accent
-        maximumTrackTintColor = brand.text.secondary
+        maximumTrackTintColor = brand.text.tertiary
     }
 }
 
