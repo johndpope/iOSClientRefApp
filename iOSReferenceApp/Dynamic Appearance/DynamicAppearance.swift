@@ -121,3 +121,9 @@ struct Branding {
 
 }
 
+extension UIProgressView: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        progressTintColor = brand.accent
+        trackTintColor = brand.text.secondary
+    }
+}

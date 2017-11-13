@@ -15,6 +15,7 @@ class ChannelViewController: UIViewController {
     @IBOutlet weak var topContentInset: NSLayoutConstraint!
     @IBOutlet weak var epgTableView: UITableView!
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
     fileprivate(set) var viewModel: ChannelViewModel!
     
@@ -32,6 +33,7 @@ class ChannelViewController: UIViewController {
                               forCellReuseIdentifier: "EPGPreviewCell")
         
         prepareEpg()
+        apply(brand: brand)
         topContentInset.constant = topContentInsetConstant
         view.layoutIfNeeded()
     }
@@ -128,8 +130,8 @@ extension ChannelViewController: UITableViewDataSource {
             let vm = viewModel.content[indexPath.row]
             
             preview.reset()
-            
             preview.bind(viewModel: vm)
+            preview.apply(brand: brand)
         }
     }
 }

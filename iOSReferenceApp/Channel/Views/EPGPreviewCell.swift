@@ -113,3 +113,13 @@ extension EPGPreviewCell {
         thumbnailView.alpha = upcoming ? 0.5 : 1
     }
 }
+
+
+extension EPGPreviewCell: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        titleLabel.textColor = brand.text.primary
+        durationLabel.textColor = brand.text.secondary
+        liveProgressView.apply(brand: brand)
+        contentView.backgroundColor = brand.backdrop.primary
+    }
+}
