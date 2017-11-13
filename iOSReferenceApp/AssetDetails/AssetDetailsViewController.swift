@@ -46,13 +46,13 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var downloadSizeLabel: UILabel!
     
     @IBOutlet weak var downloadProgressStackView: UIStackView!
-    @IBOutlet weak var downloadPauseResumeLabel: UILabel!
     @IBOutlet weak var downloadPauseResumeButton: UIButton!
     @IBOutlet weak var downloadProgress: UIProgressView!
     @IBOutlet weak var downloadedSizeLabel: UILabel!
     
     @IBOutlet weak var offlineStackView: UIStackView!
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
     fileprivate(set) var viewModel: AssetDetailsViewModel!
     fileprivate(set) var downloadViewModel: DownloadAssetViewModel!
     
@@ -75,6 +75,7 @@ class AssetDetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        apply(brand: brand)
         viewModel.refreshAssetMetaData{ [weak self] error in
             if let error = error {
                 self?.showMessage(title: "Refresh Asset Metadata", message: error.localizedDescription)
@@ -144,6 +145,7 @@ extension AssetDetailsViewController {
                 destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
                                                         environment: viewModel.environment,
                                                         playRequest: .vod(assetId: assetId))
+                destination.brand = brand
                 destination.onDismissed = { [weak self] in
                     self?.refreshUserDataUI()
                 }
@@ -154,6 +156,7 @@ extension AssetDetailsViewController {
                 destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
                                                         environment: viewModel.environment,
                                                         playRequest: .offline(assetId: assetId))
+                destination.brand = brand
                 destination.onDismissed = { [weak self] in
                     self?.refreshUserDataUI()
                 }
@@ -239,7 +242,7 @@ extension AssetDetailsViewController {
                 let names = group.names.joined(separator: ", ")
                 
                 label.font = UIFont(name: "Helvetica Neue", size: 14)
-                label.textColor = Color.lightGray
+                label.textColor = brand.text.secondary
                 label.lineBreakMode = NSLineBreakMode.byWordWrapping
                 label.numberOfLines = 0
                 label.text = function + names
@@ -414,11 +417,9 @@ extension AssetDetailsViewController {
     
     func togglePauseResumeDownload(paused: Bool) {
         if paused {
-            downloadPauseResumeLabel.text = "Resume"
             downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download"), for: [])
         }
         else {
-            downloadPauseResumeLabel.text = "Pause"
             downloadPauseResumeButton.setImage(#imageLiteral(resourceName: "download-pause"), for: [])
         }
     }
@@ -490,5 +491,35 @@ extension AssetDetailsViewController: AuthorizedEnvironment {
     
     var sessionToken: SessionToken {
         return viewModel.sessionToken
+    }
+}
+
+extension AssetDetailsViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        progressLabel.textColor = brand.accent
+        progressBar.apply(brand: brand)
+        durationLabel.textColor = brand.text.primary
+        
+        downloadQualitySelector.apply(brand: brand)
+        downloadQualityLabel.textColor = brand.text.primary
+        
+        downloadSizeLabel.textColor = brand.text.primary
+        downloadProgress.apply(brand: brand)
+        downloadedSizeLabel.textColor = brand.text.primary
+        
+        descriptionTextLabel.textColor = brand.text.primary
+        descriptionTextLabel.textColor = brand.text.primary
+        descriptionTextLabel.textColor = brand.text.primary
+        
+        participantsStackView.arrangedSubviews.forEach{
+            if let label = $0 as? UILabel {
+                label.textColor = brand.text.secondary
+            }
+        }
+        
+        footerTextLabel.textColor = brand.text.secondary
+        
+        productionYearLabel.textColor = brand.text.secondary
+        parentalRatingLabel.textColor = brand.text.secondary
     }
 }

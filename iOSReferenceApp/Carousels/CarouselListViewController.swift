@@ -121,7 +121,8 @@ extension CarouselListViewController: UICollectionViewDelegate {
             cell.brand = brand
             cell.apply(brand: brand)
             cell.selectedAsset = { [weak self] asset in
-                self?.presetDetails(for: asset, from: .other)
+                guard let `self` = self else { return }
+                `self`.presetDetails(for: asset, from: .other, with: `self`.brand)
             }
         }
     }
@@ -132,7 +133,8 @@ extension CarouselListViewController: UICollectionViewDelegate {
             view.bind(viewModel: bannerViewModel)
             view.apply(brand: brand)
             view.selectedAsset = { [weak self] asset in
-                self?.presetDetails(for: asset, from: .other)
+                guard let `self` = self else { return }
+                `self`.presetDetails(for: asset, from: .other, with: `self`.brand)
             }
         }
     }

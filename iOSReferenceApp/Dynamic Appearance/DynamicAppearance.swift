@@ -127,3 +127,30 @@ extension UIProgressView: DynamicAppearance {
         trackTintColor = brand.text.secondary
     }
 }
+extension UISlider: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        minimumTrackTintColor = brand.accent
+        thumbTintColor = brand.accent
+        maximumTrackTintColor = brand.text.secondary
+    }
+}
+
+extension SkyFloatingLabelTextField: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        titleColor = brand.accent
+        selectedTitleColor = brand.accent
+        clearButtonColor = brand.accent
+        
+        textColor = brand.text.primary
+        lineColor = brand.text.primary
+        selectedLineColor = brand.text.primary
+    }
+}
+
+extension UISearchBar: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        tintColor = brand.accent
+        searchBarStyle = UISearchBarStyle.minimal
+        barStyle = UIBarStyle.black
+    }
+}

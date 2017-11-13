@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
     
     var viewModel: LoginViewModel!
     var dynamicCustomerConfig: DynamicCustomerConfig?
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
     @IBOutlet weak var serviceLogo: UIImageView!
     
@@ -23,7 +24,9 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
     
+    @IBOutlet weak var loginHelperText: UILabel!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var environmentSelectionButton: UIButton!
     
     @IBAction func textFieldValueChanged(_ sender: SkyFloatingLabelTextField) {
         if sender == usernameTextField {
@@ -61,6 +64,7 @@ class LoginViewController: UIViewController {
                     }
             }
         }
+        
     }
     
 
@@ -92,6 +96,10 @@ extension LoginViewController {
     
     fileprivate func process(dynamicCustomerConfig: DynamicCustomerConfig) {
         guard let logoString = dynamicCustomerConfig.logoUrl, let logoUrl = URL(string: logoString) else { return }
+        
+        brand = dynamicCustomerConfig.colorScheme
+        apply(brand: dynamicCustomerConfig.colorScheme)
+        
         serviceLogo
             .kf
             .setImage(with: logoUrl,
@@ -273,5 +281,19 @@ extension LoginViewController: UITextFieldDelegate {
         }
         
         return true
+    }
+}
+
+
+extension LoginViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        loginButton.setTitleColor(brand.accent, for: [])
+        loginButton.setTitleColor(brand.text.secondary, for: .disabled)
+        
+        environmentSelectionButton.setTitleColor(brand.accent, for: [])
+        loginHelperText.textColor = brand.text.primary
+        
+        usernameTextField.apply(brand: brand)
+        passwordTextField.apply(brand: brand)
     }
 }

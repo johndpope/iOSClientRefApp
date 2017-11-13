@@ -73,6 +73,7 @@ extension OfflineListViewController {
                 destination.viewModel = PlayerViewModel(sessionToken: sessionToken,
                                                         environment: environment,
                                                         playRequest: .offline(assetId: assetId))
+                destination.brand = brand
             }
         }
     }
@@ -121,7 +122,7 @@ extension OfflineListViewController: UITableViewDelegate {
             navigationController?.popViewController(animated: true)
         case .other:
             guard let asset = vm.asset else { return }
-            presetDetails(for: asset, from: .offlineList)
+            presetDetails(for: asset, from: .offlineList, with: brand)
         }
     }
 }

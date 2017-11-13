@@ -43,6 +43,7 @@ class ChannelViewController: UIViewController {
         scrollToLive(animated: animated)
         // TODO:
         playerViewModel?.request(playback: .live(channelId: viewModel.channelId))
+        embeddedPlayerController?.brand = brand
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,6 +80,7 @@ extension ChannelViewController {
                 embeddedPlayerController = destination
                 destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
                                                         environment: viewModel.environment)
+                destination.brand = brand
                 playerViewModel = destination.viewModel
             }
         }

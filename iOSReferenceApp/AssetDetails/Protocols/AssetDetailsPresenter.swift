@@ -14,7 +14,7 @@ protocol AssetDetailsPresenter: class, AuthorizedEnvironment {
 }
 
 extension AssetDetailsPresenter {
-    func presetDetails(for asset: Asset, from origin: AssetDetailsViewController.PresentedFrom) {
+    func presetDetails(for asset: Asset, from origin: AssetDetailsViewController.PresentedFrom, with brand: Branding.ColorScheme) {
         guard let assetType = asset.type else {
             assetDetailsPresenter.showMessage(title: "AssetType missing", message: "Please check Exposure response")
             return
@@ -27,6 +27,7 @@ extension AssetDetailsPresenter {
                                                      sessionToken: sessionToken))
             vc.bind(downloadViewModel: DownloadAssetViewModel(environment: environment,
                                                               sessionToken: sessionToken))
+            vc.brand = brand
             vc.presentedFrom = origin
             assetDetailsPresenter.present(vc, animated: true) { }
         }
