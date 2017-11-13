@@ -38,6 +38,7 @@ class OfflineListViewController: UIViewController, AssetDetailsPresenter {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         content = viewModel.fetchContent()
         
         apply(brand: brand)
@@ -168,6 +169,7 @@ extension OfflineListViewController: AuthorizedEnvironment {
 
 extension OfflineListViewController: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
+        tableView.backgroundColor = brand.backdrop.primary
         view.backgroundColor = brand.backdrop.primary
     }
 }

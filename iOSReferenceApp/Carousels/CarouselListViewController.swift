@@ -40,6 +40,13 @@ class CarouselListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        apply(brand: brand)
+    }
+    
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     var dynamicContentCategory: DynamicContentCategory?
     fileprivate func prepare(contentFrom dynamicContentCategory: DynamicContentCategory) {
         updateNavigationTitle(with: dynamicContentCategory)
@@ -175,5 +182,12 @@ extension CarouselListViewController: AuthorizedEnvironment {
 extension CarouselListViewController: AssetDetailsPresenter {
     var assetDetailsPresenter: UIViewController {
         return self
+    }
+}
+
+extension CarouselListViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        collectionView.backgroundColor = brand.backdrop.primary
+        view.backgroundColor = brand.backdrop.primary
     }
 }

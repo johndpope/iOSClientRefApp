@@ -16,6 +16,8 @@ class PagedChannelViewController: TabmanViewController {
     fileprivate(set) var viewControllers: [ChannelViewController] = []
     fileprivate(set) var viewModel: ChannelListViewModel!
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     var slidingMenuController: SlidingMenuController?
     
     override func viewDidLoad() {
@@ -162,5 +164,11 @@ extension PagedChannelViewController: AuthorizedEnvironment {
     
     var sessionToken: SessionToken {
         return viewModel.sessionToken
+    }
+}
+
+extension PagedChannelViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        view.backgroundColor = brand.backdrop.primary
     }
 }

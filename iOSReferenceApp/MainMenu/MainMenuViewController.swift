@@ -101,6 +101,7 @@ class MainMenuViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         apply(brand: brand)
     }
 }
@@ -201,6 +202,7 @@ extension MainMenuViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel[section].rows.count
     }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return UIView() // TODO: Reusable view?
     }

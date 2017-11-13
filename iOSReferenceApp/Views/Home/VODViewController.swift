@@ -28,6 +28,7 @@ class VODViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         let searchImage = #imageLiteral(resourceName: "nav-search").withRenderingMode(.alwaysOriginal)
         let searchButton = UIBarButtonItem(image: searchImage, landscapeImagePhone: searchImage, style: .plain, target: self, action: #selector(VODViewController.searchAction))
         

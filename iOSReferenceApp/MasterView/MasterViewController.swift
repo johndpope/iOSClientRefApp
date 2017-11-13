@@ -89,6 +89,7 @@ class MasterViewController: UIViewController {
         carouselController.authorize(environment: environment,
                                      sessionToken: sessionToken)
         carouselController.slidingMenuController = self
+        carouselController.brand = brand
         carouselController.dynamicContentCategory = dynamicContent
     }
     
@@ -96,6 +97,7 @@ class MasterViewController: UIViewController {
         carouselController.authorize(environment: environment,
                                      sessionToken: sessionToken)
         carouselController.slidingMenuController = self
+        carouselController.brand = brand
         carouselController.dynamicContentCategory = dynamicContent
     }
     
@@ -103,11 +105,14 @@ class MasterViewController: UIViewController {
         carouselController.authorize(environment: environment,
                                      sessionToken: sessionToken)
         carouselController.slidingMenuController = self
+        carouselController.brand = brand
         carouselController.dynamicContentCategory = dynamicContent
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        apply(brand: brand)
+        
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationItem.hidesBackButton = true
         
@@ -259,7 +264,7 @@ extension MasterViewController {
         viewController.slidingMenuController = self
         viewController.authorize(environment: environment,
                                  sessionToken: sessionToken)
-
+        viewController.brand = brand
         contentNavContainer.setViewControllers([viewController], animated: true)
     }
 }

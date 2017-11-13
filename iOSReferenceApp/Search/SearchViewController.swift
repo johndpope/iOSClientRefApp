@@ -43,6 +43,7 @@ class SearchViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // Make sure the search bar is active once the view loads
         searchController.searchBar.becomeFirstResponder()
     }

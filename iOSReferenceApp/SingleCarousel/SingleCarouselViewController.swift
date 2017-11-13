@@ -17,6 +17,8 @@ class SingleCarouselViewController: UIViewController {
     var viewModel: SingleCarouselViewModel!
     var slidingMenuController: SlidingMenuController?
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,6 +40,11 @@ class SingleCarouselViewController: UIViewController {
             prepare(contentFrom: conf)
         }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        apply(brand: brand)
     }
     
     func bind(viewModel: SingleCarouselViewModel) {
@@ -202,5 +209,12 @@ extension SingleCarouselViewController {
         //                self.collectionView.reloadData()
         //            }
         //        }
+    }
+}
+
+extension SingleCarouselViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        collectionView.backgroundColor = brand.backdrop.primary
+        view.backgroundColor = brand.backdrop.primary
     }
 }

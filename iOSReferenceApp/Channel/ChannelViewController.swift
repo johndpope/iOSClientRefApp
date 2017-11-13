@@ -149,3 +149,10 @@ extension ChannelViewController: AuthorizedEnvironment {
     }
 }
 
+
+extension ChannelViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        epgTableView.backgroundColor = brand.backdrop.primary
+        view.backgroundColor = brand.backdrop.primary
+    }
+}
