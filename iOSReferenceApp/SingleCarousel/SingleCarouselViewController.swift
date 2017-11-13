@@ -123,6 +123,8 @@ extension SingleCarouselViewController: UICollectionViewDelegate {
             
             preview.reset()
             preview.thumbnail(title: vm.anyTitle(locale: "en"))
+            preview.apply(brand: brand)
+            
             // We need aspectFit for "general" thumbnail since we have little control over screen size.
             preview.thumbnailView.contentMode = .scaleAspectFit
             if let url = viewModel.imageUrl(for: indexPath) {

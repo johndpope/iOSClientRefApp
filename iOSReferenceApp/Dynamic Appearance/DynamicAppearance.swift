@@ -46,29 +46,13 @@ struct Branding {
         
         
         
+        /// The defalt color scheme
         static var `default`: ColorScheme {
-//            let text = Branding.ColorScheme.Text(primary: UIColor.redBeePaper,
-//                                                 secondary: UIColor.redBeeLightGrey)
-//            let backdrop = Branding.ColorScheme.Backdrop(primary: UIColor.redBeeBlack,
-//                                                         secondary: UIColor.redBeeCharcoal)
-//            let primary = UIColor.redBeeRed
-            let text = Branding.ColorScheme.Text(primary: UIColor.darkGray,
-                                                 secondary: UIColor.lightGray)
-            let backdrop = Branding.ColorScheme.Backdrop(primary: UIColor.cyan,
-                                                         secondary: UIColor.brown)
-            let primary = UIColor.gray
-            
-            let fadeGradient = Branding.ColorScheme.Gradient(start: CGPoint(x: 0.5, y: 0),
-                                                             end: CGPoint(x: 0.5, y: 1),
-                                                             colors: [UIColor("#222224"), UIColor.cyan])
-            
-            return Branding.ColorScheme(accent: primary,
-                                        text: text,
-                                        backdrop: backdrop,
-                                        fade: fadeGradient)
+            return redBee
         }
         
-        static var test: ColorScheme {
+        /// Used to indicate missing or malconfigured ui elements. Apply to `default`
+        static var testScheme: ColorScheme {
             let text = Branding.ColorScheme.Text(primary: UIColor.blue,
                                                  secondary: UIColor.magenta)
             let backdrop = Branding.ColorScheme.Backdrop(primary: UIColor.red,
@@ -78,6 +62,22 @@ struct Branding {
             let fadeGradient = Branding.ColorScheme.Gradient(start: CGPoint(x: 0.5, y: 0),
                                                              end: CGPoint(x: 0.5, y: 1),
                                                              colors: [UIColor("#222224"), UIColor.red])
+            
+            return Branding.ColorScheme(accent: primary,
+                                        text: text,
+                                        backdrop: backdrop,
+                                        fade: fadeGradient)
+        }
+        
+        static var redBee: ColorScheme {
+            let text = Branding.ColorScheme.Text(primary: UIColor.redBeePaper,
+                                                 secondary: UIColor.redBeeLightGrey)
+            let backdrop = Branding.ColorScheme.Backdrop(primary: UIColor.redBeeBlack,
+                                                         secondary: UIColor.redBeeCharcoal)
+            let primary = UIColor.redBeeRed
+            let fadeGradient = Branding.ColorScheme.Gradient(start: CGPoint(x: 0.5, y: 0),
+                                                             end: CGPoint(x: 0.5, y: 1),
+                                                             colors: [UIColor("#222224"), UIColor.redBeeBlack])
             
             return Branding.ColorScheme(accent: primary,
                                         text: text,
@@ -154,3 +154,60 @@ extension UISearchBar: DynamicAppearance {
         barStyle = UIBarStyle.black
     }
 }
+
+extension UINavigationController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        navigationBar.apply(brand: brand)
+    }
+}
+
+extension UINavigationBar: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        barStyle = .black
+        tintColor = brand.text.primary
+        barTintColor = brand.backdrop.primary
+        titleColor = brand.text.primary
+    }
+    
+    var titleColor: UIColor? {
+        get {
+            if let attributes = self.titleTextAttributes {
+                return attributes[NSForegroundColorAttributeName] as? UIColor
+            }
+            return nil
+        }
+        set {
+            if let value = newValue {
+                self.titleTextAttributes = [NSForegroundColorAttributeName: value]
+            }
+        }
+    }
+    
+    var titleFont: UIFont? {
+        get {
+            if let attributes = self.titleTextAttributes {
+                return attributes[NSFontAttributeName] as? UIFont
+            }
+            return nil
+        }
+        set {
+            if let value = newValue {
+                self.titleTextAttributes = [NSFontAttributeName: value]
+            }
+        }
+    }
+}
+
+extension UINavigationItem: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        leftBarButtonItems?.forEach { $0.apply(brand: brand) }
+        rightBarButtonItems?.forEach { $0.apply(brand: brand) }
+    }
+}
+
+extension UIBarButtonItem: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        tintColor = brand.text.primary
+    }
+}
+

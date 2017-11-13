@@ -9,9 +9,6 @@
 import UIKit
 
 class CarouselFooterView: UICollectionReusableView {
-
-    var fadeColor: UIColor = UIColor(red: 0.133, green: 0.133, blue: 0.141, alpha: 1)
-    var originalColor: UIColor = UIColor(red: 0.047, green: 0.055, blue: 0.059, alpha: 1)
     var roundness: CGFloat = 20
     
     @IBOutlet weak var fadeView: UIView!

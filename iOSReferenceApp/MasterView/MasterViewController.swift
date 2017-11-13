@@ -58,6 +58,9 @@ class MasterViewController: UIViewController {
     var dynamicCustomerConfig: DynamicCustomerConfig? {
         didSet {
             menuController?.dynamicCustomerConfig = dynamicCustomerConfig
+            if let brand = dynamicCustomerConfig?.colorScheme {
+                apply(brand: brand)
+            }
         }
     }
     
@@ -112,9 +115,6 @@ class MasterViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         apply(brand: brand)
-        
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationItem.hidesBackButton = true
         
         menuController.constrain(width: menuConstants.inset(for: view.bounds.size.width))
     }
@@ -269,29 +269,6 @@ extension MasterViewController {
     }
 }
 
-
-extension UINavigationController: DynamicAppearance {
-    func apply(brand: Branding.ColorScheme) {
-        navigationBar.barStyle = .black
-        navigationBar.tintColor = brand.accent
-        navigationBar.barTintColor = brand.backdrop.primary
-        navigationItem.leftBarButtonItem?.tintColor = brand.accent
-    }
-}
-
-//extension UINavigationBar: DynamicAppearance {
-//    func apply(brand: Branding.ColorScheme) {
-//        barStyle = .black
-//        tintColor = brand.accent
-//        barTintColor = brand.backdrop.primary
-//    }
-//}
-//extension UIBarButtonItem: DynamicAppearance {
-//    func apply(brand: Branding.ColorScheme) {
-//        tintColor = brand.accent
-//    }
-//}
-
 extension MasterViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let frame = fromVC.view.frame
@@ -309,7 +286,9 @@ extension MasterViewController: UINavigationControllerDelegate {
 
 extension MasterViewController: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
-        view.backgroundColor = brand.backdrop.primary
-        contentNavContainer.apply(brand: brand)
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            self?.view.backgroundColor = brand.backdrop.primary
+            self?.contentNavContainer.apply(brand: brand)
+        }
     }
 }

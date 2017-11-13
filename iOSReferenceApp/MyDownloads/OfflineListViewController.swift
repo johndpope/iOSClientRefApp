@@ -42,9 +42,10 @@ class OfflineListViewController: UIViewController, AssetDetailsPresenter {
         content = viewModel.fetchContent()
         
         apply(brand: brand)
+        navigationController?.apply(brand: brand)
 //        navigationController?.setNavigationBarHidden(false, animated: true)
 //        navigationController?.navigationBar.apply(brand: viewModel.brand)
-//        navigationItem.leftBarButtonItems?.forEach { $0.apply(brand: viewModel.brand) }
+        navigationItem.apply(brand: brand)//.leftBarButtonItems?.forEach { $0.apply(brand: viewModel.brand) }
         tableView.reloadData()
     }
     
@@ -140,6 +141,7 @@ extension OfflineListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? OfflineListCell {
             cell.bind(viewModel: content[indexPath.row])
+            cell.apply(brand: brand)
             cell.onPlaySelected = { [weak self] offlineMedia in
                 self?.performSegue(withIdentifier: Segue.segueOfflineListToPlayer.rawValue, sender: offlineMedia.assetId)
             }
