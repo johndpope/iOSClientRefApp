@@ -117,9 +117,7 @@ extension MainMenuViewController {
         if let logoString = dynamicCustomerConfig.logoUrl, let logoUrl = URL(string: logoString) {
             serviceLogo
                 .kf
-                .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in
-                    
-            }
+                .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size))
         }
         else if let preconf = UserInfo.environment?.businessUnit {
             title = preconf

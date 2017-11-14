@@ -49,13 +49,13 @@ extension ChannelViewModel {
             .filter(starting: starting, ending: ending)
             .request()
             .validate()
-            .response{ [weak self] (exposure: ExposureResponse<ChannelEpg>) in
-                if let success = exposure.value {
+            .response{ [weak self] in
+                if let success = $0.value {
                     self?.processResponse(epg: success)
                     callback(nil)
                 }
                 
-                if let error = exposure.error {
+                if let error = $0.error {
                     callback(error)
                     print(error)
                 }

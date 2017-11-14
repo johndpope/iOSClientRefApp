@@ -30,12 +30,12 @@ extension ChannelListViewModel {
             .sort(on: ["assetId","originalTitle"])
             .request()
             .validate()
-            .response{ [unowned self] (exposure: ExposureResponse<AssetList>) in
-                if let assets = exposure.value?.items {
+            .response{
+                if let assets = $0.value?.items {
                     callback(assets, nil)
                 }
                 
-                if let error = exposure.error {
+                if let error = $0.error {
                     callback(nil, error)
                 }
         }

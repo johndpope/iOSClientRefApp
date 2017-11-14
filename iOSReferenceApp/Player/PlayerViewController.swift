@@ -85,7 +85,7 @@ class PlayerViewController: UIViewController {
         }
         
         player.onDurationChanged{ player in
-            print("onDurationChanged",player.duration)
+            print("onDurationChanged",player.duration ?? 0)
         }
 
         player.onPlaybackScrubbed { player, toTime in

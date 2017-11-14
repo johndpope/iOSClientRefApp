@@ -104,8 +104,8 @@ extension DownloadAssetViewModel {
             .use(drm: .fairplay)
             .request()
             .validate()
-            .response{ [weak self] (exposure: ExposureResponse<DownloadValidation>) in
-                if let result = exposure.value {
+            .response{ [weak self] in
+                if let result = $0.value {
                     if case .success = result.status {
                         // Temporary hack to filter out 0/0 Bitrate entries
                         self?.availableBitrates = result.bitrates?.filter{ $0.bitrate != nil && $0.bitrate! > 0 && $0.size != nil && $0.size! > 0 }

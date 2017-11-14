@@ -174,8 +174,6 @@ extension AssetDetailsViewController {
             if let navController = segue.destination as? UINavigationController, let destination = navController.topViewController as? OfflineListViewController {
                 destination.authorize(environment: environment,
                                       sessionToken: sessionToken)
-                // Scroll to the current asset (if applicable)
-                let scrollTo = viewModel.asset
                 
                 // Hook the callback
                 destination.presentedFrom = .assetDetails(onSelected: { [weak self] offlineMedia, asset in
@@ -205,11 +203,7 @@ extension AssetDetailsViewController {
             .prefere(orientation: .square)
             .validImageUrls()
             .first {
-            mainImageView.kf.setImage(with: imageUrl) { [weak self] (image, error, _, _) in
-                if let error = error {
-                    print("Kingfisher error: ",error)
-                }
-            }
+            mainImageView.kf.setImage(with: imageUrl)
         }
         
         titleLabel.text = viewModel.anyTitle(locale: locale)

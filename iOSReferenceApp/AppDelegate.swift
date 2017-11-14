@@ -98,8 +98,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func retrieveDynamicCustomerConfig(for environment: Environment, callback: @escaping (DynamicCustomerConfig?) -> Void) {
         
         ApplicationConfig(environment: environment)
-            .fetchFile(fileName: "main.json") { [weak self] file in
-                if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
+            .fetchFile(fileName: "main.json") {
+                if let jsonData = $0?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
                     callback(dynamicConfig)
                 }
         }
@@ -141,29 +141,29 @@ extension AppDelegate {
         downloadTask.onCanceled{ task, url in
                 print("📱 Media Download canceled",task.configuration.identifier,url)
             }
-            .onPrepared { [weak self] task in
+            .onPrepared { _ in
                 print("📱 Media Download prepared")
             }
-            .onSuspended { [weak self] task in
+            .onSuspended { _ in
                 print("📱 Media Download Suspended")
             }
-            .onResumed { [weak self] task in
+            .onResumed { _ in
                 print("📱 Media Download Resumed")
             }
-            .onProgress { [weak self] task, progress in
+            .onProgress { _, progress in
                 print("📱 Percent",progress.current*100,"%")
             }
-            .onShouldDownloadMediaOption{ task, options in
+            .onShouldDownloadMediaOption{ _ in
                 print("📱 Select media option")
                 return nil
             }
-            .onDownloadingMediaOption{ task, option in
+            .onDownloadingMediaOption{ _ in
                 print("📱 Downloading media option")
             }
-            .onError { [weak self] task, url, error in
+            .onError {_, url, error in
                 print("📱 Download error: \(error)",url)
             }
-            .onCompleted { [weak self] task, url in
+            .onCompleted { _, url in
                 print("📱 Download completed: \(url)")
             }
             .resume()

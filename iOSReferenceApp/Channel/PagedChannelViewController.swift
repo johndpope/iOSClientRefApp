@@ -130,12 +130,10 @@ extension PagedChannelViewController: PageboyViewControllerDataSource {
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
         let inset = bar.requiredInsets.bar
         print("OFFSET",inset)
-        let vc = viewControllers[index]
-        if let channelVC = vc as? ChannelViewController {
-            channelVC.topContentInsetConstant = inset
-        }
+        let channelVC = viewControllers[index]
+        channelVC.topContentInsetConstant = inset
         
-        return vc
+        return channelVC
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {

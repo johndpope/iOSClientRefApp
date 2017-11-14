@@ -202,7 +202,7 @@ extension SingleCarouselViewController {
     }
     
     fileprivate func preloadNextBatch(after indexPath: IndexPath) {
-        let currentBatch = batch(for: indexPath)
+        //let currentBatch = batch(for: indexPath)
         //        viewModel.fetchMetadata(batch: currentBatch+1) { [unowned self] (batch, error) in
         //            if let error = error {
         //                print(error)

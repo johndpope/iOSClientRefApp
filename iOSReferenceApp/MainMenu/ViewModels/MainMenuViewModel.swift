@@ -160,8 +160,8 @@ extension MainMenuViewModel {
             .logout(sessionToken: sessionToken)
             .request()
             .validate()
-            .response{ (exposureResponse: ExposureResponse<AnyJSONType>) in
-                if let error = exposureResponse.error {
+            .response{
+                if let error = $0.error {
                     print(error)
                 }
         }

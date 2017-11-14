@@ -43,18 +43,18 @@ extension AssetDetailsViewModel {
             .includeUserData(for: sessionToken)
             .request()
             .validate()
-            .response{ [weak self] (exposure: ExposureResponse<Asset>) in
+            .response{ [weak self] in
                 guard let weakSelf = self else {
                     return
                 }
                 
-                if let success = exposure.value {
+                if let success = $0.value {
                     weakSelf.asset = success
                     callback(nil)
                     return
                 }
                 
-                if let error = exposure.error {
+                if let error = $0.error {
                     callback(error)
                     return
                 }
@@ -100,7 +100,7 @@ extension AssetDetailsViewModel {
             .rate(assetId: assetId, to: rating)
             .request()
             .validate()
-            .response{ error in
+            .emptyResponse{ error in
                 if let error = error {
                     print(error)
                 }

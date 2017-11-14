@@ -37,9 +37,8 @@ extension LoginViewModel {
         Authenticate(environment: environment)
             .anonymous()
             .request()
-            .validate()
-            .response{ (response: ExposureResponse<SessionToken>) in
-                callback(response)
+            .response{
+                callback($0)
         }
     }
     
@@ -61,8 +60,8 @@ extension LoginViewModel {
                    twoFactor: mfa)
             .request()
             .validate()
-            .response { (dataResponse: ExposureResponse<Credentials>) in
-                callback(dataResponse)
+            .response {
+                callback($0)
         }
     }
 }
