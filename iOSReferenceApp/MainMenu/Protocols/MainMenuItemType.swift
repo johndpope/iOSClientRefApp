@@ -8,7 +8,8 @@
 
 import Foundation
 
-protocol MainMenuItemType {
+protocol MainMenuItemType: class {
     static var reuseIdentifier: String { get }
+    var brand: Branding.ColorScheme { get set }
 }
 

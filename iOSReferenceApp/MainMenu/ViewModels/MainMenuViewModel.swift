@@ -15,6 +15,10 @@ class MainMenuViewModel {
     let environment: Environment
     let sessionToken: SessionToken
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default {
+        didSet { sections.forEach { $0.brand = brand } }
+    }
+    
     var sections: [MainMenuSectionViewModel] = []
     
     subscript(index: Int) -> MainMenuSectionViewModel {
@@ -60,9 +64,14 @@ class MainMenuViewModel {
     
     
     func updateDynamicContent(with dynamicConfig: DynamicCustomerConfig) {
+        brand = dynamicConfig.colorScheme
+        
         // TODO: This is where we parse all the different carousel categories
         let rows = fakeCarouselResponse(with: dynamicConfig.carouselGroupId)
+        
         sections[1].rows = rows
+        
+        rows.forEach{ $0.brand = brand }
     }
     
     private func fakeCarouselResponse(with carouselId: String?) -> [MainMenuContentViewModel] {
@@ -151,8 +160,8 @@ extension MainMenuViewModel {
             .logout(sessionToken: sessionToken)
             .request()
             .validate()
-            .response{ (exposureResponse: ExposureResponse<AnyJSONType>) in
-                if let error = exposureResponse.error {
+            .response{
+                if let error = $0.error {
                     print(error)
                 }
         }

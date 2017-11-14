@@ -40,6 +40,13 @@ class CarouselListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        apply(brand: brand)
+    }
+    
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     var dynamicContentCategory: DynamicContentCategory?
     fileprivate func prepare(contentFrom dynamicContentCategory: DynamicContentCategory) {
         updateNavigationTitle(with: dynamicContentCategory)
@@ -111,17 +118,23 @@ extension CarouselListViewController: UICollectionViewDataSource {
 extension CarouselListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? CarouselView {
+            cell.brand = brand
+            cell.apply(brand: brand)
             cell.selectedAsset = { [weak self] asset in
-                self?.presetDetails(for: asset, from: .other)
+                guard let `self` = self else { return }
+                `self`.presetDetails(for: asset, from: .other, with: `self`.brand)
             }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
         if let view = view as? StretchyCarouselHeaderView, let bannerViewModel = viewModel.bannerViewModel, elementKind == StretchyCollectionHeaderKind {
+            view.brand = brand
             view.bind(viewModel: bannerViewModel)
+            view.apply(brand: brand)
             view.selectedAsset = { [weak self] asset in
-                self?.presetDetails(for: asset, from: .other)
+                guard let `self` = self else { return }
+                `self`.presetDetails(for: asset, from: .other, with: `self`.brand)
             }
         }
     }
@@ -175,5 +188,12 @@ extension CarouselListViewController: AuthorizedEnvironment {
 extension CarouselListViewController: AssetDetailsPresenter {
     var assetDetailsPresenter: UIViewController {
         return self
+    }
+}
+
+extension CarouselListViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        collectionView.backgroundColor = brand.backdrop.primary
+        view.backgroundColor = brand.backdrop.primary
     }
 }

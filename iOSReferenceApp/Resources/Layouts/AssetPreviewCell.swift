@@ -50,11 +50,18 @@ class AssetPreviewCell: UICollectionViewCell {
         shadowView.layer.shadowPath = UIBezierPath(roundedRect: shadowView.bounds, cornerRadius: cornerRadius).cgPath
     }
     
-    func applyBox(border: UIColor, background: UIColor, alpha: CGFloat) {
-        boxView.layer.borderWidth = 1
-        boxView.layer.borderColor = border.cgColor
-        
-        boxView.backgroundColor = background
-        boxView.alpha = alpha
+//    func applyBox(border: UIColor, background: UIColor, alpha: CGFloat) {
+//        boxView.layer.borderWidth = 1
+//        boxView.layer.borderColor = border.cgColor
+//
+//        boxView.backgroundColor = background
+//        boxView.alpha = alpha
+//    }
+}
+
+extension AssetPreviewCell: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        contentView.backgroundColor = brand.backdrop.primary
+        titleLabel.textColor = brand.text.primary
     }
 }

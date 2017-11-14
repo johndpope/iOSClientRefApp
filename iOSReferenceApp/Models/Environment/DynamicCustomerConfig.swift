@@ -17,6 +17,8 @@ struct DynamicCustomerConfig {
     let mfaRequired: Bool
     let lastViewed: Bool
     let carouselGroupId: String?
+    
+    let colorScheme: Branding.ColorScheme = Branding.ColorScheme.redBee
 //{
 //    "serviceName": "Enigma TV",
 //    "serviceSlogan": "Enigmatic Video Streaming",

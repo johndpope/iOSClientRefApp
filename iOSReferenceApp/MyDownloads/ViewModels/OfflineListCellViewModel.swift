@@ -14,6 +14,8 @@ class OfflineListCellViewModel {
     let offlineAsset: OfflineMediaAsset
     var asset: Asset?
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     init(offlineAsset: OfflineMediaAsset, metaData: Asset?) {
         self.offlineAsset = offlineAsset
         self.asset = metaData

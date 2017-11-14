@@ -27,8 +27,14 @@ class MainMenuContentViewModel: MainMenuItemType, MainMenuActionType {
         }
     }
     var textColor: UIColor {
-        return isActive ? UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1) : UIColor.lightGray
+        return isActive ? brand.text.primary : brand.text.secondary
     }
+    
+    var activeColor: UIColor {
+        return brand.accent
+    }
+    
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
     init(dynamicContent: DynamicContentCategory, active: Bool = false) {
         self.dynamicContent = dynamicContent

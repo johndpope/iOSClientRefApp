@@ -21,7 +21,8 @@ class ApplicationConfig {
     CustomerConfigRequest(environment: environment)
       .request()
       .validate()
-      .response { [weak self] (response: ExposureResponse<Exposure.CustomerConfig>) in
+      .response { [weak self] response in
+        let t = response.value
         self?.customerConfig = response.value
         completion()
     }
@@ -33,7 +34,7 @@ class ApplicationConfig {
                               environment: environment)
       .request()
       .validate()
-      .response { (response: ExposureResponse<Exposure.CustomerConfig.File>) in
+      .response { response in
         completion(response.value)
     }
   }

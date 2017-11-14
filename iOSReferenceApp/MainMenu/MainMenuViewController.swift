@@ -69,6 +69,10 @@ class MainMenuViewController: UIViewController {
     var dynamicCustomerConfig: DynamicCustomerConfig?
     var viewModel: MainMenuViewModel!
     
+    var brand: Branding.ColorScheme {
+        return dynamicCustomerConfig?.colorScheme ?? Branding.ColorScheme.default
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -95,10 +99,16 @@ class MainMenuViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        apply(brand: brand)
+    }
 }
 
 extension MainMenuViewController {
     fileprivate func process(dynamicCustomerConfig: DynamicCustomerConfig) {
+        apply(brand: dynamicCustomerConfig.colorScheme)
         viewModel.updateDynamicContent(with: dynamicCustomerConfig)
         tableView.reloadData()
         viewModel.select(contentAt: 0)
@@ -107,9 +117,7 @@ extension MainMenuViewController {
         if let logoString = dynamicCustomerConfig.logoUrl, let logoUrl = URL(string: logoString) {
             serviceLogo
                 .kf
-                .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size)) { [weak self] (image, error, _, _) in
-                    
-            }
+                .setImage(with: logoUrl, options: viewModel.logoImageOptions(size: serviceLogo.bounds.size))
         }
         else if let preconf = UserInfo.environment?.businessUnit {
             title = preconf
@@ -192,6 +200,7 @@ extension MainMenuViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel[section].rows.count
     }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return UIView() // TODO: Reusable view?
     }
@@ -213,5 +222,12 @@ extension MainMenuViewController: UITableViewDataSource {
         else if let vm = vm as? MainMenuStaticDataViewModel, let cell = cell as? MainMenuStaticDataCell {
             cell.bind(viewModel: vm)
         }
+    }
+}
+
+extension MainMenuViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        tableView.backgroundColor = brand.backdrop.primary
+        view.backgroundColor = brand.backdrop.primary
     }
 }

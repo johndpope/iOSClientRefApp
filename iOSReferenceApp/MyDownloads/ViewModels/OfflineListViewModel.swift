@@ -17,6 +17,8 @@ class OfflineListViewModel: AuthorizedEnvironment {
         self.sessionToken = sessionToken
     }
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
@@ -35,6 +37,10 @@ class OfflineListViewModel: AuthorizedEnvironment {
                     return $0.0.assetId < $1.0.assetId
                 }
             }
-            .map{ OfflineListCellViewModel(offlineAsset: $0.0, metaData: $0.1) }
+            .map{
+                let vm = OfflineListCellViewModel(offlineAsset: $0.0, metaData: $0.1)
+                vm.brand = brand
+                return vm
+        }
     }
 }

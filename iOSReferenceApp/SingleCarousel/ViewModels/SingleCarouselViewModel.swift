@@ -146,8 +146,8 @@ extension SingleCarouselViewModel {
         fetch
             .show(page: 1, spanning: itemsPerCarousel)
             .request()
-            .response{ [weak self] (exposure: ExposureResponse<AssetList>) in
-                if let success = exposure.value {
+            .response{ [weak self] in
+                if let success = $0.value {
                     guard let weakSelf = self else { return }
                     guard let assets = success.items else { return }
                     
@@ -155,7 +155,7 @@ extension SingleCarouselViewModel {
                     callback(nil)
                 }
                 
-                if let error = exposure.error {
+                if let error = $0.error {
                     callback(error)
                 }
         }

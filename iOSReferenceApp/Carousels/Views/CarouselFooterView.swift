@@ -9,14 +9,11 @@
 import UIKit
 
 class CarouselFooterView: UICollectionReusableView {
-
-    var fadeColor: UIColor = UIColor(red: 0.133, green: 0.133, blue: 0.141, alpha: 1)
-    var originalColor: UIColor = UIColor(red: 0.047, green: 0.055, blue: 0.059, alpha: 1)
     var roundness: CGFloat = 20
     
     @IBOutlet weak var fadeView: UIView!
     @IBOutlet weak var gradientView: UIView!
-    private var gradientLayer = CAGradientLayer()
+    fileprivate var gradientLayer = CAGradientLayer()
     
     
     
@@ -24,20 +21,23 @@ class CarouselFooterView: UICollectionReusableView {
         super.awakeFromNib()
         // Initialization code
     }
-    
-    func setupFade() {
-        let colors = [fadeColor.cgColor, originalColor.cgColor]
-        gradientLayer.colors = colors
+}
+
+extension CarouselFooterView: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        backgroundColor = brand.backdrop.primary
         
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
+        gradientLayer.colors = brand.fade.colors
+        
+        gradientLayer.startPoint = brand.fade.start
+        gradientLayer.endPoint = brand.fade.end
         gradientLayer.frame = gradientView.bounds
         
         gradientView.layer.addSublayer(gradientLayer)
         
         let overFadeLayer = CAShapeLayer()
         overFadeLayer.path = UIBezierPath(rect: fadeView.bounds).cgPath
-        overFadeLayer.fillColor = originalColor.cgColor
+        overFadeLayer.fillColor = (brand.fade.colors.last ?? UIColor.black).cgColor
         fadeView.layer.addSublayer(overFadeLayer)
 
         let shadowLayer = CALayer()

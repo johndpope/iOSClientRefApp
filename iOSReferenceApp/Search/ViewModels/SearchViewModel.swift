@@ -51,15 +51,15 @@ extension SearchViewModel {
             .show(page: batch, spanning: batchSize)
             .request()
             .validate()
-            .response{ (response: ExposureResponse<SearchResponseList>) in
-                if let success = response.value {
+            .response{
+                if let success = $0.value {
                     self.process(response: success.items, shouldReset: shouldResetContent)
                     self.inProgressBatches.remove(batch)
                     self.loadedBatches.insert(batch)
                     callback(batch, nil)
                 }
                 
-                if let error = response.error {
+                if let error = $0.error {
                     print(error)
                     callback(batch, error)
                     self.inProgressBatches.remove(batch)

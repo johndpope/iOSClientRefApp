@@ -15,6 +15,7 @@ class ChannelViewController: UIViewController {
     @IBOutlet weak var topContentInset: NSLayoutConstraint!
     @IBOutlet weak var epgTableView: UITableView!
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
     fileprivate(set) var viewModel: ChannelViewModel!
     
@@ -32,6 +33,7 @@ class ChannelViewController: UIViewController {
                               forCellReuseIdentifier: "EPGPreviewCell")
         
         prepareEpg()
+        apply(brand: brand)
         topContentInset.constant = topContentInsetConstant
         view.layoutIfNeeded()
     }
@@ -41,6 +43,7 @@ class ChannelViewController: UIViewController {
         scrollToLive(animated: animated)
         // TODO:
         playerViewModel?.request(playback: .live(channelId: viewModel.channelId))
+        embeddedPlayerController?.brand = brand
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -77,6 +80,7 @@ extension ChannelViewController {
                 embeddedPlayerController = destination
                 destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
                                                         environment: viewModel.environment)
+                destination.brand = brand
                 playerViewModel = destination.viewModel
             }
         }
@@ -128,8 +132,8 @@ extension ChannelViewController: UITableViewDataSource {
             let vm = viewModel.content[indexPath.row]
             
             preview.reset()
-            
             preview.bind(viewModel: vm)
+            preview.apply(brand: brand)
         }
     }
 }
@@ -149,3 +153,10 @@ extension ChannelViewController: AuthorizedEnvironment {
     }
 }
 
+
+extension ChannelViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        epgTableView.backgroundColor = brand.backdrop.primary
+        view.backgroundColor = brand.backdrop.primary
+    }
+}

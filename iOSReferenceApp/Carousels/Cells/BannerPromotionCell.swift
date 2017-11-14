@@ -69,3 +69,11 @@ class BannerPromotionCell: UICollectionViewCell, EditorialCell {
         }
     }
 }
+
+extension BannerPromotionCell: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        title.textColor = brand.text.primary
+        descriptionLabel.textColor = brand.text.secondary
+        contentView.backgroundColor = brand.backdrop.primary
+    }
+}

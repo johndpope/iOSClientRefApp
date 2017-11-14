@@ -43,18 +43,18 @@ extension AssetDetailsViewModel {
             .includeUserData(for: sessionToken)
             .request()
             .validate()
-            .response{ [weak self] (exposure: ExposureResponse<Asset>) in
+            .response{ [weak self] in
                 guard let weakSelf = self else {
                     return
                 }
                 
-                if let success = exposure.value {
+                if let success = $0.value {
                     weakSelf.asset = success
                     callback(nil)
                     return
                 }
                 
-                if let error = exposure.error {
+                if let error = $0.error {
                     callback(error)
                     return
                 }
@@ -81,6 +81,29 @@ extension AssetDetailsViewModel {
         }
         else {
             return "\(seconds / 3600) h : \((seconds % 3600)/60) m"
+        }
+    }
+}
+
+// MARK: Rating
+extension AssetDetailsViewModel {
+    
+    var starRating: Double? {
+        guard let rating = asset.rating else { return nil }
+        return Double(rating * 5)
+    }
+    
+    func rate(value: Double) {
+        guard let assetId = asset.assetId else { return }
+        let rating = Float(value/5)
+        Rating(environment: environment, sessionToken: sessionToken)
+            .rate(assetId: assetId, to: rating)
+            .request()
+            .validate()
+            .emptyResponse{ error in
+                if let error = error {
+                    print(error)
+                }
         }
     }
 }

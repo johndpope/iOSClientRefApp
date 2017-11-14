@@ -12,6 +12,7 @@ import Exposure
 
 class SearchViewController: UIViewController {
 
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchContainerView: UIView!
     var searchController: UISearchController!
@@ -28,9 +29,7 @@ class SearchViewController: UIViewController {
 //        searchController.delegate = self
         
         // Setting the tint color here is required as it somehow does not work in IB
-        searchController.searchBar.tintColor = UIColor.white
-        searchController.searchBar.searchBarStyle = UISearchBarStyle.minimal
-        searchController.searchBar.barStyle = UIBarStyle.black
+        
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search..."
         searchController.searchBar.showsCancelButton = true
@@ -43,8 +42,11 @@ class SearchViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // Make sure the search bar is active once the view loads
         searchController.searchBar.becomeFirstResponder()
+        apply(brand: brand)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,6 +90,8 @@ extension SearchViewController: UICollectionViewDelegate {
 
             preview.reset()
             preview.thumbnail(title: vm.anyTitle(locale: "en"))
+            preview.apply(brand: brand)
+            
             // We need aspectFit for "general" thumbnail since we have little control over screen size.
             preview.thumbnailView.contentMode = .scaleAspectFit
             if let url = viewModel.imageUrl(for: indexPath) {
@@ -124,7 +128,7 @@ extension SearchViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let vm = viewModel.content[indexPath.row]
-        presetDetails(for: vm.asset, from: .other)
+        presetDetails(for: vm.asset, from: .other, with: brand)
     }
 }
 
@@ -204,5 +208,13 @@ extension SearchViewController: UISearchResultsUpdating {
                 }
             }
         }
+    }
+}
+
+extension SearchViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        collectionView.backgroundColor = brand.backdrop.primary
+        view.backgroundColor = brand.backdrop.primary
+        searchController.searchBar.apply(brand: brand)
     }
 }

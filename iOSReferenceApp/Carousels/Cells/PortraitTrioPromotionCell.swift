@@ -93,3 +93,11 @@ class PortraitTrioPromotionCell: UICollectionViewCell, EditorialCell {
         }
     }
 }
+
+extension PortraitTrioPromotionCell: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        title.textColor = brand.text.primary
+        text.textColor = brand.text.secondary
+        contentView.backgroundColor = brand.backdrop.primary
+    }
+}

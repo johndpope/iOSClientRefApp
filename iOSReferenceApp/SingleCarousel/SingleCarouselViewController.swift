@@ -17,6 +17,8 @@ class SingleCarouselViewController: UIViewController {
     var viewModel: SingleCarouselViewModel!
     var slidingMenuController: SlidingMenuController?
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,6 +40,11 @@ class SingleCarouselViewController: UIViewController {
             prepare(contentFrom: conf)
         }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        apply(brand: brand)
     }
     
     func bind(viewModel: SingleCarouselViewModel) {
@@ -116,6 +123,8 @@ extension SingleCarouselViewController: UICollectionViewDelegate {
             
             preview.reset()
             preview.thumbnail(title: vm.anyTitle(locale: "en"))
+            preview.apply(brand: brand)
+            
             // We need aspectFit for "general" thumbnail since we have little control over screen size.
             preview.thumbnailView.contentMode = .scaleAspectFit
             if let url = viewModel.imageUrl(for: indexPath) {
@@ -148,7 +157,7 @@ extension SingleCarouselViewController: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let asset = viewModel.content[indexPath.row].asset
-        presetDetails(for: asset, from: .other)
+        presetDetails(for: asset, from: .other, with: brand)
     }
 }
 
@@ -193,7 +202,7 @@ extension SingleCarouselViewController {
     }
     
     fileprivate func preloadNextBatch(after indexPath: IndexPath) {
-        let currentBatch = batch(for: indexPath)
+        //let currentBatch = batch(for: indexPath)
         //        viewModel.fetchMetadata(batch: currentBatch+1) { [unowned self] (batch, error) in
         //            if let error = error {
         //                print(error)
@@ -202,5 +211,12 @@ extension SingleCarouselViewController {
         //                self.collectionView.reloadData()
         //            }
         //        }
+    }
+}
+
+extension SingleCarouselViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        collectionView.backgroundColor = brand.backdrop.primary
+        view.backgroundColor = brand.backdrop.primary
     }
 }

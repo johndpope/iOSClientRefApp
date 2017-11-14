@@ -11,6 +11,8 @@ import Exposure
 
 class StretchyCarouselHeaderView: UICollectionReusableView {
 
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     @IBOutlet weak var collectionView: UICollectionView!
     var viewModel: CarouselViewModel!
     var selectedAsset: (Asset) -> Void = { _ in }
@@ -35,6 +37,7 @@ extension StretchyCarouselHeaderView: UICollectionViewDelegate {
         if let cell = cell as? BannerPromotionCell {
             cell.configure(with: viewModel.editorial as? BannerPromotionEditorial,
                            for: indexPath.row, size: collectionView.bounds.size)
+            cell.apply(brand: brand)
             cell.selectedAsset = { [weak self] asset in
                 self?.selectedAsset(asset)
             }
@@ -57,5 +60,12 @@ extension StretchyCarouselHeaderView: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
+    }
+}
+
+extension StretchyCarouselHeaderView: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        collectionView.backgroundColor = brand.backdrop.primary
+        backgroundColor = brand.backdrop.primary
     }
 }

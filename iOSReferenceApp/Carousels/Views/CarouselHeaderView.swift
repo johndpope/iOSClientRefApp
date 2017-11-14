@@ -40,3 +40,11 @@ class CarouselHeaderView: UICollectionReusableView {
         leadingInset.constant = carousel.headerViewModel?.sideInset ?? 0
     }
 }
+
+extension CarouselHeaderView: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        backgroundColor = brand.backdrop.primary
+        title.textColor = brand.text.primary
+        editorialText.textColor = brand.text.secondary
+    }
+}

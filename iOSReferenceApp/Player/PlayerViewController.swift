@@ -17,6 +17,7 @@ import MediaPlayer
 
 class PlayerViewController: UIViewController {
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
     fileprivate(set) var player: Player = Player()
     var viewModel: PlayerViewModel!
     
@@ -84,7 +85,7 @@ class PlayerViewController: UIViewController {
         }
         
         player.onDurationChanged{ player in
-            print("onDurationChanged",player.duration)
+            print("onDurationChanged",player.duration ?? 0)
         }
 
         player.onPlaybackScrubbed { player, toTime in
@@ -111,6 +112,7 @@ class PlayerViewController: UIViewController {
         super.viewWillAppear(animated)
         
         player.configure(playerView: playerView)
+        apply(brand: brand)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -286,5 +288,14 @@ extension PlayerViewController {
         else {
             pausePlayButton.setImage(#imageLiteral(resourceName: "overlay-play"), for: UIControlState.normal)
         }
+    }
+}
+
+
+extension PlayerViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        view.backgroundColor = brand.backdrop.primary
+        timelineSlider.apply(brand: brand)
+        timeLabel.textColor = brand.text.primary
     }
 }

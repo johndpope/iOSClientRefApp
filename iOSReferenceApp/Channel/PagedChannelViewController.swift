@@ -16,6 +16,8 @@ class PagedChannelViewController: TabmanViewController {
     fileprivate(set) var viewControllers: [ChannelViewController] = []
     fileprivate(set) var viewModel: ChannelListViewModel!
     
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     var slidingMenuController: SlidingMenuController?
     
     override func viewDidLoad() {
@@ -28,19 +30,19 @@ class PagedChannelViewController: TabmanViewController {
         
         bar.style = .scrollingButtonBar
         bar.appearance = TabmanBar.Appearance({ (appearance) in
-            appearance.indicator.color = UIColor.redBeeRed
+            appearance.indicator.color = brand.accent
             appearance.indicator.lineWeight = .thin
             appearance.indicator.compresses = true
             
             appearance.layout.itemDistribution = .centered
             
-            appearance.state.selectedColor = UIColor.redBeeRed
-            appearance.state.color = UIColor.white
+            appearance.state.selectedColor = brand.accent
+            appearance.state.color = brand.text.primary
             
-            appearance.style.background = .solid(color: UIColor(red: 0.071, green: 0.075, blue: 0.078, alpha: 1)) //.blur(style: .dark)
+            appearance.style.background = .solid(color: brand.backdrop.primary)
             appearance.style.showEdgeFade = true
             
-            appearance.text.font = UIFont.systemFont(ofSize: 16)
+            appearance.text.font = UIFont(name: "OpenSans-Light", size: 16)
             
         })
         
@@ -79,7 +81,7 @@ class PagedChannelViewController: TabmanViewController {
             let channelViewController = storyboard.instantiateViewController(withIdentifier: "ChannelViewController") as! ChannelViewController
             channelViewController.authorize(environment: environment,
                                             sessionToken: sessionToken)
-            
+            channelViewController.brand = brand
             channelViewController.viewModel.asset = asset
             return channelViewController
         }
@@ -128,12 +130,10 @@ extension PagedChannelViewController: PageboyViewControllerDataSource {
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
         let inset = bar.requiredInsets.bar
         print("OFFSET",inset)
-        let vc = viewControllers[index]
-        if let channelVC = vc as? ChannelViewController {
-            channelVC.topContentInsetConstant = inset
-        }
+        let channelVC = viewControllers[index]
+        channelVC.topContentInsetConstant = inset
         
-        return vc
+        return channelVC
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
@@ -162,5 +162,11 @@ extension PagedChannelViewController: AuthorizedEnvironment {
     
     var sessionToken: SessionToken {
         return viewModel.sessionToken
+    }
+}
+
+extension PagedChannelViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        view.backgroundColor = brand.backdrop.primary
     }
 }

@@ -34,7 +34,9 @@ class MainMenuContentCell: UITableViewCell {
         }
         contentTitle.text = viewModel.title
         activeIndicator.isHidden = !viewModel.isActive
+        activeIndicator.backgroundColor = viewModel.activeColor
         
         contentTitle.textColor = viewModel.textColor
+        contentView.backgroundColor = viewModel.brand.backdrop.secondary
     }
 }

@@ -12,6 +12,8 @@ import Kingfisher
 
 class CarouselView: UICollectionViewCell {
 
+    var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
     @IBOutlet weak var collectionView: UICollectionView!
     var selectedAsset: (Asset) -> Void = { _ in }
     
@@ -72,6 +74,7 @@ extension CarouselView: UICollectionViewDelegate {
         if let cell = cell as? HeroPromotionCell {
             cell.configure(with: viewModel.editorial as? HeroPromotionEditorial,
                            for: indexPath.row, size: collectionView.bounds.size)
+            cell.apply(brand: brand)
             cell.selectedAsset = { [weak self] asset in
                 self?.selectedAsset(asset)
             }
@@ -79,6 +82,7 @@ extension CarouselView: UICollectionViewDelegate {
         else if let cell = cell as? PortraitTrioPromotionCell {
             cell.configure(with: viewModel.editorial as? PortraitTrioPromotionEditorial,
                            for: indexPath.row, size: collectionView.bounds.size)
+            cell.apply(brand: brand)
             cell.selectedAsset = { [weak self]  asset in
                 self?.selectedAsset(asset)
             }
@@ -86,6 +90,7 @@ extension CarouselView: UICollectionViewDelegate {
         else if let cell = cell as? BasicPromotionCell {
             cell.configure(with: viewModel.editorial as? BasicPromotionEditorial,
                            for: indexPath.row, size: collectionView.bounds.size)
+            cell.apply(brand: brand)
             cell.selectedAsset = { [weak self]  asset in
                 self?.selectedAsset(asset)
             }
@@ -95,9 +100,10 @@ extension CarouselView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
         if let view = view as? CarouselHeaderView, elementKind == UICollectionElementKindSectionHeader {
             view.configure(with: viewModel.editorial)
+            view.apply(brand: brand)
         }
         else if let view = view as? CarouselFooterView, elementKind == UICollectionElementKindSectionFooter {
-            view.setupFade()
+            view.apply(brand: brand)
         }
     }
     
@@ -131,7 +137,7 @@ extension CarouselView {
     }
     
     fileprivate func preloadNextBatch(after indexPath: IndexPath) {
-        let currentBatch = batch(for: indexPath)
+//        let currentBatch = batch(for: indexPath)
 //        viewModel.fetchMetadata(batch: currentBatch+1) { [unowned self] (batch, error) in
 //            if let error = error {
 //                print(error)
@@ -140,5 +146,12 @@ extension CarouselView {
 //                self.collectionView.reloadData()
 //            }
 //        }
+    }
+}
+
+extension CarouselView: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        collectionView.backgroundColor = brand.backdrop.primary
+        contentView.backgroundColor = brand.backdrop.primary
     }
 }

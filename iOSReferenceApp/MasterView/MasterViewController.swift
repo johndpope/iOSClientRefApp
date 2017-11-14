@@ -52,12 +52,20 @@ class MasterViewController: UIViewController {
         blurView.effect = nil
         
         menuController.dynamicCustomerConfig = dynamicCustomerConfig
+        
     }
     
     var dynamicCustomerConfig: DynamicCustomerConfig? {
         didSet {
             menuController?.dynamicCustomerConfig = dynamicCustomerConfig
+            if let brand = dynamicCustomerConfig?.colorScheme {
+                apply(brand: brand)
+            }
         }
+    }
+    
+    var brand: Branding.ColorScheme {
+        return dynamicCustomerConfig?.colorScheme ?? Branding.ColorScheme.default
     }
     
     func createNewCarousel(from dynamicContent: DynamicContentCategory) {
@@ -84,6 +92,7 @@ class MasterViewController: UIViewController {
         carouselController.authorize(environment: environment,
                                      sessionToken: sessionToken)
         carouselController.slidingMenuController = self
+        carouselController.brand = brand
         carouselController.dynamicContentCategory = dynamicContent
     }
     
@@ -91,6 +100,7 @@ class MasterViewController: UIViewController {
         carouselController.authorize(environment: environment,
                                      sessionToken: sessionToken)
         carouselController.slidingMenuController = self
+        carouselController.brand = brand
         carouselController.dynamicContentCategory = dynamicContent
     }
     
@@ -98,13 +108,13 @@ class MasterViewController: UIViewController {
         carouselController.authorize(environment: environment,
                                      sessionToken: sessionToken)
         carouselController.slidingMenuController = self
+        carouselController.brand = brand
         carouselController.dynamicContentCategory = dynamicContent
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationItem.hidesBackButton = true
+        apply(brand: brand)
         
         menuController.constrain(width: menuConstants.inset(for: view.bounds.size.width))
     }
@@ -164,7 +174,6 @@ class MasterViewController: UIViewController {
     enum Segue: String {
         case masterToMainMenu = "masterToMainMenu"
         case masterToContent = "masterToContent"
-        case masterToMyDownloads = "masterToMyDownloads"
     }
     
     var menuOpen: Bool = false
@@ -225,6 +234,9 @@ extension MasterViewController {
         if segue.identifier == Segue.masterToContent.rawValue, let navController = segue.destination as? UINavigationController, let destination = navController.viewControllers.first as? CarouselListViewController {
             contentNavContainer = navController
             contentNavContainer.delegate = self
+            
+            contentNavContainer.apply(brand: brand)
+            
             configure(carouselController: destination)
         }
         else if segue.identifier == Segue.masterToMainMenu.rawValue, let destination = segue.destination as? MainMenuViewController {
@@ -233,7 +245,9 @@ extension MasterViewController {
                                   sessionToken: sessionToken)
             destination.selectedOtherSegue = { [weak self] segue in
                 switch segue {
-                case .myDownloads: self?.performSegue(withIdentifier: Segue.masterToMyDownloads.rawValue, sender: nil)
+                case .myDownloads:
+                    self?.closeMenu()
+                    self?.configureMyDownloads()
                 }
             }
             destination.selectedContentSegue = { [weak self] dynamicContentCategory in
@@ -241,12 +255,17 @@ extension MasterViewController {
                 self?.createNewCarousel(from: dynamicContentCategory)
             }
         }
-        else if segue.identifier == Segue.masterToMyDownloads.rawValue {
-            if let destination = segue.destination as? OfflineListViewController {
-                destination.authorize(environment: environment,
-                                      sessionToken: sessionToken)
-            }
-        }
+    }
+    
+    func configureMyDownloads() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "OfflineListViewController") as! OfflineListViewController
+        
+        viewController.slidingMenuController = self
+        viewController.authorize(environment: environment,
+                                 sessionToken: sessionToken)
+        viewController.brand = brand
+        contentNavContainer.setViewControllers([viewController], animated: true)
     }
 }
 
@@ -261,6 +280,15 @@ extension MasterViewController: UINavigationControllerDelegate {
             return ContentCarouselTransition(duration: TimeInterval(UINavigationControllerHideShowBarDuration), isPresenting: false, originFrame: frame)
         case .none:
             return ContentCarouselTransition(duration: TimeInterval(UINavigationControllerHideShowBarDuration), isPresenting: false, originFrame: frame)
+        }
+    }
+}
+
+extension MasterViewController: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            self?.view.backgroundColor = brand.backdrop.primary
+            self?.contentNavContainer.apply(brand: brand)
         }
     }
 }

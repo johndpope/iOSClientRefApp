@@ -65,3 +65,11 @@ class HeroPromotionCell: UICollectionViewCell, EditorialCell {
         }
     }
 }
+
+extension HeroPromotionCell: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        title.textColor = brand.text.primary
+        editorialText.textColor = brand.text.secondary
+        contentView.backgroundColor = brand.backdrop.primary
+    }
+}
