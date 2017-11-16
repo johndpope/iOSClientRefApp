@@ -16,6 +16,7 @@
 
 #### Bug Fixes
 * Offline media list now reloads when the view appears.
+* Fixed some layout issues with keyboards and a crash on logout.
 
 #### Changes
 *`EMP-10605` Live and catchup through touch navigation.

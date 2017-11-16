@@ -59,9 +59,9 @@ extension UIViewController {
     
     func setViewMovedUp(movedUp: Bool, notification: Notification) {
         let offset = notification.keyboardAnimationFrame.endFrame.height
-        print(notification.keyboardAnimationFrame.endFrame, notification.keyboardAnimationFrame.beginFrame)
+//        print(movedUp ? "UP  ":"DOWN",notification.keyboardAnimationFrame.endFrame, notification.keyboardAnimationFrame.beginFrame, self.view.frame.origin.y)
         UIView.animate(withDuration: 0.3) {
-            self.view.frame.origin.y += (movedUp ? -offset : offset)
+            self.view.frame.origin.y = (movedUp ? -offset : 0)
         }
     }
 }

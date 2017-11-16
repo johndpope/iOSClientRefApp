@@ -114,6 +114,9 @@ class MasterViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationItem.hidesBackButton = true
+        
         apply(brand: brand)
         
         menuController.constrain(width: menuConstants.inset(for: view.bounds.size.width))
