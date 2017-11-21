@@ -76,6 +76,7 @@ class PagedChannelViewController: TabmanViewController {
     }
     
     private func prepareTabs(from assets: [Asset]) {
+        guard !assets.isEmpty else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         viewControllers = assets.map{ asset -> ChannelViewController in
             let channelViewController = storyboard.instantiateViewController(withIdentifier: "ChannelViewController") as! ChannelViewController
