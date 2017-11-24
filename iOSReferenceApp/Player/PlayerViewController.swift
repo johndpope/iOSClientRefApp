@@ -18,7 +18,7 @@ import MediaPlayer
 class PlayerViewController: UIViewController {
     
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
-    fileprivate(set) var player: Player = Player()
+    fileprivate(set) var player: Player<HLSNative<ExposureContext>>!
     var viewModel: PlayerViewModel!
     
     @IBOutlet weak var overlayView: UIView!
@@ -36,61 +36,26 @@ class PlayerViewController: UIViewController {
     var onDismissed: () -> Void = { _ in }
     
     override func viewDidLoad() {
-        player.onError{ [unowned self] player, error in
-            self.showMessage(title: "Player Error", message: error.localizedDescription)
-        }
-        
-        player.onPlaybackCreated{ player in
-            print("onPlaybackCreated")
-        }
-        
-        player.onPlaybackPrepared{ player in
-            print("onPlaybackPrepared")
-        }
-        
-        player.onPlaybackReady{ player in
-            print("onPlaybackReady")
-            player.play()
-        }
-        
-        player.onPlaybackStarted{ [unowned self] player in
-            print("onPlaybackStarted")
-            self.togglePlayPauseButton(paused: false)
-        }
-        
-        player.onPlaybackPaused{ [unowned self] player in
-            print("onPlaybackPaused")
-            self.togglePlayPauseButton(paused: true)
-        }
-        
-        player.onPlaybackResumed{ [unowned self] player in
-            print("onPlaybackResumed")
-            self.togglePlayPauseButton(paused: false)
-        }
-        
-        player.onPlaybackCompleted{ player in
-            print("onPlaybackCompleted")
-        }
-        
-        player.onBitrateChanged{ event in
-            print("onBitrateChanged",event)
-        }
-        
-        player.onBufferingStarted{ event in
-            print("onBufferingStarted",event)
-        }
-        
-        player.onBufferingStopped{ event in
-            print("onBufferingStopped",event)
-        }
-        
-        player.onDurationChanged{ player in
-            print("onDurationChanged",player.duration ?? 0)
-        }
-
-        player.onPlaybackScrubbed { player, toTime in
-            print("onPlaybackScrubbed", toTime)
-        }
+        player = Player(environment: viewModel.environment,
+                        sessionToken: viewModel.sessionToken,
+                        analytics: ExposureAnalytics.self)
+        player.context.analyticsGenerators.append({ _ in return AnalyticsLogger() })
+        player
+            .onError{ [unowned self] tech, source, error in
+                self.showMessage(title: "Player Error", message: error.localizedDescription + "\n Code: \(error.code)")
+            }
+            .onPlaybackReady{ tech, source in
+                tech.play()
+            }
+            .onPlaybackStarted{ [unowned self] tech, source in
+                self.togglePlayPauseButton(paused: false)
+            }
+            .onPlaybackPaused{ [unowned self] tech, source in
+                self.togglePlayPauseButton(paused: true)
+            }
+            .onPlaybackResumed{ [unowned self] tech, source in
+                self.togglePlayPauseButton(paused: false)
+            }
         
         if let playRequest = viewModel.playRequest {
             stream(playRequest: playRequest)
@@ -176,48 +141,26 @@ extension PlayerViewController {
 
     private func stream(vod assetId: String) {
         player
-            .analytics(using: viewModel.sessionToken,
-                       in: viewModel.environment)
+//            .analytics(using: viewModel.sessionToken,
+//                       in: viewModel.environment)
             .sessionShift(enabled: true)
-            .stream(vod: assetId) { [unowned self] entitlement, error in
-                if let error = error {
-                    self.showMessage(title: "Playback Error", message: error.localizedDescription)
-                }
-        }
+            .stream(vod: assetId)
     }
     
     private func stream(live channelId: String) {
         player
-            .analytics(using: viewModel.sessionToken,
-                       in: viewModel.environment)
-            .stream(live: channelId) { [unowned self] entitlement, error in
-                if let error = error {
-                    // Workaround until EMP-10243 is fixed
-                    if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 403 && reason.message == "NOT_ENABLED") {
-                        print("Workaround for EMP-10243 activated! - Testing vod endpoint")
-                        self.player.stream(vod: channelId) { [unowned self] entitlement, error in
-                            if let error = error {
-                                self.showMessage(title: "Playback Error", message: error.localizedDescription)
-                            }
-                        }
-                    }
-                    else {
-                        self.showMessage(title: "Playback Error", message: error.localizedDescription)
-                    }
-                }
-        }
+//            .analytics(using: viewModel.sessionToken,
+//                       in: viewModel.environment)
+            .stream(live: channelId)
     }
     
     private func stream(program programId: String, channel channelId: String) {
         player
-            .analytics(using: viewModel.sessionToken,
-                       in: viewModel.environment)
+//            .analytics(using: viewModel.sessionToken,
+//                       in: viewModel.environment)
             .sessionShift(enabled: true)
-            .stream(programId: programId, channelId: channelId) { [unowned self] entitlement, error in
-                if let error = error {
-                    self.showMessage(title: "Playback Error", message: error.localizedDescription)
-                }
-        }
+            .stream(programId: programId,
+                    channelId: channelId)
     }
     
     private func offline(assetId: String) {
