@@ -13,7 +13,7 @@ class PlayerViewModel {
     enum PlayRequest {
         case vod(assetId: String)
         case live(channelId: String)
-        case catchup(channelId: String, programId: String)
+        case program(programId: String, channelId: String)
         case offline(assetId: String)
     }
     
