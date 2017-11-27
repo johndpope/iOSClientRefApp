@@ -108,7 +108,7 @@ extension ChannelViewController:  UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         guard let programId = viewModel.content[indexPath.row].program.assetId else { return }
-        playerViewModel?.request(playback: .catchup(channelId: viewModel.channelId, programId: programId))
+        playerViewModel?.request(playback: .program(programId: programId, channelId: viewModel.channelId))
     }
 }
 

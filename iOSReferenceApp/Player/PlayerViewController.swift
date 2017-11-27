@@ -133,7 +133,7 @@ extension PlayerViewController {
         switch playRequest {
         case .vod(assetId: let assetId): stream(vod: assetId)
         case .live(channelId: let channelId): stream(live: channelId)
-        case .catchup(channelId: let channelId, programId: let programId): stream(program: programId, channel: channelId)
+        case .program(programId: let programId, channelId: let channelId): stream(program: programId, channel: channelId)
         case .offline(assetId: let assetId): offline(assetId: assetId)
         }
         
