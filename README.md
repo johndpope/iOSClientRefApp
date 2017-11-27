@@ -30,6 +30,7 @@
 * Framework dependencies
     - [`Analytics`](https://github.com/EricssonBroadcastServices/iOSClientAnalytics)
     - [`Exposure`](https://github.com/EricssonBroadcastServices/iOSClientExposure)
+    - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientPlayer)
     - [`Download`](https://github.com/EricssonBroadcastServices/iOSClientDownload)
     - [`Utilities`](https://github.com/EricssonBroadcastServices/iOSClientUtilities)
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientRefApp/blob/master/Cartfile)
