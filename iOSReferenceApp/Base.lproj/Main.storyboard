@@ -1064,15 +1064,15 @@
                         <viewControllerLayoutGuide type="bottom" id="wG7-dj-0WZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PpH-gF-frz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P3g-vc-8Zu">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cT0-ZH-YCI">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODm-0D-l9Z">
                                         <rect key="frame" x="10" y="10" width="32" height="32"/>
@@ -1082,7 +1082,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oPc-cF-Q5E">
-                                        <rect key="frame" x="10" y="674" width="74" height="32"/>
+                                        <rect key="frame" x="10" y="191" width="74" height="32"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wla-qx-aq5">
                                                 <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -1103,7 +1103,7 @@
                                         </subviews>
                                     </stackView>
                                     <slider opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="XQS-W0-3wY">
-                                        <rect key="frame" x="92.000000000000014" y="675" width="219.33333333333337" height="31"/>
+                                        <rect key="frame" x="92.000000000000014" y="192" width="219.33333333333337" height="31"/>
                                         <color key="minimumTrackTintColor" red="0.92156862750000001" green="0.066666666669999999" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="maximumTrackTintColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="thumbTintColor" red="0.92156862745098034" green="0.066666666666666666" blue="0.035294117647058823" alpha="1" colorSpace="calibratedRGB"/>
@@ -1115,7 +1115,7 @@
                                         </connections>
                                     </slider>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uz8-JQ-vl3">
-                                        <rect key="frame" x="319.33333333333331" y="674" width="84.666666666666686" height="32"/>
+                                        <rect key="frame" x="319.33333333333331" y="191" width="84.666666666666686" height="32"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJu-g1-pHZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -1390,30 +1390,58 @@
             </objects>
             <point key="canvasLocation" x="4652" y="2226"/>
         </scene>
-        <!--TV-->
-        <scene sceneID="SuH-nn-pVd">
+        <!--PagedEPG View Controller-->
+        <scene sceneID="AUw-XB-h9x">
             <objects>
-                <viewController storyboardIdentifier="ChannelListViewController" id="noa-Eo-iVm" customClass="PagedChannelViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PagedEPGViewController" id="o8k-e2-c8I" customClass="PagedEPGViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="sHS-PC-4ka"/>
-                        <viewControllerLayoutGuide type="bottom" id="9I3-DA-ME1"/>
+                        <viewControllerLayoutGuide type="top" id="F6y-Ub-LWh"/>
+                        <viewControllerLayoutGuide type="bottom" id="4SZ-vT-nBH"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="9Uh-Q3-ffM">
+                    <view key="view" contentMode="scaleToFill" id="7eX-5J-o11">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="483"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.094117647060000004" green="0.094117647060000004" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mI5-5c-BJF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6155" y="3041"/>
+        </scene>
+        <!--Epg View Controller-->
+        <scene sceneID="U3y-5L-qLe">
+            <objects>
+                <viewController storyboardIdentifier="EpgViewController" id="BSE-IA-a63" customClass="EpgViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MOq-4l-FHe"/>
+                        <viewControllerLayoutGuide type="bottom" id="kEf-UD-SeK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6JO-WC-PIe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zSP-y4-46i">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.094117647060000004" green="0.094117647060000004" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="zSP-y4-46i" firstAttribute="leading" secondItem="6JO-WC-PIe" secondAttribute="leading" id="8FM-2Y-nzz"/>
+                            <constraint firstItem="zSP-y4-46i" firstAttribute="top" secondItem="MOq-4l-FHe" secondAttribute="bottom" id="CWY-2B-a4v"/>
+                            <constraint firstAttribute="trailing" secondItem="zSP-y4-46i" secondAttribute="trailing" id="lDz-hx-QY2"/>
+                            <constraint firstItem="kEf-UD-SeK" firstAttribute="top" secondItem="zSP-y4-46i" secondAttribute="bottom" id="ny6-cB-d7Z"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="TV" id="o59-SI-uFQ">
-                        <barButtonItem key="leftBarButtonItem" image="download-list" id="qSL-YS-Fb1">
-                            <connections>
-                                <action selector="toggleSlidingMenuAction:" destination="noa-Eo-iVm" id="FOo-0z-Ed9"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <connections>
+                        <outlet property="epgTableView" destination="zSP-y4-46i" id="3PE-Xn-BNS"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gSO-Ay-pJ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UyD-BA-QO6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5371" y="2234"/>
+            <point key="canvasLocation" x="6880" y="3142"/>
         </scene>
         <!--Title-->
         <scene sceneID="dGW-aP-QXe">
@@ -1588,10 +1616,10 @@
             </objects>
             <point key="canvasLocation" x="745" y="1741"/>
         </scene>
-        <!--Channel View Controller-->
+        <!--View Controller-->
         <scene sceneID="Ht1-1P-qa9">
             <objects>
-                <viewController storyboardIdentifier="ChannelViewController" id="1zV-E9-gYg" customClass="ChannelViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TVViewController" id="1zV-E9-gYg" customClass="TVViewController" customModule="iOSReferenceApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7gk-wI-Mcd"/>
                         <viewControllerLayoutGuide type="bottom" id="dNw-ML-0Jb"/>
@@ -1600,45 +1628,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oOF-l1-5aX">
-                                <rect key="frame" x="0.0" y="243" width="414" height="493"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="343" id="Sqq-GT-34A"/>
-                                </constraints>
-                                <color key="sectionIndexColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="x04-Vz-VnH" customClass="EPGPreviewCell" customModule="iOSReferenceApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x04-Vz-VnH" id="AVj-kU-3zR">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
-                                </prototypes>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Sqq-GT-34A"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=compact-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="Sqq-GT-34A"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=compact-widthClass=regular">
-                                    <mask key="constraints">
-                                        <include reference="Sqq-GT-34A"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <outlet property="dataSource" destination="1zV-E9-gYg" id="0rv-Rc-0aG"/>
-                                    <outlet property="delegate" destination="1zV-E9-gYg" id="r9d-nA-97Q"/>
-                                </connections>
-                            </tableView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sg0-cJ-709">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                                 <constraints>
@@ -1658,22 +1647,27 @@
                                     <segue destination="rhs-OU-IKm" kind="embed" identifier="embeddedPlayerView" id="VZE-H4-r1d"/>
                                 </connections>
                             </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R65-Vl-xaU">
+                                <rect key="frame" x="0.0" y="253" width="414" height="483"/>
+                                <connections>
+                                    <segue destination="o8k-e2-c8I" kind="embed" identifier="embeddedEpgView" id="eeu-3f-BJg"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="oOF-l1-5aX" secondAttribute="trailing" id="0BA-zr-Azd"/>
-                            <constraint firstItem="oOF-l1-5aX" firstAttribute="leading" secondItem="tQW-TE-JpT" secondAttribute="leading" id="F9u-o4-p6f"/>
+                            <constraint firstItem="R65-Vl-xaU" firstAttribute="top" secondItem="Sg0-cJ-709" secondAttribute="bottom" constant="20" id="9LL-c8-sg1"/>
+                            <constraint firstItem="R65-Vl-xaU" firstAttribute="leading" secondItem="tQW-TE-JpT" secondAttribute="leading" id="IpT-el-YTi"/>
+                            <constraint firstAttribute="trailing" secondItem="R65-Vl-xaU" secondAttribute="trailing" id="Qz6-JL-HvI"/>
                             <constraint firstItem="Sg0-cJ-709" firstAttribute="leading" secondItem="tQW-TE-JpT" secondAttribute="leading" id="aPv-St-brk"/>
                             <constraint firstAttribute="trailing" secondItem="Sg0-cJ-709" secondAttribute="trailing" id="fEX-cM-agF"/>
                             <constraint firstItem="dNw-ML-0Jb" firstAttribute="top" secondItem="Sg0-cJ-709" secondAttribute="bottom" id="gpw-XI-qZG"/>
                             <constraint firstItem="Sg0-cJ-709" firstAttribute="top" secondItem="tQW-TE-JpT" secondAttribute="top" id="jqf-hM-SDi"/>
-                            <constraint firstItem="dNw-ML-0Jb" firstAttribute="top" secondItem="oOF-l1-5aX" secondAttribute="bottom" id="pR7-jc-vmK"/>
-                            <constraint firstItem="oOF-l1-5aX" firstAttribute="top" secondItem="Sg0-cJ-709" secondAttribute="bottom" constant="10" id="ppX-hm-XWR"/>
+                            <constraint firstItem="dNw-ML-0Jb" firstAttribute="top" secondItem="R65-Vl-xaU" secondAttribute="bottom" id="wUK-fQ-3xn"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="gpw-XI-qZG"/>
-                                <exclude reference="pR7-jc-vmK"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=compact">
@@ -1686,20 +1680,18 @@
                                 <include reference="gpw-XI-qZG"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="constraints">
-                                <include reference="pR7-jc-vmK"/>
-                            </mask>
-                        </variation>
                     </view>
-                    <connections>
-                        <outlet property="epgTableView" destination="oOF-l1-5aX" id="eEi-LC-DfB"/>
-                        <outlet property="topContentInset" destination="jqf-hM-SDi" id="hWX-7K-ulg"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VmH-qw-tRt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationItem title="TV" id="3cV-Lw-YDz">
+                    <barButtonItem key="leftBarButtonItem" image="download-list" id="0Lc-ag-fxs">
+                        <connections>
+                            <action selector="toggleSlidingMenuAction:" destination="1zV-E9-gYg" id="bbK-KN-zVy"/>
+                        </connections>
+                    </barButtonItem>
+                </navigationItem>
             </objects>
-            <point key="canvasLocation" x="5370" y="2910"/>
+            <point key="canvasLocation" x="5369.5652173913049" y="2909.5108695652175"/>
         </scene>
     </scenes>
     <resources>
@@ -1717,6 +1709,6 @@
         <image name="play" width="75" height="75"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="f4H-my-9wa"/>
+        <segue reference="VZE-H4-r1d"/>
     </inferredMetricsTieBreakers>
 </document>

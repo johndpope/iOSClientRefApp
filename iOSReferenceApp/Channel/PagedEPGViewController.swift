@@ -1,8 +1,8 @@
 //
-//  ChannelListViewController.swift
+//  PagedEPGViewController.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-11-06.
+//  Created by Fredrik Sjöberg on 2017-11-28.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
@@ -11,21 +11,16 @@ import Tabman
 import Pageboy
 import Exposure
 
-class PagedChannelViewController: TabmanViewController {
-    
-    fileprivate(set) var viewControllers: [ChannelViewController] = []
-    fileprivate(set) var viewModel: ChannelListViewModel!
-    
+class PagedEPGViewController: TabmanViewController {
+
+    var viewModel: ChannelListViewModel!
+    fileprivate(set) var viewControllers: [EpgViewController] = []
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
-    
-    var slidingMenuController: SlidingMenuController?
+    var onPlaybackRequested: (_ channel: String, _ program: String) -> Void = { _,_ in }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        
-        
+
         dataSource = self
         
         bar.style = .scrollingButtonBar
@@ -50,11 +45,7 @@ class PagedChannelViewController: TabmanViewController {
             prepare(contentFrom: conf)
         }
     }
-    
-    @IBAction func toggleSlidingMenuAction(_ sender: UIBarButtonItem) {
-        slidingMenuController?.toggleSlidingMenu()
-    }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -78,51 +69,26 @@ class PagedChannelViewController: TabmanViewController {
     private func prepareTabs(from assets: [Asset]) {
         guard !assets.isEmpty else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        viewControllers = assets.map{ asset -> ChannelViewController in
-            let channelViewController = storyboard.instantiateViewController(withIdentifier: "ChannelViewController") as! ChannelViewController
-            channelViewController.authorize(environment: environment,
+        viewControllers = assets.map{ asset -> EpgViewController in
+            let epgViewController = storyboard.instantiateViewController(withIdentifier: "EpgViewController") as! EpgViewController
+            epgViewController.authorize(environment: environment,
                                             sessionToken: sessionToken)
-            channelViewController.brand = brand
-            channelViewController.viewModel.asset = asset
-            return channelViewController
+            epgViewController.brand = brand
+            epgViewController.viewModel.asset = asset
+            epgViewController.didSelectEpg = { [weak self] programId, channelId in
+                print(programId,channelId)
+                self?.onPlaybackRequested(programId, channelId)
+            }
+            return epgViewController
         }
         
         bar.items = viewControllers.map{ Item(title: $0.viewModel.asset.anyTitle(locale: "en")) }
         reloadPages()
         
     }
-    
-//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
-//                                        willScrollToPageAt index: PageboyViewController.PageIndex,
-//                                        direction: PageboyViewController.NavigationDirection,
-//                                        animated: Bool) {
-//        super
-//    }
-//
-//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
-//                                        didScrollTo position: CGPoint,
-//                                        direction: PageboyViewController.NavigationDirection,
-//                                        animated: Bool) {
-//
-//    }
-//
-//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
-//                                        didScrollToPageAt index: PageboyViewController.PageIndex,
-//                                        direction: PageboyViewController.NavigationDirection,
-//                                        animated: Bool) {
-//
-//    }
-//
-//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
-//                                        didReloadWith currentViewController: UIViewController,
-//                                        currentPageIndex: PageboyViewController.PageIndex) {
-//        super.pageboyViewController(pageboyViewController,
-//                                    didReloadWith: currentViewController,
-//                                    currentPageIndex: currentPageIndex)
-//    }
 }
 
-extension PagedChannelViewController: PageboyViewControllerDataSource {
+extension PagedEPGViewController: PageboyViewControllerDataSource {
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
         return viewControllers.count
     }
@@ -132,7 +98,7 @@ extension PagedChannelViewController: PageboyViewControllerDataSource {
         let inset = bar.requiredInsets.bar
         print("OFFSET",inset)
         let channelVC = viewControllers[index]
-        channelVC.topContentInsetConstant = inset
+//        channelVC.topContentInsetConstant = inset
         
         return channelVC
     }
@@ -146,12 +112,7 @@ extension PagedChannelViewController: PageboyViewControllerDataSource {
     }
 }
 
-
-extension PagedChannelViewController: SlidingMenuDelegate {
-
-}
-
-extension PagedChannelViewController: AuthorizedEnvironment {
+extension PagedEPGViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
         viewModel = ChannelListViewModel(environment: environment,
                                          sessionToken: sessionToken)
@@ -166,7 +127,7 @@ extension PagedChannelViewController: AuthorizedEnvironment {
     }
 }
 
-extension PagedChannelViewController: DynamicAppearance {
+extension PagedEPGViewController: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
         view.backgroundColor = brand.backdrop.primary
     }

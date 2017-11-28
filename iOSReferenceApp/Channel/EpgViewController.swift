@@ -1,31 +1,27 @@
 //
-//  ChannelViewController.swift
+//  EpgViewController.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-11-06.
+//  Created by Fredrik Sjöberg on 2017-11-28.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import UIKit
 import Exposure
 
-class ChannelViewController: UIViewController {
+class EpgViewController: UIViewController {
 
-    var topContentInsetConstant: CGFloat = 0
-    @IBOutlet weak var topContentInset: NSLayoutConstraint!
-    @IBOutlet weak var epgTableView: UITableView!
-    
+    var didSelectEpg: (_ channel: String, _ program: String) -> Void = { _,_ in }
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
+    @IBOutlet weak var epgTableView: UITableView!
+    @IBOutlet weak var topContentInset: NSLayoutConstraint!
     
     fileprivate(set) var viewModel: ChannelViewModel!
     
-    fileprivate var embeddedPlayerController: PlayerViewController?
-    fileprivate weak var playerViewModel: PlayerViewModel?
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         epgTableView.delegate = self
         epgTableView.dataSource = self
         
@@ -34,21 +30,16 @@ class ChannelViewController: UIViewController {
         
         prepareEpg()
         apply(brand: brand)
-        topContentInset.constant = topContentInsetConstant
         view.layoutIfNeeded()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         scrollToLive(animated: animated)
-        // TODO:
-        playerViewModel?.request(playback: .live(channelId: viewModel.channelId))
-        embeddedPlayerController?.brand = brand
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        embeddedPlayerController?.player.stop() // TODO: Move to onMovedToTab
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,9 +47,9 @@ class ChannelViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     func prepareEpg() {
-//        channelTitleLabel.setTitle(viewModel.anyTitle(locale: "en"), for: [])
+        //        channelTitleLabel.setTitle(viewModel.anyTitle(locale: "en"), for: [])
         
         let current = Date()
         viewModel.fetchEPG(starting: current.subtract(days: 1), ending: current.add(days: 1) ?? current) { [weak self] error in
@@ -73,28 +64,14 @@ class ChannelViewController: UIViewController {
     }
 }
 
-extension ChannelViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "embeddedPlayerView" {
-            if let destination = segue.destination as? PlayerViewController {
-                embeddedPlayerController = destination
-                destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
-                                                        environment: viewModel.environment)
-                destination.brand = brand
-                playerViewModel = destination.viewModel
-            }
-        }
-    }
-}
-
-extension ChannelViewController {
+extension EpgViewController {
     func scrollToLive(animated: Bool) {
         guard let liveRow = viewModel.currentlyLive() else { return }
         epgTableView.scrollToRow(at: liveRow, at: .middle, animated: animated)
     }
 }
 
-extension ChannelViewController:  UITableViewDelegate {
+extension EpgViewController:  UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return viewModel.rowHeight(index: indexPath.section)
@@ -108,11 +85,11 @@ extension ChannelViewController:  UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         guard let programId = viewModel.content[indexPath.row].program.assetId else { return }
-        playerViewModel?.request(playback: .program(programId: programId, channelId: viewModel.channelId))
+        didSelectEpg(programId, viewModel.channelId)
     }
 }
 
-extension ChannelViewController: UITableViewDataSource {
+extension EpgViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -138,7 +115,7 @@ extension ChannelViewController: UITableViewDataSource {
     }
 }
 
-extension ChannelViewController: AuthorizedEnvironment {
+extension EpgViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
         viewModel = ChannelViewModel(environment: environment,
                                      sessionToken: sessionToken)
@@ -154,7 +131,7 @@ extension ChannelViewController: AuthorizedEnvironment {
 }
 
 
-extension ChannelViewController: DynamicAppearance {
+extension EpgViewController: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
         epgTableView.backgroundColor = brand.backdrop.primary
         view.backgroundColor = brand.backdrop.primary
