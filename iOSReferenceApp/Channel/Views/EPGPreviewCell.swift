@@ -16,6 +16,7 @@ class EPGPreviewCell: UITableViewCell {
     @IBOutlet weak var liveProgressView: UIProgressView!
     fileprivate weak var viewModel: ProgramViewModel?
     fileprivate var liveProgressTimer: Timer?
+    fileprivate var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -105,11 +106,23 @@ extension EPGPreviewCell {
     }
 }
 
+extension EPGPreviewCell {
+    func markAs(playing: Bool) {
+        if playing {
+            titleLabel.textColor = brand.accent
+            durationLabel.textColor = brand.text.primary
+        }
+        else {
+            markAs(upcoming: viewModel?.isUpcoming ?? false)
+        }
+    }
+}
+
 /// Upcomming
 extension EPGPreviewCell {
     fileprivate func markAs(upcoming: Bool) {
-        titleLabel.textColor = upcoming ? UIColor.gray : UIColor.white
-        durationLabel.textColor = upcoming ? UIColor.gray : UIColor.white
+        titleLabel.textColor = upcoming ? brand.text.primary : brand.text.secondary
+        durationLabel.textColor = upcoming ? brand.text.secondary : brand.text.tertiary
         thumbnailView.alpha = upcoming ? 0.5 : 1
     }
 }
@@ -117,10 +130,11 @@ extension EPGPreviewCell {
 
 extension EPGPreviewCell: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
-        titleLabel.textColor = brand.text.primary
-        durationLabel.textColor = brand.text.secondary
-        liveProgressView.progressTintColor = brand.accent
+        self.brand = brand
         
+        markAs(upcoming: viewModel?.isUpcoming ?? false)
+        
+        liveProgressView.progressTintColor = brand.backdrop.secondary
         contentView.backgroundColor = brand.backdrop.primary
     }
 }

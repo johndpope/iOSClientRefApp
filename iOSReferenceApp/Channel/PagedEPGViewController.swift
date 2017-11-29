@@ -77,7 +77,7 @@ class PagedEPGViewController: TabmanViewController {
             epgViewController.brand = brand
             epgViewController.viewModel.asset = asset
             epgViewController.didSelectEpg = { [weak self] programId, channelId in
-                print(programId,channelId)
+                self?.unselectAll(besides: epgViewController)
                 self?.onPlaybackRequested(programId, channelId)
             }
             return epgViewController
@@ -85,6 +85,12 @@ class PagedEPGViewController: TabmanViewController {
         
         bar.items = viewControllers.map{ Item(title: $0.viewModel.asset.anyTitle(locale: "en")) }
         reloadPages()
+    }
+    
+    func unselectAll(besides: EpgViewController) {
+        viewControllers
+            .filter{ $0 != besides }
+            .forEach{ $0.mark(index: nil, playing: false) }
     }
 }
 
@@ -98,7 +104,7 @@ extension PagedEPGViewController: PageboyViewControllerDataSource {
         let epgVc = viewControllers[index]
         
         if activeIndex == index {
-            epgVc.scrollToLive(animated: true)
+            epgVc.scrollToLiveOrActive(animated: true)
         }
         activeIndex = index
         

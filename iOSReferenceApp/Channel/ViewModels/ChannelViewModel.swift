@@ -13,7 +13,6 @@ class ChannelViewModel {
     var asset: Asset!
     fileprivate(set) var content: [ProgramViewModel] = []
     
-    
     var environment: Environment
     var sessionToken: SessionToken
     

@@ -14,6 +14,7 @@ class EpgViewController: UIViewController {
     var didSelectEpg: (_ channel: String, _ program: String) -> Void = { _,_ in }
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
+    fileprivate var nowPlayingIndex: Int?
     @IBOutlet weak var epgTableView: UITableView!
     @IBOutlet weak var topContentInset: NSLayoutConstraint!
     
@@ -35,7 +36,6 @@ class EpgViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        scrollToLive(animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,8 +49,6 @@ class EpgViewController: UIViewController {
     
     
     func prepareEpg() {
-        //        channelTitleLabel.setTitle(viewModel.anyTitle(locale: "en"), for: [])
-        
         let current = Date()
         viewModel.fetchEPG(starting: current.subtract(days: 1), ending: current.add(days: 1) ?? current) { [weak self] error in
             if let error = error {
@@ -58,14 +56,32 @@ class EpgViewController: UIViewController {
             }
             else {
                 self?.epgTableView.reloadData()
-                self?.scrollToLive(animated: true)
+                self?.scrollToLiveOrActive(animated: true)
             }
         }
     }
 }
 
 extension EpgViewController {
-    func scrollToLive(animated: Bool) {
+    func mark(index: Int?, playing: Bool) {
+        defer { nowPlayingIndex = index }
+        
+        if let previouslySelected = nowPlayingIndex, let cell = epgTableView.cellForRow(at: IndexPath(row: previouslySelected, section: 0)) as? EPGPreviewCell {
+            cell.markAs(playing: false)
+        }
+        
+        if let startingIndex = index, let cell = epgTableView.cellForRow(at: IndexPath(row: startingIndex, section: 0)) as? EPGPreviewCell {
+            cell.markAs(playing: playing)
+        }
+    }
+}
+
+extension EpgViewController {
+    func scrollToLiveOrActive(animated: Bool) {
+        if let active = nowPlayingIndex {
+            epgTableView.scrollToRow(at: IndexPath(row: active, section: 0), at: .middle, animated: animated)
+            return
+        }
         guard let liveRow = viewModel.currentlyLive() else { return }
         epgTableView.scrollToRow(at: liveRow, at: .middle, animated: animated)
     }
@@ -86,6 +102,7 @@ extension EpgViewController:  UITableViewDelegate {
         
         guard let programId = viewModel.content[indexPath.row].program.assetId else { return }
         didSelectEpg(programId, viewModel.channelId)
+        mark(index: indexPath.row, playing: true)
     }
 }
 
@@ -111,6 +128,7 @@ extension EpgViewController: UITableViewDataSource {
             preview.reset()
             preview.bind(viewModel: vm)
             preview.apply(brand: brand)
+            preview.markAs(playing: indexPath.row == nowPlayingIndex)
         }
     }
 }
