@@ -54,7 +54,7 @@ class EpgViewController: UIViewController {
         let current = Date()
         viewModel.fetchEPG(starting: current.subtract(days: 1), ending: current.add(days: 1) ?? current) { [weak self] error in
             if let error = error {
-                self?.showMessage(title: "EPG Error", message: error.localizedDescription)
+                self?.showMessage(title: "EPG Error", message: error.message)
             }
             else {
                 self?.epgTableView.reloadData()

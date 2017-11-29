@@ -85,7 +85,7 @@ class AssetDetailsViewController: UIViewController {
         ratingsView.isUserInteractionEnabled = false
         viewModel.refreshAssetMetaData{ [weak self] error in
             if let error = error {
-                self?.showMessage(title: "Refresh Asset Metadata", message: error.localizedDescription)
+                self?.showMessage(title: "Refresh Asset Metadata", message: error.message)
             }
             self?.refreshUserDataUI()
             self?.ratingsView.isUserInteractionEnabled = true
@@ -333,7 +333,7 @@ extension AssetDetailsViewController {
                 self?.downloadViewModel.remove(assetId: assetId)
                 // TODO: Display error
                 self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
-                self?.showMessage(title: "Download Error", message: error.localizedDescription)
+                self?.showMessage(title: "Download Error", message: error.message)
             }
             .onCompleted { [weak self] task, url in
                 print("📱 Download completed: \(url)")

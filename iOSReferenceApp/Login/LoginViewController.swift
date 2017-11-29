@@ -153,7 +153,7 @@ extension LoginViewController {
             }
             
             if let error = response.error {
-                self.showMessage(title: "Login Error", message: error.localizedDescription)
+                self.showMessage(title: "Login Error", message: error.message)
                 return
             }
             
@@ -173,7 +173,7 @@ extension LoginViewController {
             }
             
             if let error = response.error {
-                self.showMessage(title: "Login Error", message: error.localizedDescription)
+                self.showMessage(title: "Login Error", message: error.message)
                 return
             }
             
@@ -202,7 +202,7 @@ extension LoginViewController {
                             }
                             
                             if let error = response.error {
-                                weakSelf.showMessage(title: "Login Error", message: error.localizedDescription)
+                                weakSelf.showMessage(title: "Login Error", message: error.message)
                                 return
                             }
                             

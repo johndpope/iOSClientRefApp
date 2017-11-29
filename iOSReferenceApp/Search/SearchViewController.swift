@@ -59,9 +59,13 @@ extension SearchViewController: AssetDetailsPresenter {
     var assetDetailsPresenter: UIViewController {
         return self
     }
-    
+}
+
+extension SearchViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
-        viewModel.authorize(environment: environment, sessionToken: sessionToken)
+        viewModel = SearchViewModel(environment: environment,
+                                    sessionToken: sessionToken)
+        //viewModel.authorize(environment: environment, sessionToken: sessionToken)
     }
     var environment: Environment {
         return viewModel.environment
@@ -201,7 +205,7 @@ extension SearchViewController: UISearchResultsUpdating {
         if let searchString = searchController.searchBar.text {
             viewModel.search(query: searchString) { [weak self] error in
                 if let error = error {
-                    self?.showMessage(title: "Exposure Error", message: error.localizedDescription)
+                    self?.showMessage(title: "Exposure Error", message: error.message)
                 }
                 else {
                     self?.collectionView.reloadData()

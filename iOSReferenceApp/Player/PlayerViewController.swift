@@ -42,7 +42,7 @@ class PlayerViewController: UIViewController {
         player.context.analyticsGenerators.append({ _ in return AnalyticsLogger() })
         player
             .onError{ [unowned self] tech, source, error in
-                self.showMessage(title: "Player Error", message: error.localizedDescription + "\n Code: \(error.code)")
+                self.showMessage(title: "Player Error", message: error.message + "\n Code: \(error.code)")
             }
             .onPlaybackReady{ tech, source in
                 tech.play()

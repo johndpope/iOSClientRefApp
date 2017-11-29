@@ -74,6 +74,12 @@ extension TVViewController {
                 }
             }
         }
+        else if segue.identifier == "segueToSearch" {
+            if let destination = segue.destination as? SearchViewController {
+                destination.authorize(environment: environment,
+                                      sessionToken: sessionToken)
+            }
+        }
     }
 }
 

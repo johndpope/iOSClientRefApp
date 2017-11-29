@@ -98,6 +98,17 @@ class SingleCarouselViewController: UIViewController {
     }
 }
 
+extension SingleCarouselViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToSearch" {
+            if let destination = segue.destination as? SearchViewController {
+                destination.authorize(environment: environment,
+                                      sessionToken: sessionToken)
+            }
+        }
+    }
+}
+
 
 extension SingleCarouselViewController: SlidingMenuDelegate {
     

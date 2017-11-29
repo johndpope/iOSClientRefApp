@@ -94,6 +94,17 @@ class CarouselListViewController: UIViewController {
     }
 }
 
+
+extension CarouselListViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToSearch" {
+            if let destination = segue.destination as? SearchViewController {
+                destination.authorize(environment: environment,
+                                      sessionToken: sessionToken)
+            }
+        }
+    }
+}
 extension CarouselListViewController: SlidingMenuDelegate {
     
 }
