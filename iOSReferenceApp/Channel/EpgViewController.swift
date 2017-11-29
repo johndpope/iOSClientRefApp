@@ -1,54 +1,47 @@
 //
-//  ChannelViewController.swift
+//  EpgViewController.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-11-06.
+//  Created by Fredrik Sjöberg on 2017-11-28.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import UIKit
 import Exposure
 
-class ChannelViewController: UIViewController {
+class EpgViewController: UIViewController {
 
-    var topContentInsetConstant: CGFloat = 0
-    @IBOutlet weak var topContentInset: NSLayoutConstraint!
-    @IBOutlet weak var epgTableView: UITableView!
-    
+    var didSelectEpg: (_ program: String?, _ channel: String) -> Void = { _,_ in }
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    
+    var nowPlayingIndex: Int?
+    @IBOutlet weak var epgTableView: UITableView!
+    @IBOutlet weak var topContentInset: NSLayoutConstraint!
     
     fileprivate(set) var viewModel: ChannelViewModel!
     
-    fileprivate var embeddedPlayerController: PlayerViewController?
-    fileprivate weak var playerViewModel: PlayerViewModel?
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         epgTableView.delegate = self
         epgTableView.dataSource = self
         
         epgTableView.register(UINib(nibName: "EPGPreviewCell", bundle: nil),
                               forCellReuseIdentifier: "EPGPreviewCell")
+        epgTableView.register(UINib(nibName: "EpgUnavailableCell", bundle: nil),
+                              forCellReuseIdentifier: "EpgUnavailableCell")
         
         prepareEpg()
         apply(brand: brand)
-        topContentInset.constant = topContentInsetConstant
         view.layoutIfNeeded()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        scrollToLive(animated: animated)
-        // TODO:
-        playerViewModel?.request(playback: .live(channelId: viewModel.channelId))
-        embeddedPlayerController?.brand = brand
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        embeddedPlayerController?.player.stop() // TODO: Move to onMovedToTab
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,10 +49,8 @@ class ChannelViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     func prepareEpg() {
-//        channelTitleLabel.setTitle(viewModel.anyTitle(locale: "en"), for: [])
-        
         let current = Date()
         viewModel.fetchEPG(starting: current.subtract(days: 1), ending: current.add(days: 1) ?? current) { [weak self] error in
             if let error = error {
@@ -67,64 +58,80 @@ class ChannelViewController: UIViewController {
             }
             else {
                 self?.epgTableView.reloadData()
-                self?.scrollToLive(animated: true)
+                self?.scrollToLiveOrActive(animated: true)
             }
         }
     }
 }
 
-extension ChannelViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "embeddedPlayerView" {
-            if let destination = segue.destination as? PlayerViewController {
-                embeddedPlayerController = destination
-                destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
-                                                        environment: viewModel.environment)
-                destination.brand = brand
-                playerViewModel = destination.viewModel
-            }
+extension EpgViewController {
+    func mark(index: Int?, playing: Bool) {
+        defer { nowPlayingIndex = index }
+        
+        if let previouslySelected = nowPlayingIndex, let cell = epgTableView.cellForRow(at: IndexPath(row: previouslySelected, section: 0)) as? EPGPreviewCell {
+            cell.markAs(playing: false)
+        }
+        
+        if let startingIndex = index, let cell = epgTableView.cellForRow(at: IndexPath(row: startingIndex, section: 0)) as? EPGPreviewCell {
+            cell.markAs(playing: playing)
         }
     }
 }
 
-extension ChannelViewController {
-    func scrollToLive(animated: Bool) {
+extension EpgViewController {
+    func scrollToLiveOrActive(animated: Bool) {
+        if let active = nowPlayingIndex {
+            epgTableView.scrollToRow(at: IndexPath(row: active, section: 0), at: .middle, animated: animated)
+            return
+        }
         guard let liveRow = viewModel.currentlyLive() else { return }
         epgTableView.scrollToRow(at: liveRow, at: .middle, animated: animated)
     }
 }
 
-extension ChannelViewController:  UITableViewDelegate {
+extension EpgViewController:  UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return viewModel.rowHeight(index: indexPath.section)
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return !viewModel.content[indexPath.row].isUpcoming
+        if viewModel.epgAvailable {
+            return !viewModel.content[indexPath.row].isUpcoming
+        }
+        return true
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let programId = viewModel.content[indexPath.row].program.assetId else { return }
-        playerViewModel?.request(playback: .program(programId: programId, channelId: viewModel.channelId))
+        if viewModel.epgAvailable {
+            guard let programId = viewModel.content[indexPath.row].program.assetId else { return }
+            didSelectEpg(programId, viewModel.channelId)
+            mark(index: indexPath.row, playing: true)
+        }
+        else {
+            didSelectEpg(nil, viewModel.channelId)
+        }
     }
 }
 
-extension ChannelViewController: UITableViewDataSource {
+extension EpgViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.content.count
+        return viewModel.epgAvailable ? viewModel.content.count : 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "EPGPreviewCell") as! EPGPreviewCell
-        
-        return cell
+        if viewModel.epgAvailable {
+             return tableView.dequeueReusableCell(withIdentifier: "EPGPreviewCell", for: indexPath)
+        }
+        else {
+            return tableView.dequeueReusableCell(withIdentifier: "EpgUnavailableCell", for: indexPath)
+        }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -134,11 +141,12 @@ extension ChannelViewController: UITableViewDataSource {
             preview.reset()
             preview.bind(viewModel: vm)
             preview.apply(brand: brand)
+            preview.markAs(playing: indexPath.row == nowPlayingIndex)
         }
     }
 }
 
-extension ChannelViewController: AuthorizedEnvironment {
+extension EpgViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
         viewModel = ChannelViewModel(environment: environment,
                                      sessionToken: sessionToken)
@@ -154,7 +162,7 @@ extension ChannelViewController: AuthorizedEnvironment {
 }
 
 
-extension ChannelViewController: DynamicAppearance {
+extension EpgViewController: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
         epgTableView.backgroundColor = brand.backdrop.primary
         view.backgroundColor = brand.backdrop.primary

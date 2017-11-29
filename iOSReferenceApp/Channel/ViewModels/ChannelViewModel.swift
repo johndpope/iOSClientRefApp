@@ -13,9 +13,12 @@ class ChannelViewModel {
     var asset: Asset!
     fileprivate(set) var content: [ProgramViewModel] = []
     
-    
     var environment: Environment
     var sessionToken: SessionToken
+    
+    var epgAvailable: Bool {
+        return !content.isEmpty
+    }
     
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment

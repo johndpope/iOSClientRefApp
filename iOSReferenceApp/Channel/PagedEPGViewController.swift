@@ -1,8 +1,8 @@
 //
-//  ChannelListViewController.swift
+//  PagedEPGViewController.swift
 //  iOSReferenceApp
 //
-//  Created by Fredrik Sjöberg on 2017-11-06.
+//  Created by Fredrik Sjöberg on 2017-11-28.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
@@ -11,21 +11,23 @@ import Tabman
 import Pageboy
 import Exposure
 
-class PagedChannelViewController: TabmanViewController {
-    
-    fileprivate(set) var viewControllers: [ChannelViewController] = []
-    fileprivate(set) var viewModel: ChannelListViewModel!
-    
+class PagedEPGViewController: TabmanViewController {
+
+    var viewModel: ChannelListViewModel!
+    fileprivate(set) var viewControllers: [EpgViewController] = []
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
+    var onPlaybackRequested: (_ program: String?, _ channel: String) -> Void = { _,_ in }
     
-    var slidingMenuController: SlidingMenuController?
+    fileprivate var loadStatus: Status = .initial
+    enum Status {
+        case initial
+        case loaded
+    }
     
+    var activeIndex: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        
-        
+
         dataSource = self
         
         bar.style = .scrollingButtonBar
@@ -51,10 +53,6 @@ class PagedChannelViewController: TabmanViewController {
         }
     }
     
-    @IBAction func toggleSlidingMenuAction(_ sender: UIBarButtonItem) {
-        slidingMenuController?.toggleSlidingMenu()
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -78,63 +76,47 @@ class PagedChannelViewController: TabmanViewController {
     private func prepareTabs(from assets: [Asset]) {
         guard !assets.isEmpty else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        viewControllers = assets.map{ asset -> ChannelViewController in
-            let channelViewController = storyboard.instantiateViewController(withIdentifier: "ChannelViewController") as! ChannelViewController
-            channelViewController.authorize(environment: environment,
+        viewControllers = assets.map{ asset -> EpgViewController in
+            let epgViewController = storyboard.instantiateViewController(withIdentifier: "EpgViewController") as! EpgViewController
+            epgViewController.authorize(environment: environment,
                                             sessionToken: sessionToken)
-            channelViewController.brand = brand
-            channelViewController.viewModel.asset = asset
-            return channelViewController
+            epgViewController.brand = brand
+            epgViewController.viewModel.asset = asset
+            epgViewController.didSelectEpg = { [weak self] programId, channelId in
+                self?.unselectAll(besides: epgViewController)
+                self?.onPlaybackRequested(programId, channelId)
+            }
+            return epgViewController
         }
         
         bar.items = viewControllers.map{ Item(title: $0.viewModel.asset.anyTitle(locale: "en")) }
         reloadPages()
-        
     }
     
-//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
-//                                        willScrollToPageAt index: PageboyViewController.PageIndex,
-//                                        direction: PageboyViewController.NavigationDirection,
-//                                        animated: Bool) {
-//        super
-//    }
-//
-//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
-//                                        didScrollTo position: CGPoint,
-//                                        direction: PageboyViewController.NavigationDirection,
-//                                        animated: Bool) {
-//
-//    }
-//
-//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
-//                                        didScrollToPageAt index: PageboyViewController.PageIndex,
-//                                        direction: PageboyViewController.NavigationDirection,
-//                                        animated: Bool) {
-//
-//    }
-//
-//    override func pageboyViewController(_ pageboyViewController: PageboyViewController,
-//                                        didReloadWith currentViewController: UIViewController,
-//                                        currentPageIndex: PageboyViewController.PageIndex) {
-//        super.pageboyViewController(pageboyViewController,
-//                                    didReloadWith: currentViewController,
-//                                    currentPageIndex: currentPageIndex)
-//    }
+    func unselectAll(besides: EpgViewController) {
+        viewControllers
+            .filter{ $0 != besides }
+            .forEach{ $0.mark(index: nil, playing: false) }
+    }
 }
 
-extension PagedChannelViewController: PageboyViewControllerDataSource {
+extension PagedEPGViewController: PageboyViewControllerDataSource {
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
         return viewControllers.count
     }
     
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
-        let inset = bar.requiredInsets.bar
-        print("OFFSET",inset)
-        let channelVC = viewControllers[index]
-        channelVC.topContentInsetConstant = inset
+        let epgVc = viewControllers[index]
         
-        return channelVC
+        if activeIndex == index {
+            epgVc.scrollToLiveOrActive(animated: true)
+        }
+        activeIndex = index
+        
+        autoLoadLive(for: epgVc)
+        
+        return epgVc
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
@@ -144,14 +126,22 @@ extension PagedChannelViewController: PageboyViewControllerDataSource {
     private var centerPage: PageboyViewController.Page {
         return .at(index: viewControllers.count / 2)
     }
+    
+    func autoLoadLive(for epgVc: EpgViewController) {
+        switch loadStatus {
+        case .initial:
+            let channelId = epgVc.viewModel.channelId
+            epgVc.scrollToLiveOrActive(animated: true)
+            epgVc.nowPlayingIndex = epgVc.viewModel.currentlyLive()?.row
+            onPlaybackRequested(nil,channelId)
+            loadStatus = .loaded
+        default:
+            return
+        }
+    }
 }
 
-
-extension PagedChannelViewController: SlidingMenuDelegate {
-
-}
-
-extension PagedChannelViewController: AuthorizedEnvironment {
+extension PagedEPGViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
         viewModel = ChannelListViewModel(environment: environment,
                                          sessionToken: sessionToken)
@@ -166,7 +156,7 @@ extension PagedChannelViewController: AuthorizedEnvironment {
     }
 }
 
-extension PagedChannelViewController: DynamicAppearance {
+extension PagedEPGViewController: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
         view.backgroundColor = brand.backdrop.primary
     }

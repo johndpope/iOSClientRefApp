@@ -11,9 +11,12 @@
 		3E9882281F66E46E003467B3 /* AuthorizedEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */; };
 		7623B2391FB07CAA0027A6B9 /* ChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7623B2371FB075500027A6B9 /* ChannelViewModel.swift */; };
 		7623B23A1FB07CAA0027A6B9 /* ChannelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76466FE21FB0698C007ECD5C /* ChannelListViewModel.swift */; };
-		7623B23B1FB07CAA0027A6B9 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76466FDE1FB05ECA007ECD5C /* ChannelViewController.swift */; };
-		7623B23C1FB07CAA0027A6B9 /* PagedChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76466FE41FB06B82007ECD5C /* PagedChannelViewController.swift */; };
 		7626ADA71FB600B500768390 /* DynamicAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7626ADA61FB600B500768390 /* DynamicAppearance.swift */; };
+		762808C71FCDC4F0005610DF /* PagedEPGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808C61FCDC4F0005610DF /* PagedEPGViewController.swift */; };
+		762808C91FCDC77D005610DF /* TVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808C81FCDC77D005610DF /* TVViewController.swift */; };
+		762808CB1FCDCAAF005610DF /* EpgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808CA1FCDCAAF005610DF /* EpgViewController.swift */; };
+		762808D01FCECA39005610DF /* EpgUnavailableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808CE1FCECA39005610DF /* EpgUnavailableCell.swift */; };
+		762808D11FCECA39005610DF /* EpgUnavailableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 762808CF1FCECA39005610DF /* EpgUnavailableCell.xib */; };
 		762F0BF81FA7153D0051395E /* StretchyCarouselHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */; };
 		76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; };
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -208,6 +211,11 @@
 		3E9882271F66E46E003467B3 /* AuthorizedEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedEnvironment.swift; sourceTree = "<group>"; };
 		7623B2371FB075500027A6B9 /* ChannelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewModel.swift; sourceTree = "<group>"; };
 		7626ADA61FB600B500768390 /* DynamicAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicAppearance.swift; sourceTree = "<group>"; };
+		762808C61FCDC4F0005610DF /* PagedEPGViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedEPGViewController.swift; sourceTree = "<group>"; };
+		762808C81FCDC77D005610DF /* TVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVViewController.swift; sourceTree = "<group>"; };
+		762808CA1FCDCAAF005610DF /* EpgViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgViewController.swift; sourceTree = "<group>"; };
+		762808CE1FCECA39005610DF /* EpgUnavailableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgUnavailableCell.swift; sourceTree = "<group>"; };
+		762808CF1FCECA39005610DF /* EpgUnavailableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EpgUnavailableCell.xib; sourceTree = "<group>"; };
 		762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyCarouselHeaderLayout.swift; sourceTree = "<group>"; };
 		76344F481F7AB3BC0034AEC0 /* Download.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Download.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewModel.swift; sourceTree = "<group>"; };
@@ -216,9 +224,7 @@
 		76466FC51FB05BCD007ECD5C /* Tabman.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Tabman.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76466FC81FB05BDA007ECD5C /* Pageboy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pageboy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76466FCB1FB05C17007ECD5C /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		76466FDE1FB05ECA007ECD5C /* ChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
 		76466FE21FB0698C007ECD5C /* ChannelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListViewModel.swift; sourceTree = "<group>"; };
-		76466FE41FB06B82007ECD5C /* PagedChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedChannelViewController.swift; sourceTree = "<group>"; };
 		764AE8851FBA4A7100DB548C /* CosmosDistrib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
 		764EDC481F5EADFB00569D5B /* environments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = environments.json; sourceTree = SOURCE_ROOT; };
 		764EDC4C1F5EB6B100569D5B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
@@ -425,8 +431,9 @@
 			children = (
 				76A5D8041FBA0DD6005F6C4B /* Views */,
 				76466FDC1FB05E8F007ECD5C /* ViewModels */,
-				76466FDE1FB05ECA007ECD5C /* ChannelViewController.swift */,
-				76466FE41FB06B82007ECD5C /* PagedChannelViewController.swift */,
+				762808C81FCDC77D005610DF /* TVViewController.swift */,
+				762808CA1FCDCAAF005610DF /* EpgViewController.swift */,
+				762808C61FCDC4F0005610DF /* PagedEPGViewController.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -434,6 +441,7 @@
 		76466FDC1FB05E8F007ECD5C /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */,
 				7623B2371FB075500027A6B9 /* ChannelViewModel.swift */,
 				76466FE21FB0698C007ECD5C /* ChannelListViewModel.swift */,
 			);
@@ -575,6 +583,8 @@
 			children = (
 				76A5D8051FBA0DD6005F6C4B /* EPGPreviewCell.swift */,
 				76A5D8061FBA0DD6005F6C4B /* EPGPreviewCell.xib */,
+				762808CE1FCECA39005610DF /* EpgUnavailableCell.swift */,
+				762808CF1FCECA39005610DF /* EpgUnavailableCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1006,7 +1016,6 @@
 			children = (
 				7672F26C1F93EEB200F892C3 /* AssetListType.swift */,
 				76A417221EE1518800677A46 /* AssetViewModel.swift */,
-				76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1154,6 +1163,7 @@
 				768ED8AA1F0FAEE3008E8F9B /* update_dependency_graph.rb in Resources */,
 				76A843B21EA7856C00BDAF2C /* Assets.xcassets in Resources */,
 				764EDC491F5EADFB00569D5B /* environments.json in Resources */,
+				762808D11FCECA39005610DF /* EpgUnavailableCell.xib in Resources */,
 				76A843D91EA7859E00BDAF2C /* Cartfile in Resources */,
 				76619E761FBA3C09000676A9 /* Google Fonts - Open Sans Light.ttf in Resources */,
 				76A417061EDEBF1B00677A46 /* AssetPreviewCell.xib in Resources */,
@@ -1187,6 +1197,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				762F0BF81FA7153D0051395E /* StretchyCarouselHeaderLayout.swift in Sources */,
+				762808CB1FCDCAAF005610DF /* EpgViewController.swift in Sources */,
 				76EC8D6A1FA514F200F6FDB6 /* CarouselHeaderView.swift in Sources */,
 				76BB35A71F9A29C200C2B386 /* Asset+LocalizedEntity.swift in Sources */,
 				766502F91F99CA4E009A5BFE /* SessionManager+ExposureDownloadTask.swift in Sources */,
@@ -1229,10 +1240,13 @@
 				F7061C731EC5CF8F0041E271 /* Logging.swift in Sources */,
 				76EC8D371FA510FA00F6FDB6 /* MainMenuStaticDataViewModel.swift in Sources */,
 				76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */,
+				762808D01FCECA39005610DF /* EpgUnavailableCell.swift in Sources */,
 				F793A8531EC5289E00DF7626 /* SkyFloatingLabelTextField.swift in Sources */,
 				76B0AFC01FA524570085C837 /* BasicPromotionLayout.swift in Sources */,
 				769862271FA518C500A57213 /* AssetDetailsViewModel.swift in Sources */,
+				762808C91FCDC77D005610DF /* TVViewController.swift in Sources */,
 				76EC8D6F1FA514F900F6FDB6 /* HeroPromotionCell.swift in Sources */,
+				762808C71FCDC4F0005610DF /* PagedEPGViewController.swift in Sources */,
 				76EC8D311FA510A500F6FDB6 /* MainMenuItemType.swift in Sources */,
 				76EC8D751FA514F900F6FDB6 /* PortraitTrioPromotionEditorial.swift in Sources */,
 				766502F71F99CA34009A5BFE /* Data+Extensions.swift in Sources */,
@@ -1277,7 +1291,6 @@
 				76C9B4731FB4A8140058045F /* UIColor+AppColors.swift in Sources */,
 				76EC8D3B1FA5113600F6FDB6 /* MainMenuSectionViewModel.swift in Sources */,
 				76BA443E1FAC891600E92AD1 /* ContentCarouselTransition.swift in Sources */,
-				7623B23C1FB07CAA0027A6B9 /* PagedChannelViewController.swift in Sources */,
 				76EC8D651FA514A900F6FDB6 /* ContentEditorial.swift in Sources */,
 				76B0AFB41FA51BCA0085C837 /* PlayerViewModel.swift in Sources */,
 				76EC8D351FA510E500F6FDB6 /* MainMenuContentViewModel.swift in Sources */,
@@ -1289,7 +1302,6 @@
 				7683F1911FAB4A960097BC23 /* LoginViewController.swift in Sources */,
 				76EC8D631FA5149000F6FDB6 /* CarouselEditorial.swift in Sources */,
 				F7C209611EC9C41800662224 /* UserInfo.swift in Sources */,
-				7623B23B1FB07CAA0027A6B9 /* ChannelViewController.swift in Sources */,
 				F75EDDC81EC63EEC0069CDEE /* StringsUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
