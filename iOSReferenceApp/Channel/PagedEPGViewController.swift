@@ -18,6 +18,7 @@ class PagedEPGViewController: TabmanViewController {
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
     var onPlaybackRequested: (_ channel: String, _ program: String) -> Void = { _,_ in }
     
+    var activeIndex: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,7 +46,7 @@ class PagedEPGViewController: TabmanViewController {
             prepare(contentFrom: conf)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -84,7 +85,6 @@ class PagedEPGViewController: TabmanViewController {
         
         bar.items = viewControllers.map{ Item(title: $0.viewModel.asset.anyTitle(locale: "en")) }
         reloadPages()
-        
     }
 }
 
@@ -95,12 +95,14 @@ extension PagedEPGViewController: PageboyViewControllerDataSource {
     
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
-        let inset = bar.requiredInsets.bar
-        print("OFFSET",inset)
-        let channelVC = viewControllers[index]
-//        channelVC.topContentInsetConstant = inset
+        let epgVc = viewControllers[index]
         
-        return channelVC
+        if activeIndex == index {
+            epgVc.scrollToLive(animated: true)
+        }
+        activeIndex = index
+        
+        return epgVc
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {

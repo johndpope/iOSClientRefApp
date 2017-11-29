@@ -30,6 +30,8 @@ class TVViewController: UIViewController {
 //            embeddedPlayerController.dynamicContentCategory = conf
             embeddedEpgController?.dynamicContentCategory = conf
         }
+        
+        apply(brand: brand)
     }
 
     override func didReceiveMemoryWarning() {
