@@ -15,6 +15,8 @@
 		762808C71FCDC4F0005610DF /* PagedEPGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808C61FCDC4F0005610DF /* PagedEPGViewController.swift */; };
 		762808C91FCDC77D005610DF /* TVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808C81FCDC77D005610DF /* TVViewController.swift */; };
 		762808CB1FCDCAAF005610DF /* EpgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808CA1FCDCAAF005610DF /* EpgViewController.swift */; };
+		762808D01FCECA39005610DF /* EpgUnavailableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808CE1FCECA39005610DF /* EpgUnavailableCell.swift */; };
+		762808D11FCECA39005610DF /* EpgUnavailableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 762808CF1FCECA39005610DF /* EpgUnavailableCell.xib */; };
 		762F0BF81FA7153D0051395E /* StretchyCarouselHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */; };
 		76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; };
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -212,6 +214,8 @@
 		762808C61FCDC4F0005610DF /* PagedEPGViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedEPGViewController.swift; sourceTree = "<group>"; };
 		762808C81FCDC77D005610DF /* TVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVViewController.swift; sourceTree = "<group>"; };
 		762808CA1FCDCAAF005610DF /* EpgViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgViewController.swift; sourceTree = "<group>"; };
+		762808CE1FCECA39005610DF /* EpgUnavailableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgUnavailableCell.swift; sourceTree = "<group>"; };
+		762808CF1FCECA39005610DF /* EpgUnavailableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EpgUnavailableCell.xib; sourceTree = "<group>"; };
 		762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyCarouselHeaderLayout.swift; sourceTree = "<group>"; };
 		76344F481F7AB3BC0034AEC0 /* Download.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Download.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewModel.swift; sourceTree = "<group>"; };
@@ -579,6 +583,8 @@
 			children = (
 				76A5D8051FBA0DD6005F6C4B /* EPGPreviewCell.swift */,
 				76A5D8061FBA0DD6005F6C4B /* EPGPreviewCell.xib */,
+				762808CE1FCECA39005610DF /* EpgUnavailableCell.swift */,
+				762808CF1FCECA39005610DF /* EpgUnavailableCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1157,6 +1163,7 @@
 				768ED8AA1F0FAEE3008E8F9B /* update_dependency_graph.rb in Resources */,
 				76A843B21EA7856C00BDAF2C /* Assets.xcassets in Resources */,
 				764EDC491F5EADFB00569D5B /* environments.json in Resources */,
+				762808D11FCECA39005610DF /* EpgUnavailableCell.xib in Resources */,
 				76A843D91EA7859E00BDAF2C /* Cartfile in Resources */,
 				76619E761FBA3C09000676A9 /* Google Fonts - Open Sans Light.ttf in Resources */,
 				76A417061EDEBF1B00677A46 /* AssetPreviewCell.xib in Resources */,
@@ -1233,6 +1240,7 @@
 				F7061C731EC5CF8F0041E271 /* Logging.swift in Sources */,
 				76EC8D371FA510FA00F6FDB6 /* MainMenuStaticDataViewModel.swift in Sources */,
 				76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */,
+				762808D01FCECA39005610DF /* EpgUnavailableCell.swift in Sources */,
 				F793A8531EC5289E00DF7626 /* SkyFloatingLabelTextField.swift in Sources */,
 				76B0AFC01FA524570085C837 /* BasicPromotionLayout.swift in Sources */,
 				769862271FA518C500A57213 /* AssetDetailsViewModel.swift in Sources */,

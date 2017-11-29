@@ -65,7 +65,12 @@ extension TVViewController {
                 destination.brand = brand
                 destination.dynamicContentCategory = dynamicContentCategory
                 destination.onPlaybackRequested = { [weak self] programId, channelId in
-                    self?.playerViewModel?.request(playback: .program(programId: programId, channelId: channelId))
+                    if let programId = programId {
+                        self?.playerViewModel?.request(playback: .program(programId: programId, channelId: channelId))
+                    }
+                    else {
+                        self?.playerViewModel?.request(playback: .live(channelId: channelId))
+                    }
                 }
             }
         }

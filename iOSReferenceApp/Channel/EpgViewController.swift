@@ -11,10 +11,10 @@ import Exposure
 
 class EpgViewController: UIViewController {
 
-    var didSelectEpg: (_ channel: String, _ program: String) -> Void = { _,_ in }
+    var didSelectEpg: (_ program: String?, _ channel: String) -> Void = { _,_ in }
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
-    fileprivate var nowPlayingIndex: Int?
+    var nowPlayingIndex: Int?
     @IBOutlet weak var epgTableView: UITableView!
     @IBOutlet weak var topContentInset: NSLayoutConstraint!
     
@@ -28,6 +28,8 @@ class EpgViewController: UIViewController {
         
         epgTableView.register(UINib(nibName: "EPGPreviewCell", bundle: nil),
                               forCellReuseIdentifier: "EPGPreviewCell")
+        epgTableView.register(UINib(nibName: "EpgUnavailableCell", bundle: nil),
+                              forCellReuseIdentifier: "EpgUnavailableCell")
         
         prepareEpg()
         apply(brand: brand)
@@ -94,15 +96,23 @@ extension EpgViewController:  UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return !viewModel.content[indexPath.row].isUpcoming
+        if viewModel.epgAvailable {
+            return !viewModel.content[indexPath.row].isUpcoming
+        }
+        return true
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let programId = viewModel.content[indexPath.row].program.assetId else { return }
-        didSelectEpg(programId, viewModel.channelId)
-        mark(index: indexPath.row, playing: true)
+        if viewModel.epgAvailable {
+            guard let programId = viewModel.content[indexPath.row].program.assetId else { return }
+            didSelectEpg(programId, viewModel.channelId)
+            mark(index: indexPath.row, playing: true)
+        }
+        else {
+            didSelectEpg(nil, viewModel.channelId)
+        }
     }
 }
 
@@ -112,13 +122,16 @@ extension EpgViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.content.count
+        return viewModel.epgAvailable ? viewModel.content.count : 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "EPGPreviewCell") as! EPGPreviewCell
-        
-        return cell
+        if viewModel.epgAvailable {
+             return tableView.dequeueReusableCell(withIdentifier: "EPGPreviewCell", for: indexPath)
+        }
+        else {
+            return tableView.dequeueReusableCell(withIdentifier: "EpgUnavailableCell", for: indexPath)
+        }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -16,7 +16,13 @@ class PagedEPGViewController: TabmanViewController {
     var viewModel: ChannelListViewModel!
     fileprivate(set) var viewControllers: [EpgViewController] = []
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
-    var onPlaybackRequested: (_ channel: String, _ program: String) -> Void = { _,_ in }
+    var onPlaybackRequested: (_ program: String?, _ channel: String) -> Void = { _,_ in }
+    
+    fileprivate var loadStatus: Status = .initial
+    enum Status {
+        case initial
+        case loaded
+    }
     
     var activeIndex: Int?
     override func viewDidLoad() {
@@ -108,6 +114,8 @@ extension PagedEPGViewController: PageboyViewControllerDataSource {
         }
         activeIndex = index
         
+        autoLoadLive(for: epgVc)
+        
         return epgVc
     }
     
@@ -117,6 +125,19 @@ extension PagedEPGViewController: PageboyViewControllerDataSource {
     
     private var centerPage: PageboyViewController.Page {
         return .at(index: viewControllers.count / 2)
+    }
+    
+    func autoLoadLive(for epgVc: EpgViewController) {
+        switch loadStatus {
+        case .initial:
+            let channelId = epgVc.viewModel.channelId
+            epgVc.scrollToLiveOrActive(animated: true)
+            epgVc.nowPlayingIndex = epgVc.viewModel.currentlyLive()?.row
+            onPlaybackRequested(nil,channelId)
+            loadStatus = .loaded
+        default:
+            return
+        }
     }
 }
 

@@ -16,6 +16,10 @@ class ChannelViewModel {
     var environment: Environment
     var sessionToken: SessionToken
     
+    var epgAvailable: Bool {
+        return !content.isEmpty
+    }
+    
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
