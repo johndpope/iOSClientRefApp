@@ -63,6 +63,8 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     
     @IBOutlet weak var castButton: GCKUICastButton!
+    var castChannel: CastChannel = CastChannel()
+    var castSession: GCKCastSession?
     
     var presentedFrom: PresentedFrom = .other
     enum PresentedFrom {
@@ -84,6 +86,43 @@ class AssetDetailsViewController: UIViewController {
         
         castButton.apply(brand: brand)
         
+        // Assign ChromeCast session listener
+        GCKCastContext.sharedInstance().sessionManager.add(self)
+        castSession = GCKCastContext.sharedInstance().sessionManager.currentCastSession
+        castSession?.add(castChannel)
+        castSession?.remoteMediaClient?.add(self)
+        castChannel
+            .onTracksUpdated { tracksUpdated in
+                print("CastChannel onTracksUpdated",tracksUpdated.audio)
+                print("CastChannel onTracksUpdated",tracksUpdated.subtitles)
+            }
+            .onTimeshiftEnabled{ timeshift in
+                print("CastChannel onTimeshiftEnabled",timeshift)
+            }
+            .onVolumeChanged { volumeChanged in
+                print("CastChannel onVolumeChanged",volumeChanged)
+            }
+            .onDurationChanged { duration in
+                print("CastChannel onDurationChanged",duration)
+            }
+            .onStartTimeLive{ startTime in
+                print("CastChannel onStartTimeLive",startTime)
+            }
+            .onProgramChanged{ program in
+                print("CastChannel onProgramChanged",program)
+            }
+            .onSegmentMissing{ segment in
+                print("CastChannel onSegmentMissing",segment)
+            }
+            .onAutoplay { autoplay in
+                print("CastChannel onAutoplay",autoplay)
+            }
+            .onIsLive { isLive in
+                print("CastChannel onIsLive",isLive)
+            }
+            .onError{ error in
+                print("CastChannel onError",error)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -137,18 +176,64 @@ class AssetDetailsViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    var hasActiveChromecastSession: Bool {
+        return GCKCastContext.sharedInstance().sessionManager.hasConnectedCastSession()
+    }
+    
     @IBAction func playAction(_ sender: UIButton) {
         guard let assetId = viewModel.asset.assetId else {
             showMessage(title: "Invalid Asset", message: "AssetId missing, unable to perform playback")
             return
         }
-        
-        self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
+        if hasActiveChromecastSession {
+            print("ACTIVE SESSION")
+            loadChromeCast()
+        }
+        else {
+            self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.contentSize = CGSize(width: contentStackView.frame.width, height: contentStackView.frame.height)
+    }
+}
+
+extension AssetDetailsViewController {
+    func loadChromeCast() {
+        guard let session = GCKCastContext.sharedInstance().sessionManager.currentCastSession else { return }
+        let castEnvironment = CastEnvironment(baseUrl: viewModel.environment.apiUrl,
+                                              customer: viewModel.environment.customer,
+                                              businessUnit: viewModel.environment.businessUnit,
+                                              sessionToken: viewModel.sessionToken.value)
+        guard let assetId = viewModel.asset.assetId else { return }
+        let customData = Cast.CustomData(environment: castEnvironment,
+                                         assetId: assetId)
+        do {
+            let mediaMetadata = GCKMediaMetadata(metadataType: .movie)
+            mediaMetadata.setString(viewModel.anyTitle(locale: "en"), forKey: kGCKMetadataKeyTitle)
+            mediaMetadata.setString(viewModel.anyDescription(locale: "en"), forKey: kGCKMetadataKeySubtitle)
+            
+            let mediaInfo = GCKMediaInformation(contentID: assetId,
+                                            streamType: .none,
+                                            contentType: "video/mp4",
+                                            metadata: mediaMetadata,
+                                            streamDuration: 0,
+                                            mediaTracks: nil,
+                                            textTrackStyle: nil,
+                                            customData: nil)
+            
+            let mediaLoadOptions = GCKMediaLoadOptions()
+            mediaLoadOptions.customData = customData.toJson
+            
+            session
+                .remoteMediaClient?
+                .loadMedia(mediaInfo, with: mediaLoadOptions)
+        }
+        catch {
+            print("loadChromeCast",error)
+        }
     }
 }
 
@@ -461,6 +546,8 @@ extension AssetDetailsViewController {
 extension AssetDetailsViewController {
     @IBAction func playOfflineAction(_ sender: UIButton) {
         guard let assetId = viewModel.asset.assetId else { return }
+        
+        // TODO: Play offline with chromecast?
         self.performSegue(withIdentifier: Segue.segueOfflineToPlayer.rawValue, sender: assetId)
     }
     
@@ -537,5 +624,31 @@ extension AssetDetailsViewController: DynamicAppearance {
         ratingsView.settings.filledBorderColor = brand.accent
         ratingsView.settings.emptyColor = brand.text.tertiary
         ratingsView.settings.emptyBorderColor = brand.text.tertiary
+    }
+}
+
+extension AssetDetailsViewController: GCKSessionManagerListener {
+    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
+        
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didEnd session: GCKSession, withError error: Error?) {
+        
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKCastSession) {
+        print("CastChannel connected")
+        session.add(castChannel)
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKCastSession) {
+        print("CastChannel disconnected")
+        session.remove(castChannel)
+    }
+}
+
+extension AssetDetailsViewController: GCKRemoteMediaClientListener {
+    func remoteMediaClient(_ client: GCKRemoteMediaClient, didUpdate mediaStatus: GCKMediaStatus?) {
+        castChannel.refreshControls()
     }
 }

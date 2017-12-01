@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let options = GCKCastOptions(discoveryCriteria: GCKDiscoveryCriteria(applicationID: "6AB327C1"))
         GCKCastContext.setSharedInstanceWith(options)
         GCKCastContext.sharedInstance().useDefaultExpandedMediaControls = true
-        setupCastLogging()
+//        setupCastLogging()
         
         setupViews()
         
