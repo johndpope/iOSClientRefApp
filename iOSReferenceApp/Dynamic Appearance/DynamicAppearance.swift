@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import GoogleCast
 
 public class TextButton: UIButton { }
 public class IconButton: UIButton { }
@@ -258,3 +258,8 @@ extension UIBarButtonItem: DynamicAppearance {
     }
 }
 
+extension GCKUICastButton: DynamicAppearance {
+    func apply(brand: Branding.ColorScheme) {
+        tintColor = brand.text.primary
+    }
+}

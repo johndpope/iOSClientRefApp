@@ -19,6 +19,7 @@
 - [x] Persistent user `SessionToken`s.
 - [x] Multi Device Session Shift.
 - [x] Airplay.
+- [x] ChromeCast integration
 - [x] Custom playback overlay.
 - [x] Customer configured carousels
 
@@ -33,6 +34,7 @@
     - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientPlayer)
     - [`Download`](https://github.com/EricssonBroadcastServices/iOSClientDownload)
     - [`Utilities`](https://github.com/EricssonBroadcastServices/iOSClientUtilities)
+    - [`Cast`](https://github.com/EricssonBroadcastServices/iOSClientCast)
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientRefApp/blob/master/Cartfile)
 
 ## Installation

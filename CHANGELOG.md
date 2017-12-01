@@ -7,6 +7,9 @@
 
 ## 0.73.0
 
+#### Features
+* `ChromeCast` integration added throught `Cast` module
+
 #### Bug Fixes
 * Search query now properly *escaped*.
 

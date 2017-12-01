@@ -12,6 +12,8 @@ import Kingfisher
 import Player
 import AVKit
 import Download
+import Cast
+import GoogleCast
 
 class AssetDetailsViewController: UIViewController {
     
@@ -23,7 +25,6 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var ratingsView: CosmosView!
-    @IBOutlet weak var ratingStarStackView: UIStackView!
     @IBOutlet weak var productionYearLabel: UILabel!
     @IBOutlet weak var parentalRatingLabel: UILabel!
     
@@ -60,6 +61,14 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     
+    @IBOutlet weak var castButton: GCKUICastButton!
+    var castChannel: Channel = Channel()
+    var castSession: GCKCastSession?
+    
+    var hasActiveChromecastSession: Bool {
+        return GCKCastContext.sharedInstance().sessionManager.hasConnectedCastSession()
+    }
+    
     var presentedFrom: PresentedFrom = .other
     enum PresentedFrom {
         case offlineList
@@ -77,6 +86,10 @@ class AssetDetailsViewController: UIViewController {
         ratingsView.didFinishTouchingCosmos = { [weak self] rating in
             self?.viewModel.rate(value: rating)
         }
+        
+        castButton.apply(brand: brand)
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,13 +148,27 @@ class AssetDetailsViewController: UIViewController {
             showMessage(title: "Invalid Asset", message: "AssetId missing, unable to perform playback")
             return
         }
-        
-        self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
+        if hasActiveChromecastSession {
+            guard let assetId = viewModel.asset.assetId else { return }
+            loadChromeCast(assetId: assetId, programId: nil, metaData: viewModel.asset)
+        }
+        else {
+            self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.contentSize = CGSize(width: contentStackView.frame.width, height: contentStackView.frame.height)
+    }
+}
+
+extension AssetDetailsViewController: ChromeCaster {
+    var castEnvironment: Cast.Environment {
+        return Cast.Environment(baseUrl: viewModel.environment.baseUrl,
+                                customer: viewModel.environment.customer,
+                                businessUnit: viewModel.environment.businessUnit,
+                                sessionToken: viewModel.sessionToken.value)
     }
 }
 
@@ -454,6 +481,8 @@ extension AssetDetailsViewController {
 extension AssetDetailsViewController {
     @IBAction func playOfflineAction(_ sender: UIButton) {
         guard let assetId = viewModel.asset.assetId else { return }
+        
+        // TODO: Play offline with chromecast?
         self.performSegue(withIdentifier: Segue.segueOfflineToPlayer.rawValue, sender: assetId)
     }
     
@@ -486,10 +515,10 @@ extension AssetDetailsViewController {
 
 // MARK: - AuthorizedEnvironment
 extension AssetDetailsViewController: AuthorizedEnvironment {
-    func authorize(environment: Environment, sessionToken: SessionToken) {
+    func authorize(environment: Exposure.Environment, sessionToken: SessionToken) {
         viewModel.authorize(environment: environment, sessionToken: sessionToken)
     }
-    var environment: Environment {
+    var environment: Exposure.Environment {
         return viewModel.environment
     }
     
@@ -530,5 +559,31 @@ extension AssetDetailsViewController: DynamicAppearance {
         ratingsView.settings.filledBorderColor = brand.accent
         ratingsView.settings.emptyColor = brand.text.tertiary
         ratingsView.settings.emptyBorderColor = brand.text.tertiary
+    }
+}
+
+extension AssetDetailsViewController: GCKSessionManagerListener {
+    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
+        
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didEnd session: GCKSession, withError error: Error?) {
+        
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKCastSession) {
+        print("Cast.Channel connected")
+        session.add(castChannel)
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKCastSession) {
+        print("Cast.Channel disconnected")
+        session.remove(castChannel)
+    }
+}
+
+extension AssetDetailsViewController: GCKRemoteMediaClientListener {
+    func remoteMediaClient(_ client: GCKRemoteMediaClient, didUpdate mediaStatus: GCKMediaStatus?) {
+        castChannel.refreshControls()
     }
 }

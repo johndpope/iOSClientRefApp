@@ -20,6 +20,9 @@
       location = "group:Carthage/Checkouts/iOSClientUtilities/Utilities.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Carthage/Checkouts/iOSClientCast/Cast.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Carthage/Checkouts/Alamofire/Alamofire.xcodeproj">
    </FileRef>
    <FileRef

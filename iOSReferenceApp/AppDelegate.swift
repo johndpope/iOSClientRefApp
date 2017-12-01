@@ -10,8 +10,9 @@ import UIKit
 import Utilities
 import Download
 import Exposure
-
 import AVFoundation
+import Cast
+import GoogleCast
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         enableAirplayInBackgroundMode()
+        
+        let options = GCKCastOptions(discoveryCriteria: GCKDiscoveryCriteria(applicationID: "6AB327C1"))
+        GCKCastContext.setSharedInstanceWith(options)
+        GCKCastContext.sharedInstance().useDefaultExpandedMediaControls = true
+//        setupCastLogging()
         
         setupViews()
         
@@ -56,13 +62,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func setupViews() {
-        let rootNavigationController = self.window?.rootViewController as? UINavigationController
-        
-        rootNavigationController?.setNavigationBarHidden(true, animated: false)
-        rootNavigationController?.navigationBar.barStyle = .black
-        
-        let stack = initialStack()
-        rootNavigationController?.setViewControllers(stack, animated: false)
+        if let rootNavigationController = self.window?.rootViewController as? UINavigationController {
+            
+            rootNavigationController.setNavigationBarHidden(true, animated: false)
+            rootNavigationController.navigationBar.barStyle = .black
+            
+            let stack = initialStack()
+            rootNavigationController.setViewControllers(stack, animated: false)
+            
+            // Activate the ChromeCast root container.
+            let castContainer = GCKCastContext.sharedInstance().createCastContainerController(for: rootNavigationController)
+            window?.rootViewController = castContainer
+        }
     }
         
     func initialStack() -> [UIViewController] {
@@ -95,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return [environmentViewController, loginViewController, masterViewController]
     }
     
-    func retrieveDynamicCustomerConfig(for environment: Environment, callback: @escaping (DynamicCustomerConfig?) -> Void) {
+    func retrieveDynamicCustomerConfig(for environment: Exposure.Environment, callback: @escaping (DynamicCustomerConfig?) -> Void) {
         
         ApplicationConfig(environment: environment)
             .fetchFile(fileName: "main.json") {
@@ -103,6 +114,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     callback(dynamicConfig)
                 }
         }
+    }
+    
+    func setupCastLogging() {
+        let logFilter = GCKLoggerFilter()
+        let classesToLog = ["GCKDeviceScanner", "GCKDeviceProvider", "GCKDiscoveryManager", "GCKCastChannel",
+                            "GCKMediaControlChannel", "GCKUICastButton", "GCKUIMediaController", "NSMutableDictionary"]
+        logFilter.setLoggingLevel(.verbose, forClasses: classesToLog)
+        GCKLogger.sharedInstance().filter = logFilter
+        GCKLogger.sharedInstance().delegate = self
+    }
+}
+
+// MARK: - GCKLoggerDelegate
+extension AppDelegate: GCKLoggerDelegate {
+    func logMessage(_ message: String, fromFunction function: String) {
+        print("\(function)  \(message)")
+    }
+}
+
+// MARK: - GCKSessionManagerListener
+extension AppDelegate: GCKSessionManagerListener {
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didEnd session: GCKSession, withError error: Error?) {
+        if error == nil {
+            print("GCKSessionManagerListener Session ended")
+        } else {
+            print("GCKSessionManagerListener Session ended unexpectedly:\n \(error?.localizedDescription ?? "")")
+        }
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didFailToStart session: GCKSession, withError error: Error) {
+        print("GCKSessionManagerListener Failed to start session:\n\(error.localizedDescription)")
     }
 }
 

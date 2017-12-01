@@ -8,6 +8,99 @@
 
 import UIKit
 import Exposure
+import GoogleCast
+import Cast
+
+protocol ChromeCaster: GCKSessionManagerListener, GCKRemoteMediaClientListener {
+    var castSession: GCKCastSession? { get set }
+    var castChannel: Channel { get set }
+    
+    var castEnvironment: Cast.Environment { get }
+}
+
+extension ChromeCaster {
+    fileprivate func chromeCastMetaData(from asset: Asset?) -> GCKMediaMetadata? {
+        guard let asset = asset else { return nil }
+        let data = GCKMediaMetadata(metadataType: .movie)
+        data.setString(asset.anyTitle(locale: "en"), forKey: kGCKMetadataKeyTitle)
+        data.setString(asset.anyDescription(locale: "en"), forKey: kGCKMetadataKeySubtitle)
+        
+        let images = asset.images(locale: "en").flatMap{ image -> GCKImage? in
+            if let urlString = image.url, let url = URL(string: urlString), let width = image.width, let height = image.height {
+                return GCKImage(url: url, width: width, height: height)
+            }
+            return nil
+        }
+        images.forEach{ data.addImage($0) }
+        return data
+    }
+    
+    func loadChromeCast(assetId: String, programId: String?, metaData: Asset?) {
+        guard let session = GCKCastContext.sharedInstance().sessionManager.currentCastSession else { return }
+        
+        // Assign ChromeCast session listener
+        GCKCastContext.sharedInstance().sessionManager.add(self)
+        castSession = session
+        session.add(castChannel)
+        session.remoteMediaClient?.add(self)
+        castChannel
+            .onTracksUpdated { tracksUpdated in
+                print("Cast.Channel onTracksUpdated Audio",tracksUpdated.audio)
+                print("Cast.Channel onTracksUpdated Subs ",tracksUpdated.subtitles)
+            }
+            .onTimeshiftEnabled{ timeshift in
+                print("Cast.Channel onTimeshiftEnabled",timeshift)
+            }
+            .onVolumeChanged { volumeChanged in
+                print("Cast.Channel onVolumeChanged",volumeChanged)
+            }
+            .onDurationChanged { duration in
+                print("Cast.Channel onDurationChanged",duration)
+            }
+            .onStartTimeLive{ startTime in
+                print("Cast.Channel onStartTimeLive",startTime)
+            }
+            .onProgramChanged{ program in
+                print("Cast.Channel onProgramChanged",program)
+            }
+            .onSegmentMissing{ segment in
+                print("Cast.Channel onSegmentMissing",segment)
+            }
+            .onAutoplay { autoplay in
+                print("Cast.Channel onAutoplay",autoplay)
+            }
+            .onIsLive { isLive in
+                print("Cast.Channel onIsLive",isLive)
+            }
+            .onError{ error in
+                print("Cast.Channel onError",error)
+        }
+        
+        let customData = Cast.CustomData(environment: castEnvironment,
+                                         assetId: assetId,
+                                         programId: programId)
+        do {
+            let mediaInfo = GCKMediaInformation(contentID: assetId,
+                                                streamType: .none,
+                                                contentType: "video/mp4",
+                                                metadata: chromeCastMetaData(from: metaData),
+                                                streamDuration: 0,
+                                                mediaTracks: nil,
+                                                textTrackStyle: nil,
+                                                customData: nil)
+            
+            let mediaLoadOptions = GCKMediaLoadOptions()
+            mediaLoadOptions.customData = customData.toJson
+            
+            session
+                .remoteMediaClient?
+                .loadMedia(mediaInfo, with: mediaLoadOptions)
+        }
+        catch {
+            print("loadChromeCast",error)
+        }
+    }
+}
 
 class TVViewController: UIViewController {
 
@@ -21,6 +114,14 @@ class TVViewController: UIViewController {
     
     fileprivate var embeddedEpgController: PagedEPGViewController?
     
+    @IBOutlet weak var castButton: GCKUICastButton!
+    var castChannel: Channel = Channel()
+    var castSession: GCKCastSession?
+    
+    var hasActiveChromecastSession: Bool {
+        return GCKCastContext.sharedInstance().sessionManager.hasConnectedCastSession()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,6 +131,13 @@ class TVViewController: UIViewController {
 //            embeddedPlayerController.dynamicContentCategory = conf
             embeddedEpgController?.dynamicContentCategory = conf
         }
+        
+        let castButton = GCKUICastButton(frame: CGRect(x: CGFloat(0), y: CGFloat(0),
+                                                       width: CGFloat(24), height: CGFloat(24)))
+        castButton.apply(brand: brand)
+        var navItems = navigationItem.rightBarButtonItems
+        navItems?.append(UIBarButtonItem(customView: castButton))
+        navigationItem.rightBarButtonItems = navItems
         
         apply(brand: brand)
     }
@@ -43,6 +151,15 @@ class TVViewController: UIViewController {
         slidingMenuController?.toggleSlidingMenu()
     }
 }
+extension TVViewController: ChromeCaster {
+    var castEnvironment: Cast.Environment {
+        return Cast.Environment(baseUrl: viewModel.environment.baseUrl,
+                                customer: viewModel.environment.customer,
+                                businessUnit: viewModel.environment.businessUnit,
+                                sessionToken: viewModel.sessionToken.value)
+    }
+}
+
 extension TVViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -64,12 +181,18 @@ extension TVViewController {
                                                              sessionToken: viewModel.sessionToken)
                 destination.brand = brand
                 destination.dynamicContentCategory = dynamicContentCategory
-                destination.onPlaybackRequested = { [weak self] programId, channelId in
-                    if let programId = programId {
-                        self?.playerViewModel?.request(playback: .program(programId: programId, channelId: channelId))
+                destination.onPlaybackRequested = { [weak self] programId, channelId, metaData in
+                    guard let `self` = self else { return }
+                    if self.hasActiveChromecastSession {
+                        self.loadChromeCast(assetId: channelId, programId: programId, metaData: metaData)
                     }
                     else {
-                        self?.playerViewModel?.request(playback: .live(channelId: channelId))
+                        if let programId = programId {
+                            self.playerViewModel?.request(playback: .program(programId: programId, channelId: channelId))
+                        }
+                        else {
+                            self.playerViewModel?.request(playback: .live(channelId: channelId))
+                        }
                     }
                 }
             }
@@ -89,12 +212,12 @@ extension TVViewController: SlidingMenuDelegate {
 }
 
 extension TVViewController: AuthorizedEnvironment {
-    func authorize(environment: Environment, sessionToken: SessionToken) {
+    func authorize(environment: Exposure.Environment, sessionToken: SessionToken) {
         viewModel = ChannelListViewModel(environment: environment,
                                          sessionToken: sessionToken)
     }
     
-    var environment: Environment {
+    var environment: Exposure.Environment {
         return viewModel.environment
     }
     
@@ -107,5 +230,33 @@ extension TVViewController: AuthorizedEnvironment {
 extension TVViewController: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
         view.backgroundColor = brand.backdrop.primary
+        
+    }
+}
+
+
+extension TVViewController: GCKSessionManagerListener {
+    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
+        
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didEnd session: GCKSession, withError error: Error?) {
+        
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKCastSession) {
+        print("Cast.Channel connected")
+        session.add(castChannel)
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKCastSession) {
+        print("Cast.Channel disconnected")
+        session.remove(castChannel)
+    }
+}
+
+extension TVViewController: GCKRemoteMediaClientListener {
+    func remoteMediaClient(_ client: GCKRemoteMediaClient, didUpdate mediaStatus: GCKMediaStatus?) {
+        castChannel.refreshControls()
     }
 }

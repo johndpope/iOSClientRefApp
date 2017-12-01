@@ -17,6 +17,10 @@
 		762808CB1FCDCAAF005610DF /* EpgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808CA1FCDCAAF005610DF /* EpgViewController.swift */; };
 		762808D01FCECA39005610DF /* EpgUnavailableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808CE1FCECA39005610DF /* EpgUnavailableCell.swift */; };
 		762808D11FCECA39005610DF /* EpgUnavailableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 762808CF1FCECA39005610DF /* EpgUnavailableCell.xib */; };
+		7628091E1FD021A7005610DF /* Cast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7628091D1FD021A7005610DF /* Cast.framework */; };
+		7628091F1FD021A7005610DF /* Cast.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7628091D1FD021A7005610DF /* Cast.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		762809231FD026B7005610DF /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762809221FD026B6005610DF /* GoogleCast.framework */; };
+		762809241FD026B7005610DF /* GoogleCast.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 762809221FD026B6005610DF /* GoogleCast.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		762F0BF81FA7153D0051395E /* StretchyCarouselHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */; };
 		76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; };
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -190,6 +194,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				762809241FD026B7005610DF /* GoogleCast.framework in Embed Frameworks */,
 				76466FCA1FB05BDA007ECD5C /* Pageboy.framework in Embed Frameworks */,
 				76A844831EA7A23700BDAF2C /* Exposure.framework in Embed Frameworks */,
 				76A4171B1EDFEB2000677A46 /* Kingfisher.framework in Embed Frameworks */,
@@ -198,6 +203,7 @@
 				76A844801EA7A23700BDAF2C /* Utilities.framework in Embed Frameworks */,
 				76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */,
 				76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */,
+				7628091F1FD021A7005610DF /* Cast.framework in Embed Frameworks */,
 				76466FCD1FB05C17007ECD5C /* PureLayout.framework in Embed Frameworks */,
 				76466FC71FB05BCD007ECD5C /* Tabman.framework in Embed Frameworks */,
 			);
@@ -216,6 +222,9 @@
 		762808CA1FCDCAAF005610DF /* EpgViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgViewController.swift; sourceTree = "<group>"; };
 		762808CE1FCECA39005610DF /* EpgUnavailableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpgUnavailableCell.swift; sourceTree = "<group>"; };
 		762808CF1FCECA39005610DF /* EpgUnavailableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EpgUnavailableCell.xib; sourceTree = "<group>"; };
+		7628091D1FD021A7005610DF /* Cast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Cast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		762809221FD026B6005610DF /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = Carthage/Checkouts/iOSClientCast/GoogleCast/GoogleCast.framework; sourceTree = "<group>"; };
+		762809251FD02B87005610DF /* iOSReferenceApp-Swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOSReferenceApp-Swift-Bridging-Header.h"; sourceTree = "<group>"; };
 		762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyCarouselHeaderLayout.swift; sourceTree = "<group>"; };
 		76344F481F7AB3BC0034AEC0 /* Download.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Download.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewModel.swift; sourceTree = "<group>"; };
@@ -371,6 +380,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				762809231FD026B7005610DF /* GoogleCast.framework in Frameworks */,
 				76466FC91FB05BDA007ECD5C /* Pageboy.framework in Frameworks */,
 				76A844821EA7A23700BDAF2C /* Exposure.framework in Frameworks */,
 				76A4171A1EDFEB2000677A46 /* Kingfisher.framework in Frameworks */,
@@ -379,6 +389,7 @@
 				76A8447F1EA7A23700BDAF2C /* Utilities.framework in Frameworks */,
 				76A844851EA7A23700BDAF2C /* Alamofire.framework in Frameworks */,
 				76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */,
+				7628091E1FD021A7005610DF /* Cast.framework in Frameworks */,
 				76466FCC1FB05C17007ECD5C /* PureLayout.framework in Frameworks */,
 				76466FC61FB05BCD007ECD5C /* Tabman.framework in Frameworks */,
 			);
@@ -592,6 +603,8 @@
 		76A8439E1EA7856C00BDAF2C = {
 			isa = PBXGroup;
 			children = (
+				762809221FD026B6005610DF /* GoogleCast.framework */,
+				7628091D1FD021A7005610DF /* Cast.framework */,
 				76466FCB1FB05C17007ECD5C /* PureLayout.framework */,
 				76466FC81FB05BDA007ECD5C /* Pageboy.framework */,
 				76466FC51FB05BCD007ECD5C /* Tabman.framework */,
@@ -627,6 +640,7 @@
 				76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */,
 				76A843AA1EA7856C00BDAF2C /* AppDelegate.swift */,
 				F7061C601EC5BFAF0041E271 /* Constants.swift */,
+				762809251FD02B87005610DF /* iOSReferenceApp-Swift-Bridging-Header.h */,
 				76A843B11EA7856C00BDAF2C /* Assets.xcassets */,
 				F793A8421EC516A500DF7626 /* Dependencies */,
 				76A843B31EA7856C00BDAF2C /* LaunchScreen.storyboard */,
@@ -1470,7 +1484,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 147;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/iOSClientCast/GoogleCast",
+				);
 				INFOPLIST_FILE = iOSReferenceApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1492,7 +1509,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 147;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/iOSClientCast/GoogleCast",
+				);
 				INFOPLIST_FILE = iOSReferenceApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
