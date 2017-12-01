@@ -12,6 +12,8 @@ import Kingfisher
 import Player
 import AVKit
 import Download
+import Cast
+import GoogleCast
 
 class AssetDetailsViewController: UIViewController {
     
@@ -60,6 +62,8 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     
+    @IBOutlet weak var castButton: GCKUICastButton!
+    
     var presentedFrom: PresentedFrom = .other
     enum PresentedFrom {
         case offlineList
@@ -77,6 +81,9 @@ class AssetDetailsViewController: UIViewController {
         ratingsView.didFinishTouchingCosmos = { [weak self] rating in
             self?.viewModel.rate(value: rating)
         }
+        
+        castButton.apply(brand: brand)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

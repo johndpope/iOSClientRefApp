@@ -8,6 +8,16 @@
 
 import UIKit
 import Exposure
+import GoogleCast
+import Cast
+
+protocol CastController {
+    var castChannel: CastChannel { get }
+}
+
+extension CastController {
+    
+}
 
 class TVViewController: UIViewController {
 
@@ -30,6 +40,13 @@ class TVViewController: UIViewController {
 //            embeddedPlayerController.dynamicContentCategory = conf
             embeddedEpgController?.dynamicContentCategory = conf
         }
+        
+        let castButton = GCKUICastButton(frame: CGRect(x: CGFloat(0), y: CGFloat(0),
+                                                       width: CGFloat(24), height: CGFloat(24)))
+        castButton.apply(brand: brand)
+        var navItems = navigationItem.rightBarButtonItems
+        navItems?.append(UIBarButtonItem(customView: castButton))
+        navigationItem.rightBarButtonItems = navItems
         
         apply(brand: brand)
     }
@@ -107,5 +124,6 @@ extension TVViewController: AuthorizedEnvironment {
 extension TVViewController: DynamicAppearance {
     func apply(brand: Branding.ColorScheme) {
         view.backgroundColor = brand.backdrop.primary
+        
     }
 }

@@ -9,6 +9,7 @@
 import UIKit
 import Exposure
 import Kingfisher
+import GoogleCast
 
 class SingleCarouselViewController: UIViewController {
     
@@ -40,6 +41,12 @@ class SingleCarouselViewController: UIViewController {
             prepare(contentFrom: conf)
         }
         
+        let castButton = GCKUICastButton(frame: CGRect(x: CGFloat(0), y: CGFloat(0),
+                                                       width: CGFloat(24), height: CGFloat(24)))
+        castButton.apply(brand: brand)
+        var navItems = navigationItem.rightBarButtonItems
+        navItems?.append(UIBarButtonItem(customView: castButton))
+        navigationItem.rightBarButtonItems = navItems
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -14,6 +14,8 @@ import AVFoundation
 import Exposure
 import Analytics
 import MediaPlayer
+import Cast
+import GoogleCast
 
 class PlayerViewController: UIViewController {
     
@@ -30,6 +32,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var quickFastForwardButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var airplayButton: MPVolumeView!
+    @IBOutlet weak var castButton: GCKUICastButton!
     
     fileprivate var timelineUpdater: Timer?
     
@@ -240,5 +243,6 @@ extension PlayerViewController: DynamicAppearance {
         view.backgroundColor = brand.backdrop.primary
         timelineSlider.apply(brand: brand)
         timeLabel.textColor = brand.text.primary
+        castButton.apply(brand: brand)
     }
 }
