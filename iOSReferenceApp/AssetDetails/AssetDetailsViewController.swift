@@ -25,7 +25,6 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var ratingsView: CosmosView!
-    @IBOutlet weak var ratingStarStackView: UIStackView!
     @IBOutlet weak var productionYearLabel: UILabel!
     @IBOutlet weak var parentalRatingLabel: UILabel!
     
@@ -63,7 +62,7 @@ class AssetDetailsViewController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     
     @IBOutlet weak var castButton: GCKUICastButton!
-    var castChannel: CastChannel = CastChannel()
+    var castChannel: Channel = Channel()
     var castSession: GCKCastSession?
     
     var presentedFrom: PresentedFrom = .other
@@ -93,35 +92,35 @@ class AssetDetailsViewController: UIViewController {
         castSession?.remoteMediaClient?.add(self)
         castChannel
             .onTracksUpdated { tracksUpdated in
-                print("CastChannel onTracksUpdated",tracksUpdated.audio)
-                print("CastChannel onTracksUpdated",tracksUpdated.subtitles)
+                print("Cast.Channel onTracksUpdated",tracksUpdated.audio)
+                print("Cast.Channel onTracksUpdated",tracksUpdated.subtitles)
             }
             .onTimeshiftEnabled{ timeshift in
-                print("CastChannel onTimeshiftEnabled",timeshift)
+                print("Cast.Channel onTimeshiftEnabled",timeshift)
             }
             .onVolumeChanged { volumeChanged in
-                print("CastChannel onVolumeChanged",volumeChanged)
+                print("Cast.Channel onVolumeChanged",volumeChanged)
             }
             .onDurationChanged { duration in
-                print("CastChannel onDurationChanged",duration)
+                print("Cast.Channel onDurationChanged",duration)
             }
             .onStartTimeLive{ startTime in
-                print("CastChannel onStartTimeLive",startTime)
+                print("Cast.Channel onStartTimeLive",startTime)
             }
             .onProgramChanged{ program in
-                print("CastChannel onProgramChanged",program)
+                print("Cast.Channel onProgramChanged",program)
             }
             .onSegmentMissing{ segment in
-                print("CastChannel onSegmentMissing",segment)
+                print("Cast.Channel onSegmentMissing",segment)
             }
             .onAutoplay { autoplay in
-                print("CastChannel onAutoplay",autoplay)
+                print("Cast.Channel onAutoplay",autoplay)
             }
             .onIsLive { isLive in
-                print("CastChannel onIsLive",isLive)
+                print("Cast.Channel onIsLive",isLive)
             }
             .onError{ error in
-                print("CastChannel onError",error)
+                print("Cast.Channel onError",error)
         }
     }
     
@@ -203,10 +202,10 @@ class AssetDetailsViewController: UIViewController {
 extension AssetDetailsViewController {
     func loadChromeCast() {
         guard let session = GCKCastContext.sharedInstance().sessionManager.currentCastSession else { return }
-        let castEnvironment = CastEnvironment(baseUrl: viewModel.environment.apiUrl,
-                                              customer: viewModel.environment.customer,
-                                              businessUnit: viewModel.environment.businessUnit,
-                                              sessionToken: viewModel.sessionToken.value)
+        let castEnvironment = Cast.Environment(baseUrl: viewModel.environment.apiUrl,
+                                               customer: viewModel.environment.customer,
+                                               businessUnit: viewModel.environment.businessUnit,
+                                               sessionToken: viewModel.sessionToken.value)
         guard let assetId = viewModel.asset.assetId else { return }
         let customData = Cast.CustomData(environment: castEnvironment,
                                          assetId: assetId)
@@ -580,10 +579,10 @@ extension AssetDetailsViewController {
 
 // MARK: - AuthorizedEnvironment
 extension AssetDetailsViewController: AuthorizedEnvironment {
-    func authorize(environment: Environment, sessionToken: SessionToken) {
+    func authorize(environment: Exposure.Environment, sessionToken: SessionToken) {
         viewModel.authorize(environment: environment, sessionToken: sessionToken)
     }
-    var environment: Environment {
+    var environment: Exposure.Environment {
         return viewModel.environment
     }
     
@@ -637,12 +636,12 @@ extension AssetDetailsViewController: GCKSessionManagerListener {
     }
     
     func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKCastSession) {
-        print("CastChannel connected")
+        print("Cast.Channel connected")
         session.add(castChannel)
     }
     
     func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKCastSession) {
-        print("CastChannel disconnected")
+        print("Cast.Channel disconnected")
         session.remove(castChannel)
     }
 }

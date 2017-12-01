@@ -12,7 +12,7 @@ import GoogleCast
 import Cast
 
 protocol CastController {
-    var castChannel: CastChannel { get }
+    var castChannel: Channel { get }
 }
 
 extension CastController {

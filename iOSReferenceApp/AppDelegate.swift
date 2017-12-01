@@ -106,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return [environmentViewController, loginViewController, masterViewController]
     }
     
-    func retrieveDynamicCustomerConfig(for environment: Environment, callback: @escaping (DynamicCustomerConfig?) -> Void) {
+    func retrieveDynamicCustomerConfig(for environment: Exposure.Environment, callback: @escaping (DynamicCustomerConfig?) -> Void) {
         
         ApplicationConfig(environment: environment)
             .fetchFile(fileName: "main.json") {
