@@ -11,7 +11,7 @@ import Exposure
 
 class EpgViewController: UIViewController {
 
-    var didSelectEpg: (_ program: String?, _ channel: String) -> Void = { _,_ in }
+    var didSelectEpg: (_ program: String?, _ channel: String, _ metaData: Asset?) -> Void = { _,_,_ in }
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
     var nowPlayingIndex: Int?
@@ -106,12 +106,13 @@ extension EpgViewController:  UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if viewModel.epgAvailable {
+            let program = viewModel.content[indexPath.row].program
             guard let programId = viewModel.content[indexPath.row].program.assetId else { return }
-            didSelectEpg(programId, viewModel.channelId)
+            didSelectEpg(programId, viewModel.channelId, program.asset)
             mark(index: indexPath.row, playing: true)
         }
         else {
-            didSelectEpg(nil, viewModel.channelId)
+            didSelectEpg(nil, viewModel.channelId, viewModel.asset)
         }
     }
 }

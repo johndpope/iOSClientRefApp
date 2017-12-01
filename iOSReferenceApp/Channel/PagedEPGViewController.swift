@@ -16,7 +16,7 @@ class PagedEPGViewController: TabmanViewController {
     var viewModel: ChannelListViewModel!
     fileprivate(set) var viewControllers: [EpgViewController] = []
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
-    var onPlaybackRequested: (_ program: String?, _ channel: String) -> Void = { _,_ in }
+    var onPlaybackRequested: (_ program: String?, _ channel: String, _ metaData: Asset?) -> Void = { _,_,_ in }
     
     fileprivate var loadStatus: Status = .initial
     enum Status {
@@ -82,9 +82,9 @@ class PagedEPGViewController: TabmanViewController {
                                             sessionToken: sessionToken)
             epgViewController.brand = brand
             epgViewController.viewModel.asset = asset
-            epgViewController.didSelectEpg = { [weak self] programId, channelId in
+            epgViewController.didSelectEpg = { [weak self] programId, channelId, metaData in
                 self?.unselectAll(besides: epgViewController)
-                self?.onPlaybackRequested(programId, channelId)
+                self?.onPlaybackRequested(programId, channelId, metaData)
             }
             return epgViewController
         }
@@ -133,7 +133,7 @@ extension PagedEPGViewController: PageboyViewControllerDataSource {
             let channelId = epgVc.viewModel.channelId
             epgVc.scrollToLiveOrActive(animated: true)
             epgVc.nowPlayingIndex = epgVc.viewModel.currentlyLive()?.row
-            onPlaybackRequested(nil,channelId)
+            onPlaybackRequested(nil,channelId,epgVc.viewModel.asset)
             loadStatus = .loaded
         default:
             return
