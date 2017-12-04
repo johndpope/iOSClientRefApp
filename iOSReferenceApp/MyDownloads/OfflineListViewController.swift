@@ -43,14 +43,10 @@ class OfflineListViewController: UIViewController, AssetDetailsPresenter {
         
         apply(brand: brand)
         navigationController?.apply(brand: brand)
-//        navigationController?.setNavigationBarHidden(false, animated: true)
-//        navigationController?.navigationBar.apply(brand: viewModel.brand)
-        navigationItem.apply(brand: brand)//.leftBarButtonItems?.forEach { $0.apply(brand: viewModel.brand) }
         tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-//        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     
@@ -73,7 +69,7 @@ extension OfflineListViewController {
             if let destination = segue.destination as? PlayerViewController, let assetId = sender as? String {
                 destination.viewModel = PlayerViewModel(sessionToken: sessionToken,
                                                         environment: environment,
-                                                        playRequest: .offline(assetId: assetId))
+                                                        playRequest: .offline(assetId: assetId, metaData: nil))
                 destination.brand = brand
             }
         }

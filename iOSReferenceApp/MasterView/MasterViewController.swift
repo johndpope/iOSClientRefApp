@@ -11,33 +11,13 @@ import Exposure
 import Kingfisher
 
 class MasterViewController: UIViewController {
-
-    struct MenuConstants {
-        let defaultInset: CGFloat = 0
-        let maxInset: CGFloat = 320
-        let maxPercentInset: CGFloat = 0.70
-        
-        func inset(for width: CGFloat) -> CGFloat {
-            let percent = width*maxPercentInset
-            return percent > maxInset ? maxInset : percent
-        }
-    }
-    
-
-
-    fileprivate let menuConstants = MenuConstants()
+    let interactor = Interactor()
     
     @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var contentContainer: UIView!
     
-    fileprivate var menuController: MainMenuViewController!
-    
     fileprivate var contentNavContainer: UINavigationController!
     
-    var animator: UIDynamicAnimator!
-    var itemBehavior: UIDynamicItemBehavior!
-    var snapBehavior: UISnapBehavior!
-    var attachmentBehavior: UIAttachmentBehavior!
     
     var environment: Environment!
     var sessionToken: SessionToken!
@@ -46,20 +26,19 @@ class MasterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        animator = UIDynamicAnimator(referenceView: view)
-        itemBehavior = UIDynamicItemBehavior(items: [contentContainer])
-        itemBehavior.allowsRotation = false
         blurView.effect = nil
-        
-        menuController.dynamicCustomerConfig = dynamicCustomerConfig
-        
     }
     
+    var activeContentIndex: Int? = 0
     var dynamicCustomerConfig: DynamicCustomerConfig? {
         didSet {
-            menuController?.dynamicCustomerConfig = dynamicCustomerConfig
-            if let brand = dynamicCustomerConfig?.colorScheme {
-                apply(brand: brand)
+            if let dynamicConfig = dynamicCustomerConfig {
+                apply(brand: dynamicConfig.colorScheme)
+                
+                let contentCategory = MainMenuViewModel
+                    .resolveHomeViewModel(for: dynamicConfig.carouselGroupId)
+                    .dynamicContent
+                createNewCarousel(from: contentCategory)
             }
         }
     }
@@ -118,60 +97,11 @@ class MasterViewController: UIViewController {
         navigationItem.hidesBackButton = true
         
         apply(brand: brand)
-        
-        menuController.constrain(width: menuConstants.inset(for: view.bounds.size.width))
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    @IBAction func blurViewTapAction(_ sender: UITapGestureRecognizer) {
-        toggleSlidingMenu()
-    }
-    
-    @IBAction func blurViewSwipeAction(_ sender: UIPanGestureRecognizer) {
-        let location = sender.translation(in: view)
-        switch sender.state {
-        case .began:
-            let anchor = CGPoint(x: snapBehavior.snapPoint.x, y: view.bounds.midY)
-            let vector = CGVector(dx: 1, dy: 0)
-            attachmentBehavior = UIAttachmentBehavior.slidingAttachment(with: contentContainer, attachmentAnchor: anchor, axisOfTranslation: vector)
-            attachmentBehavior.attachmentRange = UIFloatRange(minimum: 0, maximum: 100)
-            
-            animator.addBehavior(attachmentBehavior)
-            
-        case .ended:
-            let maxOffset = menuConstants.inset(for: view.bounds.size.width)
-            if maxOffset+location.x < 0.75*maxOffset {
-                // Hide menu
-                animator.removeBehavior(attachmentBehavior)
-                menuOpen = false
-                blurView.isUserInteractionEnabled = false
-                
-                
-                let x = contentContainer.bounds.midX
-                let y = contentContainer.frame.midY
-                
-                animator.addBehavior(snapBehavior)
-                snapBehavior.snapPoint = CGPoint(x: x, y: y)
-                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: { [weak self] in
-                    self?.blurView.effect = nil
-                })
-            }
-            else {
-                // Keep menu
-                let x = contentContainer.bounds.midX + menuConstants.inset(for: view.bounds.size.width)
-                let y = contentContainer.frame.midY
-                
-                animator.removeBehavior(attachmentBehavior)
-                
-                animator.addBehavior(snapBehavior)
-                snapBehavior.snapPoint = CGPoint(x: x, y: y)
-            }
-        default:
-            attachmentBehavior.anchorPoint = CGPoint(x: snapBehavior.snapPoint.x+location.x, y: view.bounds.midY)
-        }
     }
     
     enum Segue: String {
@@ -194,33 +124,18 @@ extension MasterViewController: SlidingMenuController {
     func openMenu() {
         guard !menuOpen else { return }
         menuOpen = true
-        blurView.isUserInteractionEnabled = true
-        animator.removeAllBehaviors()
+//        blurView.isUserInteractionEnabled = true
+//        blurView.effect = UIBlurEffect(style: .dark)
         
-        let x = contentContainer.frame.midX + menuConstants.inset(for: view.bounds.size.width)
-        let y = contentContainer.frame.midY
-        
-        snapBehavior = UISnapBehavior(item: contentContainer, snapTo: CGPoint(x: x, y: y))
-        snapBehavior.damping = 0.75
-        animator.addBehavior(snapBehavior)
-        
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: { [weak self] in
-            self?.blurView.effect = UIBlurEffect(style: .dark)
-        })
-
+        performSegue(withIdentifier: "masterToMainMenu", sender: nil)
     }
     func closeMenu() {
         guard menuOpen else { return }
         menuOpen = false
-        blurView.isUserInteractionEnabled = false
+//        blurView.isUserInteractionEnabled = false
+//        blurView.effect = nil
         
-        let x = contentContainer.frame.midX - menuConstants.inset(for: view.bounds.size.width)
-        let y = contentContainer.frame.midY
-        
-        snapBehavior.snapPoint = CGPoint(x: x, y: y)
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: { [weak self] in
-            self?.blurView.effect = nil
-        })
+        dismiss(animated: true)
     }
 }
 
@@ -243,19 +158,30 @@ extension MasterViewController {
             configure(carouselController: destination)
         }
         else if segue.identifier == Segue.masterToMainMenu.rawValue, let destination = segue.destination as? MainMenuViewController {
-            menuController = destination
+            destination.dynamicCustomerConfig = dynamicCustomerConfig
+            destination.transitioningDelegate = self
             destination.authorize(environment: environment,
                                   sessionToken: sessionToken)
+            destination.initailyActiveContentIndex = activeContentIndex
+            
+            destination.interactor = interactor
+            destination.closeMenu = { [weak self] in
+                self?.closeMenu()
+            }
             destination.selectedOtherSegue = { [weak self] segue in
+                self?.activeContentIndex = nil
                 switch segue {
                 case .myDownloads:
                     self?.closeMenu()
                     self?.configureMyDownloads()
                 }
             }
-            destination.selectedContentSegue = { [weak self] dynamicContentCategory in
+            destination.selectedContentSegue = { [weak self] dynamicContentCategory, index in
                 self?.closeMenu()
-                self?.createNewCarousel(from: dynamicContentCategory)
+                if self?.activeContentIndex != index {
+                    self?.activeContentIndex = index
+                    self?.createNewCarousel(from: dynamicContentCategory)
+                }
             }
         }
     }
@@ -269,6 +195,24 @@ extension MasterViewController {
                                  sessionToken: sessionToken)
         viewController.brand = brand
         contentNavContainer.setViewControllers([viewController], animated: true)
+    }
+}
+
+extension MasterViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return PresentMenuAnimator()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissMenuAnimator()
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStarted ? interactor : nil
+    }
+    
+    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStarted ? interactor : nil
     }
 }
 

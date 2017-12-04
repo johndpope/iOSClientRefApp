@@ -11,10 +11,10 @@ import Exposure
 
 class PlayerViewModel {
     enum PlayRequest {
-        case vod(assetId: String)
-        case live(channelId: String)
-        case program(programId: String, channelId: String)
-        case offline(assetId: String)
+        case vod(assetId: String, metaData: Asset?)
+        case live(channelId: String, metaData: Asset?)
+        case program(programId: String, channelId: String, metaData: Asset?)
+        case offline(assetId: String, metaData: Asset?)
     }
     
     var onPlaybackRequested: (PlayRequest) -> Void = { _ in }

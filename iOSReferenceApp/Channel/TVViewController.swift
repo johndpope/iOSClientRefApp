@@ -16,6 +16,7 @@ protocol ChromeCaster: GCKSessionManagerListener, GCKRemoteMediaClientListener {
     var castChannel: Channel { get set }
     
     var castEnvironment: Cast.Environment { get }
+    var hasActiveChromecastSession: Bool { get }
 }
 
 extension ChromeCaster {
@@ -78,27 +79,29 @@ extension ChromeCaster {
         
         let customData = Cast.CustomData(environment: castEnvironment,
                                          assetId: assetId,
-                                         programId: programId)
-        do {
-            let mediaInfo = GCKMediaInformation(contentID: assetId,
-                                                streamType: .none,
-                                                contentType: "video/mp4",
-                                                metadata: chromeCastMetaData(from: metaData),
-                                                streamDuration: 0,
-                                                mediaTracks: nil,
-                                                textTrackStyle: nil,
-                                                customData: nil)
-            
-            let mediaLoadOptions = GCKMediaLoadOptions()
-            mediaLoadOptions.customData = customData.toJson
-            
-            session
-                .remoteMediaClient?
-                .loadMedia(mediaInfo, with: mediaLoadOptions)
-        }
-        catch {
-            print("loadChromeCast",error)
-        }
+                                         programId: programId,
+                                         useLastViewedOffset: true)
+        let mediaInfo = GCKMediaInformation(contentID: assetId,
+                                            streamType: .none,
+                                            contentType: "video/mp4",
+                                            metadata: chromeCastMetaData(from: metaData),
+                                            streamDuration: 0,
+                                            mediaTracks: nil,
+                                            textTrackStyle: nil,
+                                            customData: nil)
+        
+        let mediaLoadOptions = GCKMediaLoadOptions()
+        mediaLoadOptions.customData = customData.toJson
+        
+        print(customData.toJson)
+        
+        session
+            .remoteMediaClient?
+            .loadMedia(mediaInfo, with: mediaLoadOptions)
+    }
+    
+    var hasActiveChromecastSession: Bool {
+        return GCKCastContext.sharedInstance().sessionManager.hasConnectedCastSession()
     }
 }
 
@@ -117,10 +120,6 @@ class TVViewController: UIViewController {
     @IBOutlet weak var castButton: GCKUICastButton!
     var castChannel: Channel = Channel()
     var castSession: GCKCastSession?
-    
-    var hasActiveChromecastSession: Bool {
-        return GCKCastContext.sharedInstance().sessionManager.hasConnectedCastSession()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,17 +150,8 @@ class TVViewController: UIViewController {
         slidingMenuController?.toggleSlidingMenu()
     }
 }
-extension TVViewController: ChromeCaster {
-    var castEnvironment: Cast.Environment {
-        return Cast.Environment(baseUrl: viewModel.environment.baseUrl,
-                                customer: viewModel.environment.customer,
-                                businessUnit: viewModel.environment.businessUnit,
-                                sessionToken: viewModel.sessionToken.value)
-    }
-}
 
 extension TVViewController {
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embeddedPlayerView" {
             if let destination = segue.destination as? PlayerViewController {
@@ -169,8 +159,12 @@ extension TVViewController {
                 destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
                                                         environment: viewModel.environment)
                 destination.brand = brand
+                destination.presentationMode = .embedded
                 playerViewModel = destination.viewModel
-//                destination.dynamicContentCategory = dynamicContentCategory
+                
+                destination.onChromeCastRequested = { [weak self] programId, assetId, metaData in
+                    self?.loadChromeCast(assetId: assetId, programId: programId, metaData: metaData)
+                }
             }
         }
         else if segue.identifier == "embeddedEpgView" {
@@ -188,10 +182,10 @@ extension TVViewController {
                     }
                     else {
                         if let programId = programId {
-                            self.playerViewModel?.request(playback: .program(programId: programId, channelId: channelId))
+                            self.playerViewModel?.request(playback: .program(programId: programId, channelId: channelId, metaData: metaData))
                         }
                         else {
-                            self.playerViewModel?.request(playback: .live(channelId: channelId))
+                            self.playerViewModel?.request(playback: .live(channelId: channelId, metaData: metaData))
                         }
                     }
                 }
@@ -206,10 +200,17 @@ extension TVViewController {
     }
 }
 
-
-extension TVViewController: SlidingMenuDelegate {
-    
+extension TVViewController {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        let newMode: PlayerViewController.Mode = size.width > size.height ? .standalone : .embedded
+        embeddedPlayerController?.presentationMode = newMode
+        embeddedPlayerController?.configure(for: newMode)
+        
+        navigationController?.setNavigationBarHidden(newMode == .standalone, animated: true)
+    }
 }
+
+extension TVViewController: SlidingMenuDelegate { }
 
 extension TVViewController: AuthorizedEnvironment {
     func authorize(environment: Exposure.Environment, sessionToken: SessionToken) {
@@ -235,6 +236,15 @@ extension TVViewController: DynamicAppearance {
 }
 
 
+extension TVViewController: ChromeCaster {
+    var castEnvironment: Cast.Environment {
+        return Cast.Environment(baseUrl: viewModel.environment.baseUrl,
+                                customer: viewModel.environment.customer,
+                                businessUnit: viewModel.environment.businessUnit,
+                                sessionToken: viewModel.sessionToken.value)
+    }
+}
+
 extension TVViewController: GCKSessionManagerListener {
     func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
         
@@ -251,6 +261,7 @@ extension TVViewController: GCKSessionManagerListener {
     
     func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKCastSession) {
         print("Cast.Channel disconnected")
+        
         session.remove(castChannel)
     }
 }
@@ -260,3 +271,4 @@ extension TVViewController: GCKRemoteMediaClientListener {
         castChannel.refreshControls()
     }
 }
+
