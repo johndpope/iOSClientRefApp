@@ -104,7 +104,9 @@ class PlayerViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         stopTimelineUpdate()
     }
-    
+}
+
+extension PlayerViewController {
     // MARK: Actions
     @IBAction func actionBack(_ sender: UIButton) {
         player.stop()

@@ -207,6 +207,8 @@ extension TVViewController {
         let newMode: PlayerViewController.Mode = size.width > size.height ? .standalone : .embedded
         embeddedPlayerController?.presentationMode = newMode
         embeddedPlayerController?.configure(for: newMode)
+        
+        navigationController?.setNavigationBarHidden(newMode == .standalone, animated: true)
     }
 }
 
