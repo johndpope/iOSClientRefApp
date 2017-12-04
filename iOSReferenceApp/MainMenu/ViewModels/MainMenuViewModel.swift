@@ -74,8 +74,12 @@ class MainMenuViewModel {
         rows.forEach{ $0.brand = brand }
     }
     
+    static func resolveHomeViewModel(for carouselId: String?) -> MainMenuContentViewModel {
+        return MainMenuContentViewModel(dynamicContent: resolveHomeCategory(with: carouselId), active: true)
+    }
+    
     private func fakeCarouselResponse(with carouselId: String?) -> [MainMenuContentViewModel] {
-        let home = MainMenuContentViewModel(dynamicContent: resolveHomeCategory(with: carouselId), active: true)
+        let home = MainMenuViewModel.resolveHomeViewModel(for: carouselId)
         let tv = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "TV", presentation: .tabbedEpg, content: .channels))
         let movies = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Movies", presentation: .multiCarousel, content: .movies))
         let documentaries = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Documentaries", presentation: .multiCarousel, content: .documentaries))
@@ -86,7 +90,7 @@ class MainMenuViewModel {
         return [home, tv, movies, documentaries, kids, clips, omegaPoint]
     }
     
-    private func resolveHomeCategory(with carouselId: String?) -> DynamicContentCategory {
+    private static func resolveHomeCategory(with carouselId: String?) -> DynamicContentCategory {
         guard let carouselId = carouselId else {
             return FakeDynamicContentCarousel(title: "Home", presentation: .multiCarousel, content: .home)
         }
@@ -144,11 +148,11 @@ class MainMenuViewModel {
 }
 
 extension MainMenuViewModel {
-    func select(contentAt index: Int) {
+    func select(contentAt index: Int?) {
         let rows = sections[1].rows
         (0..<rows.count).forEach{
             if let viewModel = rows[$0] as? MainMenuContentViewModel {
-                viewModel.isActive = $0 == index
+                viewModel.isActive = (index != nil ? $0 == index : false)
             }
         }
     }

@@ -43,14 +43,10 @@ class OfflineListViewController: UIViewController, AssetDetailsPresenter {
         
         apply(brand: brand)
         navigationController?.apply(brand: brand)
-//        navigationController?.setNavigationBarHidden(false, animated: true)
-//        navigationController?.navigationBar.apply(brand: viewModel.brand)
-        navigationItem.apply(brand: brand)//.leftBarButtonItems?.forEach { $0.apply(brand: viewModel.brand) }
         tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-//        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     

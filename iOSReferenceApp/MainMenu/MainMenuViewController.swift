@@ -57,20 +57,41 @@ class MainMenuViewController: UIViewController {
         }
     }
     
+    
+    var initailyActiveContentIndex: Int? = nil
+    var closeMenu: () -> Void = { }
     var selectedOtherSegue: (Segue.Other) -> Void = { _ in }
-    var selectedContentSegue: (DynamicContentCategory) -> Void = { _ in }
+    var selectedContentSegue: (DynamicContentCategory, Int) -> Void = { _ in }
     
     @IBOutlet weak var serviceLogo: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var logoWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var logoAspectRationConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tableViewWIdthConstraint: NSLayoutConstraint!
     
     var dynamicCustomerConfig: DynamicCustomerConfig?
     var viewModel: MainMenuViewModel!
     
     var brand: Branding.ColorScheme {
         return dynamicCustomerConfig?.colorScheme ?? Branding.ColorScheme.default
+    }
+    
+    
+    var interactor:Interactor? = nil
+    @IBAction func panGestureAction(_ sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: view)
+        
+        let progress = MenuHelper.calculateProgress(translation, viewBounds: view.bounds, direction: .left)
+        
+        MenuHelper.mapGestureStateToInteractor(
+            sender.state,
+            progress: progress,
+            interactor: interactor){
+                self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func closeMenuAction(_ sender: UIButton) {
+        closeMenu()
     }
     
     override func viewDidLoad() {
@@ -84,15 +105,6 @@ class MainMenuViewController: UIViewController {
         if let conf = dynamicCustomerConfig {
             process(dynamicCustomerConfig: conf)
         }
-        else {
-            ApplicationConfig(environment: viewModel.environment)
-                .fetchFile(fileName: "main.json") { [weak self] file in
-                    if let jsonData = file?.config, let dynamicConfig = DynamicCustomerConfig(json: jsonData) {
-                        self?.dynamicCustomerConfig = dynamicConfig
-                        self?.process(dynamicCustomerConfig: dynamicConfig)
-                    }
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -104,6 +116,17 @@ class MainMenuViewController: UIViewController {
         super.viewWillAppear(animated)
         apply(brand: brand)
     }
+    
+    func delay(seconds: Double, completion:@escaping ()->()) {
+        let popTime = DispatchTime.now() + Double(Int64( Double(NSEC_PER_SEC) * seconds )) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: popTime) {
+            completion()
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        closeMenu()
+    }
 }
 
 extension MainMenuViewController {
@@ -111,8 +134,7 @@ extension MainMenuViewController {
         apply(brand: dynamicCustomerConfig.colorScheme)
         viewModel.updateDynamicContent(with: dynamicCustomerConfig)
         tableView.reloadData()
-        viewModel.select(contentAt: 0)
-        triggerAction(for: viewModel.homeContentViewModel, at: IndexPath(item: 0, section: 1))
+        viewModel.select(contentAt: initailyActiveContentIndex)
         
         if let logoString = dynamicCustomerConfig.logoUrl, let logoUrl = URL(string: logoString) {
             serviceLogo
@@ -144,14 +166,6 @@ extension MainMenuViewController: AuthorizedEnvironment {
 }
 
 extension MainMenuViewController {
-    func constrain(width: CGFloat) {
-        logoWidthConstraint.constant = width
-        tableViewWIdthConstraint.constant = width
-        view.layoutIfNeeded()
-    }
-}
-
-extension MainMenuViewController {
     func actionLogout() {
         defer {
             UserInfo.clear()
@@ -174,8 +188,9 @@ extension MainMenuViewController: UITableViewDelegate {
                 actionLogout()
             case .content(segue: let segue):
                 viewModel.select(contentAt: indexPath.row)
-                selectedContentSegue(segue)
+                selectedContentSegue(segue, indexPath.row)
             case .other(segue: let segue):
+                viewModel.select(contentAt: nil)
                 selectedOtherSegue(segue)
             case .none: return
             }
