@@ -69,7 +69,7 @@ extension OfflineListViewController {
             if let destination = segue.destination as? PlayerViewController, let assetId = sender as? String {
                 destination.viewModel = PlayerViewModel(sessionToken: sessionToken,
                                                         environment: environment,
-                                                        playRequest: .offline(assetId: assetId))
+                                                        playRequest: .offline(assetId: assetId, metaData: nil))
                 destination.brand = brand
             }
         }
