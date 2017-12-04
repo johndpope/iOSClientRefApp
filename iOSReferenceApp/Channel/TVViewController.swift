@@ -78,7 +78,8 @@ extension ChromeCaster {
         
         let customData = Cast.CustomData(environment: castEnvironment,
                                          assetId: assetId,
-                                         programId: programId)
+                                         programId: programId,
+                                         useLastViewedOffset: true)
         do {
             let mediaInfo = GCKMediaInformation(contentID: assetId,
                                                 streamType: .none,
