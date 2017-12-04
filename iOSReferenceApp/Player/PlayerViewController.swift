@@ -31,12 +31,20 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var timelineSlider: UISlider!
     @IBOutlet weak var quickFastForwardButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
+    
+    
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var airplayButton: MPVolumeView!
     @IBOutlet weak var castButton: GCKUICastButton!
     
     fileprivate var timelineUpdater: Timer?
-    
     var onDismissed: () -> Void = { _ in }
+    
+    var presentationMode: Mode = .standalone
+    enum Mode {
+        case standalone
+        case embedded
+    }
     
     override func viewDidLoad() {
         player = Player(environment: viewModel.environment,
@@ -74,11 +82,21 @@ class PlayerViewController: UIViewController {
         airplayButton.showsVolumeSlider = false
     }
     
-    
+    func configure(for presentationMode: Mode) {
+        switch presentationMode {
+        case .standalone:
+            castButton.isHidden = false
+            backButton.isHidden = false
+        case .embedded:
+            castButton.isHidden = true
+            backButton.isHidden = true
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        configure(for: presentationMode)
         player.configure(playerView: playerView)
         apply(brand: brand)
     }
@@ -144,23 +162,16 @@ extension PlayerViewController {
 
     private func stream(vod assetId: String) {
         player
-//            .analytics(using: viewModel.sessionToken,
-//                       in: viewModel.environment)
             .sessionShift(enabled: true)
             .stream(vod: assetId)
     }
     
     private func stream(live channelId: String) {
-        player
-//            .analytics(using: viewModel.sessionToken,
-//                       in: viewModel.environment)
-            .stream(live: channelId)
+        player.stream(live: channelId)
     }
     
     private func stream(program programId: String, channel channelId: String) {
         player
-//            .analytics(using: viewModel.sessionToken,
-//                       in: viewModel.environment)
             .sessionShift(enabled: true)
             .stream(programId: programId,
                     channelId: channelId)

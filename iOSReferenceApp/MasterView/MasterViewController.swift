@@ -34,6 +34,10 @@ class MasterViewController: UIViewController {
     
     fileprivate var contentNavContainer: UINavigationController!
     
+    
+    @IBOutlet weak var trailingContentConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leadingContentConstraint: NSLayoutConstraint!
+    
     var animator: UIDynamicAnimator!
     var itemBehavior: UIDynamicItemBehavior!
     var snapBehavior: UISnapBehavior!
@@ -131,47 +135,47 @@ class MasterViewController: UIViewController {
     }
     
     @IBAction func blurViewSwipeAction(_ sender: UIPanGestureRecognizer) {
-        let location = sender.translation(in: view)
-        switch sender.state {
-        case .began:
-            let anchor = CGPoint(x: snapBehavior.snapPoint.x, y: view.bounds.midY)
-            let vector = CGVector(dx: 1, dy: 0)
-            attachmentBehavior = UIAttachmentBehavior.slidingAttachment(with: contentContainer, attachmentAnchor: anchor, axisOfTranslation: vector)
-            attachmentBehavior.attachmentRange = UIFloatRange(minimum: 0, maximum: 100)
-            
-            animator.addBehavior(attachmentBehavior)
-            
-        case .ended:
-            let maxOffset = menuConstants.inset(for: view.bounds.size.width)
-            if maxOffset+location.x < 0.75*maxOffset {
-                // Hide menu
-                animator.removeBehavior(attachmentBehavior)
-                menuOpen = false
-                blurView.isUserInteractionEnabled = false
-                
-                
-                let x = contentContainer.bounds.midX
-                let y = contentContainer.frame.midY
-                
-                animator.addBehavior(snapBehavior)
-                snapBehavior.snapPoint = CGPoint(x: x, y: y)
-                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: { [weak self] in
-                    self?.blurView.effect = nil
-                })
-            }
-            else {
-                // Keep menu
-                let x = contentContainer.bounds.midX + menuConstants.inset(for: view.bounds.size.width)
-                let y = contentContainer.frame.midY
-                
-                animator.removeBehavior(attachmentBehavior)
-                
-                animator.addBehavior(snapBehavior)
-                snapBehavior.snapPoint = CGPoint(x: x, y: y)
-            }
-        default:
-            attachmentBehavior.anchorPoint = CGPoint(x: snapBehavior.snapPoint.x+location.x, y: view.bounds.midY)
-        }
+//        let location = sender.translation(in: view)
+//        switch sender.state {
+//        case .began:
+//            let anchor = CGPoint(x: snapBehavior.snapPoint.x, y: view.bounds.midY)
+//            let vector = CGVector(dx: 1, dy: 0)
+//            attachmentBehavior = UIAttachmentBehavior.slidingAttachment(with: contentContainer, attachmentAnchor: anchor, axisOfTranslation: vector)
+//            attachmentBehavior.attachmentRange = UIFloatRange(minimum: 0, maximum: 100)
+//
+//            animator.addBehavior(attachmentBehavior)
+//
+//        case .ended:
+//            let maxOffset = menuConstants.inset(for: view.bounds.size.width)
+//            if maxOffset+location.x < 0.75*maxOffset {
+//                // Hide menu
+//                animator.removeBehavior(attachmentBehavior)
+//                menuOpen = false
+//                blurView.isUserInteractionEnabled = false
+//
+//
+//                let x = contentContainer.bounds.midX
+//                let y = contentContainer.frame.midY
+//
+//                animator.addBehavior(snapBehavior)
+//                snapBehavior.snapPoint = CGPoint(x: x, y: y)
+//                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: { [weak self] in
+//                    self?.blurView.effect = nil
+//                })
+//            }
+//            else {
+//                // Keep menu
+//                let x = contentContainer.bounds.midX + menuConstants.inset(for: view.bounds.size.width)
+//                let y = contentContainer.frame.midY
+//
+//                animator.removeBehavior(attachmentBehavior)
+//
+//                animator.addBehavior(snapBehavior)
+//                snapBehavior.snapPoint = CGPoint(x: x, y: y)
+//            }
+//        default:
+//            attachmentBehavior.anchorPoint = CGPoint(x: snapBehavior.snapPoint.x+location.x, y: view.bounds.midY)
+//        }
     }
     
     enum Segue: String {
@@ -195,18 +199,25 @@ extension MasterViewController: SlidingMenuController {
         guard !menuOpen else { return }
         menuOpen = true
         blurView.isUserInteractionEnabled = true
-        animator.removeAllBehaviors()
         
-        let x = contentContainer.frame.midX + menuConstants.inset(for: view.bounds.size.width)
-        let y = contentContainer.frame.midY
+        leadingContentConstraint.constant = menuConstants.inset(for: view.bounds.size.width)
+        trailingContentConstraint.constant = menuConstants.inset(for: view.bounds.size.width)
         
-        snapBehavior = UISnapBehavior(item: contentContainer, snapTo: CGPoint(x: x, y: y))
-        snapBehavior.damping = 0.75
-        animator.addBehavior(snapBehavior)
-        
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: { [weak self] in
-            self?.blurView.effect = UIBlurEffect(style: .dark)
-        })
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
+//        animator.removeAllBehaviors()
+//
+//        let x = contentContainer.frame.midX + menuConstants.inset(for: view.bounds.size.width)
+//        let y = contentContainer.frame.midY
+//
+//        snapBehavior = UISnapBehavior(item: contentContainer, snapTo: CGPoint(x: x, y: y))
+//        snapBehavior.damping = 0.75
+//        animator.addBehavior(snapBehavior)
+//
+//        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: { [weak self] in
+//            self?.blurView.effect = UIBlurEffect(style: .dark)
+//        })
 
     }
     func closeMenu() {
@@ -214,13 +225,19 @@ extension MasterViewController: SlidingMenuController {
         menuOpen = false
         blurView.isUserInteractionEnabled = false
         
-        let x = contentContainer.frame.midX - menuConstants.inset(for: view.bounds.size.width)
-        let y = contentContainer.frame.midY
+        leadingContentConstraint.constant = 0
+        trailingContentConstraint.constant = 0
         
-        snapBehavior.snapPoint = CGPoint(x: x, y: y)
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: { [weak self] in
-            self?.blurView.effect = nil
-        })
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
+//        let x = contentContainer.frame.midX - menuConstants.inset(for: view.bounds.size.width)
+//        let y = contentContainer.frame.midY
+//
+//        snapBehavior.snapPoint = CGPoint(x: x, y: y)
+//        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: { [weak self] in
+//            self?.blurView.effect = nil
+//        })
     }
 }
 

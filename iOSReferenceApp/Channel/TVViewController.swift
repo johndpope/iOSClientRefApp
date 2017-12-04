@@ -80,26 +80,21 @@ extension ChromeCaster {
                                          assetId: assetId,
                                          programId: programId,
                                          useLastViewedOffset: true)
-        do {
-            let mediaInfo = GCKMediaInformation(contentID: assetId,
-                                                streamType: .none,
-                                                contentType: "video/mp4",
-                                                metadata: chromeCastMetaData(from: metaData),
-                                                streamDuration: 0,
-                                                mediaTracks: nil,
-                                                textTrackStyle: nil,
-                                                customData: nil)
-            
-            let mediaLoadOptions = GCKMediaLoadOptions()
-            mediaLoadOptions.customData = customData.toJson
-            
-            session
-                .remoteMediaClient?
-                .loadMedia(mediaInfo, with: mediaLoadOptions)
-        }
-        catch {
-            print("loadChromeCast",error)
-        }
+        let mediaInfo = GCKMediaInformation(contentID: assetId,
+                                            streamType: .none,
+                                            contentType: "video/mp4",
+                                            metadata: chromeCastMetaData(from: metaData),
+                                            streamDuration: 0,
+                                            mediaTracks: nil,
+                                            textTrackStyle: nil,
+                                            customData: nil)
+        
+        let mediaLoadOptions = GCKMediaLoadOptions()
+        mediaLoadOptions.customData = customData.toJson
+        
+        session
+            .remoteMediaClient?
+            .loadMedia(mediaInfo, with: mediaLoadOptions)
     }
 }
 
@@ -162,7 +157,6 @@ extension TVViewController: ChromeCaster {
 }
 
 extension TVViewController {
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embeddedPlayerView" {
             if let destination = segue.destination as? PlayerViewController {
@@ -170,6 +164,7 @@ extension TVViewController {
                 destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
                                                         environment: viewModel.environment)
                 destination.brand = brand
+                destination.presentationMode = .embedded
                 playerViewModel = destination.viewModel
 //                destination.dynamicContentCategory = dynamicContentCategory
             }
@@ -207,10 +202,15 @@ extension TVViewController {
     }
 }
 
-
-extension TVViewController: SlidingMenuDelegate {
-    
+extension TVViewController {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        let newMode: PlayerViewController.Mode = size.width > size.height ? .standalone : .embedded
+        embeddedPlayerController?.presentationMode = newMode
+        embeddedPlayerController?.configure(for: newMode)
+    }
 }
+
+extension TVViewController: SlidingMenuDelegate { }
 
 extension TVViewController: AuthorizedEnvironment {
     func authorize(environment: Exposure.Environment, sessionToken: SessionToken) {
