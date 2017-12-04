@@ -43,11 +43,11 @@ extension DismissMenuAnimator : UIViewControllerAnimatedTransitioning {
         }
         let containerView = transitionContext.containerView
         let snapshot = containerView.viewWithTag(MenuHelper.snapshotNumber)
-        let blurView = 
         
         UIView.animate(
             withDuration: transitionDuration(using: transitionContext),
             animations: {
+                fromVC.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
                 snapshot?.frame = CGRect(origin: CGPoint.zero, size: UIScreen.main.bounds.size)
             },
             completion: { _ in

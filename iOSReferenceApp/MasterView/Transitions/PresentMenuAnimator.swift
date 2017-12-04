@@ -42,6 +42,8 @@ extension PresentMenuAnimator : UIViewControllerAnimatedTransitioning {
                 return
         }
         
+        toVC.view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        
         let containerView = transitionContext.containerView
         containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
         
@@ -57,6 +59,7 @@ extension PresentMenuAnimator : UIViewControllerAnimatedTransitioning {
             UIView.animate(
                 withDuration: transitionDuration(using: transitionContext),
                 animations: {
+                    toVC.view.transform = CGAffineTransform(scaleX: 1, y: 1)
                     snapshot.center.x += UIScreen.main.bounds.width * MenuHelper.menuWidth
             },
                 completion: { _ in
