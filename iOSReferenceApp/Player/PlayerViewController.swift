@@ -36,9 +36,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var airplayButton: MPVolumeView!
     @IBOutlet weak var castButton: GCKUICastButton!
-    
-    var castChannel: Channel = Channel()
-    var castSession: GCKCastSession?
+    var onChromeCastRequested: (_ programId: String?, _ assetId: String, _ metaData: Asset?) -> Void = { _,_,_ in }
     
     fileprivate var timelineUpdater: Timer?
     var onDismissed: () -> Void = { _ in }
@@ -80,6 +78,9 @@ class PlayerViewController: UIViewController {
         }
         
         startTimelineUpdate()
+        
+        // Listen to sessions
+        GCKCastContext.sharedInstance().sessionManager.add(self)
         
         // Enable airplay icon
         airplayButton.showsVolumeSlider = false
@@ -164,37 +165,22 @@ extension PlayerViewController {
         }
         
     }
-
+    
     private func stream(vod assetId: String, metaData: Asset?) {
-        if hasActiveChromecastSession {
-            loadChromeCast(assetId: assetId, programId: nil, metaData: metaData)
-        }
-        else {
-            player
-                .sessionShift(enabled: true)
-                .stream(vod: assetId)
-        }
+        player
+            .sessionShift(enabled: true)
+            .stream(vod: assetId)
     }
     
     private func stream(live channelId: String, metaData: Asset?) {
-        if hasActiveChromecastSession {
-            loadChromeCast(assetId: channelId, programId: nil, metaData: metaData)
-        }
-        else {
-            player.stream(live: channelId)
-        }
+        player.stream(live: channelId)
     }
     
     private func stream(program programId: String, channel channelId: String, metaData: Asset?) {
-        if hasActiveChromecastSession {
-            loadChromeCast(assetId: channelId, programId: programId, metaData: metaData)
-        }
-        else {
-            player
-                .sessionShift(enabled: true)
-                .stream(programId: programId,
-                        channelId: channelId)
-        }
+        player
+            .sessionShift(enabled: true)
+            .stream(programId: programId,
+                    channelId: channelId)
     }
     
     private func offline(assetId: String, metaData: Asset?) {
@@ -278,14 +264,6 @@ extension PlayerViewController: DynamicAppearance {
     }
 }
 
-extension PlayerViewController: ChromeCaster {
-    var castEnvironment: Cast.Environment {
-        return Cast.Environment(baseUrl: viewModel.environment.baseUrl,
-                                customer: viewModel.environment.customer,
-                                businessUnit: viewModel.environment.businessUnit,
-                                sessionToken: viewModel.sessionToken.value)
-    }
-}
 
 extension PlayerViewController: GCKSessionManagerListener {
     func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
@@ -298,18 +276,21 @@ extension PlayerViewController: GCKSessionManagerListener {
     
     func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKCastSession) {
         print("Cast.Channel connected")
-        session.add(castChannel)
+        sessionManager.remove(self)
+        player.stop()
+        
+        guard let request = viewModel.playRequest else { return }
+        switch request {
+        case .live(channelId: let channelId, metaData: let metaData): self.onChromeCastRequested(nil, channelId, metaData)
+        case .program(programId: let programId, channelId: let channelId, metaData: let metaData): self.onChromeCastRequested(programId, channelId, metaData)
+        case .vod(assetId: let assetId, metaData: let metaData): self.onChromeCastRequested(nil, assetId, metaData)
+        case .offline(assetId: let assetId, metaData: let metaData):
+            print("ChromeCasting Offline Asset!? \(assetId)")
+        }
     }
     
     func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKCastSession) {
         print("Cast.Channel disconnected")
         
-        session.remove(castChannel)
-    }
-}
-
-extension PlayerViewController: GCKRemoteMediaClientListener {
-    func remoteMediaClient(_ client: GCKRemoteMediaClient, didUpdate mediaStatus: GCKMediaStatus?) {
-        castChannel.refreshControls()
     }
 }

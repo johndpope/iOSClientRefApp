@@ -63,6 +63,9 @@ class AssetDetailsViewController: UIViewController {
     
     @IBOutlet weak var castButton: GCKUICastButton!
     
+    var castChannel: Channel = Channel()
+    var castSession: GCKCastSession?
+    
     var presentedFrom: PresentedFrom = .other
     enum PresentedFrom {
         case offlineList
@@ -143,7 +146,12 @@ class AssetDetailsViewController: UIViewController {
             return
         }
         
-        self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
+        if hasActiveChromecastSession {
+            loadChromeCast(assetId: assetId, programId: nil, metaData: viewModel.asset)
+        }
+        else {
+            self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -161,6 +169,10 @@ extension AssetDetailsViewController {
                                                         environment: viewModel.environment,
                                                         playRequest: .vod(assetId: assetId, metaData: viewModel.asset))
                 destination.brand = brand
+                destination.onChromeCastRequested = { [weak self] programId, assetId, metaData in
+                    self?.dismiss(animated: true)
+                    self?.loadChromeCast(assetId: assetId, programId: programId, metaData: metaData)
+                }
                 destination.onDismissed = { [weak self] in
                     self?.refreshUserDataUI()
                 }
@@ -264,10 +276,6 @@ extension AssetDetailsViewController {
         }
         participantsStackView.layoutIfNeeded()
     }
-}
-
-extension UIImageView {
-    
 }
 
 // MARK: - Download available
@@ -542,3 +550,39 @@ extension AssetDetailsViewController: DynamicAppearance {
     }
 }
 
+
+extension AssetDetailsViewController: ChromeCaster {
+    var castEnvironment: Cast.Environment {
+        return Cast.Environment(baseUrl: viewModel.environment.baseUrl,
+                                customer: viewModel.environment.customer,
+                                businessUnit: viewModel.environment.businessUnit,
+                                sessionToken: viewModel.sessionToken.value)
+    }
+}
+
+extension AssetDetailsViewController: GCKSessionManagerListener {
+    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
+        
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didEnd session: GCKSession, withError error: Error?) {
+        
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKCastSession) {
+        print("Cast.Channel connected")
+        session.add(castChannel)
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKCastSession) {
+        print("Cast.Channel disconnected")
+        
+        session.remove(castChannel)
+    }
+}
+
+extension AssetDetailsViewController: GCKRemoteMediaClientListener {
+    func remoteMediaClient(_ client: GCKRemoteMediaClient, didUpdate mediaStatus: GCKMediaStatus?) {
+        castChannel.refreshControls()
+    }
+}
