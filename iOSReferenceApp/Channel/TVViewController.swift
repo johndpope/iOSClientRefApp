@@ -115,6 +115,8 @@ class TVViewController: UIViewController {
     
     fileprivate var embeddedPlayerController: PlayerViewController?
     fileprivate weak var playerViewModel: PlayerViewModel?
+    @IBOutlet weak var playerContainer: UIView!
+    @IBOutlet weak var topPlayerViewConstraint: NSLayoutConstraint!
     
     fileprivate var embeddedEpgController: PagedEPGViewController?
     
@@ -150,6 +152,15 @@ class TVViewController: UIViewController {
     @IBAction func toggleSlidingMenuAction(_ sender: UIBarButtonItem) {
         slidingMenuController?.toggleSlidingMenu()
     }
+    
+    fileprivate func toggleEmbeddedPlayer(hidden: Bool) {
+        topPlayerViewConstraint.constant = hidden ? -playerContainer.bounds.height : 0
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.embeddedPlayerController?.view.isHidden = hidden
+            self?.playerContainer.isHidden = hidden
+            self?.view.layoutIfNeeded()
+        }
+    }
 }
 
 extension TVViewController {
@@ -164,6 +175,7 @@ extension TVViewController {
                 playerViewModel = destination.viewModel
                 
                 destination.onChromeCastRequested = { [weak self] programId, assetId, metaData in
+                    self?.toggleEmbeddedPlayer(hidden: true)
                     self?.loadChromeCast(assetId: assetId, programId: programId, metaData: metaData)
                 }
             }
@@ -248,7 +260,13 @@ extension TVViewController: ChromeCaster {
 
 extension TVViewController: GCKSessionManagerListener {
     func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
+        print("TVViewController didStart GCKSession")
+        toggleEmbeddedPlayer(hidden: true)
         
+    }
+    func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKSession) {
+        print("TVViewController willEnd GCKSession")
+        toggleEmbeddedPlayer(hidden: false)
     }
     
     func sessionManager(_ sessionManager: GCKSessionManager, didEnd session: GCKSession, withError error: Error?) {
@@ -262,7 +280,6 @@ extension TVViewController: GCKSessionManagerListener {
     
     func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKCastSession) {
         print("Cast.Channel disconnected")
-        
         session.remove(castChannel)
     }
 }
