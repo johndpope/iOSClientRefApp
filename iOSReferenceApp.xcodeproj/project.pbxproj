@@ -1068,6 +1068,7 @@
 				76A843A41EA7856C00BDAF2C /* Frameworks */,
 				76A843A51EA7856C00BDAF2C /* Resources */,
 				76A8448D1EA7A23700BDAF2C /* Embed Frameworks */,
+				7688519A1FD5DD3100A06499 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1220,6 +1221,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7688519A1FD5DD3100A06499 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = /Users/fredriksjoberg/Documents/Repos/Ericsson/iOSClientRefApp/fastlane/strip_unused_archs.sh;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		76A843A31EA7856C00BDAF2C /* Sources */ = {

@@ -37,6 +37,7 @@ extension ChromeCaster {
     }
     
     func loadChromeCast(assetId: String, programId: String?, metaData: Asset?) {
+        print("NO ACTIVE CHROMECAST SESSION")
         guard let session = GCKCastContext.sharedInstance().sessionManager.currentCastSession else { return }
         
         // Assign ChromeCast session listener

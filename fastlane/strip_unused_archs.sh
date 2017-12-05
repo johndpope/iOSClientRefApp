@@ -16,17 +16,20 @@ for framework_dir in "${framework_dirs[@]}"; do
   framework_path="${framework_dir}/${framework_name}"
 
   echo "Removing unused architectures from framework: ${framework_name}"
+  if framework_name == "GoogleCast"; then
+      echo framework_name
 
-  slice_paths=()
-  for arch in ${ARCHS}; do
-    slice_path="${framework_path}_${arch}"
-    lipo "${framework_path}" -extract "${arch}" -output "${slice_path}"
-    slice_paths+=("${slice_path}")
-  done
+      slice_paths=()
+      for arch in ${ARCHS}; do
+        slice_path="${framework_path}_${arch}"
+        lipo "${framework_path}" -extract "${arch}" -output "${slice_path}"
+        slice_paths+=("${slice_path}")
+      done
 
-  lipo "${slice_paths[@]}" -create -output "${framework_path}_thinned"
-  rm -f "${slice_paths[@]}"
+      lipo "${slice_paths[@]}" -create -output "${framework_path}_thinned"
+      rm -f "${slice_paths[@]}"
 
-  rm -f "${framework_path}"
-  mv "${framework_path}_thinned" "${framework_path}"
+      rm -f "${framework_path}"
+      mv "${framework_path}_thinned" "${framework_path}"
+  fi
 done

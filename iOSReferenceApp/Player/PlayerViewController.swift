@@ -266,16 +266,11 @@ extension PlayerViewController: DynamicAppearance {
 
 
 extension PlayerViewController: GCKSessionManagerListener {
+    func sessionManager(_ sessionManager: GCKSessionManager, willStart session: GCKSession) {
+        print("willStart GCKSession")
+    }
     func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
-        
-    }
-    
-    func sessionManager(_ sessionManager: GCKSessionManager, didEnd session: GCKSession, withError error: Error?) {
-        
-    }
-    
-    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKCastSession) {
-        print("Cast.Channel connected")
+        print("didStart GCKSession")
         sessionManager.remove(self)
         player.stop()
         
@@ -287,6 +282,19 @@ extension PlayerViewController: GCKSessionManagerListener {
         case .offline(assetId: let assetId, metaData: let metaData):
             print("ChromeCasting Offline Asset!? \(assetId)")
         }
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didEnd session: GCKSession, withError error: Error?) {
+        
+    }
+    func sessionManager(_ sessionManager: GCKSessionManager, willStart session: GCKCastSession) {
+        print("willStart GCKCastSession")
+        
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKCastSession) {
+        print("Cast.Channel connected")
+        
     }
     
     func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKCastSession) {
