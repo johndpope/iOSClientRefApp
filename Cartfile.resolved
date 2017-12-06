@@ -1,6 +1,6 @@
 github "Alamofire/Alamofire" "4.4.0"
 github "EricssonBroadcastServices/iOSClientAnalytics" "545219df0d13707131f130663c34f02377d7bcf9"
-github "EricssonBroadcastServices/iOSClientCast" "f70ba28eaad09da62aedb4ec4cb73de8a737aad2"
+github "EricssonBroadcastServices/iOSClientCast" "217c0a15fa7b94ce54cd25cb8816f6cd5e15f576"
 github "EricssonBroadcastServices/iOSClientDownload" "2fc5477c09316fbb73b59c14f9333f4dd7b0f332"
 github "EricssonBroadcastServices/iOSClientExposure" "6e9370edc5cb81baf72766bd38e82ebe71e93e15"
 github "EricssonBroadcastServices/iOSClientPlayer" "65329706fa91f0d52d3ae032df33587f2beabbb4"
