@@ -11,7 +11,8 @@
 * `ChromeCast` integration added throught `Cast` module
 
 #### Bug Fixes
-* Search query now properly *escaped*.
+* Search query now properly *escaped*
+* Fixes to *environment* selection and login views
 
 ## 0.72.0
 

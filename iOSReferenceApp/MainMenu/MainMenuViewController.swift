@@ -47,13 +47,14 @@ class MainMenuViewController: UIViewController {
     enum Action {
         case other(segue: MainMenuViewController.Segue.Other)
         case content(segue: DynamicContentCategory)
-        case logout
+//        case logout
         case none
     }
     
     enum Segue {
         enum Other: String {
             case myDownloads
+            case logout
         }
     }
     
@@ -165,16 +166,6 @@ extension MainMenuViewController: AuthorizedEnvironment {
     }
 }
 
-extension MainMenuViewController {
-    func actionLogout() {
-        defer {
-            UserInfo.clear()
-            navigationController?.popViewController(animated: true)
-        }
-        viewModel.logout()
-    }
-}
-
 extension MainMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -184,8 +175,6 @@ extension MainMenuViewController: UITableViewDelegate {
     fileprivate func triggerAction(for menuItemType: MainMenuItemType, at indexPath: IndexPath) {
         if let actionable = menuItemType as? MainMenuActionType {
             switch actionable.actionIdentifier {
-            case .logout:
-                actionLogout()
             case .content(segue: let segue):
                 viewModel.select(contentAt: indexPath.row)
                 selectedContentSegue(segue, indexPath.row)

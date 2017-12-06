@@ -100,7 +100,7 @@ class MainMenuViewModel {
     private func configureAppSettings() -> MainMenuSectionViewModel {
         let appSettings = MainMenuPushNavigationViewModel(title: "App Settings", action: .none)
         let account = MainMenuPushNavigationViewModel(title: "Account", action: .none)
-        let logOut = MainMenuPushNavigationViewModel(title: "Log out", action: .logout)
+        let logOut = MainMenuPushNavigationViewModel(title: "Log out", action: .other(segue: .logout))// MainMenuPushNavigationViewModel(title: , action: .logout)
         
         // Version
         let version = MainMenuStaticDataViewModel(text: versionData())
@@ -154,20 +154,6 @@ extension MainMenuViewModel {
             if let viewModel = rows[$0] as? MainMenuContentViewModel {
                 viewModel.isActive = (index != nil ? $0 == index : false)
             }
-        }
-    }
-}
-
-extension MainMenuViewModel {
-    func logout() {
-        Authenticate(environment: environment)
-            .logout(sessionToken: sessionToken)
-            .request()
-            .validate()
-            .response{
-                if let error = $0.error {
-                    print(error)
-                }
         }
     }
 }

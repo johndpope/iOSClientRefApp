@@ -19,6 +19,7 @@ class EnvironmentSelectionViewController: UIViewController {
     @IBOutlet weak var exposureUrlField: SkyFloatingLabelTextField!
     @IBOutlet weak var businessUnitField: SkyFloatingLabelTextField!
     @IBOutlet weak var customerField: SkyFloatingLabelTextField!
+    @IBOutlet weak var mfaSwitch: UISwitch!
     
     @IBOutlet weak var continueButton: UIButton!
     
@@ -58,12 +59,14 @@ class EnvironmentSelectionViewController: UIViewController {
         
         customerButton.setTitleColor(UIColor.darkGray, for: .disabled)
         customerButton.setTitleColor(UIColor.white, for: .normal)
-        viewModel.updatedDefaultValues = { [weak self] (url, customer, businessUnit) in
+        
+        viewModel.updatedDefaultValues = { [weak self] (url, customer, businessUnit, usesMfa) in
             self?.exposureUrlField.text = url
             self?.customerField.text = customer
             self?.businessUnitField.text = businessUnit
             self?.toggleContinueButton()
             self?.toggleTextFields()
+            self?.mfaSwitch.isOn = usesMfa ?? false
         }
         
         viewModel.updatedPresets = { [weak self] (environment, customer, enableCustomer) in
@@ -100,9 +103,10 @@ class EnvironmentSelectionViewController: UIViewController {
 extension EnvironmentSelectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segue.environmentToLogin.rawValue, let destination = segue.destination as? LoginViewController {
-            guard let environment = viewModel.selectedExposureEnvironment else { return }
+            guard let environment = UserInfo.environment else { return }
+            
             destination.viewModel = LoginViewModel(environment: environment,
-                                                   loginMethod: viewModel.preferedLoginMethod)
+                                                   useMfa: UserInfo.environmentUsesMfa)
         }
     }
 }
@@ -110,9 +114,10 @@ extension EnvironmentSelectionViewController {
 extension EnvironmentSelectionViewController {
     func applyEnvironment() {
         guard fieldsValid else { return }
-        guard let environment = viewModel.selectedExposureEnvironment else { return }
+        guard let url = exposureUrlField.text, let customer = customerField.text, let businessUnit = businessUnitField.text else { return }
+        let environment = Environment(baseUrl: url, customer: customer, businessUnit: businessUnit)
         UserInfo.update(environment: environment)
-        UserInfo.environment(loginMethod: viewModel.preferedLoginMethod)
+        UserInfo.environment(usesMfa: mfaSwitch.isOn)
         performSegue(withIdentifier: Segue.environmentToLogin.rawValue, sender: nil)
     }
     

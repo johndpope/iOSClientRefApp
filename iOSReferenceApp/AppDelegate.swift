@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
         loginViewController.viewModel = LoginViewModel(environment: environment,
-                                                       loginMethod: UserInfo.environmentLoginMethod ?? .login(username: "", password: "", mfa: false))
+                                                       useMfa: UserInfo.environmentUsesMfa)
         
         guard UserInfo.sessionToken != nil else {
             retrieveDynamicCustomerConfig(for: environment) { conf in

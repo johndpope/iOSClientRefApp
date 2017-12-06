@@ -44,13 +44,13 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginAction(_ sender: UIButton) {
-        login()
+        handleLogin()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureLoginControls()
+        toggleLoginButton()
         
         if let conf = dynamicCustomerConfig {
             process(dynamicCustomerConfig: conf)
@@ -120,49 +120,11 @@ extension LoginViewController {
 }
 
 extension LoginViewController {
-    func configureLoginControls() {
-        switch viewModel.loginMethod {
-        case .anonymous:
-            usernameTextField.isHidden = true
-            passwordTextField.isHidden = true
-        case .login(username: let username, password: let password, mfa: _):
-            usernameTextField.isHidden = false
-            passwordTextField.isHidden = false
-            usernameTextField.text = username
-            passwordTextField.text = password
-        }
-        toggleLoginButton()
-    }
 }
 
 extension LoginViewController {
-    func login() {
-        guard fieldsValid else { return }
-        switch viewModel.loginMethod {
-        case .anonymous: handleAnonymousLogin()
-        case .login(username: _, password: _, mfa: let mfa): mfa ? handleTwoFactorLogin() : handleLogin()
-        }
-    }
     
-    // MARK: Anonymous
-    fileprivate func handleAnonymousLogin() {
-        ProgressIndicatorUtil.shared.show(parentView: self.view)
-        viewModel.anonymous(callback: { (response) in
-            defer {
-                ProgressIndicatorUtil.shared.hide()
-            }
-            
-            if let error = response.error {
-                self.showMessage(title: "Login Error", message: error.message)
-                return
-            }
-            
-            if let sessionToken = response.value {
-                UserInfo.update(sessionToken: sessionToken)
-                self.performSegue(withIdentifier: Segue.loginToMaster.rawValue, sender: sessionToken)
-            }
-        })
-    }
+    
     // MARK: Login
     fileprivate func handleLogin() {
         ProgressIndicatorUtil.shared.show(parentView: self.view)
@@ -277,7 +239,7 @@ extension LoginViewController: UITextFieldDelegate {
         if textField == usernameTextField {
             passwordTextField.becomeFirstResponder()
         } else if textField == passwordTextField {
-            login()
+            handleLogin()
         }
         
         return true

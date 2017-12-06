@@ -12,13 +12,13 @@ import Kingfisher
 
 class LoginViewModel {
     let environment: Environment
-    var loginMethod: CustomerConfig.PresetMethod
+    let useMfa: Bool
     
     var onServiceLogoUpdated: (UIImage?) -> Void = { _ in }
     
-    init(environment: Environment, loginMethod: CustomerConfig.PresetMethod) {
+    init(environment: Environment, useMfa: Bool = false) {
         self.environment = environment
-        self.loginMethod = loginMethod
+        self.useMfa = useMfa
     }
 }
 
@@ -33,23 +33,12 @@ extension LoginViewModel {
 }
 
 extension LoginViewModel {
-    func anonymous(callback: @escaping (ExposureResponse<SessionToken>) -> Void) {
-        Authenticate(environment: environment)
-            .anonymous()
-            .request()
-            .response{
-                callback($0)
-        }
-    }
-    
-//    func login(exposureUsername: String, exposurePassword: String, callback: @escaping (ExposureResponse<Credentials>) -> Void) {
+//    func anonymous(callback: @escaping (ExposureResponse<SessionToken>) -> Void) {
 //        Authenticate(environment: environment)
-//            .login(username: exposureUsername,
-//                   password: exposurePassword)
+//            .anonymous()
 //            .request()
-//            .validate()
-//            .response { (dataResponse: ExposureResponse<Credentials>) in
-//                callback(dataResponse)
+//            .response{
+//                callback($0)
 //        }
 //    }
     

@@ -140,6 +140,24 @@ extension MasterViewController: SlidingMenuController {
 }
 
 extension MasterViewController {
+    func actionLogout() {
+        defer {
+            UserInfo.clearSession()
+            navigationController?.popViewController(animated: true)
+        }
+        Authenticate(environment: environment)
+            .logout(sessionToken: sessionToken)
+            .request()
+            .validate()
+            .response{
+                if let error = $0.error {
+                    print(error)
+                }
+        }
+    }
+}
+
+extension MasterViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let environment = UserInfo.environment,
             let sessionToken = UserInfo.sessionToken else {
@@ -174,6 +192,9 @@ extension MasterViewController {
                 case .myDownloads:
                     self?.closeMenu()
                     self?.configureMyDownloads()
+                case .logout:
+                    self?.closeMenu()
+                    self?.actionLogout()
                 }
             }
             destination.selectedContentSegue = { [weak self] dynamicContentCategory, index in
