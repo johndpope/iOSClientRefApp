@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginAction(_ sender: UIButton) {
-        handleLogin()
+        login()
     }
     
     override func viewDidLoad() {
@@ -124,6 +124,14 @@ extension LoginViewController {
 
 extension LoginViewController {
     
+    func login() {
+        if viewModel.useMfa {
+            handleTwoFactorLogin()
+        }
+        else {
+            handleLogin()
+        }
+    }
     
     // MARK: Login
     fileprivate func handleLogin() {
@@ -239,7 +247,7 @@ extension LoginViewController: UITextFieldDelegate {
         if textField == usernameTextField {
             passwordTextField.becomeFirstResponder()
         } else if textField == passwordTextField {
-            handleLogin()
+            login()
         }
         
         return true
