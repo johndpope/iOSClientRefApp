@@ -14,6 +14,9 @@
 * Search query now properly *escaped*
 * Fixes to *environment* selection and login views
 
+#### Improvements
+* UX flow to better suit `ChromeCast` integration.
+
 ## 0.72.0
 
 #### Features

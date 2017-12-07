@@ -10,8 +10,7 @@ import Foundation
 import UIKit
 import Exposure
 
-class OfflineListViewController: UIViewController, AssetDetailsPresenter {
-    var assetDetailsPresenter: UIViewController { return self }
+class OfflineListViewController: UIViewController {
     
     var slidingMenuController: SlidingMenuController?
     var viewModel: OfflineListViewModel!
@@ -59,7 +58,7 @@ class OfflineListViewController: UIViewController, AssetDetailsPresenter {
 extension OfflineListViewController {
     enum Segue: String {
         case segueOfflineListToPlayer = "segueOfflineListToPlayer"
-        case segueOfflineListToDetails = "segueOfflineListToDetails"
+        case segueListToDetails = "segueListToDetails"
     }
 }
 
@@ -71,6 +70,17 @@ extension OfflineListViewController {
                                                         environment: environment,
                                                         playRequest: .offline(assetId: assetId, metaData: nil))
                 destination.brand = brand
+            }
+        }
+        else if segue.identifier == Segue.segueListToDetails.rawValue {
+            if let destination = segue.destination as? AssetDetailsViewController {
+                destination.bind(viewModel: AssetDetailsViewModel(asset: sender as! Asset,
+                                                                  environment: environment,
+                                                                  sessionToken: sessionToken))
+                destination.bind(downloadViewModel: DownloadAssetViewModel(environment: environment,
+                                                                           sessionToken: sessionToken))
+                destination.brand = brand
+                destination.presentedFrom = .offlineList
             }
         }
     }
@@ -119,7 +129,7 @@ extension OfflineListViewController: UITableViewDelegate {
             navigationController?.popViewController(animated: true)
         case .other:
             guard let asset = vm.asset else { return }
-            presetDetails(for: asset, from: .offlineList, with: brand)
+            self.performSegue(withIdentifier: "segueListToDetails", sender: asset)
         }
     }
 }

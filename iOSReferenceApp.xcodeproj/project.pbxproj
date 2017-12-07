@@ -453,8 +453,8 @@
 				76A5D8041FBA0DD6005F6C4B /* Views */,
 				76466FDC1FB05E8F007ECD5C /* ViewModels */,
 				762808C81FCDC77D005610DF /* TVViewController.swift */,
-				762808CA1FCDCAAF005610DF /* EpgViewController.swift */,
 				762808C61FCDC4F0005610DF /* PagedEPGViewController.swift */,
+				762808CA1FCDCAAF005610DF /* EpgViewController.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";

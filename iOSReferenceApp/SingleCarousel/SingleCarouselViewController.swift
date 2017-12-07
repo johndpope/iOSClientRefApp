@@ -113,6 +113,17 @@ extension SingleCarouselViewController {
                                       sessionToken: sessionToken)
             }
         }
+        else if segue.identifier == "segueListToDetails" {
+            if let destination = segue.destination as? AssetDetailsViewController {
+                destination.bind(viewModel: AssetDetailsViewModel(asset: sender as! Asset,
+                                                         environment: environment,
+                                                         sessionToken: sessionToken))
+                destination.bind(downloadViewModel: DownloadAssetViewModel(environment: environment,
+                                                                  sessionToken: sessionToken))
+                destination.brand = brand
+                destination.presentedFrom = .other
+            }
+        }
     }
 }
 
@@ -175,7 +186,7 @@ extension SingleCarouselViewController: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let asset = viewModel.content[indexPath.row].asset
-        presetDetails(for: asset, from: .other, with: brand)
+        performSegue(withIdentifier: "segueListToDetails", sender: asset)
     }
 }
 
@@ -199,12 +210,6 @@ extension SingleCarouselViewController: AuthorizedEnvironment {
         return viewModel.sessionToken
     }
     
-}
-
-extension SingleCarouselViewController: AssetDetailsPresenter {
-    var assetDetailsPresenter: UIViewController {
-        return self
-    }
 }
 
 extension SingleCarouselViewController: UICollectionViewDataSourcePrefetching {

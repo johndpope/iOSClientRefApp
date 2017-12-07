@@ -88,9 +88,13 @@ class AssetDetailsViewController: UIViewController {
         
         
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        
         apply(brand: brand)
         ratingsView.isUserInteractionEnabled = false
         viewModel.refreshAssetMetaData{ [weak self] error in
@@ -100,6 +104,10 @@ class AssetDetailsViewController: UIViewController {
             self?.refreshUserDataUI()
             self?.ratingsView.isUserInteractionEnabled = true
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -137,7 +145,8 @@ class AssetDetailsViewController: UIViewController {
     }
 
     @IBAction func closeAction(_ sender: UIButton) {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
+//        dismiss(animated: true)
     }
     
     @IBAction func playAction(_ sender: UIButton) {
@@ -170,7 +179,8 @@ extension AssetDetailsViewController {
                                                         playRequest: .vod(assetId: assetId, metaData: viewModel.asset))
                 destination.brand = brand
                 destination.onChromeCastRequested = { [weak self] programId, assetId, metaData in
-                    self?.dismiss(animated: true)
+                    self?.navigationController?.popViewController(animated: true)
+//                    self?.dismiss(animated: true)
                     self?.loadChromeCast(assetId: assetId, programId: programId, metaData: metaData)
                 }
                 destination.onDismissed = { [weak self] in
@@ -190,7 +200,7 @@ extension AssetDetailsViewController {
             }
         }
         else if segue.identifier == Segue.segueDetailsToList.rawValue {
-            if let navController = segue.destination as? UINavigationController, let destination = navController.topViewController as? OfflineListViewController {
+            if let destination = segue.destination as? OfflineListViewController {
                 destination.authorize(environment: environment,
                                       sessionToken: sessionToken)
                 
@@ -444,7 +454,6 @@ extension AssetDetailsViewController {
     }
     
     func transitionToDownloadProgressUI(from otherView: UIStackView?) {
-        
         downloadProgress.setProgress(0, animated: false)
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.downloadProgressStackView.isHidden = false
@@ -482,7 +491,7 @@ extension AssetDetailsViewController {
     
     @IBAction func viewOfflineListAction(_ sender: UIButton) {
         switch presentedFrom {
-        case .offlineList: dismiss(animated: true)
+        case .offlineList: navigationController?.popViewController(animated: true)//dismiss(animated: true)
         case .other: performSegue(withIdentifier: Segue.segueDetailsToList.rawValue, sender: nil)
         }
     }

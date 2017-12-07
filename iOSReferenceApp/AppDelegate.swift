@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let options = GCKCastOptions(discoveryCriteria: GCKDiscoveryCriteria(applicationID: "6AB327C1"))
         GCKCastContext.setSharedInstanceWith(options)
         GCKCastContext.sharedInstance().useDefaultExpandedMediaControls = true
+        NotificationCenter.default.addObserver(self, selector: #selector(presentExpandedMediaControls),
+                                               name: NSNotification.Name.gckExpandedMediaControlsTriggered, object: nil)
 //        setupCastLogging()
         
         setupViews()
@@ -59,6 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         print(#function)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.gckExpandedMediaControlsTriggered,
+                                                  object: nil)
     }
 
     func setupViews() {
@@ -72,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             // Activate the ChromeCast root container.
             let castContainer = GCKCastContext.sharedInstance().createCastContainerController(for: rootNavigationController)
+            castContainer.miniMediaControlsItemEnabled = true
             window?.rootViewController = castContainer
         }
     }
@@ -157,6 +162,17 @@ extension AppDelegate {
             try audioSession.setCategory(AVAudioSessionCategoryPlayback)
         } catch {
             print("Setting category to AVAudioSessionCategoryPlayback failed.")
+        }
+    }
+}
+
+// MARK: - GoogleCast
+extension AppDelegate {
+    func presentExpandedMediaControls() {
+        print("present expanded media controls")
+        // Segue directly to the ExpandedViewController.
+        if let castContainerVC = window?.rootViewController as? GCKUICastContainerViewController {//}, let navigationController = castContainerVC.contentViewController as? UINavigationController {
+            GCKCastContext.sharedInstance().presentDefaultExpandedMediaControls()
         }
     }
 }
