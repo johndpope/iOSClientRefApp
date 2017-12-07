@@ -117,7 +117,7 @@ platform :ios do
         pilot(
               changelog: strip_emoji(changelog),
               distribute_external: true,
-              groups: "BetaGroup"
+              groups: ["BetaGroup"]
               )
         
         notify_slack_new_testflight
