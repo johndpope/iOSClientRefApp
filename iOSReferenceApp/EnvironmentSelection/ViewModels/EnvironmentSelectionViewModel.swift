@@ -46,7 +46,7 @@ class EnvironmentSelectionViewModel {
         updatedPresets(environmentSelections[index], "Customer", true)
         updatedDefaultValues(environments[index].url, nil, nil, nil)
         
-        if let preselectedCustomer = customerSelections(index: 0).first {
+        if let preselectedCustomer = customerSelections(index: index).first {
             select(customer: preselectedCustomer)
         }
     }
@@ -63,14 +63,5 @@ class EnvironmentSelectionViewModel {
                              environments[environmentIndex].customers[index].customer,
                              environments[environmentIndex].customers[index].businessUnit,
                              environments[environmentIndex].customers[index].usesMfa)
-    }
-    
-    var selectedExposureEnvironment: Environment? {
-        guard let environmentIndex = selectedEnvironment, let customerIndex = selectedCustomer else { return nil }
-        let environmentConfig = environments[environmentIndex]
-        let customerConfig = environmentConfig.customers[customerIndex]
-        return Environment(baseUrl: environmentConfig.url,
-                           customer: customerConfig.customer,
-                           businessUnit: customerConfig.businessUnit)
     }
 }
