@@ -111,6 +111,17 @@ extension CarouselListViewController {
                                       sessionToken: sessionToken)
             }
         }
+        else if segue.identifier == "segueListToDetails" {
+            if let destination = segue.destination as? AssetDetailsViewController {
+                destination.bind(viewModel: AssetDetailsViewModel(asset: sender as! Asset,
+                                                         environment: environment,
+                                                         sessionToken: sessionToken))
+                destination.bind(downloadViewModel: DownloadAssetViewModel(environment: environment,
+                                                                  sessionToken: sessionToken))
+                destination.brand = brand
+                destination.presentedFrom = .other
+            }
+        }
     }
 }
 extension CarouselListViewController: SlidingMenuDelegate {
@@ -141,7 +152,7 @@ extension CarouselListViewController: UICollectionViewDelegate {
             cell.apply(brand: brand)
             cell.selectedAsset = { [weak self] asset in
                 guard let `self` = self else { return }
-                `self`.presetDetails(for: asset, from: .other, with: `self`.brand)
+                self.performSegue(withIdentifier: "segueListToDetails", sender: asset)
             }
         }
     }
@@ -153,7 +164,7 @@ extension CarouselListViewController: UICollectionViewDelegate {
             view.apply(brand: brand)
             view.selectedAsset = { [weak self] asset in
                 guard let `self` = self else { return }
-                `self`.presetDetails(for: asset, from: .other, with: `self`.brand)
+                self.performSegue(withIdentifier: "segueListToDetails", sender: asset)
             }
         }
     }
@@ -201,12 +212,6 @@ extension CarouselListViewController: AuthorizedEnvironment {
     
     var sessionToken: SessionToken {
         return viewModel.sessionToken
-    }
-}
-
-extension CarouselListViewController: AssetDetailsPresenter {
-    var assetDetailsPresenter: UIViewController {
-        return self
     }
 }
 

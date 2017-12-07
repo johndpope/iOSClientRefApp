@@ -88,8 +88,9 @@ class AssetDetailsViewController: UIViewController {
         
         
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewWillAppear(animated)
         apply(brand: brand)
         ratingsView.isUserInteractionEnabled = false
@@ -101,6 +102,8 @@ class AssetDetailsViewController: UIViewController {
             self?.ratingsView.isUserInteractionEnabled = true
         }
     }
+    
+    
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait //return the value as per the required orientation
@@ -190,7 +193,7 @@ extension AssetDetailsViewController {
             }
         }
         else if segue.identifier == Segue.segueDetailsToList.rawValue {
-            if let navController = segue.destination as? UINavigationController, let destination = navController.topViewController as? OfflineListViewController {
+            if let destination = segue.destination as? OfflineListViewController {
                 destination.authorize(environment: environment,
                                       sessionToken: sessionToken)
                 
@@ -444,7 +447,6 @@ extension AssetDetailsViewController {
     }
     
     func transitionToDownloadProgressUI(from otherView: UIStackView?) {
-        
         downloadProgress.setProgress(0, animated: false)
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.downloadProgressStackView.isHidden = false

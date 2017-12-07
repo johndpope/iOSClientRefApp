@@ -55,12 +55,6 @@ class SearchViewController: UIViewController {
     }
 }
 
-extension SearchViewController: AssetDetailsPresenter {
-    var assetDetailsPresenter: UIViewController {
-        return self
-    }
-}
-
 extension SearchViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
         viewModel = SearchViewModel(environment: environment,

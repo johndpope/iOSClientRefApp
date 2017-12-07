@@ -10,8 +10,7 @@ import Foundation
 import UIKit
 import Exposure
 
-class OfflineListViewController: UIViewController, AssetDetailsPresenter {
-    var assetDetailsPresenter: UIViewController { return self }
+class OfflineListViewController: UIViewController {
     
     var slidingMenuController: SlidingMenuController?
     var viewModel: OfflineListViewModel!
