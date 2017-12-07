@@ -126,7 +126,24 @@ extension SearchViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let vm = viewModel.content[indexPath.row]
-        presetDetails(for: vm.asset, from: .other, with: brand)
+        self.performSegue(withIdentifier: "segueListToDetails", sender: vm.asset)
+    }
+}
+
+
+extension SearchViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueListToDetails" {
+            if let destination = segue.destination as? AssetDetailsViewController {
+                destination.bind(viewModel: AssetDetailsViewModel(asset: sender as! Asset,
+                                                                  environment: environment,
+                                                                  sessionToken: sessionToken))
+                destination.bind(downloadViewModel: DownloadAssetViewModel(environment: environment,
+                                                                           sessionToken: sessionToken))
+                destination.brand = brand
+                destination.presentedFrom = .other
+            }
+        }
     }
 }
 

@@ -111,7 +111,7 @@ extension CarouselListViewController {
                                       sessionToken: sessionToken)
             }
         }
-        else if segue.identifier == "segueListToDetails" {
+        else if segue.identifier == "details" {
             if let destination = segue.destination as? AssetDetailsViewController {
                 destination.bind(viewModel: AssetDetailsViewModel(asset: sender as! Asset,
                                                          environment: environment,
@@ -124,6 +124,7 @@ extension CarouselListViewController {
         }
     }
 }
+
 extension CarouselListViewController: SlidingMenuDelegate {
     
 }
@@ -152,7 +153,7 @@ extension CarouselListViewController: UICollectionViewDelegate {
             cell.apply(brand: brand)
             cell.selectedAsset = { [weak self] asset in
                 guard let `self` = self else { return }
-                self.performSegue(withIdentifier: "segueListToDetails", sender: asset)
+                self.performSegue(withIdentifier: "details", sender: asset)
             }
         }
     }
@@ -164,7 +165,7 @@ extension CarouselListViewController: UICollectionViewDelegate {
             view.apply(brand: brand)
             view.selectedAsset = { [weak self] asset in
                 guard let `self` = self else { return }
-                self.performSegue(withIdentifier: "segueListToDetails", sender: asset)
+                self.performSegue(withIdentifier: "details", sender: asset)
             }
         }
     }

@@ -90,8 +90,11 @@ class AssetDetailsViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewWillAppear(animated)
+        
+//        navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        
         apply(brand: brand)
         ratingsView.isUserInteractionEnabled = false
         viewModel.refreshAssetMetaData{ [weak self] error in
@@ -484,7 +487,7 @@ extension AssetDetailsViewController {
     
     @IBAction func viewOfflineListAction(_ sender: UIButton) {
         switch presentedFrom {
-        case .offlineList: dismiss(animated: true)
+        case .offlineList: navigationController?.popViewController(animated: true)//dismiss(animated: true)
         case .other: performSegue(withIdentifier: Segue.segueDetailsToList.rawValue, sender: nil)
         }
     }
