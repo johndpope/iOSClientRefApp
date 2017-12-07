@@ -169,7 +169,7 @@ extension MasterViewController {
         
         if segue.identifier == Segue.masterToContent.rawValue, let navController = segue.destination as? UINavigationController, let destination = navController.viewControllers.first as? CarouselListViewController {
             contentNavContainer = navController
-            contentNavContainer.delegate = self
+//            contentNavContainer.delegate = self
             
             contentNavContainer.apply(brand: brand)
             

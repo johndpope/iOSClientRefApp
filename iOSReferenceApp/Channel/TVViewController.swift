@@ -143,6 +143,10 @@ class TVViewController: UIViewController {
         
         apply(brand: brand)
     }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        toggleEmbeddedPlayer(hidden: hasActiveChromecastSession)
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

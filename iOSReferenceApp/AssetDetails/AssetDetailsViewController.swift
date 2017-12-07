@@ -92,7 +92,7 @@ class AssetDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: true)
         
         
         apply(brand: brand)
@@ -106,7 +106,9 @@ class AssetDetailsViewController: UIViewController {
         }
     }
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait //return the value as per the required orientation
@@ -143,7 +145,8 @@ class AssetDetailsViewController: UIViewController {
     }
 
     @IBAction func closeAction(_ sender: UIButton) {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
+//        dismiss(animated: true)
     }
     
     @IBAction func playAction(_ sender: UIButton) {
@@ -176,7 +179,8 @@ extension AssetDetailsViewController {
                                                         playRequest: .vod(assetId: assetId, metaData: viewModel.asset))
                 destination.brand = brand
                 destination.onChromeCastRequested = { [weak self] programId, assetId, metaData in
-                    self?.dismiss(animated: true)
+                    self?.navigationController?.popViewController(animated: true)
+//                    self?.dismiss(animated: true)
                     self?.loadChromeCast(assetId: assetId, programId: programId, metaData: metaData)
                 }
                 destination.onDismissed = { [weak self] in
