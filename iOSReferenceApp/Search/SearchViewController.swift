@@ -43,12 +43,20 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationItem.hidesBackButton = true
+        
         // Make sure the search bar is active once the view loads
         searchController.searchBar.becomeFirstResponder()
         apply(brand: brand)
         
     }
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -181,7 +189,7 @@ extension SearchViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

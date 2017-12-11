@@ -93,6 +93,7 @@ class AssetDetailsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationItem.hidesBackButton = true
         
         
         apply(brand: brand)
@@ -179,8 +180,8 @@ extension AssetDetailsViewController {
                                                         playRequest: .vod(assetId: assetId, metaData: viewModel.asset))
                 destination.brand = brand
                 destination.onChromeCastRequested = { [weak self] programId, assetId, metaData in
-                    self?.navigationController?.popViewController(animated: true)
-//                    self?.dismiss(animated: true)
+//                    self?.navigationController?.popViewController(animated: true)
+                    self?.dismiss(animated: true)
                     self?.loadChromeCast(assetId: assetId, programId: programId, metaData: metaData)
                 }
                 destination.onDismissed = { [weak self] in
