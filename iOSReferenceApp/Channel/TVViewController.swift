@@ -147,7 +147,7 @@ class TVViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         /// Hide the local playback view if we have an active ChromeCast session. We cant set the NSLayoutConstraint at onViewDidLoad() since we do not have the PagedEPGView loaded. That forces us to animate/hide the local playerview when an active ChromeCast session is available.
-        toggleEmbeddedPlayer(hidden: true)
+        toggleEmbeddedPlayer(hidden: hasActiveChromecastSession)
     }
 
     override func didReceiveMemoryWarning() {
