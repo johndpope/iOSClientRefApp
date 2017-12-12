@@ -147,7 +147,6 @@ class AssetDetailsViewController: UIViewController {
 
     @IBAction func closeAction(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
-//        dismiss(animated: true)
     }
     
     @IBAction func playAction(_ sender: UIButton) {
@@ -157,10 +156,10 @@ class AssetDetailsViewController: UIViewController {
         }
         
         if hasActiveChromecastSession {
-            loadChromeCast(assetId: assetId, programId: nil, metaData: viewModel.asset)
+            loadChromeCast(for: PlayerViewModel.PlayRequest.vod(assetId: assetId, metaData: viewModel.asset), localOffset: nil)
         }
         else {
-            self.performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
+            performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
         }
     }
     
@@ -179,10 +178,9 @@ extension AssetDetailsViewController {
                                                         environment: viewModel.environment,
                                                         playRequest: .vod(assetId: assetId, metaData: viewModel.asset))
                 destination.brand = brand
-                destination.onChromeCastRequested = { [weak self] programId, assetId, metaData in
-//                    self?.navigationController?.popViewController(animated: true)
+                destination.onChromeCastRequested = { [weak self] request, currentTime in
                     self?.dismiss(animated: true)
-                    self?.loadChromeCast(assetId: assetId, programId: programId, metaData: metaData)
+                    self?.loadChromeCast(for: request, localOffset: currentTime)
                 }
                 destination.onDismissed = { [weak self] in
                     self?.refreshUserDataUI()
