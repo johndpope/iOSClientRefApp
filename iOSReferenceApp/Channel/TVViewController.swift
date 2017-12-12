@@ -36,8 +36,7 @@ extension ChromeCaster {
         return data
     }
     
-    func loadChromeCast(assetId: String, programId: String?, metaData: Asset?) {
-        print("NO ACTIVE CHROMECAST SESSION")
+    func loadChromeCast(for request: PlayerViewModel.PlayRequest, localOffset: Int64?) {
         guard let session = GCKCastContext.sharedInstance().sessionManager.currentCastSession else { return }
         
         // Assign ChromeCast session listener
@@ -78,14 +77,13 @@ extension ChromeCaster {
                 print("Cast.Channel onError",error)
         }
         
-        let customData = Cast.CustomData(environment: castEnvironment,
-                                         assetId: assetId,
-                                         programId: programId,
-                                         useLastViewedOffset: true)
-        let mediaInfo = GCKMediaInformation(contentID: assetId,
+        
+        
+        let customData = configure(for: request, localOffset: localOffset)
+        let mediaInfo = GCKMediaInformation(contentID: assetId(for: request),
                                             streamType: .none,
                                             contentType: "video/mp4",
-                                            metadata: chromeCastMetaData(from: metaData),
+                                            metadata: chromeCastMetaData(from: request.metaData),
                                             streamDuration: 0,
                                             mediaTracks: nil,
                                             textTrackStyle: nil,
@@ -99,6 +97,41 @@ extension ChromeCaster {
         session
             .remoteMediaClient?
             .loadMedia(mediaInfo, with: mediaLoadOptions)
+    }
+    
+    private func configure(for request: PlayerViewModel.PlayRequest, localOffset: Int64?) -> Cast.CustomData {
+        switch request {
+        case .vod(assetId: let assetId, metaData: _):
+            return CustomData(environment: castEnvironment,
+                              assetId: assetId,
+                              startTime: localOffset,
+                              useLastViewedOffset: localOffset == nil)
+        case .live(channelId: let channelId, metaData: _):
+            return CustomData(environment: castEnvironment,
+                              assetId: channelId,
+                              absoluteStartTime: localOffset,
+                              useLastViewedOffset: localOffset == nil)
+        case .program(programId: let programId, channelId: let channelId, metaData: _):
+            return CustomData(environment: castEnvironment,
+                              assetId: channelId,
+                              programId: programId,
+                              startTime: localOffset,
+                              useLastViewedOffset: localOffset == nil)
+        case .offline(assetId: let assetId, metaData: _):
+            return CustomData(environment: castEnvironment,
+                              assetId: assetId,
+                              startTime: localOffset,
+                              useLastViewedOffset: localOffset == nil)
+        }
+    }
+    
+    private func assetId(for request: PlayerViewModel.PlayRequest) -> String {
+        switch request {
+        case .vod(assetId: let assetId, metaData: _): return assetId
+        case .live(channelId: let assetId, metaData: _): return assetId
+        case .program(programId: _, channelId: let assetId, metaData: _): return assetId
+        case .offline(assetId: let assetId, metaData: _): return assetId
+        }
     }
     
     var hasActiveChromecastSession: Bool {
@@ -180,10 +213,11 @@ extension TVViewController {
                 destination.brand = brand
                 destination.presentationMode = .embedded
                 playerViewModel = destination.viewModel
+                destination.configure(for: .embedded)
                 
-                destination.onChromeCastRequested = { [weak self] programId, assetId, metaData in
+                destination.onChromeCastRequested = { [weak self] request, currentTime in
                     self?.toggleEmbeddedPlayer(hidden: true)
-                    self?.loadChromeCast(assetId: assetId, programId: programId, metaData: metaData)
+                    self?.loadChromeCast(for: request, localOffset: currentTime)
                 }
             }
         }
@@ -198,7 +232,13 @@ extension TVViewController {
                 destination.onPlaybackRequested = { [weak self] programId, channelId, metaData in
                     guard let `self` = self else { return }
                     if self.hasActiveChromecastSession {
-                        self.loadChromeCast(assetId: channelId, programId: programId, metaData: metaData)
+                        if let programId = programId {
+                            self.loadChromeCast(for: PlayerViewModel.PlayRequest.program(programId: programId, channelId: channelId, metaData: metaData), localOffset: nil)
+                        }
+                        else {
+                            self.loadChromeCast(for: PlayerViewModel.PlayRequest.live(channelId: channelId, metaData: metaData), localOffset: nil)
+                        }
+                        
                     }
                     else {
                         if let programId = programId {
@@ -268,6 +308,9 @@ extension TVViewController: ChromeCaster {
 extension TVViewController: GCKSessionManagerListener {
     func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
         print("TVViewController didStart GCKSession")
+        if embeddedPlayerController?.player.isPlaying ?? false {
+            embeddedPlayerController?.player.stop()
+        }
         toggleEmbeddedPlayer(hidden: true)
         
     }

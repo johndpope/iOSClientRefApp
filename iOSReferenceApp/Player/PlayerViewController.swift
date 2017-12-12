@@ -36,7 +36,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var airplayButton: MPVolumeView!
     @IBOutlet weak var castButton: GCKUICastButton!
-    var onChromeCastRequested: (_ programId: String?, _ assetId: String, _ metaData: Asset?) -> Void = { _,_,_ in }
+    var onChromeCastRequested: (PlayerViewModel.PlayRequest, Int64) -> Void = { _,_ in }
     
     fileprivate var timelineUpdater: Timer?
     var onDismissed: () -> Void = { _ in }
@@ -59,15 +59,19 @@ class PlayerViewController: UIViewController {
             .onPlaybackReady{ tech, source in
                 tech.play()
             }
-            .onPlaybackStarted{ [unowned self] tech, source in
-                self.togglePlayPauseButton(paused: false)
+            .onPlaybackStarted{ [weak self] tech, source in
+                self?.togglePlayPauseButton(paused: false)
+                self?.startTimelineUpdate()
             }
-            .onPlaybackPaused{ [unowned self] tech, source in
-                self.togglePlayPauseButton(paused: true)
+            .onPlaybackPaused{ [weak self] tech, source in
+                self?.togglePlayPauseButton(paused: true)
             }
-            .onPlaybackResumed{ [unowned self] tech, source in
-                self.togglePlayPauseButton(paused: false)
+            .onPlaybackResumed{ [weak self] tech, source in
+                self?.togglePlayPauseButton(paused: false)
             }
+            .onPlaybackAborted { [weak self] tech, source in
+                self?.hideTimeline()
+        }
         
         if let playRequest = viewModel.playRequest {
             stream(playRequest: playRequest)
@@ -224,6 +228,11 @@ extension PlayerViewController {
         updateTimeline(with: currentTime)
     }
     
+    fileprivate func hideTimeline() {
+        timelineSlider.isHidden = true
+        timeLabel.text = ""
+    }
+    
     fileprivate func updateTimeline(with currentTime: Int64) {
         if let duration = player.duration {
             // Calculate time remaining
@@ -272,16 +281,18 @@ extension PlayerViewController: GCKSessionManagerListener {
     func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
         print("didStart GCKSession")
         sessionManager.remove(self)
+        
+        // HACK: Instruct the relevant analyticsProviders that startCasting event took place
+        // TODO: We do not have nor want a strong coupling between the Cast and Player framework.
+        player.tech.currentSource?.analyticsConnector.providers
+            .flatMap{ $0 as? ExposureAnalytics }
+            .forEach{ $0.startedCasting() }
+        let currentTime = player.tech.currentTime
         player.stop()
         
+        
         guard let request = viewModel.playRequest else { return }
-        switch request {
-        case .live(channelId: let channelId, metaData: let metaData): self.onChromeCastRequested(nil, channelId, metaData)
-        case .program(programId: let programId, channelId: let channelId, metaData: let metaData): self.onChromeCastRequested(programId, channelId, metaData)
-        case .vod(assetId: let assetId, metaData: let metaData): self.onChromeCastRequested(nil, assetId, metaData)
-        case .offline(assetId: let assetId, metaData: let metaData):
-            print("ChromeCasting Offline Asset!? \(assetId)")
-        }
+        onChromeCastRequested(request, currentTime)
     }
     
     func sessionManager(_ sessionManager: GCKSessionManager, didEnd session: GCKSession, withError error: Error?) {

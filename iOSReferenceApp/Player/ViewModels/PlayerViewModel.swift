@@ -15,6 +15,15 @@ class PlayerViewModel {
         case live(channelId: String, metaData: Asset?)
         case program(programId: String, channelId: String, metaData: Asset?)
         case offline(assetId: String, metaData: Asset?)
+        
+        var metaData: Asset? {
+            switch self {
+            case .vod(assetId: _, metaData: let metadata): return metadata
+            case .live(channelId: _, metaData: let metadata): return metadata
+            case .program(programId: _, channelId: _, metaData: let metadata): return metadata
+            case .offline(assetId: _, metaData: let metadata): return metadata
+            }
+        }
     }
     
     var onPlaybackRequested: (PlayRequest) -> Void = { _ in }
