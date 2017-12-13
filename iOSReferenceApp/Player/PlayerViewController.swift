@@ -35,6 +35,7 @@ class PlayerViewController: UIViewController {
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var airplayButton: MPVolumeView!
+    @IBOutlet weak var castButtonContainer: UIStackView!
     @IBOutlet weak var castButton: GCKUICastButton!
     var onChromeCastRequested: (PlayerViewModel.PlayRequest, Int64) -> Void = { _,_ in }
     
@@ -88,15 +89,18 @@ class PlayerViewController: UIViewController {
         
         // Enable airplay icon
         airplayButton.showsVolumeSlider = false
+        
+        configure(for: presentationMode)
     }
     
     func configure(for presentationMode: Mode) {
         switch presentationMode {
         case .standalone:
-            castButton.isHidden = false
+            castButtonContainer.isHidden = false
             backButton.isHidden = false
         case .embedded:
-            castButton.isHidden = true
+            /// Due to GoogleCast framework internals, hiding the actual `GCKUICastButton` does not allways work. We have to resort to hiding the *container* instead
+            castButtonContainer.isHidden = true
             backButton.isHidden = true
         }
     }

@@ -171,7 +171,7 @@ class TVViewController: UIViewController {
                                                        width: CGFloat(24), height: CGFloat(24)))
         castButton.apply(brand: brand)
         var navItems = navigationItem.rightBarButtonItems
-        navItems?.append(UIBarButtonItem(customView: castButton))
+        navItems?.insert(UIBarButtonItem(customView: castButton), at: 0)
         navigationItem.rightBarButtonItems = navItems
         
         apply(brand: brand)
@@ -213,7 +213,6 @@ extension TVViewController {
                 destination.brand = brand
                 destination.presentationMode = .embedded
                 playerViewModel = destination.viewModel
-                destination.configure(for: .embedded)
                 
                 destination.onChromeCastRequested = { [weak self] request, currentTime in
                     self?.toggleEmbeddedPlayer(hidden: true)

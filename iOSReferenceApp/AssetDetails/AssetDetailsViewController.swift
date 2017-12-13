@@ -85,8 +85,6 @@ class AssetDetailsViewController: UIViewController {
         }
         
         castButton.apply(brand: brand)
-        
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
