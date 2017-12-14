@@ -49,7 +49,8 @@ class SearchViewController: UIViewController {
         
         navigationItem.hidesBackButton = true
         
-        // Make sure the search bar is active once the view lo
+        // Make sure the search bar is active once the view loads
+        searchController.searchBar.becomeFirstResponder()
         
         apply(brand: brand)
         
