@@ -14,7 +14,6 @@ class SearchViewController: UIViewController {
 
     var brand: Branding.ColorScheme = Branding.ColorScheme.default
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var searchContainerView: UIView!
     var searchController: UISearchController!
     
     var viewModel: SearchViewModel!
@@ -26,15 +25,19 @@ class SearchViewController: UIViewController {
         
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
-//        searchController.delegate = self
-        
-        // Setting the tint color here is required as it somehow does not work in IB
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        definesPresentationContext = true
         
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search..."
         searchController.searchBar.showsCancelButton = true
         
-        searchContainerView.addSubview(searchController.searchBar)
+        
+        navigationItem.titleView = searchController.searchBar
+        // HACK: The navigationBar grows when the searchbar is added.
+        collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+            
         searchController.searchBar.sizeToFit()
         if #available(iOS 10.0, *) {
             collectionView.prefetchDataSource = self
@@ -44,17 +47,16 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.setNavigationBarHidden(true, animated: true)
         navigationItem.hidesBackButton = true
         
-        // Make sure the search bar is active once the view loads
-        searchController.searchBar.becomeFirstResponder()
+        // Make sure the search bar is active once the view lo
+        
         apply(brand: brand)
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -176,19 +178,17 @@ extension SearchViewController {
     
     fileprivate func preloadNextBatch(after indexPath: IndexPath) {
         let currentBatch = batch(for: indexPath)
-        viewModel.fetchMetadata(batch: currentBatch+1) { [unowned self] (batch, error) in
+        viewModel.fetchMetadata(batch: currentBatch+1) { batch, error in
             if let error = error {
                 print(error)
             }
-//            else if batch == currentBatch {
-//                self.collectionView.reloadData()
-//            }
         }
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchController.searchBar.removeFromSuperview()
         navigationController?.popViewController(animated: true)
     }
     
@@ -205,7 +205,6 @@ extension SearchViewController: UISearchBarDelegate {
             viewModel.clear()
             collectionView.reloadData()
         }
-        print("Search text changed: ",searchText)
     }
 }
 
@@ -220,7 +219,6 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        print("updateSearchResults")
         if let searchString = searchController.searchBar.text {
             viewModel.search(query: searchString) { [weak self] error in
                 if let error = error {
