@@ -1274,7 +1274,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bN0-hQ-4ET">
-                                <rect key="frame" x="0.0" y="56" width="414" height="596"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="652"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ph2-Su-GKh">
                                     <size key="itemSize" width="108" height="162"/>
@@ -1288,30 +1288,19 @@
                                     <outlet property="delegate" destination="6vn-U8-XOv" id="o6e-VA-vXc"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xp5-9r-IIO">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="AbO-P0-39C"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="c6v-V7-l0h" firstAttribute="top" secondItem="bN0-hQ-4ET" secondAttribute="bottom" id="IO5-Vu-hMA"/>
-                            <constraint firstItem="Xp5-9r-IIO" firstAttribute="leading" secondItem="lt2-OJ-Jh5" secondAttribute="leading" id="NVL-cp-HR6"/>
-                            <constraint firstItem="Xp5-9r-IIO" firstAttribute="top" secondItem="Xc4-Ny-YCV" secondAttribute="bottom" id="PUp-bE-mh7"/>
                             <constraint firstItem="bN0-hQ-4ET" firstAttribute="leading" secondItem="lt2-OJ-Jh5" secondAttribute="leading" id="RXr-jE-bQy"/>
-                            <constraint firstItem="bN0-hQ-4ET" firstAttribute="top" secondItem="Xp5-9r-IIO" secondAttribute="bottom" id="WOK-c7-jw6"/>
                             <constraint firstAttribute="trailing" secondItem="bN0-hQ-4ET" secondAttribute="trailing" id="jXv-5d-PPi"/>
-                            <constraint firstAttribute="trailing" secondItem="Xp5-9r-IIO" secondAttribute="trailing" id="nlA-eY-b0f"/>
+                            <constraint firstItem="bN0-hQ-4ET" firstAttribute="top" secondItem="Xc4-Ny-YCV" secondAttribute="bottom" id="ohM-8d-RPe"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="twI-oR-tgi"/>
                     <connections>
                         <outlet property="collectionView" destination="bN0-hQ-4ET" id="cHk-W8-I42"/>
-                        <outlet property="searchContainerView" destination="Xp5-9r-IIO" id="O65-eh-a4Y"/>
                         <segue destination="aUa-uP-O3V" kind="show" identifier="segueListToDetails" id="JpR-oP-vgz"/>
                     </connections>
                 </viewController>
@@ -1787,6 +1776,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="WPM-n0-5LO"/>
         <segue reference="G3d-4d-mII"/>
-        <segue reference="1qW-5O-CKz"/>
+        <segue reference="JpR-oP-vgz"/>
     </inferredMetricsTieBreakers>
 </document>

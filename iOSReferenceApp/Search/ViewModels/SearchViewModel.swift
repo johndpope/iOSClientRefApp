@@ -48,6 +48,7 @@ extension SearchViewModel {
         let shouldResetContent = isSearching
         Search(environment: environment)
             .query(for: searchTerm)
+            .filter(locale: "en")
             .show(page: batch, spanning: batchSize)
             .request()
             .validate()
@@ -125,17 +126,10 @@ extension SearchViewModel {
     func search(query string: String, callback: @escaping (ExposureError?) -> Void) {
         resetSearch(for: string)
         guard string != "" else { return }
-        if isSearching {
-            // TODO:
-            print("isSearching == true")
-        }
-        else {
-            isSearching = true
-            fetchMetadata(batch: 1) { [weak self] batch, error in
-                print("search returned")
-                callback(error)
-                self?.isSearching = false
-            }
+        isSearching = true
+        fetchMetadata(batch: 1) { [weak self] batch, error in
+            callback(error)
+            self?.isSearching = false
         }
     }
     

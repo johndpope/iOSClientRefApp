@@ -39,7 +39,7 @@ class CarouselListViewController: UIViewController {
                                                        width: CGFloat(24), height: CGFloat(24)))
         castButton.apply(brand: brand)
         var navItems = navigationItem.rightBarButtonItems
-        navItems?.insert(UIBarButtonItem(customView: castButton), at: 0)
+        navItems?.append(UIBarButtonItem(customView: castButton))
         navigationItem.rightBarButtonItems = navItems
     }
     
