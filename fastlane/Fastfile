@@ -28,10 +28,9 @@ platform :ios do
         
         update_graph
         update_app_icon
-        
         bump_build_number
-        
         run_unit_tests
+        update_code_coverage
         
         clean_build_artifacts
         
@@ -47,14 +46,25 @@ platform :ios do
     
     desc "Runs all the tests"
     lane :run_unit_tests do
-        ws = ENV["CLIENT_WORKSPACE"]
-        UI.message("CLIENT_WORKSPACE #{ws}")
         scan(
              workspace: ENV["CLIENT_WORKSPACE"],
-             scheme: ENV["UNIT_TEST_SCHEME"]
+             scheme: ENV["UNIT_TEST_SCHEME"],
+             output_directory: "fastlane/test_output/scan",
+             output_style: "standard", #['standard', 'basic', 'rspec', 'raw']
+             code_coverage: true
              )
-             
-             UI.success("====> TESTING DONE")
+            
+        slather(
+                html: true,
+                # cobertura_xml: true,
+                output_directory: "fastlane/test_output/coverage",
+                proj: ENV["XCODE_PROJECT"],
+                workspace: ENV["UNIT_TEST_WORKSPACE"],
+                scheme: ENV["UNIT_TEST_SCHEME"],
+                ignore:["iOSReferenceAppTests/*","iOSReferenceAppUITests/*"]
+                )
+                
+        UI.success("====> TESTING DONE")
     end
     
     
@@ -92,6 +102,15 @@ platform :ios do
         update_appicon()
     end
     
+    desc "Updates the code coverage badge icon in README.md"
+    lane :update_code_coverage do
+        
+    end
+    
+    lane :release do
+        # TODO: Push new version number to shield
+        
+    end
     
     lane :testflight_beta do
         badge(dark: true)
