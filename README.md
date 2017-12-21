@@ -1,4 +1,7 @@
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![license](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](https://github.com/EricssonBroadcastServices/iOSClientRefApp/blob/master/LICENSE)
+[![version](https://img.shields.io/badge/version-v0.73.0-blue.svg)](https://github.com/EricssonBroadcastServices/iOSClientRefApp/releases/tag/v0.73.0)
+![coverage](https://img.shields.io/badge/coverage-85%25-green.svg)
 
 # Reference App
 

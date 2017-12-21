@@ -94,6 +94,8 @@ platform :ios do
     
     
     lane :testflight_beta do
+        badge(dark: true)
+        
         cert
         sigh
         
