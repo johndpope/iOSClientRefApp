@@ -137,12 +137,12 @@ extension PlayerViewController {
     }
     
     @IBAction func actionQuickRewind(_ sender: UIButton) {
-        let currentPosition = player.playheadTime
+        let currentPosition = player.playheadPosition
         player.seek(to: currentPosition - 10 * 1000)
     }
     
     @IBAction func actionQuickForward(_ sender: UIButton) {
-        let currentPosition = player.playheadTime
+        let currentPosition = player.playheadPosition
         player.seek(to: currentPosition + 10 * 1000)
     }
     
@@ -228,7 +228,7 @@ extension PlayerViewController {
     @objc fileprivate func timedTimelineUpdate() {
         guard !viewModel.isScrubbing else { return }
         
-        let currentTime = player.playheadTime
+        let currentTime = player.playheadPosition
         updateTimeline(with: currentTime)
     }
     
@@ -291,7 +291,7 @@ extension PlayerViewController: GCKSessionManagerListener {
         player.tech.currentSource?.analyticsConnector.providers
             .flatMap{ $0 as? ExposureAnalytics }
             .forEach{ $0.startedCasting() }
-        let currentTime = player.tech.playheadTime
+        let currentTime = player.tech.playheadPosition
         player.stop()
         
         
