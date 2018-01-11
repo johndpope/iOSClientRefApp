@@ -158,6 +158,24 @@ extension MasterViewController {
 }
 
 extension MasterViewController {
+    func configureMyDownloads() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "OfflineListViewController") as! OfflineListViewController
+        
+        viewController.slidingMenuController = self
+        viewController.authorize(environment: environment,
+                                 sessionToken: sessionToken)
+        viewController.brand = brand
+        contentNavContainer.setViewControllers([viewController], animated: true)
+    }
+}
+extension MasterViewController {
+    func accessTestEnv() {
+        
+    }
+}
+
+extension MasterViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let environment = UserInfo.environment,
             let sessionToken = UserInfo.sessionToken else {
@@ -188,13 +206,14 @@ extension MasterViewController {
             }
             destination.selectedOtherSegue = { [weak self] segue in
                 self?.activeContentIndex = nil
+                self?.closeMenu()
                 switch segue {
                 case .myDownloads:
-                    self?.closeMenu()
                     self?.configureMyDownloads()
                 case .logout:
-                    self?.closeMenu()
                     self?.actionLogout()
+                case .testEnv:
+                    self?.accessTestEnv()
                 }
             }
             destination.selectedContentSegue = { [weak self] dynamicContentCategory, index in
@@ -205,17 +224,6 @@ extension MasterViewController {
                 }
             }
         }
-    }
-    
-    func configureMyDownloads() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "OfflineListViewController") as! OfflineListViewController
-        
-        viewController.slidingMenuController = self
-        viewController.authorize(environment: environment,
-                                 sessionToken: sessionToken)
-        viewController.brand = brand
-        contentNavContainer.setViewControllers([viewController], animated: true)
     }
 }
 

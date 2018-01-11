@@ -98,14 +98,15 @@ class MainMenuViewModel {
     }
     
     private func configureAppSettings() -> MainMenuSectionViewModel {
+        let testEnv = MainMenuPushNavigationViewModel(title: "Test Env", action: .other(segue: .testEnv))
         let appSettings = MainMenuPushNavigationViewModel(title: "App Settings", action: .none)
         let account = MainMenuPushNavigationViewModel(title: "Account", action: .none)
-        let logOut = MainMenuPushNavigationViewModel(title: "Log out", action: .other(segue: .logout))// MainMenuPushNavigationViewModel(title: , action: .logout)
+        let logOut = MainMenuPushNavigationViewModel(title: "Log out", action: .other(segue: .logout))
         
         // Version
         let version = MainMenuStaticDataViewModel(text: versionData())
         
-        return MainMenuSectionViewModel(rows: [appSettings, account, logOut, version])
+        return MainMenuSectionViewModel(rows: [testEnv, appSettings, account, logOut, version])
     }
     
     private func versionData() -> String {

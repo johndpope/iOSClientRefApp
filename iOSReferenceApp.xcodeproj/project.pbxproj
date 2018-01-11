@@ -30,6 +30,9 @@
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76391B411FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */; };
 		76391B431FAA6DDF0047447F /* EnvironmentSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76391B421FAA6DDF0047447F /* EnvironmentSelectionViewController.swift */; };
+		7645C5652007814600133955 /* TestEnv.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7645C5642007814600133955 /* TestEnv.storyboard */; };
+		7645C56720078C7D00133955 /* TestEnvTimeshiftDelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C56620078C7D00133955 /* TestEnvTimeshiftDelay.swift */; };
+		7645C5692007A98100133955 /* Program+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C5682007A98100133955 /* Program+Extensions.swift */; };
 		76466FC61FB05BCD007ECD5C /* Tabman.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FC51FB05BCD007ECD5C /* Tabman.framework */; };
 		76466FC71FB05BCD007ECD5C /* Tabman.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FC51FB05BCD007ECD5C /* Tabman.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76466FC91FB05BDA007ECD5C /* Pageboy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FC81FB05BDA007ECD5C /* Pageboy.framework */; };
@@ -239,6 +242,9 @@
 		76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewModel.swift; sourceTree = "<group>"; };
 		76391B421FAA6DDF0047447F /* EnvironmentSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewController.swift; sourceTree = "<group>"; };
 		764392D21FA5C09C008DC1E8 /* BasicPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasicPromotionCell.xib; sourceTree = "<group>"; };
+		7645C5642007814600133955 /* TestEnv.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestEnv.storyboard; sourceTree = "<group>"; };
+		7645C56620078C7D00133955 /* TestEnvTimeshiftDelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEnvTimeshiftDelay.swift; sourceTree = "<group>"; };
+		7645C5682007A98100133955 /* Program+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Program+Extensions.swift"; sourceTree = "<group>"; };
 		76466FC51FB05BCD007ECD5C /* Tabman.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Tabman.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76466FC81FB05BDA007ECD5C /* Pageboy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pageboy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76466FCB1FB05C17007ECD5C /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -493,6 +499,7 @@
 				766502FC1F99CB29009A5BFE /* Sequence+Extensions.swift */,
 				766502F81F99CA4E009A5BFE /* SessionManager+ExposureDownloadTask.swift */,
 				76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */,
+				7645C5682007A98100133955 /* Program+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -674,6 +681,8 @@
 				7683F18E1FAB4A1A0097BC23 /* Login */,
 				76391B3D1FAA6DAD0047447F /* EnvironmentSelection */,
 				3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */,
+				7645C56620078C7D00133955 /* TestEnvTimeshiftDelay.swift */,
+				7645C5642007814600133955 /* TestEnv.storyboard */,
 			);
 			path = iOSReferenceApp;
 			sourceTree = "<group>";
@@ -1190,6 +1199,7 @@
 				76A843B51EA7856C00BDAF2C /* LaunchScreen.storyboard in Resources */,
 				76A5D8081FBA0F41005F6C4B /* EPGPreviewCell.xib in Resources */,
 				7667AECF1EC5E29400C308FC /* .env in Resources */,
+				7645C5652007814600133955 /* TestEnv.storyboard in Resources */,
 				768ED8AA1F0FAEE3008E8F9B /* update_dependency_graph.rb in Resources */,
 				76A843B21EA7856C00BDAF2C /* Assets.xcassets in Resources */,
 				764EDC491F5EADFB00569D5B /* environments.json in Resources */,
@@ -1288,6 +1298,7 @@
 				76EC8D331FA510BF00F6FDB6 /* MainMenuActionType.swift in Sources */,
 				76A844001EA7886400BDAF2C /* EnvironmentConfig.swift in Sources */,
 				F7061C731EC5CF8F0041E271 /* Logging.swift in Sources */,
+				7645C56720078C7D00133955 /* TestEnvTimeshiftDelay.swift in Sources */,
 				76EC8D371FA510FA00F6FDB6 /* MainMenuStaticDataViewModel.swift in Sources */,
 				76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */,
 				762808D01FCECA39005610DF /* EpgUnavailableCell.swift in Sources */,
@@ -1336,6 +1347,7 @@
 				769862261FA518C500A57213 /* AssetDetailsViewController.swift in Sources */,
 				767DC0DC1FA712B10021A17A /* StretchyCarouselHeaderView.swift in Sources */,
 				7698622D1FA5197C00A57213 /* OfflineListViewModel.swift in Sources */,
+				7645C5692007A98100133955 /* Program+Extensions.swift in Sources */,
 				76BA44481FACA91E00E92AD1 /* SingleCarouselViewModel.swift in Sources */,
 				76AE64EB1F90217B0036933E /* GradientView.swift in Sources */,
 				76EC8D7C1FA5158B00F6FDB6 /* UICollectionViewLayoutPagination.swift in Sources */,

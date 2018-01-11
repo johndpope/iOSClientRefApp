@@ -55,6 +55,7 @@ class MainMenuViewController: UIViewController {
         enum Other: String {
             case myDownloads
             case logout
+            case testEnv
         }
     }
     
