@@ -171,7 +171,55 @@ extension MasterViewController {
 }
 extension MasterViewController {
     func accessTestEnv() {
+        let viewController = SimpleCarouselViewController<Asset>(nibName: "SimpleCarouselViewController", bundle: nil)
+        viewController.viewModel.executeResuest = { [weak self] in
+            guard let `self` = self else { return }
+            FetchAsset(environment: self.environment)
+                .list()
+                .includeUserData(for: self.sessionToken)
+                .elasticSearch(query: "(medias.drm:FAIRPLAY OR medias.drm:UNENCRYPTED) AND medias.format:HLS")
+                .filter(on: .tvChannel)
+                .filter(onlyPublished: true)
+                .sort(on: ["assetId","originalTitle"])
+                .request()
+                .validate()
+                .response{
+                    viewController.viewModel.prepare(content: $0.value?.items, error: $0.error)
+            }
+        }
         
+        viewController.onSelected = { [weak self] channelAsset in
+            guard let `self` = self else { return }
+            let epgViewController = SimpleEpgViewController(nibName: "SimpleEpgViewController", bundle: nil)
+            epgViewController.onSelected = { model in
+                let storyboard = UIStoryboard(name: "TestEnv", bundle: nil)
+                let viewController = storyboard.instantiateViewController(withIdentifier: "TestEnvTimeshiftDelay") as! TestEnvTimeshiftDelay
+                
+            }
+            
+            epgViewController.viewModel.executeResuest = { [weak self] in
+                guard let `self` = self else { return }
+                guard let channelId = channelAsset?.assetId else { return }
+                let current = Date()
+                FetchEpg(environment: self.environment)
+                    .channel(id: channelId)
+                    .show(page: 1, spanning: 100)
+                    .filter(starting: current.subtract(days: 1), ending: current.add(days: 1) ?? current)
+                    .request()
+                    .validate()
+                    .response{
+                        epgViewController.viewModel.prepare(content: $0.value?.programs, error: $0.error)
+                }
+            }
+            
+            self.contentNavContainer.pushViewController(epgViewController, animated: true)
+        }
+        
+        viewController.slidingMenuController = self
+//        viewController.brand = brand
+        
+        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "download-list"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(MasterViewController.toggleSlidingMenu))
+        contentNavContainer.setViewControllers([viewController], animated: true)
     }
 }
 

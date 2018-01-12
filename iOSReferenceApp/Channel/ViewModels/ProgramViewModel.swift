@@ -14,7 +14,7 @@ class ProgramViewModel {
     
     typealias ExposureImage = Image
     
-    init?(program: Program) {
+    init(program: Program) {
         self.program = program
     }
 }

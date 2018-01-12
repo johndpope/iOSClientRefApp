@@ -11,7 +11,6 @@ import UIKit
 class TestEnvTimeshiftDelay: UIViewController {
 
     @IBOutlet weak var playerView: UIView!
-    @IBOutlet weak var epgTableView: UITableView!
     
     @IBOutlet weak var programIdLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
@@ -22,6 +21,7 @@ class TestEnvTimeshiftDelay: UIViewController {
     @IBOutlet weak var playheadPositionLabel: UILabel!
     
     @IBOutlet weak var timeshiftDelayTextField: UITextField!
+    @IBOutlet weak var seekDeltaTextField: UITextField!
     
     var viewModel: ChannelViewModel!
     
@@ -36,28 +36,11 @@ class TestEnvTimeshiftDelay: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-}
-
-extension TestEnvTimeshiftDelay: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.epgAvailable ? viewModel.content.count : 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "epgCell", for: indexPath)
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard viewModel.epgAvailable else {
-            cell.textLabel?.text = "EPG unavailable"
-            return
-        }
+    @IBAction func timeshiftAction(_ sender: UIButton) {
         
-        let cellViewModel = viewModel.content[indexPath.row]
+    }
+    
+    @IBAction func seekDeltaAction(_ sender: UIButton) {
         
     }
 }
