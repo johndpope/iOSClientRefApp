@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Exposure
 
 class EPGPreviewCell: UITableViewCell {
     
@@ -14,7 +15,7 @@ class EPGPreviewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var liveProgressView: UIProgressView!
-    fileprivate weak var viewModel: ProgramViewModel?
+    fileprivate weak var viewModel: PresentableViewModel<Program>?
     fileprivate var liveProgressTimer: Timer?
     fileprivate var brand: Branding.ColorScheme = Branding.ColorScheme.default
     
@@ -29,11 +30,11 @@ class EPGPreviewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func bind(viewModel: ProgramViewModel) {
+    func bind(viewModel: PresentableViewModel<Program>) {
         reset()
         self.viewModel = viewModel
         
-        titleLabel.text = viewModel.anyTitle(locale: "en")
+        titleLabel.text = viewModel.model.anyTitle(locale: "en")
         durationLabel.text = viewModel.programDurationString(locale: "en")
         
         
@@ -47,6 +48,7 @@ class EPGPreviewCell: UITableViewCell {
         }
         
         if let url = viewModel
+            .model
             .images(locale: "en")
             .prefere(orientation: .landscape)
             .validImageUrls()

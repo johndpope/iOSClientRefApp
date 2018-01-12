@@ -52,7 +52,7 @@ extension Asset: Presentable {
 
 class SimpleEpgViewController: UIViewController {
     
-    let viewModel = PresentableViewModel<Program>()
+    let viewModel = ListViewModel<Program>()
     var onSelected: (Program) -> Void = { _ in }
     
     @IBOutlet weak var tableView: UITableView!
@@ -106,7 +106,7 @@ extension SimpleEpgViewController: UITableViewDataSource {
             let vm = viewModel.content[indexPath.row]
             
             preview.reset()
-            preview.bind(viewModel: ProgramViewModel(program: vm))
+            preview.bind(viewModel: vm)
             //            preview.apply(brand: brand)
             //            preview.markAs(playing: indexPath.row == nowPlayingIndex)
         }
@@ -119,8 +119,8 @@ extension SimpleEpgViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if !viewModel.content.isEmpty {
-            let model = viewModel.content[indexPath.row]
-            onSelected(model)
+            let vm = viewModel.content[indexPath.row]
+            onSelected(vm.model)
         }
     }
 }

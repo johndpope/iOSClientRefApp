@@ -106,8 +106,8 @@ extension EpgViewController:  UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if viewModel.epgAvailable {
-            let program = viewModel.content[indexPath.row].program
-            guard let programId = viewModel.content[indexPath.row].program.assetId else { return }
+            let program = viewModel.content[indexPath.row].model
+            guard let programId = viewModel.content[indexPath.row].model.assetId else { return }
             didSelectEpg(programId, viewModel.channelId, program.asset)
             mark(index: indexPath.row, playing: true)
         }

@@ -10,12 +10,97 @@ import UIKit
 import Exposure
 
 class PresentableViewModel<Model: Presentable> {
-    fileprivate(set) var content: [Model] = []
+    let model: Model
+    
+    init(model: Model) {
+        self.model = model
+    }
+}
+
+extension PresentableViewModel where Model == Program {
+    var isUpcoming: Bool {
+        guard let start = model.startDate else { return false }
+        
+        let current = Date()
+        
+        return start > current
+    }
+    
+    var isLive: Bool {
+        guard let start = model.startDate, let end = model.endDate else { return false }
+        
+        let current = Date()
+        
+        return start < current && current < end
+    }
+    
+    func programLiveProgress() -> Float? {
+        guard isLive else { return nil }
+        
+        guard let start = model.startDate, let end = model.endDate else { return nil }
+        
+        let current = Date()
+        
+        let startMillis = Float(start.millisecondsSince1970)
+        let currentMillis = Float(current.millisecondsSince1970)
+        let endMillis = Float(end.millisecondsSince1970)
+        
+        return (currentMillis - startMillis) / (endMillis - startMillis)
+    }
+    
+    func programDurationString(locale: String) -> String? {
+        let current = Date()
+        
+        guard let start = model.startDate, let end = model.endDate else { return nil }
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
+        
+        let startTime = timeFormatter.string(from: start)
+        let endTime = timeFormatter.string(from: end)
+        
+        // Start | End | Current
+        //
+        //   X   |  X  |    X    ->  Today
+        //  X-1  |  X  |    X    ->  Yesterday
+        //   X   | X+1 |    X    ->  Tomorrow
+        //
+        // Otherwise, just use date
+        let startComponents = Calendar.current.dateComponents([.day,.month], from: start)
+        let endComponents = Calendar.current.dateComponents([.day,.month], from: end)
+        let currentComponents = Calendar.current.dateComponents([.day,.month], from: current)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d"
+        
+        if startComponents.day! == endComponents.day! {
+            if startComponents.day! == currentComponents.day! {
+                return "Today " + startTime + " - " + endTime
+            }
+            else if endComponents.day! == (currentComponents.day! - 1) {
+                return "Yesterday " + startTime + " - " + endTime
+            }
+            else if startComponents.day! == (currentComponents.day! - 1) {
+                return "Tomorrow " + startTime + " - " + endTime
+            }
+            else {
+                return dateFormatter.string(from: start) + " " + startTime + " - " + endTime
+            }
+        }
+        else {
+            dateFormatter.dateFormat = "MMM d HH:mm"
+            return dateFormatter.string(from: start) + " - " + dateFormatter.string(from: end)
+        }
+    }
+}
+
+class ListViewModel<Model: Presentable> {
+    fileprivate(set) var content: [PresentableViewModel<Model>] = []
     var executeResuest: () -> Void = { _ in }
     var onPrepared: ([Model]?, ExposureError?) -> Void = { _,_ in }
     
     func prepare(content: [Model]?, error: ExposureError?) {
-        self.content = content ?? []
+        self.content = content?.map{ PresentableViewModel(model: $0) } ?? []
         onPrepared(content,error)
     }
 }
@@ -48,7 +133,7 @@ class GenericCollectionViewDataSource: NSObject, UICollectionViewDataSource {
 
 class SimpleCarouselViewController<Model: Presentable>: UIViewController {
     
-    let viewModel = PresentableViewModel<Model>()
+    let viewModel = ListViewModel<Model>()
     var onSelected: (Model?) -> Void = { _ in }
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -123,7 +208,7 @@ extension SimpleCarouselViewController {
                 let vm = self.viewModel.content[indexPath.row]
                 
                 preview.reset()
-                preview.thumbnail(title: vm.anyTitle(locale: "en"))
+                preview.thumbnail(title: vm.model.anyTitle(locale: "en"))
                 //                preview.apply(brand: brand)
                 
                 // We need aspectFit for "general" thumbnail since we have little control over screen size.
@@ -146,8 +231,8 @@ extension SimpleCarouselViewController {
         genericDelegate.didSelect = { [weak self] collectionView, indexPath in
             guard let `self` = self else { return }
             collectionView.deselectItem(at: indexPath, animated: true)
-            let model = self.viewModel.content[indexPath.row]
-            self.onSelected(model)
+            let vm = self.viewModel.content[indexPath.row]
+            self.onSelected(vm.model)
         }
         
         

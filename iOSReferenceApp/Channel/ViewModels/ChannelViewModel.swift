@@ -11,7 +11,7 @@ import Exposure
 
 class ChannelViewModel {
     var asset: Asset!
-    fileprivate(set) var content: [ProgramViewModel] = []
+    fileprivate(set) var content: [PresentableViewModel<Program>] = []
     
     var environment: Environment
     var sessionToken: SessionToken
@@ -72,7 +72,7 @@ extension ChannelViewModel {
         }
         
         let vms = programs
-            .flatMap{ ProgramViewModel(program: $0) }
+            .flatMap{ PresentableViewModel(model: $0) }
         
         content.append(contentsOf: vms)
     }
