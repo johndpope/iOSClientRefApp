@@ -9,11 +9,32 @@
 import UIKit
 import Exposure
 
-class PresentableViewModel<Model: Presentable> {
+class PresentableViewModel<Model> {
     let model: Model
     
     init(model: Model) {
         self.model = model
+    }
+}
+extension PresentableViewModel where Model: LocalizedEntity {
+    var locales: [String] {
+        return model.locales
+    }
+    
+    func localizedData(locale: String) -> LocalizedData? {
+        return model.localizedData(locale: locale)
+    }
+    
+    func localizations() -> [LocalizedData] {
+        return model.localizations()
+    }
+    
+    func anyTitle(locale: String) -> String {
+        return model.anyTitle(locale: locale)
+    }
+    
+    func anyDescription(locale: String) -> String {
+        return model.anyDescription(locale: locale)
     }
 }
 
@@ -94,7 +115,7 @@ extension PresentableViewModel where Model == Program {
     }
 }
 
-class ListViewModel<Model: Presentable> {
+class ListViewModel<Model> {
     fileprivate(set) var content: [PresentableViewModel<Model>] = []
     var executeResuest: () -> Void = { _ in }
     var onPrepared: ([Model]?, ExposureError?) -> Void = { _,_ in }
@@ -131,7 +152,7 @@ class GenericCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     }
 }
 
-class SimpleCarouselViewController<Model: Presentable>: UIViewController {
+class SimpleCarouselViewController<Model: LocalizedEntity>: UIViewController {
     
     let viewModel = ListViewModel<Model>()
     var onSelected: (Model?) -> Void = { _ in }
@@ -208,7 +229,7 @@ extension SimpleCarouselViewController {
                 let vm = self.viewModel.content[indexPath.row]
                 
                 preview.reset()
-                preview.thumbnail(title: vm.model.anyTitle(locale: "en"))
+                preview.thumbnail(title: vm.anyTitle(locale: "en"))
                 //                preview.apply(brand: brand)
                 
                 // We need aspectFit for "general" thumbnail since we have little control over screen size.

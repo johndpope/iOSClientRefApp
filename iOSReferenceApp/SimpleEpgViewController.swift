@@ -37,19 +37,6 @@ extension Program: LocalizedEntity {
     }
 }
 
-
-protocol Presentable: LocalizedEntity {
-    
-}
-
-extension Program: Presentable {
-    
-}
-
-extension Asset: Presentable {
-    
-}
-
 class SimpleEpgViewController: UIViewController {
     
     let viewModel = ListViewModel<Program>()
@@ -114,6 +101,16 @@ extension SimpleEpgViewController: UITableViewDataSource {
 }
 
 extension SimpleEpgViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if !viewModel.content.isEmpty {
+            return !viewModel.content[indexPath.row].isUpcoming
+        }
+        return true
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
