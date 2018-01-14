@@ -172,7 +172,7 @@ extension MasterViewController {
 extension MasterViewController {
     func accessTestEnv() {
         let viewController = SimpleCarouselViewController<Asset>(nibName: "SimpleCarouselViewController", bundle: nil)
-        viewController.viewModel.executeResuest = { [weak self] in
+        viewController.viewModel.executeResuest = { [weak self, unowned viewController] in
             guard let `self` = self else { return }
             FetchAsset(environment: self.environment)
                 .list()
@@ -197,7 +197,7 @@ extension MasterViewController {
                 
             }
             
-            epgViewController.viewModel.executeResuest = { [weak self] in
+            epgViewController.viewModel.executeResuest = { [weak self, unowned epgViewController] in
                 guard let `self` = self else { return }
                 guard let channelId = channelAsset?.assetId else { return }
                 let current = Date()
@@ -209,6 +209,13 @@ extension MasterViewController {
                     .validate()
                     .response{
                         epgViewController.viewModel.prepare(content: $0.value?.programs, error: $0.error)
+                }
+            }
+            
+            epgViewController.viewModel.onPrepared = { [unowned epgViewController] model, error in
+                epgViewController.tableView.reloadData()
+                if let liveIndex = epgViewController.viewModel.currentlyLiveIndex {
+                    epgViewController.tableView.scrollToRow(at: liveIndex, at: .middle, animated: false)
                 }
             }
             

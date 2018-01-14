@@ -8,6 +8,7 @@
 
 import UIKit
 import Exposure
+import Kingfisher
 
 class PresentableViewModel<Model> {
     let model: Model
@@ -36,6 +37,33 @@ extension PresentableViewModel where Model: LocalizedEntity {
     func anyDescription(locale: String) -> String {
         return model.anyDescription(locale: locale)
     }
+}
+
+extension PresentableViewModel where Model: LocalizedEntity {
+    
+    private func thumbnailImageProcessor(for thumbnailSize: CGSize, contentMode mode: ContentMode = .aspectFill) -> ImageProcessor {
+        let resizeProcessor = CrispResizingImageProcessor(referenceSize: thumbnailSize, mode: mode)
+        let croppingProcessor = CroppingImageProcessor(size: thumbnailSize)
+        return (resizeProcessor>>croppingProcessor)
+    }
+    
+    func thumbnailImageOptions(for thumbnailSize: CGSize) -> KingfisherOptionsInfo {
+        return [
+            .backgroundDecode,
+            .cacheMemoryOnly,
+            .processor(thumbnailImageProcessor(for: thumbnailSize))
+        ]
+    }
+    
+    func imageUrl(locale: String = "en", orientation: Exposure.Image.Orientation = .portrait) -> URL? {
+        return model
+            .images(locale: locale)
+            .prefere(orientation: orientation)
+            .validImageUrls()
+            .first
+    }
+    
+    
 }
 
 extension PresentableViewModel where Model == Program {
@@ -123,6 +151,16 @@ class ListViewModel<Model> {
     func prepare(content: [Model]?, error: ExposureError?) {
         self.content = content?.map{ PresentableViewModel(model: $0) } ?? []
         onPrepared(content,error)
+    }
+}
+
+extension ListViewModel where Model == Program {
+    var currentlyLiveIndex: IndexPath? {
+        for index in (0..<content.count) {
+            let program = content[index]
+            if program.isLive { return IndexPath(row: index, section: 0) }
+        }
+        return nil
     }
 }
 
@@ -234,18 +272,18 @@ extension SimpleCarouselViewController {
                 
                 // We need aspectFit for "general" thumbnail since we have little control over screen size.
                 preview.thumbnailView.contentMode = .scaleAspectFit
-                //                if let url = self.viewModel.imageUrl(for: indexPath) {
-                //                    preview
-                //                        .thumbnailView
-                //                        .kf
-                //                        .setImage(with: url, options: viewModel.thumbnailImageOptions(for: collectionView.bounds.width)) { (image, error, cache, url) in
-                //                            // AspectFill for images to make sure they "fill" the entire preview.
-                //                            preview.thumbnailView.contentMode = .scaleAspectFill
-                //                            if let error = error {
-                //                                print("Kingfisher: ",error)
-                //                            }
-                //                    }
-                //                }
+                if let url = vm.imageUrl() {
+                    preview
+                        .thumbnailView
+                        .kf
+                        .setImage(with: url, options: vm.thumbnailImageOptions(for: self.preferredThumbnailSize(forWidth: collectionView.bounds.width))) { (image, error, cache, url) in
+                            // AspectFill for images to make sure they "fill" the entire preview.
+                            preview.thumbnailView.contentMode = .scaleAspectFill
+                            if let error = error {
+                                print("Kingfisher: ",error)
+                            }
+                    }
+                }
             }
         }
         
