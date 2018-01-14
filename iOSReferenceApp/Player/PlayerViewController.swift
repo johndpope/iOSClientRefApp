@@ -50,8 +50,7 @@ class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         player = Player(environment: viewModel.environment,
-                        sessionToken: viewModel.sessionToken,
-                        analytics: ExposureAnalytics.self)
+                        sessionToken: viewModel.sessionToken)
         player.context.analyticsGenerators.append({ _ in return AnalyticsLogger() })
         player
             .onError{ [unowned self] tech, source, error in
