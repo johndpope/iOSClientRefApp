@@ -41,6 +41,7 @@ class SimpleEpgViewController: UIViewController {
     
     let viewModel = ListViewModel<Program>()
     var onSelected: (Program) -> Void = { _ in }
+    var onViewDidLoad: () -> Void = { _ in }
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -55,13 +56,9 @@ class SimpleEpgViewController: UIViewController {
         tableView.register(UINib(nibName: "EpgUnavailableCell", bundle: nil),
                            forCellReuseIdentifier: "EpgUnavailableCell")
         
-        
-        viewModel.onPrepared = { [weak self] models, error in
-            // reload
-            self?.tableView.reloadData()
-        }
         viewModel.executeResuest()
         
+        onViewDidLoad()
     }
     
     override func didReceiveMemoryWarning() {

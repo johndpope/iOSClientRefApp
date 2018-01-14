@@ -194,6 +194,7 @@ class SimpleCarouselViewController<Model: LocalizedEntity>: UIViewController {
     
     let viewModel = ListViewModel<Model>()
     var onSelected: (Model?) -> Void = { _ in }
+    var onViewDidLoad: () -> Void = { _ in }
     
     @IBOutlet weak var collectionView: UICollectionView!
     let genericDelegate = GenericCollectionViewDelegate()
@@ -214,12 +215,9 @@ class SimpleCarouselViewController<Model: LocalizedEntity>: UIViewController {
         collectionView.contentInset = edgeInsets
         collectionView.collectionViewLayout = flowLayout
         
-        viewModel.onPrepared = { [weak self] models, error in
-            // reload
-            self?.collectionView.reloadData()
-        }
         viewModel.executeResuest()
         
+        onViewDidLoad()
     }
     
     override func didReceiveMemoryWarning() {

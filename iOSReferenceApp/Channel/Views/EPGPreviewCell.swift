@@ -124,8 +124,12 @@ extension EPGPreviewCell {
 extension EPGPreviewCell {
     fileprivate func markAs(upcoming: Bool) {
         titleLabel.textColor = upcoming ? brand.text.primary : brand.text.secondary
+        titleLabel.alpha = upcoming ? 0.25 : 1
+    
         durationLabel.textColor = upcoming ? brand.text.secondary : brand.text.tertiary
-        thumbnailView.alpha = upcoming ? 0.5 : 1
+        durationLabel.alpha = upcoming ? 0.25 : 1
+        
+        thumbnailView.alpha = upcoming ? 0.25 : 1
     }
 }
 

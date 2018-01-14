@@ -172,6 +172,7 @@ extension MasterViewController {
 extension MasterViewController {
     func accessTestEnv() {
         let viewController = SimpleCarouselViewController<Asset>(nibName: "SimpleCarouselViewController", bundle: nil)
+        viewController.navigationItem.title = "Channels"
         viewController.viewModel.executeResuest = { [weak self, unowned viewController] in
             guard let `self` = self else { return }
             FetchAsset(environment: self.environment)
@@ -188,9 +189,14 @@ extension MasterViewController {
             }
         }
         
+        viewController.viewModel.onPrepared = { [unowned viewController] _,_ in
+            viewController.collectionView.reloadSections([0])
+        }
+        
         viewController.onSelected = { [weak self] channelAsset in
             guard let `self` = self else { return }
             let epgViewController = SimpleEpgViewController(nibName: "SimpleEpgViewController", bundle: nil)
+            epgViewController.navigationItem.title = channelAsset?.anyTitle(locale: "en") ?? "EPG"
             epgViewController.onSelected = { model in
                 let storyboard = UIStoryboard(name: "TestEnv", bundle: nil)
                 let viewController = storyboard.instantiateViewController(withIdentifier: "TestEnvTimeshiftDelay") as! TestEnvTimeshiftDelay
@@ -212,10 +218,10 @@ extension MasterViewController {
                 }
             }
             
-            epgViewController.viewModel.onPrepared = { [unowned epgViewController] model, error in
-                epgViewController.tableView.reloadData()
+            epgViewController.viewModel.onPrepared = { [unowned epgViewController] _,_ in
+                epgViewController.tableView.reloadSections([0], with: .automatic)
                 if let liveIndex = epgViewController.viewModel.currentlyLiveIndex {
-                    epgViewController.tableView.scrollToRow(at: liveIndex, at: .middle, animated: false)
+                    epgViewController.tableView.scrollToRow(at: liveIndex, at: .middle, animated: true)
                 }
             }
             
