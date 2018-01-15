@@ -194,45 +194,51 @@ extension MasterViewController {
         }
         
         viewController.onSelected = { [weak self] channelAsset in
-            guard let `self` = self else { return }
-            let epgViewController = SimpleEpgViewController(nibName: "SimpleEpgViewController", bundle: nil)
-            epgViewController.navigationItem.title = channelAsset?.anyTitle(locale: "en") ?? "EPG"
-            epgViewController.onSelected = { [weak self] model in
-                guard let `self` = self, let channelId = channelAsset?.assetId else { return }
-                let storyboard = UIStoryboard(name: "TestEnv", bundle: nil)
-                let timeshiftViewController = storyboard.instantiateViewController(withIdentifier: "TestEnvTimeshiftDelay") as! TestEnvTimeshiftDelay
-                
-                timeshiftViewController.program = model
-                timeshiftViewController.channelId = channelId
-                timeshiftViewController.environment = self.environment
-                timeshiftViewController.sessionToken = self.sessionToken
-                
-                self.contentNavContainer.pushViewController(timeshiftViewController, animated: true)
-            }
-            
-            epgViewController.viewModel.executeResuest = { [weak self, unowned epgViewController] in
+            guard let `self` = self, let channelAsset = channelAsset else { return }
+            let alert = UIAlertController(title: "PlaybackMode", message: "Please select the desired playback mode", preferredStyle: UIAlertControllerStyle.alert)
+            let channelPlay = UIAlertAction(title: "Channel Play", style: UIAlertActionStyle.default) { [weak self] action in
                 guard let `self` = self else { return }
-                guard let channelId = channelAsset?.assetId else { return }
-                let current = Date()
-                FetchEpg(environment: self.environment)
-                    .channel(id: channelId)
-                    .show(page: 1, spanning: 100)
-                    .filter(starting: current.subtract(days: 1), ending: current.add(days: 1) ?? current)
-                    .request()
-                    .validate()
-                    .response{
-                        epgViewController.viewModel.prepare(content: $0.value?.programs, error: $0.error)
-                }
+                self.timeshiftTestEnv(for: channelAsset, program: nil)
             }
             
-            epgViewController.viewModel.onPrepared = { [unowned epgViewController] _,_ in
-                epgViewController.tableView.reloadSections([0], with: .automatic)
-                if let liveIndex = epgViewController.viewModel.currentlyLiveIndex {
-                    epgViewController.tableView.scrollToRow(at: liveIndex, at: .middle, animated: true)
+            let programPlay = UIAlertAction(title: "Program Play", style: UIAlertActionStyle.default) { [weak self] action in
+                guard let `self` = self else { return }
+                
+                let epgViewController = SimpleEpgViewController(nibName: "SimpleEpgViewController", bundle: nil)
+                epgViewController.navigationItem.title = channelAsset.anyTitle(locale: "en") ?? "EPG"
+                epgViewController.onSelected = { [weak self] model in
+                    guard let `self` = self else { return }
+                    self.timeshiftTestEnv(for: channelAsset, program: model)
                 }
+                
+                epgViewController.viewModel.executeResuest = { [weak self, unowned epgViewController] in
+                    guard let `self` = self else { return }
+                    guard let channelId = channelAsset.assetId else { return }
+                    let current = Date()
+                    FetchEpg(environment: self.environment)
+                        .channel(id: channelId)
+                        .show(page: 1, spanning: 100)
+                        .filter(starting: current.subtract(days: 1), ending: current.add(days: 1) ?? current)
+                        .request()
+                        .validate()
+                        .response{
+                            epgViewController.viewModel.prepare(content: $0.value?.programs, error: $0.error)
+                    }
+                }
+                
+                epgViewController.viewModel.onPrepared = { [unowned epgViewController] _,_ in
+                    epgViewController.tableView.reloadSections([0], with: .automatic)
+                    if let liveIndex = epgViewController.viewModel.currentlyLiveIndex {
+                        epgViewController.tableView.scrollToRow(at: liveIndex, at: .middle, animated: true)
+                    }
+                }
+                
+                self.contentNavContainer.pushViewController(epgViewController, animated: true)
             }
+            alert.addAction(channelPlay)
+            alert.addAction(programPlay)
+            self.present(alert, animated: true)
             
-            self.contentNavContainer.pushViewController(epgViewController, animated: true)
         }
         
         viewController.slidingMenuController = self
@@ -240,6 +246,18 @@ extension MasterViewController {
         
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "download-list"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(MasterViewController.toggleSlidingMenu))
         contentNavContainer.setViewControllers([viewController], animated: true)
+    }
+    
+    private func timeshiftTestEnv(for channel: Asset, program: Program?) {
+        let storyboard = UIStoryboard(name: "TestEnv", bundle: nil)
+        let timeshiftViewController = storyboard.instantiateViewController(withIdentifier: "TestEnvTimeshiftDelay") as! TestEnvTimeshiftDelay
+        
+        timeshiftViewController.program = program
+        timeshiftViewController.channel = channel
+        timeshiftViewController.environment = self.environment
+        timeshiftViewController.sessionToken = self.sessionToken
+        
+        self.contentNavContainer.pushViewController(timeshiftViewController, animated: true)
     }
 }
 

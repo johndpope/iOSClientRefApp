@@ -23,7 +23,10 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
     @IBOutlet weak var seekDeltaTextField: UITextField!
     
     @IBAction func timeshiftAction(_ sender: UIButton) {
-        guard let text = timeshiftDelayTextField.text, let value = Int64(text) else { return }
+        guard let text = timeshiftDelayTextField.text, let value = Int64(text) else {
+            onTimeshifting(nil)
+            return
+        }
         onTimeshifting(value)
     }
     
@@ -37,7 +40,7 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
         onSeeking(-value)
     }
     
-    var onTimeshifting: (Int64) -> Void = { _ in }
+    var onTimeshifting: (Int64?) -> Void = { _ in }
     var onSeeking: (Int64) -> Void = { _ in }
     var onTimeTick: () -> Void = { _ in }
     
