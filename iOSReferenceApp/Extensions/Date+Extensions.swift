@@ -12,7 +12,7 @@ extension Date {
     func subtract(days: UInt) -> Date? {
         var components = DateComponents()
         components.setValue(-Int(days), for: Calendar.Component.day)
-
+        
         return Calendar.current.date(byAdding: components, to: self)
     }
     
@@ -23,5 +23,9 @@ extension Date {
         return Calendar.current.date(byAdding: components, to: self)
     }
     
-    
+    func dateString(format: String) -> String {
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = format
+        return timeFormatter.string(from: self)
+    }
 }

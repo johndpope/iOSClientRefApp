@@ -9,7 +9,8 @@
 import UIKit
 
 class TestEnvTimeshiftDelayControls: UITableViewController {
-
+    var onViewDidLoad: () -> Void = { _ in }
+    
     @IBOutlet weak var programIdLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var endTimeLabel: UILabel!
@@ -38,9 +39,36 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
     
     var onTimeshifting: (Int64) -> Void = { _ in }
     var onSeeking: (Int64) -> Void = { _ in }
+    var onTimeTick: () -> Void = { _ in }
+    
+    
+    /// Queue where `timer` runs
+    fileprivate let queue = DispatchQueue(label: "com.emp.refapp.testEnv.timestamp",
+                                          qos: DispatchQoS.background,
+                                          attributes: DispatchQueue.Attributes.concurrent)
+    
+    /// The oneShot timer used to trigger `ServerTime` refresh requests
+    fileprivate var timer: DispatchSourceTimer?
+    
+    deinit {
+        timer?.setEventHandler{}
+        timer?.cancel()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        timer = DispatchSource.makeTimerSource(queue: queue)
+        timer?.scheduleRepeating(deadline: .now() + .seconds(1), interval: .seconds(1))
+        timer?.setEventHandler { [weak self] in
+            DispatchQueue.main.async {
+                self?.onTimeTick()
+            }
+        }
+        timer?.resume()
+        
+        onViewDidLoad()
     }
 
     override func didReceiveMemoryWarning() {

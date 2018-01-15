@@ -198,9 +198,14 @@ extension MasterViewController {
             let epgViewController = SimpleEpgViewController(nibName: "SimpleEpgViewController", bundle: nil)
             epgViewController.navigationItem.title = channelAsset?.anyTitle(locale: "en") ?? "EPG"
             epgViewController.onSelected = { [weak self] model in
-                guard let `self` = self else { return }
+                guard let `self` = self, let channelId = channelAsset?.assetId else { return }
                 let storyboard = UIStoryboard(name: "TestEnv", bundle: nil)
                 let timeshiftViewController = storyboard.instantiateViewController(withIdentifier: "TestEnvTimeshiftDelay") as! TestEnvTimeshiftDelay
+                
+                timeshiftViewController.program = model
+                timeshiftViewController.channelId = channelId
+                timeshiftViewController.environment = self.environment
+                timeshiftViewController.sessionToken = self.sessionToken
                 
                 self.contentNavContainer.pushViewController(timeshiftViewController, animated: true)
             }
