@@ -15,6 +15,12 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var endTimeLabel: UILabel!
     
+    @IBOutlet weak var seekableStartLabel: UILabel!
+    @IBOutlet weak var seekableEndLabel: UILabel!
+    @IBOutlet weak var bufferedStartLabel: UILabel!
+    @IBOutlet weak var bufferedEndLabel: UILabel!
+    
+    
     @IBOutlet weak var wallclockTimeLabel: UILabel!
     @IBOutlet weak var playheadTimeLabel: UILabel!
     @IBOutlet weak var playheadPositionLabel: UILabel!

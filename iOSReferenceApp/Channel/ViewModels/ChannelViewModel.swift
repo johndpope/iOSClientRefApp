@@ -48,7 +48,7 @@ extension ChannelViewModel {
     func fetchEPG(starting: Date?, ending: Date, callback: @escaping (ExposureError?) -> Void) {
         FetchEpg(environment: environment)
             .channel(id: channelId)
-            .show(page: 1, spanning: 100)
+            .show(page: 1, spanning: 500)
             .filter(starting: starting, ending: ending)
             .request()
             .validate()

@@ -205,7 +205,7 @@ extension MasterViewController {
                 guard let `self` = self else { return }
                 
                 let epgViewController = SimpleEpgViewController(nibName: "SimpleEpgViewController", bundle: nil)
-                epgViewController.navigationItem.title = channelAsset.anyTitle(locale: "en") ?? "EPG"
+                epgViewController.navigationItem.title = channelAsset.anyTitle(locale: "en")
                 epgViewController.onSelected = { [weak self] model in
                     guard let `self` = self else { return }
                     self.timeshiftTestEnv(for: channelAsset, program: model)
@@ -217,7 +217,7 @@ extension MasterViewController {
                     let current = Date()
                     FetchEpg(environment: self.environment)
                         .channel(id: channelId)
-                        .show(page: 1, spanning: 100)
+                        .show(page: 1, spanning: 500)
                         .filter(starting: current.subtract(days: 1), ending: current.add(days: 1) ?? current)
                         .request()
                         .validate()

@@ -137,12 +137,12 @@ extension PlayerViewController {
     
     @IBAction func actionQuickRewind(_ sender: UIButton) {
         let currentPosition = player.playheadPosition
-        player.seek(to: currentPosition - 10 * 1000)
+        player.seek(toPosition: currentPosition - 10 * 1000)
     }
     
     @IBAction func actionQuickForward(_ sender: UIButton) {
         let currentPosition = player.playheadPosition
-        player.seek(to: currentPosition + 10 * 1000)
+        player.seek(toPosition: currentPosition + 10 * 1000)
     }
     
     @IBAction func actionToggleOverlay(_ sender: UITapGestureRecognizer) {
@@ -157,7 +157,7 @@ extension PlayerViewController {
     @IBAction func actionSeekTo(_ sender: UISlider) {
         viewModel.isScrubbing = false
         
-        player.seek(to: Int64(timelineSlider.value))
+        player.seek(toPosition: Int64(timelineSlider.value))
         startTimelineUpdate()
     }
 }
