@@ -41,33 +41,17 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.controls.wallclockTimeLabel.text = "n/a"
             }
             
-//            let seekableRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
-//            let bufferedRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
-//            if let seekable = seekableRange {
-//                self.controls.seekableStartLabel.text = String(Int64(seekable.0))
-//                self.controls.seekableEndLabel.text = String(Int64(seekable.1))
-//            }
-//            if let buffered = bufferedRange {
-//                self.controls.bufferedStartLabel.text = String(Int64(buffered.0))
-//                self.controls.bufferedEndLabel.text = String(Int64(buffered.1))
-//            }
-//            if let playheadTime = self.player.playheadTime, let techPlayTime = self.player.tech.playheadTime {
-//                print("SEEKABLE", self.player.seekableRange.map{ ($0.start.seconds, $0.duration.seconds, $0.end.seconds)},
-//                      "BUFFERED",self.player.bufferedRange.map{ ($0.start.seconds, $0.duration.seconds, $0.end.seconds)})
-//                print(self.player.playheadPosition/1000,
-//                      Date(milliseconds: playheadTime).dateString(format: "HH:mm:ss"),
-//                      Date(milliseconds: techPlayTime).dateString(format: "HH:mm:ss"),
-//                      "Delta:",(playheadTime-techPlayTime)/1000)
-//                print(Date(milliseconds: playheadTime),Date(milliseconds: techPlayTime))
-//                let buffer = self.player.bufferedRange.map{ $0.start.seconds }.first
-//                if let buffer = buffer  {
-//                    print("==> ",self.player.playheadPosition/1000-Int64(buffer))
-//                }
-//            }
-//            else {
-//                print("SEEKABLE \n ",self.player.seekableRange.map{ ($0.start.seconds, $0.duration.seconds, $0.end.seconds)},self.player.playheadPosition/1000)
-//                print("BUFFERED \n ",self.player.bufferedRange.map{ ($0.start.seconds, $0.duration.seconds, $0.end.seconds)},self.player.playheadPosition/1000)
-//            }
+            let seekableRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
+            let bufferedRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
+            if let seekable = seekableRange {
+                self.controls.seekableStartLabel.text = String(Int64(seekable.0))
+                self.controls.seekableEndLabel.text = String(Int64(seekable.1))
+            }
+            if let buffered = bufferedRange {
+                self.controls.bufferedStartLabel.text = String(Int64(buffered.0))
+                self.controls.bufferedEndLabel.text = String(Int64(buffered.1))
+            }
+            
             if let playheadTime = self.player.playheadTime {
                 let date = Date(milliseconds: playheadTime)
                 self.controls.playheadTimeLabel.text = date.dateString(format: "HH:mm:ss")
