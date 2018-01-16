@@ -42,7 +42,7 @@ class TestEnvTimeshiftDelay: UIViewController {
             }
             
             let seekableRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
-            let bufferedRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
+            let bufferedRange = self.player.bufferedRange.map{ ($0.start.seconds, $0.end.seconds) }.first
             if let seekable = seekableRange {
                 self.controls.seekableStartLabel.text = String(Int64(seekable.0))
                 self.controls.seekableEndLabel.text = String(Int64(seekable.1))
@@ -106,6 +106,16 @@ class TestEnvTimeshiftDelay: UIViewController {
                 guard let `self` = self else { return }
                 let currentPosition = self.player.playheadPosition
                 self.player.seek(toPosition: currentPosition + seekDelta * 1000)
+            }
+            
+            viewController.onPauseResumed = { [weak self] paused in
+                guard let `self` = self else { return }
+                if paused {
+                    self.player.play()
+                }
+                else {
+                    self.player.pause()
+                }
             }
         }
     }

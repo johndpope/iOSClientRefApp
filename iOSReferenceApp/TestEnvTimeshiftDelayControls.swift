@@ -9,7 +9,6 @@
 import UIKit
 
 class TestEnvTimeshiftDelayControls: UITableViewController {
-    var onViewDidLoad: () -> Void = { _ in }
     
     @IBOutlet weak var programIdLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
@@ -46,9 +45,20 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
         onSeeking(-value)
     }
     
+    var paused: Bool = false
+    @IBOutlet weak var pausePlayButton: UIButton!
+    @IBAction func pauseResumeAction(_ sender: UIButton) {
+        let value = paused
+        paused = !value
+        pausePlayButton.setTitle(paused ? "PLAY" : "PAUSE", for: [])
+        onPauseResumed(value)
+    }
+    
     var onTimeshifting: (Int64?) -> Void = { _ in }
     var onSeeking: (Int64) -> Void = { _ in }
     var onTimeTick: () -> Void = { _ in }
+    var onViewDidLoad: () -> Void = { _ in }
+    var onPauseResumed: (Bool) -> Void = { _ in }
     
     
     /// Queue where `timer` runs
