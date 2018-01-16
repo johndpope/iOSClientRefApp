@@ -33,13 +33,15 @@ class TestEnvTimeshiftDelay: UIViewController {
         
         controls.onTimeTick = { [weak self] in
             guard let `self` = self else { return }
-            if let currentTime = self.player.currentTime {
+            if let currentTime = self.player.serverTime {
                 let date = Date(milliseconds: currentTime)
                 self.controls.wallclockTimeLabel.text = date.dateString(format: "HH:mm:ss")
             }
             else {
                 self.controls.wallclockTimeLabel.text = "n/a"
             }
+            
+//            self.player.tech.logStuff()
             
             let seekableRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
             let bufferedRange = self.player.bufferedRange.map{ ($0.start.seconds, $0.end.seconds) }.first
@@ -55,6 +57,9 @@ class TestEnvTimeshiftDelay: UIViewController {
             if let playheadTime = self.player.playheadTime {
                 let date = Date(milliseconds: playheadTime)
                 self.controls.playheadTimeLabel.text = date.dateString(format: "HH:mm:ss")
+            }
+            else {
+                self.controls.playheadTimeLabel.text = "n/a"
             }
             
             self.controls.playheadPositionLabel.text = String(self.player.playheadPosition/1000)
