@@ -53,9 +53,17 @@ class EnvironmentSelectionViewController: UIViewController {
         case environmentToLogin
     }
     
+    func accessibilityIdentifiers(){
+        exposureUrlField.accessibilityIdentifier = "exposureURL"
+        businessUnitField.accessibilityIdentifier = "BU"
+        customerField.accessibilityIdentifier = "CU"
+        mfaSwitch.accessibilityIdentifier = "MFASwitch"
+        continueButton.accessibilityIdentifier = "continueButton"
+    }
+    
     override func viewDidLoad() {
         viewModel = EnvironmentSelectionViewModel()
-        
+        accessibilityIdentifiers()
         
         customerButton.setTitleColor(UIColor.darkGray, for: .disabled)
         customerButton.setTitleColor(UIColor.white, for: .normal)

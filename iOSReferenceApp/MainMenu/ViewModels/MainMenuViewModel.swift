@@ -63,11 +63,13 @@ class MainMenuViewModel {
     }
     
     
-    func updateDynamicContent(with dynamicConfig: DynamicCustomerConfig) {
-        brand = dynamicConfig.colorScheme
+    func updateDynamicContent(with dynamicConfig: DynamicCustomerConfig?) {
+        if let scheme = dynamicConfig?.colorScheme {
+            brand = scheme
+        }
         
         // TODO: This is where we parse all the different carousel categories
-        let rows = fakeCarouselResponse(with: dynamicConfig.carouselGroupId)
+        let rows = fakeCarouselResponse(with: dynamicConfig?.carouselGroupId)
         
         sections[1].rows = rows
         

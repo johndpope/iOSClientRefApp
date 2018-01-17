@@ -13,12 +13,16 @@ import Kingfisher
 class LoginViewModel {
     let environment: Environment
     let useMfa: Bool
+    let defaultUsername: String?
+    let defaultPassword: String?
     
     var onServiceLogoUpdated: (UIImage?) -> Void = { _ in }
     
-    init(environment: Environment, useMfa: Bool = false) {
+    init(environment: Environment, useMfa: Bool = false, defaultUsername: String? = nil, defaultPassword: String? = nil) {
         self.environment = environment
         self.useMfa = useMfa
+        self.defaultUsername = defaultUsername
+        self.defaultPassword = defaultPassword
     }
 }
 
