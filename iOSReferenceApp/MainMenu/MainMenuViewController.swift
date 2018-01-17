@@ -106,6 +106,11 @@ class MainMenuViewController: UIViewController {
         if let conf = dynamicCustomerConfig {
             process(dynamicCustomerConfig: conf)
         }
+        else {
+            viewModel.updateDynamicContent(with: nil)
+            tableView.reloadData()
+            viewModel.select(contentAt: initailyActiveContentIndex)
+        }
     }
 
     override func didReceiveMemoryWarning() {

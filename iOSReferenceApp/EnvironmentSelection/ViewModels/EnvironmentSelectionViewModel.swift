@@ -59,7 +59,7 @@ class EnvironmentSelectionViewModel {
         updatedPresets(environmentSelections[environmentIndex],
                        customerSelections(index: environmentIndex)[index],
                        true)
-        updatedDefaultValues(environments[index].url,
+        updatedDefaultValues(environments[environmentIndex].url,
                              environments[environmentIndex].customers[index].customer,
                              environments[environmentIndex].customers[index].businessUnit,
                              environments[environmentIndex].customers[index].usesMfa)
