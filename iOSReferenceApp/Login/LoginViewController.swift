@@ -50,6 +50,9 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        usernameTextField.text = viewModel.defaultUsername
+        passwordTextField.text = viewModel.defaultPassword
+        
         toggleLoginButton()
         
         if let conf = dynamicCustomerConfig {

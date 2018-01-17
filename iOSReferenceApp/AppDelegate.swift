@@ -84,11 +84,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initialStack() -> [UIViewController] {
         let uiStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let environmentViewController = uiStoryboard.instantiateViewController(withIdentifier: "EnvironmentSelection") as! EnvironmentSelectionViewController
+        
+        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
         guard let environment = UserInfo.environment else {
+            let preconfEnv = EnvironmentConfig.preconfigured(files:["environments"])
+            let preconf = preconfEnv.first{ $0.name == "Testflight" }
+            if let preconf = preconf, let customer = preconf.customers.first {
+                
+                let env = Environment(baseUrl: preconf.url, customer: customer.customer, businessUnit: customer.businessUnit)
+                UserInfo.update(environment: env)
+                loginViewController.viewModel = LoginViewModel(environment: env,
+                                                               useMfa: false,
+                                                               defaultUsername: customer.defaultUsername,
+                                                               defaultPassword: customer.defaultPassword)
+                return [environmentViewController, loginViewController]
+            }
             return [environmentViewController]
         }
         
-        let loginViewController = uiStoryboard.instantiateViewController(withIdentifier: "LoginView") as! LoginViewController
         loginViewController.viewModel = LoginViewModel(environment: environment,
                                                        useMfa: UserInfo.environmentUsesMfa)
         
