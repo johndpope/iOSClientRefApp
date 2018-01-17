@@ -184,8 +184,13 @@ extension MasterViewController {
                 .sort(on: ["assetId","originalTitle"])
                 .request()
                 .validate()
-                .response{
-                    viewController.viewModel.prepare(content: $0.value?.items, error: $0.error)
+                .response{ [weak self] in
+                    if let error = $0.error {
+                        self?.showMessage(title: "Exposure: \(error.code)", message: error.message)
+                    }
+                    if let value = $0.value {
+                        viewController.viewModel.prepare(content: value.items, error: nil)
+                    }
             }
         }
         
