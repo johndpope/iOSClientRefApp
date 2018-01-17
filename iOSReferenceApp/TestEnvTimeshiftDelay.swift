@@ -102,10 +102,10 @@ class TestEnvTimeshiftDelay: UIViewController {
                 viewController.endTimeLabel.text = self.program?.endDate?.dateString(format: "HH:mm") ?? "n/a"
             }
             
-            viewController.onTimeshifting = { [weak self] timeshiftDelay in
-                guard let `self` = self else { return }
-                self.player.timeshiftDelay = timeshiftDelay
-            }
+//            viewController.onTimeshifting = { [weak self] timeshiftDelay in
+//                guard let `self` = self else { return }
+//                self.player.timeshiftDelay = timeshiftDelay
+//            }
             
             viewController.onSeeking = { [weak self] seekDelta in
                 guard let `self` = self else { return }
