@@ -50,8 +50,7 @@ class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         player = Player(environment: viewModel.environment,
-                        sessionToken: viewModel.sessionToken,
-                        analytics: ExposureAnalytics.self)
+                        sessionToken: viewModel.sessionToken)
         player.context.analyticsGenerators.append({ _ in return AnalyticsLogger() })
         player
             .onError{ [unowned self] tech, source, error in
@@ -137,13 +136,13 @@ extension PlayerViewController {
     }
     
     @IBAction func actionQuickRewind(_ sender: UIButton) {
-        let currentPosition = player.currentTime
-        player.seek(to: currentPosition - 10 * 1000)
+        let currentPosition = player.playheadPosition
+        player.seek(toPosition: currentPosition - 10 * 1000)
     }
     
     @IBAction func actionQuickForward(_ sender: UIButton) {
-        let currentPosition = player.currentTime
-        player.seek(to: currentPosition + 10 * 1000)
+        let currentPosition = player.playheadPosition
+        player.seek(toPosition: currentPosition + 10 * 1000)
     }
     
     @IBAction func actionToggleOverlay(_ sender: UITapGestureRecognizer) {
@@ -158,7 +157,7 @@ extension PlayerViewController {
     @IBAction func actionSeekTo(_ sender: UISlider) {
         viewModel.isScrubbing = false
         
-        player.seek(to: Int64(timelineSlider.value))
+        player.seek(toPosition: Int64(timelineSlider.value))
         startTimelineUpdate()
     }
 }
@@ -175,20 +174,15 @@ extension PlayerViewController {
     }
     
     private func stream(vod assetId: String, metaData: Asset?) {
-        player
-            .sessionShift(enabled: true)
-            .stream(vod: assetId)
+        player.startPlayback(assetId: assetId, useBookmark: true)
     }
     
     private func stream(live channelId: String, metaData: Asset?) {
-        player.stream(live: channelId)
+        player.startPlayback(channelId: channelId, useBookmark: true)
     }
     
     private func stream(program programId: String, channel channelId: String, metaData: Asset?) {
-        player
-            .sessionShift(enabled: true)
-            .stream(programId: programId,
-                    channelId: channelId)
+        player.startPlayback(channelId: channelId, programId: programId, useBookmark: true)
     }
     
     private func offline(assetId: String, metaData: Asset?) {
@@ -228,7 +222,7 @@ extension PlayerViewController {
     @objc fileprivate func timedTimelineUpdate() {
         guard !viewModel.isScrubbing else { return }
         
-        let currentTime = player.currentTime
+        let currentTime = player.playheadPosition
         updateTimeline(with: currentTime)
     }
     
@@ -291,7 +285,7 @@ extension PlayerViewController: GCKSessionManagerListener {
         player.tech.currentSource?.analyticsConnector.providers
             .flatMap{ $0 as? ExposureAnalytics }
             .forEach{ $0.startedCasting() }
-        let currentTime = player.tech.currentTime
+        let currentTime = player.tech.playheadPosition
         player.stop()
         
         

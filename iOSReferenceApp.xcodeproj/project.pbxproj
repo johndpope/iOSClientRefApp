@@ -14,7 +14,6 @@
 		761794FE1FD5513B005B1B3A /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761794FA1FD5513A005B1B3A /* Interactor.swift */; };
 		761794FF1FD5513B005B1B3A /* PresentMenuAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761794FB1FD5513B005B1B3A /* PresentMenuAnimator.swift */; };
 		7623B2391FB07CAA0027A6B9 /* ChannelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7623B2371FB075500027A6B9 /* ChannelViewModel.swift */; };
-		7623B23A1FB07CAA0027A6B9 /* ChannelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76466FE21FB0698C007ECD5C /* ChannelListViewModel.swift */; };
 		7626ADA71FB600B500768390 /* DynamicAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7626ADA61FB600B500768390 /* DynamicAppearance.swift */; };
 		762808C71FCDC4F0005610DF /* PagedEPGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808C61FCDC4F0005610DF /* PagedEPGViewController.swift */; };
 		762808C91FCDC77D005610DF /* TVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762808C81FCDC77D005610DF /* TVViewController.swift */; };
@@ -30,6 +29,15 @@
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76391B411FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */; };
 		76391B431FAA6DDF0047447F /* EnvironmentSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76391B421FAA6DDF0047447F /* EnvironmentSelectionViewController.swift */; };
+		7645C5652007814600133955 /* TestEnv.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7645C5642007814600133955 /* TestEnv.storyboard */; };
+		7645C56720078C7D00133955 /* TestEnvTimeshiftDelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C56620078C7D00133955 /* TestEnvTimeshiftDelay.swift */; };
+		7645C5692007A98100133955 /* Program+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C5682007A98100133955 /* Program+Extensions.swift */; };
+		7645C56E2008D98400133955 /* ChannelListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C56D2008D98400133955 /* ChannelListViewModel.swift */; };
+		7645C5732008EA4300133955 /* SimpleEpgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C5712008EA4300133955 /* SimpleEpgViewController.swift */; };
+		7645C5742008EA4300133955 /* SimpleEpgViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7645C5722008EA4300133955 /* SimpleEpgViewController.xib */; };
+		7645C5772008EA7300133955 /* SimpleCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C5752008EA7300133955 /* SimpleCarouselViewController.swift */; };
+		7645C5782008EA7300133955 /* SimpleCarouselViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7645C5762008EA7300133955 /* SimpleCarouselViewController.xib */; };
+		7645C57A200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C579200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift */; };
 		76466FC61FB05BCD007ECD5C /* Tabman.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FC51FB05BCD007ECD5C /* Tabman.framework */; };
 		76466FC71FB05BCD007ECD5C /* Tabman.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FC51FB05BCD007ECD5C /* Tabman.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76466FC91FB05BDA007ECD5C /* Pageboy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FC81FB05BDA007ECD5C /* Pageboy.framework */; };
@@ -239,10 +247,18 @@
 		76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewModel.swift; sourceTree = "<group>"; };
 		76391B421FAA6DDF0047447F /* EnvironmentSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewController.swift; sourceTree = "<group>"; };
 		764392D21FA5C09C008DC1E8 /* BasicPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasicPromotionCell.xib; sourceTree = "<group>"; };
+		7645C5642007814600133955 /* TestEnv.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestEnv.storyboard; sourceTree = "<group>"; };
+		7645C56620078C7D00133955 /* TestEnvTimeshiftDelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEnvTimeshiftDelay.swift; sourceTree = "<group>"; };
+		7645C5682007A98100133955 /* Program+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Program+Extensions.swift"; sourceTree = "<group>"; };
+		7645C56D2008D98400133955 /* ChannelListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelListViewModel.swift; sourceTree = "<group>"; };
+		7645C5712008EA4300133955 /* SimpleEpgViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleEpgViewController.swift; sourceTree = "<group>"; };
+		7645C5722008EA4300133955 /* SimpleEpgViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleEpgViewController.xib; sourceTree = "<group>"; };
+		7645C5752008EA7300133955 /* SimpleCarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCarouselViewController.swift; sourceTree = "<group>"; };
+		7645C5762008EA7300133955 /* SimpleCarouselViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleCarouselViewController.xib; sourceTree = "<group>"; };
+		7645C579200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEnvTimeshiftDelayControls.swift; sourceTree = "<group>"; };
 		76466FC51FB05BCD007ECD5C /* Tabman.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Tabman.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76466FC81FB05BDA007ECD5C /* Pageboy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pageboy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76466FCB1FB05C17007ECD5C /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		76466FE21FB0698C007ECD5C /* ChannelListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListViewModel.swift; sourceTree = "<group>"; };
 		764AE8851FBA4A7100DB548C /* CosmosDistrib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
 		764EDC481F5EADFB00569D5B /* environments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = environments.json; sourceTree = SOURCE_ROOT; };
 		764EDC4C1F5EB6B100569D5B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
@@ -464,7 +480,7 @@
 			children = (
 				76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */,
 				7623B2371FB075500027A6B9 /* ChannelViewModel.swift */,
-				76466FE21FB0698C007ECD5C /* ChannelListViewModel.swift */,
+				7645C56D2008D98400133955 /* ChannelListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -493,6 +509,7 @@
 				766502FC1F99CB29009A5BFE /* Sequence+Extensions.swift */,
 				766502F81F99CA4E009A5BFE /* SessionManager+ExposureDownloadTask.swift */,
 				76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */,
+				7645C5682007A98100133955 /* Program+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -674,6 +691,13 @@
 				7683F18E1FAB4A1A0097BC23 /* Login */,
 				76391B3D1FAA6DAD0047447F /* EnvironmentSelection */,
 				3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */,
+				7645C56620078C7D00133955 /* TestEnvTimeshiftDelay.swift */,
+				7645C579200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift */,
+				7645C5752008EA7300133955 /* SimpleCarouselViewController.swift */,
+				7645C5762008EA7300133955 /* SimpleCarouselViewController.xib */,
+				7645C5712008EA4300133955 /* SimpleEpgViewController.swift */,
+				7645C5722008EA4300133955 /* SimpleEpgViewController.xib */,
+				7645C5642007814600133955 /* TestEnv.storyboard */,
 			);
 			path = iOSReferenceApp;
 			sourceTree = "<group>";
@@ -736,9 +760,9 @@
 				F75EDDC71EC63EEC0069CDEE /* StringsUtil.swift */,
 				F7061C721EC5CF8F0041E271 /* Logging.swift */,
 				76A843F01EA7886400BDAF2C /* KeyboardAnimationFrame.swift */,
+				F7B710A71ECB369E00E9D324 /* ProgressIndicatorUtil.swift */,
 				76A843F11EA7886400BDAF2C /* Notifications+KeyboardAnimationFrame.swift */,
 				F7129CB01EC9AB970033B3FF /* Extensions.swift */,
-				F7B710A71ECB369E00E9D324 /* ProgressIndicatorUtil.swift */,
 				76D704551F92273400D6FC6B /* CrispResizingImageProcessor.swift */,
 				766502FA1F99CAA9009A5BFE /* ExposureSessionManager.swift */,
 			);
@@ -1190,12 +1214,15 @@
 				76A843B51EA7856C00BDAF2C /* LaunchScreen.storyboard in Resources */,
 				76A5D8081FBA0F41005F6C4B /* EPGPreviewCell.xib in Resources */,
 				7667AECF1EC5E29400C308FC /* .env in Resources */,
+				7645C5782008EA7300133955 /* SimpleCarouselViewController.xib in Resources */,
+				7645C5652007814600133955 /* TestEnv.storyboard in Resources */,
 				768ED8AA1F0FAEE3008E8F9B /* update_dependency_graph.rb in Resources */,
 				76A843B21EA7856C00BDAF2C /* Assets.xcassets in Resources */,
 				764EDC491F5EADFB00569D5B /* environments.json in Resources */,
 				762808D11FCECA39005610DF /* EpgUnavailableCell.xib in Resources */,
 				76A843D91EA7859E00BDAF2C /* Cartfile in Resources */,
 				76619E761FBA3C09000676A9 /* Google Fonts - Open Sans Light.ttf in Resources */,
+				7645C5742008EA4300133955 /* SimpleEpgViewController.xib in Resources */,
 				76A417061EDEBF1B00677A46 /* AssetPreviewCell.xib in Resources */,
 				76EC8D6B1FA514F200F6FDB6 /* CarouselHeaderView.xib in Resources */,
 				767DC0DD1FA712B10021A17A /* StretchyCarouselHeaderView.xib in Resources */,
@@ -1250,6 +1277,7 @@
 				761794FE1FD5513B005B1B3A /* Interactor.swift in Sources */,
 				76EC8D6A1FA514F200F6FDB6 /* CarouselHeaderView.swift in Sources */,
 				76BB35A71F9A29C200C2B386 /* Asset+LocalizedEntity.swift in Sources */,
+				7645C5732008EA4300133955 /* SimpleEpgViewController.swift in Sources */,
 				766502F91F99CA4E009A5BFE /* SessionManager+ExposureDownloadTask.swift in Sources */,
 				3E6B3B461F84D5100071C10A /* ApplicationConfig.swift in Sources */,
 				76B0AFB31FA51BCA0085C837 /* PlayerViewController.swift in Sources */,
@@ -1263,6 +1291,7 @@
 				76BB35A91F9A2A7100C2B386 /* LocalizedAssetEntity.swift in Sources */,
 				76EC8D431FA5121600F6FDB6 /* MainMenuStaticDataCell.swift in Sources */,
 				76EC8D681FA514F200F6FDB6 /* CarouselFooterView.swift in Sources */,
+				7645C57A200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift in Sources */,
 				7698622B1FA5197C00A57213 /* OfflineListViewController.swift in Sources */,
 				76B0AFBE1FA5241B0085C837 /* BasicItemPromotionEditorial.swift in Sources */,
 				76B0AFAE1FA51B8E0085C837 /* SearchViewModel.swift in Sources */,
@@ -1288,6 +1317,7 @@
 				76EC8D331FA510BF00F6FDB6 /* MainMenuActionType.swift in Sources */,
 				76A844001EA7886400BDAF2C /* EnvironmentConfig.swift in Sources */,
 				F7061C731EC5CF8F0041E271 /* Logging.swift in Sources */,
+				7645C56720078C7D00133955 /* TestEnvTimeshiftDelay.swift in Sources */,
 				76EC8D371FA510FA00F6FDB6 /* MainMenuStaticDataViewModel.swift in Sources */,
 				76AF2F141F13B25E0014F007 /* ProgramViewModel.swift in Sources */,
 				762808D01FCECA39005610DF /* EpgUnavailableCell.swift in Sources */,
@@ -1314,10 +1344,10 @@
 				7698622C1FA5197C00A57213 /* OfflineListCellViewModel.swift in Sources */,
 				76EC8D7E1FA515B200F6FDB6 /* CollectionViewLayout.swift in Sources */,
 				76A844021EA7886400BDAF2C /* Notifications+KeyboardAnimationFrame.swift in Sources */,
-				7623B23A1FB07CAA0027A6B9 /* ChannelListViewModel.swift in Sources */,
 				76BA44381FAC88E300E92AD1 /* MasterViewController.swift in Sources */,
 				76EC8D3D1FA5114700F6FDB6 /* MainMenuViewModel.swift in Sources */,
 				76EC8D6C1FA514F200F6FDB6 /* CarouselView.swift in Sources */,
+				7645C5772008EA7300133955 /* SimpleCarouselViewController.swift in Sources */,
 				7672F26D1F93EEB200F892C3 /* AssetListType.swift in Sources */,
 				76A5D8071FBA0F39005F6C4B /* EPGPreviewCell.swift in Sources */,
 				76EC8D611FA5148100F6FDB6 /* EditorialCell.swift in Sources */,
@@ -1336,6 +1366,7 @@
 				769862261FA518C500A57213 /* AssetDetailsViewController.swift in Sources */,
 				767DC0DC1FA712B10021A17A /* StretchyCarouselHeaderView.swift in Sources */,
 				7698622D1FA5197C00A57213 /* OfflineListViewModel.swift in Sources */,
+				7645C5692007A98100133955 /* Program+Extensions.swift in Sources */,
 				76BA44481FACA91E00E92AD1 /* SingleCarouselViewModel.swift in Sources */,
 				76AE64EB1F90217B0036933E /* GradientView.swift in Sources */,
 				76EC8D7C1FA5158B00F6FDB6 /* UICollectionViewLayoutPagination.swift in Sources */,
@@ -1351,6 +1382,7 @@
 				76EC8D731FA514F900F6FDB6 /* PortraitTrioPromotionCell.swift in Sources */,
 				7623B2391FB07CAA0027A6B9 /* ChannelViewModel.swift in Sources */,
 				7698622A1FA518D900A57213 /* AssetDetailsPresenter.swift in Sources */,
+				7645C56E2008D98400133955 /* ChannelListViewModel.swift in Sources */,
 				7683F1911FAB4A960097BC23 /* LoginViewController.swift in Sources */,
 				76EC8D631FA5149000F6FDB6 /* CarouselEditorial.swift in Sources */,
 				F7C209611EC9C41800662224 /* UserInfo.swift in Sources */,
