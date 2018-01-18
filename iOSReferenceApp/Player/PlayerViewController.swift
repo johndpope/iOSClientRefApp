@@ -178,7 +178,7 @@ extension PlayerViewController {
     }
     
     private func stream(live channelId: String, metaData: Asset?) {
-        player.startPlayback(channelId: channelId, useBookmark: true)
+        player.startPlayback(channelId: channelId)
     }
     
     private func stream(program programId: String, channel channelId: String, metaData: Asset?) {

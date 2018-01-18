@@ -94,7 +94,12 @@ class TestEnvTimeshiftDelay: UIViewController {
             showMessage(title: "Playback start error", message: "No ChannelId")
             return
         }
-        player.startPlayback(channelId: channelId, programId: program?.programId, useBookmark: false)
+        if let programId = program?.programId {
+            player.startPlayback(channelId: channelId, programId: programId, useBookmark: false)
+        }
+        else {
+            player.startPlayback(channelId: channelId)
+        }
     }
 
     override func didReceiveMemoryWarning() {
