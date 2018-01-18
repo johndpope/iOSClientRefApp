@@ -41,6 +41,9 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.controls.wallclockTimeLabel.text = "n/a"
             }
             
+            if let serv = self.player.serverTime, let cur = self.player.tech.playheadTime {
+                print("Delta", (serv-cur)/1000)
+            }
 //            self.player.tech.logStuff()
             
             let seekableRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Tabman
+import Tabman_Carthage
 import Pageboy
 import Exposure
 

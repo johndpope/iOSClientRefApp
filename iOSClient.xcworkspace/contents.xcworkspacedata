@@ -40,7 +40,4 @@
    <FileRef
       location = "group:Carthage/Checkouts/Pageboy/Sources/Pageboy.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/PureLayout/PureLayout/PureLayout.xcodeproj">
-   </FileRef>
 </Workspace>
