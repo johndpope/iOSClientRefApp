@@ -41,9 +41,6 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.controls.wallclockTimeLabel.text = "n/a"
             }
             
-            if let serv = self.player.serverTime, let cur = self.player.tech.playheadTime {
-                print("Delta", (serv-cur)/1000)
-            }
 //            self.player.tech.logStuff()
             
             let seekableRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
@@ -66,6 +63,18 @@ class TestEnvTimeshiftDelay: UIViewController {
             }
             
             self.controls.playheadPositionLabel.text = String(self.player.playheadPosition/1000)
+            
+            
+            if let serv = self.player.serverTime, let playhead = self.player.playheadTime, let cur = self.player.tech.playheadTime, let dvr = self.player.dvrWindowLength {
+                let timeshiftedLivepoint = serv/1000-(self.player.timeshiftDelay ?? 0)
+                let dvrWindowStart = timeshiftedLivepoint-dvr
+                let dvrWindowOffset = dvrWindowStart + self.player.playheadPosition/1000
+                print("wc",serv/1000,Date(milliseconds: playhead).dateString(format: "HH:mm:ss"),Date(milliseconds: cur).dateString(format: "HH:mm:ss"),self.player.playheadPosition/1000)//"tsLive",timeshiftedLivepoint,"dvrWindowStart",dvrWindowStart,"pos",dvrWindowOffset)
+                
+//                print("TS",self.player.timeshiftDelay,"dtsWC",(serv-cur)/1000-(self.player.timeshiftDelay ?? 0),"dvr",dvr, "Pos",self.player.playheadPosition/1000,"Start",Int64(buf.0),"Edge",Int64(buf.1))
+                
+            }
+            
         }
         
         player
@@ -105,10 +114,12 @@ class TestEnvTimeshiftDelay: UIViewController {
                 viewController.endTimeLabel.text = self.program?.endDate?.dateString(format: "HH:mm") ?? "n/a"
             }
             
-//            viewController.onTimeshifting = { [weak self] timeshiftDelay in
-//                guard let `self` = self else { return }
-//                self.player.timeshiftDelay = timeshiftDelay
-//            }
+            #if DEBUG
+            viewController.onTimeshifting = { [weak self] timeshiftDelay in
+                guard let `self` = self else { return }
+                self.player.timeshiftDelay = timeshiftDelay
+            }
+            #endif
             
             viewController.onSeeking = { [weak self] seekDelta in
                 guard let `self` = self else { return }
