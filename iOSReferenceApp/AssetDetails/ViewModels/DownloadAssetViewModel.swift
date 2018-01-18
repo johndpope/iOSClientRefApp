@@ -106,7 +106,7 @@ extension DownloadAssetViewModel {
             .validate()
             .response{ [weak self] in
                 if let result = $0.value {
-                    if case .success = result.status {
+                    if result.status == "SUCCESS" {
                         // Temporary hack to filter out 0/0 Bitrate entries
                         self?.availableBitrates = result.bitrates?.filter{ $0.bitrate != nil && $0.bitrate! > 0 && $0.size != nil && $0.size! > 0 }
                         callback(true)
