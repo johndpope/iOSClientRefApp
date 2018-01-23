@@ -174,15 +174,15 @@ extension PlayerViewController {
     }
     
     private func stream(vod assetId: String, metaData: Asset?) {
-        player.startPlayback(assetId: assetId, useBookmark: true)
+        player.startPlayback(assetId: assetId)
     }
     
     private func stream(live channelId: String, metaData: Asset?) {
-        player.startPlayback(channelId: channelId, useBookmark: true)
+        player.startPlayback(channelId: channelId)
     }
     
     private func stream(program programId: String, channel channelId: String, metaData: Asset?) {
-        player.startPlayback(channelId: channelId, programId: programId, useBookmark: true)
+        player.startPlayback(channelId: channelId, programId: programId)
     }
     
     private func offline(assetId: String, metaData: Asset?) {

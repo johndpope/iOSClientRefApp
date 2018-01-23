@@ -41,8 +41,11 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.controls.wallclockTimeLabel.text = "n/a"
             }
             
+            self.player.timeBehindLive
+            #if DEBUG
 //            self.player.tech.logStuff()
-            
+            #endif
+                
             let seekableRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
             let bufferedRange = self.player.bufferedRange.map{ ($0.start.seconds, $0.end.seconds) }.first
             if let seekable = seekableRange {
@@ -63,18 +66,6 @@ class TestEnvTimeshiftDelay: UIViewController {
             }
             
             self.controls.playheadPositionLabel.text = String(self.player.playheadPosition/1000)
-            
-            
-            if let serv = self.player.serverTime, let playhead = self.player.playheadTime, let cur = self.player.tech.playheadTime, let dvr = self.player.dvrWindowLength {
-                let timeshiftedLivepoint = serv/1000-(self.player.timeshiftDelay ?? 0)
-                let dvrWindowStart = timeshiftedLivepoint-dvr
-                let dvrWindowOffset = dvrWindowStart + self.player.playheadPosition/1000
-                print("wc",serv/1000,Date(milliseconds: playhead).dateString(format: "HH:mm:ss"),Date(milliseconds: cur).dateString(format: "HH:mm:ss"),self.player.playheadPosition/1000)//"tsLive",timeshiftedLivepoint,"dvrWindowStart",dvrWindowStart,"pos",dvrWindowOffset)
-                
-//                print("TS",self.player.timeshiftDelay,"dtsWC",(serv-cur)/1000-(self.player.timeshiftDelay ?? 0),"dvr",dvr, "Pos",self.player.playheadPosition/1000,"Start",Int64(buf.0),"Edge",Int64(buf.1))
-                
-            }
-            
         }
         
         player
@@ -83,18 +74,30 @@ class TestEnvTimeshiftDelay: UIViewController {
                 guard let `self` = self else { return }
                 self.controls.timeshiftDelayTextField.text = self.player.timeshiftDelay != nil ? String(self.player.timeshiftDelay!) : nil
                 
+                print("TEST ENV",self.player.playheadTime,self.player.playheadPosition)
+                tech.play()
                 // Start updating playheadTime + playheadPosition
             }
             .onError{ [weak self] tech, source, error in
                 guard let `self` = self else { return }
                 self.showMessage(title: "Error \(error.code)", message: error.message)
+            }
+            .onProgramChanged{ [weak self] tech, source, program in
+                guard let `self` = self else { return }
+                print("onProgramChanged",program?.programId)
+                self.update(withProgram: program)
         }
         
         guard let channelId = channel.assetId else {
             showMessage(title: "Playback start error", message: "No ChannelId")
             return
         }
-        player.startPlayback(channelId: channelId, programId: program?.programId, useBookmark: false)
+        if let programId = program?.programId {
+            player.startPlayback(channelId: channelId, programId: programId)
+        }
+        else {
+            player.startPlayback(channelId: channelId)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -107,13 +110,6 @@ class TestEnvTimeshiftDelay: UIViewController {
         if let viewController = segue.destination as? TestEnvTimeshiftDelayControls, segue.identifier == "timeshiftControls" {
             controls = viewController
             
-            viewController.onViewDidLoad = { [weak self, unowned viewController] in
-                guard let `self` = self else { return }
-                viewController.programIdLabel.text = self.program?.anyTitle(locale: "en") ?? self.channel.anyTitle(locale: "en")
-                viewController.startTimeLabel.text = self.program?.startDate?.dateString(format: "HH:mm") ?? "n/a"
-                viewController.endTimeLabel.text = self.program?.endDate?.dateString(format: "HH:mm") ?? "n/a"
-            }
-            
             #if DEBUG
             viewController.onTimeshifting = { [weak self] timeshiftDelay in
                 guard let `self` = self else { return }
@@ -123,8 +119,9 @@ class TestEnvTimeshiftDelay: UIViewController {
             
             viewController.onSeeking = { [weak self] seekDelta in
                 guard let `self` = self else { return }
-                let currentPosition = self.player.playheadPosition
-                self.player.seek(toPosition: currentPosition + seekDelta * 1000)
+                if let currentTime = self.player.playheadTime {
+                    self.player.seek(toTime: currentTime + seekDelta * 1000)
+                }
             }
             
             viewController.onPauseResumed = { [weak self] paused in
@@ -136,6 +133,26 @@ class TestEnvTimeshiftDelay: UIViewController {
                     self.player.pause()
                 }
             }
+            
+            viewController.onStartOver = { [weak self] in
+                if let programStartTime = self?.player.currentProgram?.startDate?.millisecondsSince1970 {
+                    self?.player.seek(toTime: programStartTime)
+                }
+            }
+            
+            viewController.onGoLive = { [weak self] in
+                guard let `self` = self else { return }
+                let serverTime = self.player.serverTime ?? Date().millisecondsSince1970
+                self.player.seek(toTime: serverTime)
+            }
+            
+            
         }
+    }
+    
+    func update(withProgram program: Program?) {
+        controls.programIdLabel.text = program?.anyTitle(locale: "en") ?? self.channel.anyTitle(locale: "en")
+        controls.startTimeLabel.text = program?.startDate?.dateString(format: "HH:mm") ?? "n/a"
+        controls.endTimeLabel.text = program?.endDate?.dateString(format: "HH:mm") ?? "n/a"
     }
 }
