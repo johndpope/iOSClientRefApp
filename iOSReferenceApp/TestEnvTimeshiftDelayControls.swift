@@ -45,6 +45,14 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
         onSeeking(-value)
     }
     
+    @IBAction func startOverAction(_ sender: UIButton) {
+        onStartOver()
+    }
+    
+    @IBAction func goLiveAction(_ sender: UIButton) {
+        onGoLive()
+    }
+    
     var paused: Bool = false
     @IBOutlet weak var pausePlayButton: UIButton!
     @IBAction func pauseResumeAction(_ sender: UIButton) {
@@ -59,7 +67,8 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
     var onTimeTick: () -> Void = { _ in }
     var onViewDidLoad: () -> Void = { _ in }
     var onPauseResumed: (Bool) -> Void = { _ in }
-    
+    var onGoLive: () -> Void = { _ in }
+    var onStartOver: () -> Void = { _ in }
     
     /// Queue where `timer` runs
     fileprivate let queue = DispatchQueue(label: "com.emp.refapp.testEnv.timestamp",

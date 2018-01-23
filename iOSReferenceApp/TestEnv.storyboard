@@ -267,8 +267,45 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="controls" rowHeight="34" id="hhc-Wl-Jfr" userLabel="controls">
+                                        <rect key="frame" x="0.0" y="106" width="320" height="34"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hhc-Wl-Jfr" id="byj-UB-GpX">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="4wr-lY-eUN">
+                                                    <rect key="frame" x="16" y="3" width="288" height="28"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pd-OE-gVc">
+                                                            <rect key="frame" x="0.0" y="0.0" width="169" height="28"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <state key="normal" title="START-OVER"/>
+                                                            <connections>
+                                                                <action selector="startOverAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="WAj-FB-5xw"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIy-Ea-cGS">
+                                                            <rect key="frame" x="175" y="0.0" width="113" height="28"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <state key="normal" title="GO LIVE"/>
+                                                            <connections>
+                                                                <action selector="goLiveAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="Na9-qy-4bk"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="4wr-lY-eUN" secondAttribute="trailing" id="Nql-V4-ekN"/>
+                                                <constraint firstItem="4wr-lY-eUN" firstAttribute="centerY" secondItem="byj-UB-GpX" secondAttribute="centerY" id="Uzz-Mn-Djq"/>
+                                                <constraint firstItem="4wr-lY-eUN" firstAttribute="leading" secondItem="byj-UB-GpX" secondAttribute="leadingMargin" id="h1H-lH-JTX"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="timeshift" rowHeight="40" id="NTC-lD-mt5">
-                                        <rect key="frame" x="0.0" y="106" width="320" height="40"/>
+                                        <rect key="frame" x="0.0" y="140" width="320" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NTC-lD-mt5" id="dkb-Cu-98c">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
@@ -304,7 +341,7 @@
                                         <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="seek" rowHeight="40" id="AfG-aM-V4V">
-                                        <rect key="frame" x="0.0" y="146" width="320" height="40"/>
+                                        <rect key="frame" x="0.0" y="180" width="320" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AfG-aM-V4V" id="GJM-tB-vNJ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
