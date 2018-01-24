@@ -38,10 +38,6 @@
 		7645C5772008EA7300133955 /* SimpleCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C5752008EA7300133955 /* SimpleCarouselViewController.swift */; };
 		7645C5782008EA7300133955 /* SimpleCarouselViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7645C5762008EA7300133955 /* SimpleCarouselViewController.xib */; };
 		7645C57A200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C579200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift */; };
-		76466FC91FB05BDA007ECD5C /* Pageboy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FC81FB05BDA007ECD5C /* Pageboy.framework */; };
-		76466FCA1FB05BDA007ECD5C /* Pageboy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FC81FB05BDA007ECD5C /* Pageboy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		76466FCC1FB05C17007ECD5C /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FCB1FB05C17007ECD5C /* PureLayout.framework */; };
-		76466FCD1FB05C17007ECD5C /* PureLayout.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76466FCB1FB05C17007ECD5C /* PureLayout.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		764979102010ABDC000258F2 /* Tabman_Carthage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7649790F2010ABDC000258F2 /* Tabman_Carthage.framework */; };
 		764979112010ABDC000258F2 /* Tabman_Carthage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7649790F2010ABDC000258F2 /* Tabman_Carthage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		764AE8861FBA4A7100DB548C /* CosmosDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764AE8851FBA4A7100DB548C /* CosmosDistrib.swift */; };
@@ -208,7 +204,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				762809241FD026B7005610DF /* GoogleCast.framework in Embed Frameworks */,
-				76466FCA1FB05BDA007ECD5C /* Pageboy.framework in Embed Frameworks */,
 				76A844831EA7A23700BDAF2C /* Exposure.framework in Embed Frameworks */,
 				76A4171B1EDFEB2000677A46 /* Kingfisher.framework in Embed Frameworks */,
 				76A8447D1EA7A23700BDAF2C /* Player.framework in Embed Frameworks */,
@@ -218,7 +213,6 @@
 				76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */,
 				76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */,
 				7628091F1FD021A7005610DF /* Cast.framework in Embed Frameworks */,
-				76466FCD1FB05C17007ECD5C /* PureLayout.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,7 +251,6 @@
 		7645C5762008EA7300133955 /* SimpleCarouselViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleCarouselViewController.xib; sourceTree = "<group>"; };
 		7645C579200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEnvTimeshiftDelayControls.swift; sourceTree = "<group>"; };
 		76466FC81FB05BDA007ECD5C /* Pageboy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pageboy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		76466FCB1FB05C17007ECD5C /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7649790F2010ABDC000258F2 /* Tabman_Carthage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Tabman_Carthage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		764AE8851FBA4A7100DB548C /* CosmosDistrib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
 		764EDC481F5EADFB00569D5B /* environments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = environments.json; sourceTree = SOURCE_ROOT; };
@@ -407,7 +400,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				762809231FD026B7005610DF /* GoogleCast.framework in Frameworks */,
-				76466FC91FB05BDA007ECD5C /* Pageboy.framework in Frameworks */,
 				76A844821EA7A23700BDAF2C /* Exposure.framework in Frameworks */,
 				76A4171A1EDFEB2000677A46 /* Kingfisher.framework in Frameworks */,
 				76A8447C1EA7A23700BDAF2C /* Player.framework in Frameworks */,
@@ -417,7 +409,6 @@
 				76A844851EA7A23700BDAF2C /* Alamofire.framework in Frameworks */,
 				76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */,
 				7628091E1FD021A7005610DF /* Cast.framework in Frameworks */,
-				76466FCC1FB05C17007ECD5C /* PureLayout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,7 +625,6 @@
 				7649790F2010ABDC000258F2 /* Tabman_Carthage.framework */,
 				762809221FD026B6005610DF /* GoogleCast.framework */,
 				7628091D1FD021A7005610DF /* Cast.framework */,
-				76466FCB1FB05C17007ECD5C /* PureLayout.framework */,
 				76466FC81FB05BDA007ECD5C /* Pageboy.framework */,
 				76344F481F7AB3BC0034AEC0 /* Download.framework */,
 				76A843A91EA7856C00BDAF2C /* iOSReferenceApp */,
