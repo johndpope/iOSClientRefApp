@@ -25,7 +25,7 @@ class AssetViewModel: LocalizedAssetEntity {
 
 extension AssetViewModel: Hashable {
     var hashValue: Int {
-        return asset.assetId?.hashValue ?? -1
+        return asset.assetId.hashValue
     }
 }
 

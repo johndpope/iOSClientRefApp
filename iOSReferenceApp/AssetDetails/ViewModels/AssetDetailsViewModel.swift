@@ -34,12 +34,8 @@ extension AssetDetailsViewModel {
     }
     
     func refreshAssetMetaData(callback: @escaping (ExposureError?) -> Void) {
-        guard let assetId = asset.assetId else {
-            return
-        }
-        
         FetchAsset(environment: environment)
-            .filter(assetId: assetId)
+            .filter(assetId: asset.assetId)
             .includeUserData(for: sessionToken)
             .request()
             .validate()
@@ -94,10 +90,9 @@ extension AssetDetailsViewModel {
     }
     
     func rate(value: Double) {
-        guard let assetId = asset.assetId else { return }
         let rating = Float(value/5)
         Rating(environment: environment, sessionToken: sessionToken)
-            .rate(assetId: assetId, to: rating)
+            .rate(assetId: asset.assetId, to: rating)
             .request()
             .validate()
             .emptyResponse{ error in

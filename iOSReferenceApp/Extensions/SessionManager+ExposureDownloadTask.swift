@@ -16,19 +16,17 @@ extension SessionManager where T == ExposureDownloadTask {
     }
     
     func removeMetaData(for asset: Asset) {
-        guard let assetId = asset.assetId else { return }
         let all = retrieveMetaData() ?? []
         
-        let filtered = all.filter{ $0.assetId != assetId }
+        let filtered = all.filter{ $0.assetId != asset.assetId }
         
         persist(metaData: filtered)
     }
     
     func storeMetaData(for asset: Asset) {
-        guard let assetId = asset.assetId else { return }
         let all = retrieveMetaData() ?? []
         
-        var filtered = all.filter{ $0.assetId != assetId }
+        var filtered = all.filter{ $0.assetId != asset.assetId }
         filtered.append(asset)
         
         persist(metaData: filtered)
@@ -55,8 +53,7 @@ extension SessionManager where T == ExposureDownloadTask {
     func loadMetaData(for assetIds: Set<String>) -> [Asset] {
         return retrieveMetaData()?
             .filter{ asset -> Bool in
-                guard let assetId = asset.assetId else { return false }
-                return assetIds.contains(assetId)
+                return assetIds.contains(asset.assetId)
             } ?? []
     }
     

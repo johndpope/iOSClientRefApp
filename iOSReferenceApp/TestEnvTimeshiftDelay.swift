@@ -84,15 +84,11 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.update(withProgram: program)
         }
         
-        guard let channelId = channel.assetId else {
-            showMessage(title: "Playback start error", message: "No ChannelId")
-            return
-        }
         if let programId = program?.programId {
-            player.startPlayback(channelId: channelId, programId: programId)
+            player.startPlayback(channelId: channel.assetId, programId: programId)
         }
         else {
-            player.startPlayback(channelId: channelId)
+            player.startPlayback(channelId: channel.assetId)
         }
     }
 

@@ -121,9 +121,8 @@ class AssetDetailsViewController: UIViewController {
         downloadStackView.isHidden = true
         downloadProgressStackView.isHidden = true
         offlineStackView.isHidden = true
-        guard let assetId = viewModel.asset.assetId else { return }
-        if downloadViewModel.offline(assetId: assetId) != nil {
-            configureDownloadTask(assetId: assetId, lazily: true, autostart: false)
+        if downloadViewModel.offline(assetId: viewModel.asset.assetId) != nil {
+            configureDownloadTask(assetId: viewModel.asset.assetId, lazily: true, autostart: false)
         }
         else {
             transitionToDownloadUI(from: nil)
@@ -148,16 +147,11 @@ class AssetDetailsViewController: UIViewController {
     }
     
     @IBAction func playAction(_ sender: UIButton) {
-        guard let assetId = viewModel.asset.assetId else {
-            showMessage(title: "Invalid Asset", message: "AssetId missing, unable to perform playback")
-            return
-        }
-        
         if hasActiveChromecastSession {
-            loadChromeCast(for: PlayerViewModel.PlayRequest.vod(assetId: assetId, metaData: viewModel.asset), localOffset: nil)
+            loadChromeCast(for: PlayerViewModel.PlayRequest.vod(assetId: viewModel.asset.assetId, metaData: viewModel.asset), localOffset: nil)
         }
         else {
-            performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: assetId)
+            performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: viewModel.asset.assetId)
         }
     }
     
@@ -299,8 +293,7 @@ extension AssetDetailsViewController {
     }
     
     @IBAction func downloadAction(_ sender: UIButton) {
-        guard let assetId = viewModel.asset.assetId else { return }
-        configureDownloadTask(assetId: assetId, lazily: false, autostart: true)
+        configureDownloadTask(assetId: viewModel.asset.assetId, lazily: false, autostart: true)
         downloadViewModel.persist(metaData: viewModel.asset)
         togglePauseResumeDownload(paused: false)
     }
@@ -376,8 +369,7 @@ extension AssetDetailsViewController {
             otherView?.isHidden = true
         }
         
-        guard let assetId = viewModel.asset.assetId else { return }
-        downloadViewModel.refreshDownloadMetadata(for: assetId) { [weak self] success in
+        downloadViewModel.refreshDownloadMetadata(for: viewModel.asset.assetId) { [weak self] success in
             if success {
                 self?.resetStartDownloadUI()
             }
@@ -474,15 +466,12 @@ extension AssetDetailsViewController {
 // MARK: - Offline Asset
 extension AssetDetailsViewController {
     @IBAction func playOfflineAction(_ sender: UIButton) {
-        guard let assetId = viewModel.asset.assetId else { return }
-        
         // TODO: Play offline with chromecast?
-        self.performSegue(withIdentifier: Segue.segueOfflineToPlayer.rawValue, sender: assetId)
+        self.performSegue(withIdentifier: Segue.segueOfflineToPlayer.rawValue, sender: viewModel.asset.assetId)
     }
     
     @IBAction func removeOfflineMediaAction(_ sender: UIButton) {
-        guard let assetId = viewModel.asset.assetId else { return }
-        downloadViewModel.remove(assetId: assetId)
+        downloadViewModel.remove(assetId: viewModel.asset.assetId)
         transitionToDownloadUI(from: offlineStackView)
     }
     

@@ -218,10 +218,9 @@ extension MasterViewController {
                 
                 epgViewController.viewModel.executeResuest = { [weak self, unowned epgViewController] in
                     guard let `self` = self else { return }
-                    guard let channelId = channelAsset.assetId else { return }
                     let current = Date()
                     FetchEpg(environment: self.environment)
-                        .channel(id: channelId)
+                        .channel(id: channelAsset.assetId)
                         .show(page: 1, spanning: 500)
                         .filter(starting: current.subtract(days: 1), ending: current.add(days: 1) ?? current)
                         .request()

@@ -25,8 +25,7 @@ extension Asset: LocalizedEntity {
     func anyTitle(locale: String) -> String {
         if let title = title(locale: locale), title != "" { return title }
         else if let originalTitle = originalTitle, originalTitle != "" { return originalTitle }
-        else if let assetId = assetId { return assetId }
-        return "NO TITIE"
+        return assetId
     }
     
     func anyDescription(locale: String) -> String {
