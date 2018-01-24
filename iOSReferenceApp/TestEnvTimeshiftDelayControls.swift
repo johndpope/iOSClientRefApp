@@ -24,16 +24,9 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
     @IBOutlet weak var playheadTimeLabel: UILabel!
     @IBOutlet weak var playheadPositionLabel: UILabel!
     
-    @IBOutlet weak var timeshiftDelayTextField: UITextField!
     @IBOutlet weak var seekDeltaTextField: UITextField!
+    @IBOutlet weak var seekDeltaTimeTextField: UITextField!
     
-    @IBAction func timeshiftAction(_ sender: UIButton) {
-        guard let text = timeshiftDelayTextField.text, let value = Int64(text) else {
-            onTimeshifting(nil)
-            return
-        }
-        onTimeshifting(value)
-    }
     
     @IBAction func fastForwardAction(_ sender: UIButton) {
         guard let text = seekDeltaTextField.text, let value = Int64(text) else { return }
@@ -44,6 +37,17 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
         guard let text = seekDeltaTextField.text, let value = Int64(text) else { return }
         onSeeking(-value)
     }
+    
+    @IBAction func fastForwardTimeAction(_ sender: UIButton) {
+        guard let text = seekDeltaTimeTextField.text, let value = Int64(text) else { return }
+        onSeekingTime(value)
+    }
+    
+    @IBAction func rewindTimeAction(_ sender: UIButton) {
+        guard let text = seekDeltaTimeTextField.text, let value = Int64(text) else { return }
+        onSeekingTime(-value)
+    }
+    
     
     @IBAction func startOverAction(_ sender: UIButton) {
         onStartOver()
@@ -62,7 +66,7 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
         onPauseResumed(value)
     }
     
-    var onTimeshifting: (Int64?) -> Void = { _ in }
+    var onSeekingTime: (Int64) -> Void = { _ in }
     var onSeeking: (Int64) -> Void = { _ in }
     var onTimeTick: () -> Void = { _ in }
     var onViewDidLoad: () -> Void = { _ in }

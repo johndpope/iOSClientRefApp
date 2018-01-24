@@ -71,10 +71,6 @@ class TestEnvTimeshiftDelay: UIViewController {
         player
             .autoplay(enabled: true)
             .onPlaybackReady{ [weak self] tech, source in
-                guard let `self` = self else { return }
-                self.controls.timeshiftDelayTextField.text = self.player.timeshiftDelay != nil ? String(self.player.timeshiftDelay!) : nil
-                
-                print("TEST ENV",self.player.playheadTime,self.player.playheadPosition)
                 tech.play()
                 // Start updating playheadTime + playheadPosition
             }
@@ -110,20 +106,18 @@ class TestEnvTimeshiftDelay: UIViewController {
         if let viewController = segue.destination as? TestEnvTimeshiftDelayControls, segue.identifier == "timeshiftControls" {
             controls = viewController
             
-            #if DEBUG
-            viewController.onTimeshifting = { [weak self] timeshiftDelay in
-                guard let `self` = self else { return }
-                self.player.timeshiftDelay = timeshiftDelay
-            }
-            #endif
-            
             viewController.onSeeking = { [weak self] seekDelta in
+                guard let `self` = self else { return }
+                let currentTime = self.player.playheadPosition
+                self.player.seek(toPosition: currentTime + seekDelta * 1000)
+            }
+            
+            viewController.onSeekingTime = { [weak self] seekDelta in
                 guard let `self` = self else { return }
                 if let currentTime = self.player.playheadTime {
                     self.player.seek(toTime: currentTime + seekDelta * 1000)
                 }
             }
-            
             viewController.onPauseResumed = { [weak self] paused in
                 guard let `self` = self else { return }
                 if paused {

@@ -278,7 +278,7 @@
                                                     <rect key="frame" x="16" y="3" width="288" height="28"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pd-OE-gVc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="169" height="28"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="125.5" height="28"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <state key="normal" title="START-OVER"/>
                                                             <connections>
@@ -286,11 +286,19 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIy-Ea-cGS">
-                                                            <rect key="frame" x="175" y="0.0" width="113" height="28"/>
+                                                            <rect key="frame" x="131.5" y="0.0" width="79" height="28"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <state key="normal" title="GO LIVE"/>
                                                             <connections>
                                                                 <action selector="goLiveAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="Na9-qy-4bk"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T3q-gG-Qni">
+                                                            <rect key="frame" x="216.5" y="0.0" width="71.5" height="28"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <state key="normal" title="PAUSE"/>
+                                                            <connections>
+                                                                <action selector="pauseResumeAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="4vP-Hb-3eU"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -304,44 +312,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="timeshift" rowHeight="40" id="NTC-lD-mt5">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="seekPos" rowHeight="40" id="AfG-aM-V4V">
                                         <rect key="frame" x="0.0" y="140" width="320" height="40"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NTC-lD-mt5" id="dkb-Cu-98c">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="hth-xW-n20">
-                                                    <rect key="frame" x="16" y="5" width="288" height="30"/>
-                                                    <subviews>
-                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="30" borderStyle="roundedRect" placeholder="Timeshift Delay (in sec)" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="fl6-CD-tfr" userLabel="Manage Timeshift">
-                                                            <rect key="frame" x="0.0" y="0.0" width="192" height="30"/>
-                                                            <nil key="textColor"/>
-                                                            <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="15"/>
-                                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                                        </textField>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vfo-Sa-scX">
-                                                            <rect key="frame" x="198" y="0.0" width="90" height="30"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <state key="normal" title="TIMESHIFT"/>
-                                                            <connections>
-                                                                <action selector="timeshiftAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="pzc-I8-29e"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="hth-xW-n20" firstAttribute="centerY" secondItem="dkb-Cu-98c" secondAttribute="centerY" id="La1-b8-S20"/>
-                                                <constraint firstItem="fl6-CD-tfr" firstAttribute="width" secondItem="dkb-Cu-98c" secondAttribute="width" multiplier="0.6" id="Yhe-pZ-OfK"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="hth-xW-n20" secondAttribute="trailing" id="oxf-x9-Tnt"/>
-                                                <constraint firstItem="hth-xW-n20" firstAttribute="leading" secondItem="dkb-Cu-98c" secondAttribute="leadingMargin" id="zOM-dx-ADv"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="seek" rowHeight="40" id="AfG-aM-V4V">
-                                        <rect key="frame" x="0.0" y="180" width="320" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AfG-aM-V4V" id="GJM-tB-vNJ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
@@ -351,33 +323,25 @@
                                                     <rect key="frame" x="16" y="5" width="288" height="30"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S04-qr-Gzr">
-                                                            <rect key="frame" x="0.0" y="1" width="42" height="28"/>
+                                                            <rect key="frame" x="0.0" y="1" width="71" height="28"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <state key="normal" title="&lt;&lt; RW"/>
+                                                            <state key="normal" title="&lt;&lt; RW POS"/>
                                                             <connections>
                                                                 <action selector="rewindAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="llX-pK-zad"/>
                                                             </connections>
                                                         </button>
                                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="10" borderStyle="roundedRect" placeholder="Seek offset (in sec)" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="QYg-0w-fwm" userLabel="Manage Timeshift">
-                                                            <rect key="frame" x="48" y="0.0" width="128" height="30"/>
+                                                            <rect key="frame" x="81.5" y="0.0" width="128" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="15"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                         </textField>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJO-sx-tGQ">
-                                                            <rect key="frame" x="185" y="1" width="36" height="28"/>
+                                                            <rect key="frame" x="223" y="1" width="65" height="28"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <state key="normal" title="FF &gt;&gt;"/>
+                                                            <state key="normal" title="FF POS &gt;&gt;"/>
                                                             <connections>
                                                                 <action selector="fastForwardAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="8Mo-yD-avc"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T3q-gG-Qni">
-                                                            <rect key="frame" x="246" y="1" width="42" height="28"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <state key="normal" title="PAUSE"/>
-                                                            <connections>
-                                                                <action selector="pauseResumeAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="4vP-Hb-3eU"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -388,6 +352,51 @@
                                                 <constraint firstItem="hrD-Ka-AA4" firstAttribute="centerY" secondItem="GJM-tB-vNJ" secondAttribute="centerY" id="Ntl-SX-WR1"/>
                                                 <constraint firstItem="QYg-0w-fwm" firstAttribute="width" secondItem="GJM-tB-vNJ" secondAttribute="width" multiplier="0.4" id="T8a-t5-srK"/>
                                                 <constraint firstItem="hrD-Ka-AA4" firstAttribute="leading" secondItem="GJM-tB-vNJ" secondAttribute="leadingMargin" id="oNi-x8-aVV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="seekTime" rowHeight="40" id="Rmk-4H-Exe">
+                                        <rect key="frame" x="0.0" y="180" width="320" height="40"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rmk-4H-Exe" id="Vpj-qO-FuY">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ATh-mk-SwV">
+                                                    <rect key="frame" x="16" y="5" width="288" height="30"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OMA-sh-1if">
+                                                            <rect key="frame" x="0.0" y="1" width="76" height="28"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <state key="normal" title="&lt;&lt; RW TIME"/>
+                                                            <connections>
+                                                                <action selector="rewindAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="ZyI-Xy-6Lg"/>
+                                                            </connections>
+                                                        </button>
+                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="10" borderStyle="roundedRect" placeholder="SeekTime offset (in sec)" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="DWE-e8-osM" userLabel="Manage Timeshift">
+                                                            <rect key="frame" x="82" y="0.0" width="128" height="30"/>
+                                                            <nil key="textColor"/>
+                                                            <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="15"/>
+                                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                        </textField>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-Ph-CXs">
+                                                            <rect key="frame" x="218" y="1" width="70" height="28"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <state key="normal" title="FF TIME &gt;&gt;"/>
+                                                            <connections>
+                                                                <action selector="fastForwardAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="rSV-c1-FLU"/>
+                                                                <action selector="fastForwardTimeAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="LBk-f0-HkS"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ATh-mk-SwV" secondAttribute="trailing" id="LVt-P9-RvO"/>
+                                                <constraint firstItem="DWE-e8-osM" firstAttribute="width" secondItem="Vpj-qO-FuY" secondAttribute="width" multiplier="0.4" id="SFt-om-t5D"/>
+                                                <constraint firstItem="ATh-mk-SwV" firstAttribute="centerY" secondItem="Vpj-qO-FuY" secondAttribute="centerY" id="hWD-Dd-VaW"/>
+                                                <constraint firstItem="ATh-mk-SwV" firstAttribute="leading" secondItem="Vpj-qO-FuY" secondAttribute="leadingMargin" id="s98-SH-ggT"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.047058823530000002" green="0.054901960780000002" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -409,10 +418,10 @@
                         <outlet property="playheadTimeLabel" destination="2aq-Yu-hbm" id="VZM-0S-Ac4"/>
                         <outlet property="programIdLabel" destination="qVT-ys-JD8" id="eZa-dC-Zpp"/>
                         <outlet property="seekDeltaTextField" destination="QYg-0w-fwm" id="nL5-4I-4W2"/>
+                        <outlet property="seekDeltaTimeTextField" destination="DWE-e8-osM" id="m3z-YB-bzE"/>
                         <outlet property="seekableEndLabel" destination="0UR-RV-yDw" id="Gu9-81-yYQ"/>
                         <outlet property="seekableStartLabel" destination="9lB-Hq-GX6" id="vjl-pP-iVY"/>
                         <outlet property="startTimeLabel" destination="ink-ae-MP9" id="ToW-SD-Ukb"/>
-                        <outlet property="timeshiftDelayTextField" destination="fl6-CD-tfr" id="RNI-mY-yto"/>
                         <outlet property="wallclockTimeLabel" destination="4Mg-rO-Y9I" id="oif-IT-lPK"/>
                     </connections>
                 </tableViewController>
