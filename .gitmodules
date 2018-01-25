@@ -25,12 +25,6 @@
 [submodule "Carthage/Checkouts/iOSClientDownload"]
 	path = Carthage/Checkouts/iOSClientDownload
 	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientDownload.git
-[submodule "Carthage/Checkouts/Pageboy"]
-	path = Carthage/Checkouts/Pageboy
-	url = ssh://git@github.com/uias/Pageboy.git
-[submodule "Carthage/Checkouts/Tabman"]
-	path = Carthage/Checkouts/Tabman
-	url = ssh://git@github.com/uias/Tabman.git
 [submodule "Carthage/Checkouts/iOSClientCast"]
 	path = Carthage/Checkouts/iOSClientCast
 	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientCast.git

@@ -34,10 +34,4 @@
    <FileRef
       location = "group:Carthage/Checkouts/Kingfisher/Kingfisher.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/Tabman/Sources/Tabman.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/Pageboy/Sources/Pageboy.xcodeproj">
-   </FileRef>
 </Workspace>
