@@ -9,6 +9,8 @@
 import UIKit
 import Exposure
 import Kingfisher
+import GoogleCast
+import Cast
 
 class MasterViewController: UIViewController {
     let interactor = Interactor()
@@ -18,8 +20,10 @@ class MasterViewController: UIViewController {
     
     fileprivate var contentNavContainer: UINavigationController!
     
+    var castChannel: Channel = Channel()
+    var castSession: GCKCastSession?
     
-    var environment: Environment!
+    var environment: Exposure.Environment!
     var sessionToken: SessionToken!
     
     
@@ -59,23 +63,13 @@ class MasterViewController: UIViewController {
             let viewController = storyboard.instantiateViewController(withIdentifier: "CarouselListViewController") as! CarouselListViewController
             configure(carouselController: viewController, dynamicContent: dynamicContent)
             contentNavContainer.setViewControllers([viewController], animated: true)
-        case .tabbedEpg:
-            let viewController = storyboard.instantiateViewController(withIdentifier: "TVViewController") as! TVViewController
-            configure(carouselController: viewController, dynamicContent: dynamicContent)
-            contentNavContainer.setViewControllers([viewController], animated: true)
+        case .simpleCarousel:
+            prepareChannelView()
         }
         
     }
     
     func configure(carouselController: SingleCarouselViewController, dynamicContent: DynamicContentCategory? = nil) {
-        carouselController.authorize(environment: environment,
-                                     sessionToken: sessionToken)
-        carouselController.slidingMenuController = self
-        carouselController.brand = brand
-        carouselController.dynamicContentCategory = dynamicContent
-    }
-    
-    func configure(carouselController: TVViewController, dynamicContent: DynamicContentCategory? = nil) {
         carouselController.authorize(environment: environment,
                                      sessionToken: sessionToken)
         carouselController.slidingMenuController = self
@@ -169,8 +163,70 @@ extension MasterViewController {
         contentNavContainer.setViewControllers([viewController], animated: true)
     }
 }
+
+extension MasterViewController: ChromeCaster {
+    
+    var castEnvironment: Cast.Environment {
+        return Cast.Environment(baseUrl: environment.baseUrl,
+                                customer: environment.customer,
+                                businessUnit: environment.businessUnit,
+                                sessionToken: sessionToken.value)
+    }
+}
+
 extension MasterViewController {
+    var hasActiveChromecastSession: Bool {
+        return GCKCastContext.sharedInstance().sessionManager.hasConnectedCastSession()
+    }
+    
+    func prepareChannelView() {
+        epgSelectionView{  [weak self] channel, program in
+            guard let `self` = self else { return }
+            if self.hasActiveChromecastSession {
+                // Load ChromeCasting
+                if let programId = program?.assetId {
+                    self.loadChromeCast(for: PlayerViewModel.PlayRequest.program(programId: programId, channelId: channel.assetId, metaData: program?.asset), localOffset: nil)
+                }
+                else {
+                    self.loadChromeCast(for: PlayerViewModel.PlayRequest.live(channelId: channel.assetId, metaData: channel), localOffset: nil)
+                }
+                
+            }
+            else {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let viewController = storyboard.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
+                
+                let playRequest = program != nil  ? PlayerViewModel.PlayRequest.program(programId: program!.assetId, channelId: channel.assetId, metaData: program?.asset) : PlayerViewModel.PlayRequest.live(channelId: channel.assetId, metaData: channel)
+                viewController.viewModel = PlayerViewModel(sessionToken: self.sessionToken, environment: self.environment, playRequest: playRequest)
+                viewController.brand = self.brand
+                viewController.onChromeCastRequested = { [weak self] request, currentTime in
+                    self?.dismiss(animated: true)
+                    self?.loadChromeCast(for: request, localOffset: currentTime)
+                }
+                viewController.onDismissed = { [weak self] in
+                    self?.dismiss(animated: true)
+                }
+                
+                self.present(viewController, animated: true)
+            }
+        }
+    }
     func accessTestEnv() {
+        epgSelectionView{ [weak self] channel, program in
+            guard let `self` = self else { return }
+            let storyboard = UIStoryboard(name: "TestEnv", bundle: nil)
+            let timeshiftViewController = storyboard.instantiateViewController(withIdentifier: "TestEnvTimeshiftDelay") as! TestEnvTimeshiftDelay
+            
+            timeshiftViewController.program = program
+            timeshiftViewController.channel = channel
+            timeshiftViewController.environment = self.environment
+            timeshiftViewController.sessionToken = self.sessionToken
+            
+            self.contentNavContainer.pushViewController(timeshiftViewController, animated: true)
+        }
+    }
+    
+    func epgSelectionView(callback: @escaping (Asset, Program?) -> Void) {
         let viewController = SimpleCarouselViewController<Asset>(nibName: "SimpleCarouselViewController", bundle: nil)
         viewController.navigationItem.title = "Channels"
         viewController.viewModel.executeResuest = { [weak self, unowned viewController] in
@@ -202,8 +258,7 @@ extension MasterViewController {
             guard let `self` = self, let channelAsset = channelAsset else { return }
             let alert = UIAlertController(title: "PlaybackMode", message: "Please select the desired playback mode", preferredStyle: UIAlertControllerStyle.alert)
             let channelPlay = UIAlertAction(title: "Channel Play", style: UIAlertActionStyle.default) { [weak self] action in
-                guard let `self` = self else { return }
-                self.timeshiftTestEnv(for: channelAsset, program: nil)
+                callback(channelAsset,nil)
             }
             
             let programPlay = UIAlertAction(title: "Program Play", style: UIAlertActionStyle.default) { [weak self] action in
@@ -212,8 +267,7 @@ extension MasterViewController {
                 let epgViewController = SimpleEpgViewController(nibName: "SimpleEpgViewController", bundle: nil)
                 epgViewController.navigationItem.title = channelAsset.anyTitle(locale: "en")
                 epgViewController.onSelected = { [weak self] model in
-                    guard let `self` = self else { return }
-                    self.timeshiftTestEnv(for: channelAsset, program: model)
+                    callback(channelAsset,model)
                 }
                 
                 epgViewController.viewModel.executeResuest = { [weak self, unowned epgViewController] in
@@ -250,18 +304,6 @@ extension MasterViewController {
         
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "download-list"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(MasterViewController.toggleSlidingMenu))
         contentNavContainer.setViewControllers([viewController], animated: true)
-    }
-    
-    private func timeshiftTestEnv(for channel: Asset, program: Program?) {
-        let storyboard = UIStoryboard(name: "TestEnv", bundle: nil)
-        let timeshiftViewController = storyboard.instantiateViewController(withIdentifier: "TestEnvTimeshiftDelay") as! TestEnvTimeshiftDelay
-        
-        timeshiftViewController.program = program
-        timeshiftViewController.channel = channel
-        timeshiftViewController.environment = self.environment
-        timeshiftViewController.sessionToken = self.sessionToken
-        
-        self.contentNavContainer.pushViewController(timeshiftViewController, animated: true)
     }
 }
 

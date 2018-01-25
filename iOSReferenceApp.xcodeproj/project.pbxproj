@@ -117,6 +117,7 @@
 		76BA443E1FAC891600E92AD1 /* ContentCarouselTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA443D1FAC891600E92AD1 /* ContentCarouselTransition.swift */; };
 		76BA44401FAC937000E92AD1 /* CarouselListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA443F1FAC937000E92AD1 /* CarouselListViewController.swift */; };
 		76BA44481FACA91E00E92AD1 /* SingleCarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA44471FACA91E00E92AD1 /* SingleCarouselViewModel.swift */; };
+		76BAF3AF2019EDD300E48206 /* ChromeCaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BAF3AE2019EDD300E48206 /* ChromeCaster.swift */; };
 		76BB35A71F9A29C200C2B386 /* Asset+LocalizedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */; };
 		76BB35A91F9A2A7100C2B386 /* LocalizedAssetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */; };
 		76BBFB7E1EA8CF2E001DBDDB /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */; };
@@ -329,6 +330,7 @@
 		76BA443F1FAC937000E92AD1 /* CarouselListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselListViewController.swift; sourceTree = "<group>"; };
 		76BA44461FACA8E800E92AD1 /* SingleCarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCarouselViewController.swift; sourceTree = "<group>"; };
 		76BA44471FACA91E00E92AD1 /* SingleCarouselViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCarouselViewModel.swift; sourceTree = "<group>"; };
+		76BAF3AE2019EDD300E48206 /* ChromeCaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChromeCaster.swift; sourceTree = "<group>"; };
 		76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Asset+LocalizedEntity.swift"; sourceTree = "<group>"; };
 		76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedAssetEntity.swift; sourceTree = "<group>"; };
 		76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = SOURCE_ROOT; };
@@ -810,6 +812,7 @@
 			children = (
 				76BA44391FAC88F600E92AD1 /* SlidingMenuController.swift */,
 				76BA443B1FAC890700E92AD1 /* SlidingMenuDelegate.swift */,
+				76BAF3AE2019EDD300E48206 /* ChromeCaster.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1355,6 +1358,7 @@
 				769862281FA518C500A57213 /* DownloadAssetViewModel.swift in Sources */,
 				76C9B4731FB4A8140058045F /* UIColor+AppColors.swift in Sources */,
 				76EC8D3B1FA5113600F6FDB6 /* MainMenuSectionViewModel.swift in Sources */,
+				76BAF3AF2019EDD300E48206 /* ChromeCaster.swift in Sources */,
 				76BA443E1FAC891600E92AD1 /* ContentCarouselTransition.swift in Sources */,
 				76EC8D651FA514A900F6FDB6 /* ContentEditorial.swift in Sources */,
 				76B0AFB41FA51BCA0085C837 /* PlayerViewModel.swift in Sources */,

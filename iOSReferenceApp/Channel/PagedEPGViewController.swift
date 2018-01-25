@@ -58,17 +58,17 @@ class PagedEPGViewController: UIViewController {
     
     var dynamicContentCategory: DynamicContentCategory?
     fileprivate func prepare(contentFrom dynamicContentCategory: DynamicContentCategory) {
-        switch dynamicContentCategory.presentation {
-        case .tabbedEpg:
-            viewModel.loadChannelList{ [weak self] list, error in
-                if let list = list {
-                    self?.prepareTabs(from: list)
-                }
-            }
-        default:
-            print("Please use tabbedEpg when presenting channel lists")
-            return
-        }
+//        switch dynamicContentCategory.presentation {
+//        case .tabbedEpg:
+//            viewModel.loadChannelList{ [weak self] list, error in
+//                if let list = list {
+//                    self?.prepareTabs(from: list)
+//                }
+//            }
+//        default:
+//            print("Please use tabbedEpg when presenting channel lists")
+//            return
+//        }
     }
     
     private func prepareTabs(from assets: [Asset]) {

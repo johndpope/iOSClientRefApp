@@ -18,7 +18,7 @@ protocol DynamicContentCategory {
 enum DynamicContentPresentation {
     case singleCarousel
     case multiCarousel
-    case tabbedEpg
+    case simpleCarousel
 }
 
 struct DynamicContentCarousel: DynamicContentCategory {

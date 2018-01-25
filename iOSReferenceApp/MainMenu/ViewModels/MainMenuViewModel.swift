@@ -82,7 +82,7 @@ class MainMenuViewModel {
     
     private func fakeCarouselResponse(with carouselId: String?) -> [MainMenuContentViewModel] {
         let home = MainMenuViewModel.resolveHomeViewModel(for: carouselId)
-        let tv = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "TV", presentation: .tabbedEpg, content: .channels))
+        let tv = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "TV", presentation: .simpleCarousel, content: .channels))
         let movies = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Movies", presentation: .multiCarousel, content: .movies))
         let documentaries = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Documentaries", presentation: .multiCarousel, content: .documentaries))
         let kids = MainMenuContentViewModel(dynamicContent: FakeDynamicContentCarousel(title: "Kids", presentation: .multiCarousel, content: .kids))
