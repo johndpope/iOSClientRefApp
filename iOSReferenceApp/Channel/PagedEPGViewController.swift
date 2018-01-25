@@ -7,11 +7,9 @@
 //
 
 import UIKit
-import Tabman_Carthage
-import Pageboy
 import Exposure
 
-class PagedEPGViewController: TabmanViewController {
+class PagedEPGViewController: UIViewController {
 
     var viewModel: ChannelListViewModel!
     fileprivate(set) var viewControllers: [EpgViewController] = []
@@ -28,29 +26,29 @@ class PagedEPGViewController: TabmanViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dataSource = self
-        
-        bar.style = .scrollingButtonBar
-        bar.appearance = TabmanBar.Appearance({ (appearance) in
-            appearance.indicator.color = brand.accent
-            appearance.indicator.lineWeight = .thin
-            appearance.indicator.compresses = true
-            
-            appearance.layout.itemDistribution = .centered
-            
-            appearance.state.selectedColor = brand.accent
-            appearance.state.color = brand.text.primary
-            
-            appearance.style.background = .solid(color: brand.backdrop.primary)
-            appearance.style.showEdgeFade = true
-            
-            appearance.text.font = UIFont(name: "OpenSans-Light", size: 16)
-            
-        })
-        
-        if let conf = dynamicContentCategory {
-            prepare(contentFrom: conf)
-        }
+//        dataSource = self
+//        
+//        bar.style = .scrollingButtonBar
+//        bar.appearance = TabmanBar.Appearance({ (appearance) in
+//            appearance.indicator.color = brand.accent
+//            appearance.indicator.lineWeight = .thin
+//            appearance.indicator.compresses = true
+//            
+//            appearance.layout.itemDistribution = .centered
+//            
+//            appearance.state.selectedColor = brand.accent
+//            appearance.state.color = brand.text.primary
+//            
+//            appearance.style.background = .solid(color: brand.backdrop.primary)
+//            appearance.style.showEdgeFade = true
+//            
+//            appearance.text.font = UIFont(name: "OpenSans-Light", size: 16)
+//            
+//        })
+//        
+//        if let conf = dynamicContentCategory {
+//            prepare(contentFrom: conf)
+//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -76,21 +74,21 @@ class PagedEPGViewController: TabmanViewController {
     private func prepareTabs(from assets: [Asset]) {
         guard !assets.isEmpty else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        viewControllers = assets.map{ asset -> EpgViewController in
-            let epgViewController = storyboard.instantiateViewController(withIdentifier: "EpgViewController") as! EpgViewController
-            epgViewController.authorize(environment: environment,
-                                            sessionToken: sessionToken)
-            epgViewController.brand = brand
-            epgViewController.viewModel.asset = asset
-            epgViewController.didSelectEpg = { [weak self] programId, channelId, metaData in
-                self?.unselectAll(besides: epgViewController)
-                self?.onPlaybackRequested(programId, channelId, metaData)
-            }
-            return epgViewController
-        }
-        
-        bar.items = viewControllers.map{ Item(title: $0.viewModel.asset.anyTitle(locale: "en")) }
-        reloadPages()
+//        viewControllers = assets.map{ asset -> EpgViewController in
+//            let epgViewController = storyboard.instantiateViewController(withIdentifier: "EpgViewController") as! EpgViewController
+//            epgViewController.authorize(environment: environment,
+//                                            sessionToken: sessionToken)
+//            epgViewController.brand = brand
+//            epgViewController.viewModel.asset = asset
+//            epgViewController.didSelectEpg = { [weak self] programId, channelId, metaData in
+//                self?.unselectAll(besides: epgViewController)
+//                self?.onPlaybackRequested(programId, channelId, metaData)
+//            }
+//            return epgViewController
+//        }
+//
+//        bar.items = viewControllers.map{ Item(title: $0.viewModel.asset.anyTitle(locale: "en")) }
+//        reloadPages()
     }
     
     func unselectAll(besides: EpgViewController) {
@@ -100,46 +98,46 @@ class PagedEPGViewController: TabmanViewController {
     }
 }
 
-extension PagedEPGViewController: PageboyViewControllerDataSource {
-    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-        return viewControllers.count
-    }
-    
-    func viewController(for pageboyViewController: PageboyViewController,
-                        at index: PageboyViewController.PageIndex) -> UIViewController? {
-        let epgVc = viewControllers[index]
-        
-        if activeIndex == index {
-            epgVc.scrollToLiveOrActive(animated: true)
-        }
-        activeIndex = index
-        
-        autoLoadLive(for: epgVc)
-        
-        return epgVc
-    }
-    
-    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        return centerPage
-    }
-    
-    private var centerPage: PageboyViewController.Page {
-        return .at(index: viewControllers.count / 2)
-    }
-    
-    func autoLoadLive(for epgVc: EpgViewController) {
-        switch loadStatus {
-        case .initial:
-            let channelId = epgVc.viewModel.channelId
-            epgVc.scrollToLiveOrActive(animated: true)
-            epgVc.nowPlayingIndex = epgVc.viewModel.currentlyLive()?.row
-            onPlaybackRequested(nil,channelId,epgVc.viewModel.asset)
-            loadStatus = .loaded
-        default:
-            return
-        }
-    }
-}
+//extension PagedEPGViewController: PageboyViewControllerDataSource {
+//    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
+//        return viewControllers.count
+//    }
+//    
+//    func viewController(for pageboyViewController: PageboyViewController,
+//                        at index: PageboyViewController.PageIndex) -> UIViewController? {
+//        let epgVc = viewControllers[index]
+//        
+//        if activeIndex == index {
+//            epgVc.scrollToLiveOrActive(animated: true)
+//        }
+//        activeIndex = index
+//        
+//        autoLoadLive(for: epgVc)
+//        
+//        return epgVc
+//    }
+//    
+//    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+//        return centerPage
+//    }
+//    
+//    private var centerPage: PageboyViewController.Page {
+//        return .at(index: viewControllers.count / 2)
+//    }
+//    
+//    func autoLoadLive(for epgVc: EpgViewController) {
+//        switch loadStatus {
+//        case .initial:
+//            let channelId = epgVc.viewModel.channelId
+//            epgVc.scrollToLiveOrActive(animated: true)
+//            epgVc.nowPlayingIndex = epgVc.viewModel.currentlyLive()?.row
+//            onPlaybackRequested(nil,channelId,epgVc.viewModel.asset)
+//            loadStatus = .loaded
+//        default:
+//            return
+//        }
+//    }
+//}
 
 extension PagedEPGViewController: AuthorizedEnvironment {
     func authorize(environment: Environment, sessionToken: SessionToken) {
