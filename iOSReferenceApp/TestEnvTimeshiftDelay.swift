@@ -45,7 +45,7 @@ class TestEnvTimeshiftDelay: UIViewController {
             #if DEBUG
 //            self.player.tech.logStuff()
             #endif
-                
+            
             let seekableRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
             let bufferedRange = self.player.bufferedRange.map{ ($0.start.seconds, $0.end.seconds) }.first
             if let seekable = seekableRange {
@@ -55,6 +55,21 @@ class TestEnvTimeshiftDelay: UIViewController {
             if let buffered = bufferedRange {
                 self.controls.bufferedStartLabel.text = String(Int64(buffered.0))
                 self.controls.bufferedEndLabel.text = String(Int64(buffered.1))
+            }
+            
+            let seekableTimeRange = self.player.seekableTimeRange.first
+            let bufferedTimeRange = self.player.bufferedTimeRange.first
+            if let seekableTime = seekableTimeRange {
+                let start = Date(milliseconds: seekableTime.0).dateString(format: "HH:mm:ss")
+                let end = Date(milliseconds: seekableTime.1).dateString(format: "HH:mm:ss")
+                self.controls.seekableStartTimeLabel.text = start
+                self.controls.seekableEndTimeLabel.text = end
+            }
+            if let bufferedTime = bufferedTimeRange {
+                let start = Date(milliseconds: bufferedTime.0).dateString(format: "HH:mm:ss")
+                let end = Date(milliseconds: bufferedTime.1).dateString(format: "HH:mm:ss")
+                self.controls.bufferedStartTimeLabel.text = start
+                self.controls.bufferedEndTimeLabel.text = end
             }
             
             if let playheadTime = self.player.playheadTime {

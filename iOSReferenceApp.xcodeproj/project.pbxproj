@@ -119,6 +119,8 @@
 		76BA443E1FAC891600E92AD1 /* ContentCarouselTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA443D1FAC891600E92AD1 /* ContentCarouselTransition.swift */; };
 		76BA44401FAC937000E92AD1 /* CarouselListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA443F1FAC937000E92AD1 /* CarouselListViewController.swift */; };
 		76BA44481FACA91E00E92AD1 /* SingleCarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BA44471FACA91E00E92AD1 /* SingleCarouselViewModel.swift */; };
+		76BAF3A82019CB4800E48206 /* Pageboy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BAF3A92019CB4800E48206 /* Pageboy.framework */; };
+		76BAF3AA2019CB6F00E48206 /* Pageboy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76BAF3A92019CB4800E48206 /* Pageboy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76BB35A71F9A29C200C2B386 /* Asset+LocalizedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */; };
 		76BB35A91F9A2A7100C2B386 /* LocalizedAssetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */; };
 		76BBFB7E1EA8CF2E001DBDDB /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */; };
@@ -210,6 +212,7 @@
 				76C7DDE71F235D74008FE955 /* Analytics.framework in Embed Frameworks */,
 				764979112010ABDC000258F2 /* Tabman_Carthage.framework in Embed Frameworks */,
 				76A844801EA7A23700BDAF2C /* Utilities.framework in Embed Frameworks */,
+				76BAF3AA2019CB6F00E48206 /* Pageboy.framework in Embed Frameworks */,
 				76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */,
 				76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */,
 				7628091F1FD021A7005610DF /* Cast.framework in Embed Frameworks */,
@@ -250,7 +253,6 @@
 		7645C5752008EA7300133955 /* SimpleCarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCarouselViewController.swift; sourceTree = "<group>"; };
 		7645C5762008EA7300133955 /* SimpleCarouselViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleCarouselViewController.xib; sourceTree = "<group>"; };
 		7645C579200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEnvTimeshiftDelayControls.swift; sourceTree = "<group>"; };
-		76466FC81FB05BDA007ECD5C /* Pageboy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pageboy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7649790F2010ABDC000258F2 /* Tabman_Carthage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Tabman_Carthage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		764AE8851FBA4A7100DB548C /* CosmosDistrib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
 		764EDC481F5EADFB00569D5B /* environments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = environments.json; sourceTree = SOURCE_ROOT; };
@@ -314,7 +316,6 @@
 		76A8447E1EA7A23700BDAF2C /* Utilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A844811EA7A23700BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A844841EA7A23700BDAF2C /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		76A844871EA7A23700BDAF2C /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76AE64EA1F90217B0036933E /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		76AE64F61F91498D0036933E /* DynamicCustomerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCustomerConfig.swift; sourceTree = "<group>"; };
 		76AF2F131F13B25E0014F007 /* ProgramViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramViewModel.swift; sourceTree = "<group>"; };
@@ -334,6 +335,7 @@
 		76BA443F1FAC937000E92AD1 /* CarouselListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselListViewController.swift; sourceTree = "<group>"; };
 		76BA44461FACA8E800E92AD1 /* SingleCarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCarouselViewController.swift; sourceTree = "<group>"; };
 		76BA44471FACA91E00E92AD1 /* SingleCarouselViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCarouselViewModel.swift; sourceTree = "<group>"; };
+		76BAF3A92019CB4800E48206 /* Pageboy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pageboy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76BB35A61F9A29C200C2B386 /* Asset+LocalizedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Asset+LocalizedEntity.swift"; sourceTree = "<group>"; };
 		76BB35A81F9A2A7100C2B386 /* LocalizedAssetEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedAssetEntity.swift; sourceTree = "<group>"; };
 		76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = SOURCE_ROOT; };
@@ -399,6 +401,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76BAF3A82019CB4800E48206 /* Pageboy.framework in Frameworks */,
 				762809231FD026B7005610DF /* GoogleCast.framework in Frameworks */,
 				76A844821EA7A23700BDAF2C /* Exposure.framework in Frameworks */,
 				76A4171A1EDFEB2000677A46 /* Kingfisher.framework in Frameworks */,
@@ -625,7 +628,6 @@
 				7649790F2010ABDC000258F2 /* Tabman_Carthage.framework */,
 				762809221FD026B6005610DF /* GoogleCast.framework */,
 				7628091D1FD021A7005610DF /* Cast.framework */,
-				76466FC81FB05BDA007ECD5C /* Pageboy.framework */,
 				76344F481F7AB3BC0034AEC0 /* Download.framework */,
 				76A843A91EA7856C00BDAF2C /* iOSReferenceApp */,
 				76A843BE1EA7856C00BDAF2C /* iOSReferenceAppTests */,
@@ -713,9 +715,9 @@
 		76A843EA1EA7878800BDAF2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76BAF3A92019CB4800E48206 /* Pageboy.framework */,
 				76C7DDE51F235D74008FE955 /* Analytics.framework */,
 				76A417191EDFEB2000677A46 /* Kingfisher.framework */,
-				76A844871EA7A23700BDAF2C /* SwiftyJSON.framework */,
 				76A844841EA7A23700BDAF2C /* Alamofire.framework */,
 				76A844811EA7A23700BDAF2C /* Exposure.framework */,
 				76A8447E1EA7A23700BDAF2C /* Utilities.framework */,
