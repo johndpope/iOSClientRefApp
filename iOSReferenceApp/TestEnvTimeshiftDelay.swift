@@ -99,11 +99,12 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.update(withProgram: program)
         }
         
-        if let programId = program?.programId {
-            player.startPlayback(channelId: channel.assetId, programId: programId)
+        if let program = program {
+            player.startPlayback(playable: program.programPlayable)
+//            player.startPlayback(channelId: channel.assetId, programId: programId)
         }
         else {
-            player.startPlayback(channelId: channel.assetId)
+            player.startPlayback(playable: channel.channelPlayable)
         }
     }
 

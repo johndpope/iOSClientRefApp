@@ -20,7 +20,7 @@ class AssetViewModel: LocalizedAssetEntity {
         self.type = type
     }
     
-    fileprivate(set) var type: Asset.AssetType
+    fileprivate(set) var type: String
 }
 
 extension AssetViewModel: Hashable {
