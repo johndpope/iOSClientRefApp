@@ -53,23 +53,23 @@ class PlayerViewController: UIViewController {
                         sessionToken: viewModel.sessionToken)
         player.context.analyticsGenerators.append({ _ in return AnalyticsLogger() })
         player
-            .onError{ [unowned self] tech, source, error in
-                self.showMessage(title: "Player Error", message: error.message + "\n Code: \(error.code)")
+            .onError{ [weak self] player, source, error in
+                self?.showMessage(title: "Player Error", message: error.message + "\n Code: \(error.code)")
             }
-            .onPlaybackReady{ tech, source in
-                tech.play()
+            .onPlaybackReady{ player, source in
+                player.play()
             }
-            .onPlaybackStarted{ [weak self] tech, source in
+            .onPlaybackStarted{ [weak self] player, source in
                 self?.togglePlayPauseButton(paused: false)
                 self?.startTimelineUpdate()
             }
-            .onPlaybackPaused{ [weak self] tech, source in
+            .onPlaybackPaused{ [weak self] player, source in
                 self?.togglePlayPauseButton(paused: true)
             }
-            .onPlaybackResumed{ [weak self] tech, source in
+            .onPlaybackResumed{ [weak self] player, source in
                 self?.togglePlayPauseButton(paused: false)
             }
-            .onPlaybackAborted { [weak self] tech, source in
+            .onPlaybackAborted { [weak self] player, source in
                 self?.hideTimeline()
         }
         

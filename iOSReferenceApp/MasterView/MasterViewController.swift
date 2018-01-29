@@ -235,7 +235,7 @@ extension MasterViewController {
                 .list()
                 .includeUserData(for: self.sessionToken)
                 .elasticSearch(query: "(medias.drm:FAIRPLAY OR medias.drm:UNENCRYPTED) AND medias.format:HLS")
-                .filter(on: .tvChannel)
+                .filter(on: "TV_CHANNEL")
                 .filter(onlyPublished: true)
                 .sort(on: ["assetId","originalTitle"])
                 .request()

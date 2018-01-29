@@ -202,6 +202,7 @@
 				76A8447D1EA7A23700BDAF2C /* Player.framework in Embed Frameworks */,
 				76C7DDE71F235D74008FE955 /* Analytics.framework in Embed Frameworks */,
 				76A844801EA7A23700BDAF2C /* Utilities.framework in Embed Frameworks */,
+				76BAF3AA2019CB6F00E48206 /* Pageboy.framework in Embed Frameworks */,
 				76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */,
 				76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */,
 				7628091F1FD021A7005610DF /* Cast.framework in Embed Frameworks */,
@@ -299,7 +300,6 @@
 		76A8447E1EA7A23700BDAF2C /* Utilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A844811EA7A23700BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A844841EA7A23700BDAF2C /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		76A844871EA7A23700BDAF2C /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76AE64EA1F90217B0036933E /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		76AE64F61F91498D0036933E /* DynamicCustomerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCustomerConfig.swift; sourceTree = "<group>"; };
 		76B0AFA91FA51B880085C837 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -384,6 +384,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76BAF3A82019CB4800E48206 /* Pageboy.framework in Frameworks */,
 				762809231FD026B7005610DF /* GoogleCast.framework in Frameworks */,
 				76A844821EA7A23700BDAF2C /* Exposure.framework in Frameworks */,
 				76A4171A1EDFEB2000677A46 /* Kingfisher.framework in Frameworks */,
@@ -681,9 +682,9 @@
 		76A843EA1EA7878800BDAF2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76BAF3A92019CB4800E48206 /* Pageboy.framework */,
 				76C7DDE51F235D74008FE955 /* Analytics.framework */,
 				76A417191EDFEB2000677A46 /* Kingfisher.framework */,
-				76A844871EA7A23700BDAF2C /* SwiftyJSON.framework */,
 				76A844841EA7A23700BDAF2C /* Alamofire.framework */,
 				76A844811EA7A23700BDAF2C /* Exposure.framework */,
 				76A8447E1EA7A23700BDAF2C /* Utilities.framework */,

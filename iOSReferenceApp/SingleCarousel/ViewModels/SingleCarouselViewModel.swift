@@ -102,7 +102,7 @@ extension SingleCarouselViewModel {
             .elasticSearch(publicationQuery: "publications.products:EnigmaFVOD_enigma")
             .sort(on: "originalTitle")
             .filter(onlyPublished: true)
-            .filter(on: .movie)
+            .filter(on: "MOVIE")
         
         createFakeCarousel(for: fetch, callback: callback)
     }
@@ -122,7 +122,7 @@ extension SingleCarouselViewModel {
             .elasticSearch(publicationQuery: "publications.products:kidsContent_enigma")
             .sort(on: "originalTitle")
             .filter(onlyPublished: true)
-            .filter(on: .movie)
+            .filter(on: "MOVIE")
         
         createFakeCarousel(for: fetch, callback: callback)
     }
@@ -134,7 +134,7 @@ extension SingleCarouselViewModel {
             .elasticSearch(query: "(medias.drm:FAIRPLAY OR medias.drm:UNENCRYPTED) AND medias.format:HLS")
             .sort(on: "originalTitle")
             .filter(onlyPublished: true)
-            .filter(on: .clip)
+            .filter(on: "CLIP")
         
         createFakeCarousel(for: fetch, callback: callback)
     }
