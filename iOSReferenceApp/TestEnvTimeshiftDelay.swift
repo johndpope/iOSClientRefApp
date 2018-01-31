@@ -22,6 +22,9 @@ class TestEnvTimeshiftDelay: UIViewController {
     @IBOutlet weak var playerView: UIView!
     fileprivate(set) var player: Player<HLSNative<ExposureContext>>!
     
+    override func viewWillDisappear(_ animated: Bool) {
+        print("viewWillDisappear")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,13 +44,12 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.controls.wallclockTimeLabel.text = "n/a"
             }
             
-            self.player.timeBehindLive
             #if DEBUG
 //            self.player.tech.logStuff()
             #endif
             
-            let seekableRange = self.player.seekableRange.map{ ($0.start.seconds, $0.end.seconds) }.first
-            let bufferedRange = self.player.bufferedRange.map{ ($0.start.seconds, $0.end.seconds) }.first
+            let seekableRange = self.player.seekableRanges.map{ ($0.start.seconds, $0.end.seconds) }.first
+            let bufferedRange = self.player.bufferedRanges.map{ ($0.start.seconds, $0.end.seconds) }.first
             if let seekable = seekableRange {
                 self.controls.seekableStartLabel.text = String(Int64(seekable.0))
                 self.controls.seekableEndLabel.text = String(Int64(seekable.1))
@@ -57,17 +59,17 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.controls.bufferedEndLabel.text = String(Int64(buffered.1))
             }
             
-            let seekableTimeRange = self.player.seekableTimeRange.first
-            let bufferedTimeRange = self.player.bufferedTimeRange.first
+            let seekableTimeRange = self.player.seekableTimeRanges.first
+            let bufferedTimeRange = self.player.bufferedTimeRanges.first
             if let seekableTime = seekableTimeRange {
-                let start = Date(milliseconds: seekableTime.0).dateString(format: "HH:mm:ss")
-                let end = Date(milliseconds: seekableTime.1).dateString(format: "HH:mm:ss")
+                let start = Date(milliseconds: seekableTime.start.milliseconds).dateString(format: "HH:mm:ss")
+                let end = Date(milliseconds: seekableTime.end.milliseconds).dateString(format: "HH:mm:ss")
                 self.controls.seekableStartTimeLabel.text = start
                 self.controls.seekableEndTimeLabel.text = end
             }
             if let bufferedTime = bufferedTimeRange {
-                let start = Date(milliseconds: bufferedTime.0).dateString(format: "HH:mm:ss")
-                let end = Date(milliseconds: bufferedTime.1).dateString(format: "HH:mm:ss")
+                let start = Date(milliseconds: bufferedTime.start.milliseconds).dateString(format: "HH:mm:ss")
+                let end = Date(milliseconds: bufferedTime.end.milliseconds).dateString(format: "HH:mm:ss")
                 self.controls.bufferedStartTimeLabel.text = start
                 self.controls.bufferedEndTimeLabel.text = end
             }
@@ -84,16 +86,15 @@ class TestEnvTimeshiftDelay: UIViewController {
         }
         
         player
-            .autoplay(enabled: true)
-            .onPlaybackReady{ [weak self] tech, source in
-                tech.play()
+            .onPlaybackReady{ player, source in
+                player.play()
                 // Start updating playheadTime + playheadPosition
             }
-            .onError{ [weak self] tech, source, error in
+            .onError{ [weak self] player, source, error in
                 guard let `self` = self else { return }
                 self.showMessage(title: "Error \(error.code)", message: error.message)
             }
-            .onProgramChanged{ [weak self] tech, source, program in
+            .onProgramChanged{ [weak self] player, source, program in
                 guard let `self` = self else { return }
                 print("onProgramChanged",program?.programId)
                 self.update(withProgram: program)

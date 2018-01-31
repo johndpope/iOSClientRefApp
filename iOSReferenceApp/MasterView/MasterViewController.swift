@@ -242,7 +242,7 @@ extension MasterViewController {
                 .validate()
                 .response{ [weak self] in
                     if let error = $0.error {
-                        self?.showMessage(title: "Exposure: \(error.code)", message: error.message)
+                        self?.showMessage(title: "epgSelectionView: \(error.code)", message: error.message)
                     }
                     if let value = $0.value {
                         viewController.viewModel.prepare(content: value.items, error: nil)
@@ -284,7 +284,10 @@ extension MasterViewController {
                     }
                 }
                 
-                epgViewController.viewModel.onPrepared = { [unowned epgViewController] _,_ in
+                epgViewController.viewModel.onPrepared = { [weak self, unowned epgViewController] _,error in
+                    if let error = error {
+                        self?.showMessage(title: "EPG Error \(error.code)", message: error.message)
+                    }
                     epgViewController.tableView.reloadSections([0], with: .automatic)
                     if let liveIndex = epgViewController.viewModel.currentlyLiveIndex {
                         epgViewController.tableView.scrollToRow(at: liveIndex, at: .middle, animated: true)
