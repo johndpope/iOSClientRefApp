@@ -9,6 +9,7 @@
 import UIKit
 import Exposure
 import Player
+import ExposurePlayback
 
 class TestEnvTimeshiftDelay: UIViewController {
     var controls: TestEnvTimeshiftDelayControls!

@@ -348,7 +348,7 @@ extension AssetDetailsViewController {
                 self?.downloadViewModel.remove(assetId: assetId)
                 // TODO: Display error
                 self?.transitionToDownloadUI(from: self?.downloadProgressStackView)
-                self?.showMessage(title: "Download Error", message: error.message)
+                self?.showMessage(title: "Download Error", message: error.localizedDescription)
             }
             .onCompleted { [weak self] task, url in
                 print("📱 Download completed: \(url)")

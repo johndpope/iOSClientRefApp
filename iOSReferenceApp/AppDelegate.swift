@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import Utilities
 import Download
 import Exposure
+import ExposureDownload
 import AVFoundation
 import Cast
 import GoogleCast
@@ -113,6 +113,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             return [environmentViewController, loginViewController]
         }
+        
+        print("sessionToken",UserInfo.sessionToken)
         
         let masterViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as! MasterViewController
         retrieveDynamicCustomerConfig(for: environment) { conf in

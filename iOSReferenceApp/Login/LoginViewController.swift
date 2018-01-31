@@ -146,7 +146,7 @@ extension LoginViewController {
             }
             
             if let error = response.error {
-                self.showMessage(title: "Login Error", message: error.message)
+                self.showMessage(title: "Login Error: \(error.code)", message: error.message)
                 return
             }
             

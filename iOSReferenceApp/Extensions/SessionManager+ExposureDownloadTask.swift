@@ -9,6 +9,7 @@
 import Foundation
 import Exposure
 import Download
+import ExposureDownload
 
 extension SessionManager where T == ExposureDownloadTask {
     func offlineAssetsWithMetaData() -> [(OfflineMediaAsset, Asset?)] {

@@ -4,9 +4,6 @@
 [submodule "Carthage/Checkouts/iOSClientPlayer"]
 	path = Carthage/Checkouts/iOSClientPlayer
 	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientPlayer.git
-[submodule "Carthage/Checkouts/iOSClientUtilities"]
-	path = Carthage/Checkouts/iOSClientUtilities
-	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientUtilities.git
 [submodule "Carthage/Checkouts/Kingfisher"]
 	path = Carthage/Checkouts/Kingfisher
 	url = ssh://git@github.com/onevcat/Kingfisher.git
@@ -19,12 +16,15 @@
 [submodule "Carthage/Checkouts/iOSClientExposure"]
 	path = Carthage/Checkouts/iOSClientExposure
 	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientExposure.git
-[submodule "Carthage/Checkouts/iOSClientAnalytics"]
-	path = Carthage/Checkouts/iOSClientAnalytics
-	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientAnalytics.git
 [submodule "Carthage/Checkouts/iOSClientDownload"]
 	path = Carthage/Checkouts/iOSClientDownload
 	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientDownload.git
 [submodule "Carthage/Checkouts/iOSClientCast"]
 	path = Carthage/Checkouts/iOSClientCast
 	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientCast.git
+[submodule "Carthage/Checkouts/iOSClientExposureDownload"]
+	path = Carthage/Checkouts/iOSClientExposureDownload
+	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientExposureDownload.git
+[submodule "Carthage/Checkouts/iOSClientExposurePlayback"]
+	path = Carthage/Checkouts/iOSClientExposurePlayback
+	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientExposurePlayback.git

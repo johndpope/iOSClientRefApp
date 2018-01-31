@@ -9,6 +9,7 @@
 import UIKit
 import Kingfisher
 import Exposure
+import ExposureDownload
 
 class OfflineListCell: UITableViewCell {
 

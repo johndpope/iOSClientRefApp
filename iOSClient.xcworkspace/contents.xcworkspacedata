@@ -8,16 +8,16 @@
       location = "group:Carthage/Checkouts/iOSClientPlayer/Player.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/iOSClientAnalytics/Analytics.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/iOSClientDownload/Download.xcodeproj">
+      location = "group:Carthage/Checkouts/iOSClientExposurePlayback/ExposurePlayback.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Carthage/Checkouts/iOSClientExposure/Exposure.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/iOSClientUtilities/Utilities.xcodeproj">
+      location = "group:Carthage/Checkouts/iOSClientExposureDownload/ExposureDownload.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/iOSClientDownload/Download.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Carthage/Checkouts/iOSClientCast/Cast.xcodeproj">

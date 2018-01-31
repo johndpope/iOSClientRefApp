@@ -8,6 +8,7 @@
 
 import Foundation
 import Exposure
+import ExposureDownload
 import Download
 import Kingfisher
 
@@ -28,13 +29,6 @@ class DownloadAssetViewModel: AuthorizedEnvironment {
     init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
-    }
-}
-
-extension DownloadAssetViewModel {
-    enum DownloadAssetError: Error {
-        case exposure(error: ExposureError)
-        case download(error: DownloadError)
     }
 }
 
@@ -89,7 +83,7 @@ extension DownloadAssetViewModel {
             .download(assetId: assetId,
                       using: sessionToken,
                       in: environment)
-            .use(drm: .fairplay)
+            .use(drm: "FAIRPLAY")
             .use(bitrate: bps)
         
         return task!
@@ -101,7 +95,7 @@ extension DownloadAssetViewModel {
         Entitlement(environment: environment,
                     sessionToken: sessionToken)
             .validate(downloadId: assetId)
-            .use(drm: .fairplay)
+            .use(drm: "FAIRPLAY")
             .request()
             .validate()
             .response{ [weak self] in
