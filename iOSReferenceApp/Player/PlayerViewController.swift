@@ -12,7 +12,7 @@ import Player
 import Download
 import AVFoundation
 import Exposure
-import Analytics
+import ExposurePlayback
 import MediaPlayer
 import Cast
 import GoogleCast
@@ -203,7 +203,8 @@ extension PlayerViewController {
             self.showMessage(title: "Offline Playback Error", message: "No entitlement found for local media \(assetId)")
             return
         }
-        player.offline(entitlement: entitlement, assetId: offline.assetId, urlAsset: urlAsset)
+        // TODO: Implement offline playback
+//        player.offline(entitlement: entitlement, assetId: offline.assetId, urlAsset: urlAsset)
     }
 }
 

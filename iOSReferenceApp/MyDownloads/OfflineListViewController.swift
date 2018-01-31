@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Exposure
+import ExposureDownload
 
 class OfflineListViewController: UIViewController {
     
