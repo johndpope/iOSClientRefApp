@@ -114,6 +114,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return [environmentViewController, loginViewController]
         }
         
+        print("sessionToken",UserInfo.sessionToken)
+        
         let masterViewController = uiStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.masterView) as! MasterViewController
         retrieveDynamicCustomerConfig(for: environment) { conf in
             if let conf = conf {
