@@ -13,7 +13,7 @@ import Foundation
 //        UserDefaults.standard.set(string, forKey: key)
 //        UserDefaults.standard.synchronize()
 //    }
-//    
+//
 //    static func string(for key: String) -> String? {
 //        return UserDefaults.standard.string(forKey: key)
 //    }
