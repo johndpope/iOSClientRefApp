@@ -101,20 +101,20 @@ extension ChromeCaster {
     
     private func configure(for request: PlayerViewModel.PlayRequest, localOffset: Int64?) -> Cast.CustomData {
         switch request {
-        case .vod(assetId: let assetId, metaData: _):
+        case .vod(playable: let playable, metaData: _):
             return CustomData(environment: castEnvironment,
-                              assetId: assetId,
+                              assetId: playable.assetId,
                               startTime: localOffset,
                               useLastViewedOffset: localOffset == nil)
-        case .live(channelId: let channelId, metaData: _):
+        case .live(playable: let playable, metaData: _):
             return CustomData(environment: castEnvironment,
-                              assetId: channelId,
+                              assetId: playable.assetId,
                               absoluteStartTime: localOffset,
                               useLastViewedOffset: localOffset == nil)
-        case .program(programId: let programId, channelId: let channelId, metaData: _):
+        case .program(playable: let playable, metaData: _):
             return CustomData(environment: castEnvironment,
-                              assetId: channelId,
-                              programId: programId,
+                              assetId: playable.channelId,
+                              programId: playable.assetId,
                               startTime: localOffset,
                               useLastViewedOffset: localOffset == nil)
         case .offline(assetId: let assetId, metaData: _):
@@ -127,9 +127,9 @@ extension ChromeCaster {
     
     private func assetId(for request: PlayerViewModel.PlayRequest) -> String {
         switch request {
-        case .vod(assetId: let assetId, metaData: _): return assetId
-        case .live(channelId: let assetId, metaData: _): return assetId
-        case .program(programId: _, channelId: let assetId, metaData: _): return assetId
+        case .vod(playable: let playable, metaData: _): return playable.assetId
+        case .live(playable: let playable, metaData: _): return playable.assetId
+        case .program(playable: let playable, metaData: _): return playable.channelId
         case .offline(assetId: let assetId, metaData: _): return assetId
         }
     }

@@ -8,19 +8,20 @@
 
 import Foundation
 import Exposure
+import ExposurePlayback
 
 class PlayerViewModel {
     enum PlayRequest {
-        case vod(assetId: String, metaData: Asset?)
-        case live(channelId: String, metaData: Asset?)
-        case program(programId: String, channelId: String, metaData: Asset?)
+        case vod(playable: AssetPlayable, metaData: Asset?)
+        case live(playable: ChannelPlayable, metaData: Asset?)
+        case program(playable: ProgramPlayable, metaData: Asset?)
         case offline(assetId: String, metaData: Asset?)
         
         var metaData: Asset? {
             switch self {
-            case .vod(assetId: _, metaData: let metadata): return metadata
-            case .live(channelId: _, metaData: let metadata): return metadata
-            case .program(programId: _, channelId: _, metaData: let metadata): return metadata
+            case .vod(playable: _, metaData: let metadata): return metadata
+            case .live(playable: _, metaData: let metadata): return metadata
+            case .program(playable: _, metaData: let metadata): return metadata
             case .offline(assetId: _, metaData: let metadata): return metadata
             }
         }

@@ -184,11 +184,11 @@ extension MasterViewController {
             guard let `self` = self else { return }
             if self.hasActiveChromecastSession {
                 // Load ChromeCasting
-                if let programId = program?.assetId {
-                    self.loadChromeCast(for: PlayerViewModel.PlayRequest.program(programId: programId, channelId: channel.assetId, metaData: program?.asset), localOffset: nil)
+                if let program = program {
+                    self.loadChromeCast(for: PlayerViewModel.PlayRequest.program(playable: program.programPlayable, metaData: program.asset), localOffset: nil)
                 }
                 else {
-                    self.loadChromeCast(for: PlayerViewModel.PlayRequest.live(channelId: channel.assetId, metaData: channel), localOffset: nil)
+                    self.loadChromeCast(for: PlayerViewModel.PlayRequest.live(playable: channel.channelPlayable, metaData: channel), localOffset: nil)
                 }
                 
             }
@@ -196,7 +196,7 @@ extension MasterViewController {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let viewController = storyboard.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
                 
-                let playRequest = program != nil  ? PlayerViewModel.PlayRequest.program(programId: program!.assetId, channelId: channel.assetId, metaData: program?.asset) : PlayerViewModel.PlayRequest.live(channelId: channel.assetId, metaData: channel)
+                let playRequest = program != nil ? PlayerViewModel.PlayRequest.program(playable: program!.programPlayable, metaData: program?.asset) : PlayerViewModel.PlayRequest.live(playable: channel.channelPlayable, metaData: channel)
                 viewController.viewModel = PlayerViewModel(sessionToken: self.sessionToken, environment: self.environment, playRequest: playRequest)
                 viewController.brand = self.brand
                 viewController.onChromeCastRequested = { [weak self] request, currentTime in

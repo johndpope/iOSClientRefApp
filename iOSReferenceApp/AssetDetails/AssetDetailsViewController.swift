@@ -8,6 +8,7 @@
 
 import UIKit
 import Exposure
+import ExposurePlayback
 import Kingfisher
 import Player
 import AVKit
@@ -148,10 +149,10 @@ class AssetDetailsViewController: UIViewController {
     
     @IBAction func playAction(_ sender: UIButton) {
         if hasActiveChromecastSession {
-            loadChromeCast(for: PlayerViewModel.PlayRequest.vod(assetId: viewModel.asset.assetId, metaData: viewModel.asset), localOffset: nil)
+            loadChromeCast(for: PlayerViewModel.PlayRequest.vod(playable: viewModel.asset.assetPlayable, metaData: viewModel.asset), localOffset: nil)
         }
         else {
-            performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: viewModel.asset.assetId)
+            performSegue(withIdentifier: Segue.segueDetailsToPlayer.rawValue, sender: viewModel.asset)
         }
     }
     
@@ -165,10 +166,10 @@ extension AssetDetailsViewController {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segue.segueDetailsToPlayer.rawValue {
-            if let destination = segue.destination as? PlayerViewController, let assetId = sender as? String {
+            if let destination = segue.destination as? PlayerViewController, let asset = sender as? Asset {
                 destination.viewModel = PlayerViewModel(sessionToken: viewModel.sessionToken,
                                                         environment: viewModel.environment,
-                                                        playRequest: .vod(assetId: assetId, metaData: viewModel.asset))
+                                                        playRequest: .vod(playable: asset.assetPlayable, metaData: asset))
                 destination.brand = brand
                 destination.onChromeCastRequested = { [weak self] request, currentTime in
                     self?.dismiss(animated: true)

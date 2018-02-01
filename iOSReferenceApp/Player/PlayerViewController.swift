@@ -165,9 +165,9 @@ extension PlayerViewController {
 extension PlayerViewController {
     fileprivate func stream(playRequest: PlayerViewModel.PlayRequest) {
         switch playRequest {
-        case .vod(assetId: let assetId, metaData: let metaData): stream(vod: assetId, metaData: metaData)
-        case .live(channelId: let channelId, metaData: let metaData): stream(live: channelId, metaData: metaData)
-        case .program(programId: let programId, channelId: let channelId, metaData: let metaData): stream(program: programId, channel: channelId, metaData: metaData)
+        case .vod(playable: let playable, metaData: _): player.startPlayback(playable: playable)
+        case .live(playable: let playable, metaData: _): player.startPlayback(playable: playable)
+        case .program(playable: let playable, metaData: _): player.startPlayback(playable: playable)
         case .offline(assetId: let assetId, metaData: let metaData): offline(assetId: assetId, metaData: metaData)
         }
         
