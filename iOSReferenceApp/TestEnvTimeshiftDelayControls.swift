@@ -55,6 +55,9 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
         onSeekingTime(-value)
     }
     
+    @IBAction func reloadAction(_ sender: UIButton) {
+        onReload()
+    }
     
     @IBAction func startOverAction(_ sender: UIButton) {
         onStartOver()
@@ -78,6 +81,7 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
     var onTimeTick: () -> Void = { _ in }
     var onViewDidLoad: () -> Void = { _ in }
     var onPauseResumed: (Bool) -> Void = { _ in }
+    var onReload: () -> Void = { _ in }
     var onGoLive: () -> Void = { _ in }
     var onStartOver: () -> Void = { _ in }
     

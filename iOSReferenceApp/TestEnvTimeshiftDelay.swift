@@ -19,6 +19,7 @@ class TestEnvTimeshiftDelay: UIViewController {
     
     var channel: Asset!
     var program: Program?
+    var playbackProperties = PlaybackProperties()
     
     @IBOutlet weak var playerView: UIView!
     fileprivate(set) var player: Player<HLSNative<ExposureContext>>!
@@ -105,14 +106,18 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.update(contractRestrictions: entitlement)
             }
         
-        if let program = program {
-            player.startPlayback(playable: program.programPlayable)
-        }
-        else {
-            player.startPlayback(playable: channel.channelPlayable)
-        }
+        startPlayback(properties: playbackProperties)
     }
 
+    func startPlayback(properties: PlaybackProperties) {
+        if let program = program {
+            player.startPlayback(playable: program.programPlayable, properties: properties)
+        }
+        else {
+            player.startPlayback(playable: channel.channelPlayable, properties: properties)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -157,8 +162,29 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.player.seek(toTime: serverTime)
             }
             
-            
+            viewController.onReload = { [weak self] in
+                self?.presentPlaybackProperties{ [weak self] properties in
+                    self?.startPlayback(properties: properties)
+                }
+            }
         }
+    }
+    
+    func presentPlaybackProperties(onProceed: @escaping (PlaybackProperties) -> Void) {
+        
+        let storyBoard = UIStoryboard(name: "TestEnv", bundle: nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "PlaybackPropertiesViewController") as! PlaybackPropertiesViewController
+        viewController.playbackProperties = playbackProperties
+        viewController.program = program
+        viewController.onDone = { [weak viewController, weak self] props in
+            viewController?.dismiss(animated: true)
+            self?.playbackProperties = props
+            onProceed(props)
+        }
+        viewController.onCancel = { [weak viewController] in
+            viewController?.dismiss(animated: true)
+        }
+        present(viewController, animated: true)
     }
     
     func update(withProgram program: Program?) {

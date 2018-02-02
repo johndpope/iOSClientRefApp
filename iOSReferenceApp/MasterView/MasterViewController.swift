@@ -256,6 +256,11 @@ extension MasterViewController {
         
         viewController.onSelected = { [weak self] channelAsset in
             guard let `self` = self, let channelAsset = channelAsset else { return }
+            
+            let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive) { [weak self] action in
+                
+            }
+            
             let alert = UIAlertController(title: "PlaybackMode", message: "Please select the desired playback mode", preferredStyle: UIAlertControllerStyle.alert)
             let channelPlay = UIAlertAction(title: "Channel Play", style: UIAlertActionStyle.default) { [weak self] action in
                 callback(channelAsset,nil)
@@ -298,6 +303,7 @@ extension MasterViewController {
             }
             alert.addAction(channelPlay)
             alert.addAction(programPlay)
+            alert.addAction(cancel)
             self.present(alert, animated: true)
             
         }
