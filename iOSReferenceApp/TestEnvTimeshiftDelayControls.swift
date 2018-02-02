@@ -31,6 +31,9 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
     @IBOutlet weak var seekDeltaTextField: UITextField!
     @IBOutlet weak var seekDeltaTimeTextField: UITextField!
     
+    @IBOutlet weak var ffEnabledLabel: UILabel!
+    @IBOutlet weak var timeshiftEnabledLabel: UILabel!
+    @IBOutlet weak var rwEnabledLabel: UILabel!
     
     @IBAction func fastForwardAction(_ sender: UIButton) {
         guard let text = seekDeltaTextField.text, let value = Int64(text) else { return }

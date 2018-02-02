@@ -99,7 +99,11 @@ class TestEnvTimeshiftDelay: UIViewController {
                 guard let `self` = self else { return }
                 print("onProgramChanged",program?.programId)
                 self.update(withProgram: program)
-        }
+            }
+            .onEntitlementResponse { [weak self] player, source, entitlement in
+                guard let `self` = self else { return }
+                self.update(contractRestrictions: entitlement)
+            }
         
         if let program = program {
             player.startPlayback(playable: program.programPlayable)
@@ -161,5 +165,16 @@ class TestEnvTimeshiftDelay: UIViewController {
         controls.programIdLabel.text = program?.anyTitle(locale: "en") ?? self.channel.anyTitle(locale: "en")
         controls.startTimeLabel.text = program?.startDate?.dateString(format: "HH:mm") ?? "n/a"
         controls.endTimeLabel.text = program?.endDate?.dateString(format: "HH:mm") ?? "n/a"
+    }
+    
+    func update(contractRestrictions entitlement: PlaybackEntitlement) {
+        controls.ffEnabledLabel.text = entitlement.ffEnabled ? "FF enabled" : "FF disabled"
+        controls.ffEnabledLabel.textColor = entitlement.ffEnabled ? UIColor.green : UIColor.red
+        
+        controls.rwEnabledLabel.text = entitlement.rwEnabled ? "RW enabled" : "RW disabled"
+        controls.rwEnabledLabel.textColor = entitlement.rwEnabled ? UIColor.green : UIColor.red
+        
+        controls.timeshiftEnabledLabel.text = entitlement.timeshiftEnabled ? "Timeshift enabled" : "Timeshift disabled"
+        controls.timeshiftEnabledLabel.textColor = entitlement.timeshiftEnabled ? UIColor.green : UIColor.red
     }
 }
