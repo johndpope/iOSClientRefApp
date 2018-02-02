@@ -158,8 +158,7 @@ class TestEnvTimeshiftDelay: UIViewController {
             
             viewController.onGoLive = { [weak self] in
                 guard let `self` = self else { return }
-                let serverTime = self.player.serverTime ?? Date().millisecondsSince1970
-                self.player.seek(toTime: serverTime)
+                self.player.seekToLive()
             }
             
             viewController.onReload = { [weak self] in

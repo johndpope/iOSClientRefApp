@@ -104,16 +104,16 @@ class PlaybackPropertiesViewController: UIViewController {
         if value < 0.2 {
             // Force negative out-of-bounds offset
             customOffsetLabel.textColor = UIColor.red
-            return start - Int64(hour * value / 0.2)
+            return start - Int64(hour - hour * (value / 0.2))
         }
         else if value > 0.8 {
             // Force positive out-of-bounds offset
             customOffsetLabel.textColor = UIColor.red
-            return end + Int64(hour * (1-value) / 0.2)
+            return end + Int64(hour - hour * (1-value) / 0.2)
         }
         else {
             customOffsetLabel.textColor = UIColor.black
-            let durationPercentage = Double(end - start) * value
+            let durationPercentage = Double(end - start) * (value-0.2)/(0.8-0.2)
             let offset = start + Int64(durationPercentage)
             return offset
         }
