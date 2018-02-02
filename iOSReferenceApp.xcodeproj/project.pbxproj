@@ -51,6 +51,7 @@
 		7667AECC1EC5E21200C308FC /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 7667AECA1EC5E21200C308FC /* Appfile */; };
 		7667AECD1EC5E21200C308FC /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 7667AECB1EC5E21200C308FC /* Fastfile */; };
 		7667AECF1EC5E29400C308FC /* .env in Resources */ = {isa = PBXBuildFile; fileRef = 7667AECE1EC5E29400C308FC /* .env */; };
+		766D815E2024856600DC98F3 /* PlaybackPropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D815D2024856600DC98F3 /* PlaybackPropertiesViewController.swift */; };
 		766EA96F1FD5273B0056EB03 /* strip_unused_archs.sh in Resources */ = {isa = PBXBuildFile; fileRef = 766EA96E1FD5273B0056EB03 /* strip_unused_archs.sh */; };
 		7672F26D1F93EEB200F892C3 /* AssetListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672F26C1F93EEB200F892C3 /* AssetListType.swift */; };
 		767DC0DC1FA712B10021A17A /* StretchyCarouselHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767DC0DA1FA712B10021A17A /* StretchyCarouselHeaderView.swift */; };
@@ -255,6 +256,7 @@
 		7667AECA1EC5E21200C308FC /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
 		7667AECB1EC5E21200C308FC /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7667AECE1EC5E29400C308FC /* .env */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .env; sourceTree = "<group>"; };
+		766D815D2024856600DC98F3 /* PlaybackPropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPropertiesViewController.swift; sourceTree = "<group>"; };
 		766EA96E1FD5273B0056EB03 /* strip_unused_archs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = strip_unused_archs.sh; sourceTree = "<group>"; };
 		7672F26C1F93EEB200F892C3 /* AssetListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetListType.swift; sourceTree = "<group>"; };
 		767DC0DA1FA712B10021A17A /* StretchyCarouselHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyCarouselHeaderView.swift; sourceTree = "<group>"; };
@@ -659,6 +661,7 @@
 				7645C5712008EA4300133955 /* SimpleEpgViewController.swift */,
 				7645C5722008EA4300133955 /* SimpleEpgViewController.xib */,
 				7645C5642007814600133955 /* TestEnv.storyboard */,
+				766D815D2024856600DC98F3 /* PlaybackPropertiesViewController.swift */,
 			);
 			path = iOSReferenceApp;
 			sourceTree = "<group>";
@@ -1292,6 +1295,7 @@
 				764AE8861FBA4A7100DB548C /* CosmosDistrib.swift in Sources */,
 				76391B411FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift in Sources */,
 				F7B710A81ECB369E00E9D324 /* ProgressIndicatorUtil.swift in Sources */,
+				766D815E2024856600DC98F3 /* PlaybackPropertiesViewController.swift in Sources */,
 				761794FC1FD5513B005B1B3A /* DismissMenuAnimator.swift in Sources */,
 				76EC8D411FA5121600F6FDB6 /* MainMenuPushNavigationCell.swift in Sources */,
 				76A4AD481FA731C000D20743 /* BannerPromotionCell.swift in Sources */,
