@@ -163,7 +163,6 @@
                                                                         </state>
                                                                         <connections>
                                                                             <action selector="cancelAction:" destination="TgA-se-l7a" eventType="touchUpInside" id="gUm-E9-fn4"/>
-                                                                            <action selector="doneAction:" destination="TgA-se-l7a" eventType="touchUpInside" id="l0P-QW-MTf"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
@@ -639,7 +638,7 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <state key="normal" title="FF POS &gt;&gt;"/>
                                                             <connections>
-                                                                <action selector="fastForwardAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="8Mo-yD-avc"/>
+                                                                <action selector="fastForwardAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="YJN-bJ-0mg"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -683,8 +682,7 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <state key="normal" title="FF TIME &gt;&gt;"/>
                                                             <connections>
-                                                                <action selector="fastForwardAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="rSV-c1-FLU"/>
-                                                                <action selector="fastForwardTimeAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="LBk-f0-HkS"/>
+                                                                <action selector="fastForwardTimeAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="AXZ-ap-wy1"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>

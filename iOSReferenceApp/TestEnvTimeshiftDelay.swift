@@ -30,6 +30,7 @@ class TestEnvTimeshiftDelay: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        ToastManager.shared.position = .top
         // Do any additional setup after loading the view.
         
         player = Player(environment: environment, sessionToken: sessionToken)
@@ -105,6 +106,9 @@ class TestEnvTimeshiftDelay: UIViewController {
                 guard let `self` = self else { return }
                 self.update(contractRestrictions: entitlement)
             }
+            .onWarning{ [weak self] player, source, warning in
+                self?.view.makeToast(warning.message, duration: 5)
+        }
         
         startPlayback(properties: playbackProperties)
     }
@@ -162,28 +166,22 @@ class TestEnvTimeshiftDelay: UIViewController {
             }
             
             viewController.onReload = { [weak self] in
-                self?.presentPlaybackProperties{ [weak self] properties in
-                    self?.startPlayback(properties: properties)
+                guard let `self` = self else { return }
+                let storyBoard = UIStoryboard(name: "TestEnv", bundle: nil)
+                let propertiesViewController = storyBoard.instantiateViewController(withIdentifier: "PlaybackPropertiesViewController") as! PlaybackPropertiesViewController
+                propertiesViewController.playbackProperties = self.playbackProperties
+                propertiesViewController.program = self.program
+                propertiesViewController.onDone = { [weak propertiesViewController, weak self] props in
+                    propertiesViewController?.dismiss(animated: true)
+                    self?.playbackProperties = props
+                    self?.startPlayback(properties: props)
                 }
+                propertiesViewController.onCancel = { [weak propertiesViewController] in
+                    propertiesViewController?.dismiss(animated: true)
+                }
+                self.present(propertiesViewController, animated: true)
             }
         }
-    }
-    
-    func presentPlaybackProperties(onProceed: @escaping (PlaybackProperties) -> Void) {
-        
-        let storyBoard = UIStoryboard(name: "TestEnv", bundle: nil)
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "PlaybackPropertiesViewController") as! PlaybackPropertiesViewController
-        viewController.playbackProperties = playbackProperties
-        viewController.program = program
-        viewController.onDone = { [weak viewController, weak self] props in
-            viewController?.dismiss(animated: true)
-            self?.playbackProperties = props
-            onProceed(props)
-        }
-        viewController.onCancel = { [weak viewController] in
-            viewController?.dismiss(animated: true)
-        }
-        present(viewController, animated: true)
     }
     
     func update(withProgram program: Program?) {

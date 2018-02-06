@@ -88,7 +88,7 @@ class PlaybackPropertiesViewController: UIViewController {
         }
         
         customOffsetLabel.text = Date(milliseconds: value).dateString(format: "HH:mm:ss")
-        toggle(playFrom: .custom(offset: value))
+        toggle(playFrom: .customTime(timestamp: value))
     }
     
     func toggle(playFrom: PlaybackProperties.PlayFrom) {
@@ -123,7 +123,7 @@ class PlaybackPropertiesViewController: UIViewController {
         onDone(playbackProperties)
     }
     @IBAction func cancelAction(_ sender: UIButton) {
-        
+        onCancel()
     }
     
     override func viewDidLoad() {
@@ -137,13 +137,15 @@ class PlaybackPropertiesViewController: UIViewController {
             beginningSwitch.isOn = true
         case .bookmark:
             useBookmarkSwitch.isOn = true
-        case .custom(offset: let offset):
+        case .customTime(timestamp: let offset):
             customOffsetLabel.text = Date(milliseconds: offset).dateString(format: "HH:mm:ss")
             if let start = program?.startDate?.millisecondsSince1970, let end = program?.endDate?.millisecondsSince1970 {
                 if offset < start || offset > end {
                     customOffsetLabel.textColor = UIColor.red
                 }
             }
+        case .customPosition(position: _):
+            return
         }
         
         programLabel.text = program?.anyTitle(locale: "en") ?? "Channel"

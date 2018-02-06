@@ -23,6 +23,7 @@
 		762F0BF81FA7153D0051395E /* StretchyCarouselHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */; };
 		76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; };
 		76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76344F481F7AB3BC0034AEC0 /* Download.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7635AEBD2028A829001512BF /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7635AEBC2028A829001512BF /* Toast.swift */; };
 		76391B411FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */; };
 		76391B431FAA6DDF0047447F /* EnvironmentSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76391B421FAA6DDF0047447F /* EnvironmentSelectionViewController.swift */; };
 		7645C5652007814600133955 /* TestEnv.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7645C5642007814600133955 /* TestEnv.storyboard */; };
@@ -228,6 +229,7 @@
 		762809251FD02B87005610DF /* iOSReferenceApp-Swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOSReferenceApp-Swift-Bridging-Header.h"; sourceTree = "<group>"; };
 		762F0BF71FA7153D0051395E /* StretchyCarouselHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyCarouselHeaderLayout.swift; sourceTree = "<group>"; };
 		76344F481F7AB3BC0034AEC0 /* Download.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Download.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7635AEBC2028A829001512BF /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		76391B401FAA6DBF0047447F /* EnvironmentSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewModel.swift; sourceTree = "<group>"; };
 		76391B421FAA6DDF0047447F /* EnvironmentSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSelectionViewController.swift; sourceTree = "<group>"; };
 		764392D21FA5C09C008DC1E8 /* BasicPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasicPromotionCell.xib; sourceTree = "<group>"; };
@@ -1005,6 +1007,7 @@
 				F7061C5D1EC5AF760041E271 /* McPicker */,
 				F793A84F1EC5289E00DF7626 /* SkyFloatingLabelTextField */,
 				F793A8431EC516A500DF7626 /* LazyScrollView */,
+				7635AEBC2028A829001512BF /* Toast.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -1314,6 +1317,7 @@
 				76BA44401FAC937000E92AD1 /* CarouselListViewController.swift in Sources */,
 				76EC8D661FA514ED00F6FDB6 /* CarouselListViewModel.swift in Sources */,
 				761794FF1FD5513B005B1B3A /* PresentMenuAnimator.swift in Sources */,
+				7635AEBD2028A829001512BF /* Toast.swift in Sources */,
 				76A4AD4B1FA7352400D20743 /* BannerPromotionEditorial.swift in Sources */,
 				76EC8D761FA514F900F6FDB6 /* PortraitTrioPromotionLayout.swift in Sources */,
 				76B0AFBC1FA520670085C837 /* BasicPromotionEditorial.swift in Sources */,
