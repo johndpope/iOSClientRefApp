@@ -229,7 +229,7 @@ extension MasterViewController {
     func epgSelectionView(callback: @escaping (Asset, Program?) -> Void) {
         let viewController = SimpleCarouselViewController<Asset>(nibName: "SimpleCarouselViewController", bundle: nil)
         viewController.navigationItem.title = "Channels"
-        viewController.viewModel.executeResuest = { [weak self, unowned viewController] in
+        viewController.viewModel.executeResuest = { [weak self, weak viewController] in
             guard let `self` = self else { return }
             FetchAsset(environment: self.environment)
                 .list()
@@ -245,7 +245,7 @@ extension MasterViewController {
                         self?.showMessage(title: "epgSelectionView: \(error.code)", message: error.message)
                     }
                     if let value = $0.value {
-                        viewController.viewModel.prepare(content: value.items, error: nil)
+                        viewController?.viewModel.prepare(content: value.items, error: nil)
                     }
             }
         }

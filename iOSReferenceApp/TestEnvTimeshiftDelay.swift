@@ -89,10 +89,6 @@ class TestEnvTimeshiftDelay: UIViewController {
         }
         
         player
-            .onPlaybackReady{ player, source in
-                player.play()
-                // Start updating playheadTime + playheadPosition
-            }
             .onError{ [weak self] player, source, error in
                 guard let `self` = self else { return }
                 self.showMessage(title: "Error \(error.code)", message: error.message)
