@@ -19,7 +19,7 @@ class TestEnvTimeshiftDelay: UIViewController {
     
     var channel: Asset!
     var program: Program?
-    var playbackProperties = PlaybackProperties()
+    var playbackProperties = PlaybackProperties(playFrom: PlaybackProperties.PlayFrom.bookmark)
     
     @IBOutlet weak var playerView: UIView!
     fileprivate(set) var player: Player<HLSNative<ExposureContext>>!
