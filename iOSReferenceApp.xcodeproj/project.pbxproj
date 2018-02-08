@@ -122,6 +122,7 @@
 		76BBFB7E1EA8CF2E001DBDDB /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */; };
 		76C9B4711FB49CEB0058045F /* update_appicon.rb in Resources */ = {isa = PBXBuildFile; fileRef = 76C9B4701FB49CEB0058045F /* update_appicon.rb */; };
 		76C9B4731FB4A8140058045F /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C9B4721FB4A8140058045F /* UIColor+AppColors.swift */; };
+		76CD5AEA202C7E0E00941ABC /* TrackSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD5AE9202C7E0E00941ABC /* TrackSelectionViewController.swift */; };
 		76D704561F92273400D6FC6B /* CrispResizingImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D704551F92273400D6FC6B /* CrispResizingImageProcessor.swift */; };
 		76EC8D311FA510A500F6FDB6 /* MainMenuItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D301FA510A500F6FDB6 /* MainMenuItemType.swift */; };
 		76EC8D331FA510BF00F6FDB6 /* MainMenuActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D321FA510BF00F6FDB6 /* MainMenuActionType.swift */; };
@@ -330,6 +331,7 @@
 		76BBFB7D1EA8CF2E001DBDDB /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = SOURCE_ROOT; };
 		76C9B4701FB49CEB0058045F /* update_appicon.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = update_appicon.rb; sourceTree = "<group>"; };
 		76C9B4721FB4A8140058045F /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
+		76CD5AE9202C7E0E00941ABC /* TrackSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSelectionViewController.swift; sourceTree = "<group>"; };
 		76D704551F92273400D6FC6B /* CrispResizingImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrispResizingImageProcessor.swift; sourceTree = "<group>"; };
 		76EC8D271FA5106B00F6FDB6 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		76EC8D281FA5107A00F6FDB6 /* MainMenuPushNavigationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuPushNavigationCell.swift; sourceTree = "<group>"; };
@@ -664,6 +666,7 @@
 				7645C5722008EA4300133955 /* SimpleEpgViewController.xib */,
 				7645C5642007814600133955 /* TestEnv.storyboard */,
 				766D815D2024856600DC98F3 /* PlaybackPropertiesViewController.swift */,
+				76CD5AE9202C7E0E00941ABC /* TrackSelectionViewController.swift */,
 			);
 			path = iOSReferenceApp;
 			sourceTree = "<group>";
@@ -1254,6 +1257,7 @@
 				76A417231EE1518800677A46 /* AssetViewModel.swift in Sources */,
 				76B0AFAD1FA51B8E0085C837 /* SearchViewController.swift in Sources */,
 				76BB35A91F9A2A7100C2B386 /* LocalizedAssetEntity.swift in Sources */,
+				76CD5AEA202C7E0E00941ABC /* TrackSelectionViewController.swift in Sources */,
 				76EC8D431FA5121600F6FDB6 /* MainMenuStaticDataCell.swift in Sources */,
 				76EC8D681FA514F200F6FDB6 /* CarouselFooterView.swift in Sources */,
 				7645C57A200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift in Sources */,
