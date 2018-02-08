@@ -182,7 +182,7 @@ class TestEnvTimeshiftDelay: UIViewController {
     
     func update(withProgram program: Program?) {
         self.program = program
-        controls.programIdLabel.text = program?.anyTitle(locale: "en") ?? self.channel.anyTitle(locale: "en")
+        controls.programIdLabel.text = program?.programId ?? self.channel.assetId
         controls.startTimeLabel.text = program?.startDate?.dateString(format: "HH:mm") ?? "n/a"
         controls.endTimeLabel.text = program?.endDate?.dateString(format: "HH:mm") ?? "n/a"
     }
