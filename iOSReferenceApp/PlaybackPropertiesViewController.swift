@@ -28,6 +28,7 @@ class PlaybackPropertiesViewController: UIViewController {
     var program: Program?
     var onDone: (PlaybackProperties) -> Void = { _ in }
     var onCancel: () -> Void = { _ in }
+    var timestampNow: Int64 = Date().millisecondsSince1970
     
     @IBAction func defaultBehaviourAction(_ sender: UISwitch) {
         if sender.isOn {
@@ -96,9 +97,17 @@ class PlaybackPropertiesViewController: UIViewController {
     }
     
     func transformOffset(sliderValue: Float) -> Int64? {
-        guard let start = program?.startDate?.millisecondsSince1970, let end = program?.endDate?.millisecondsSince1970 else {
-            return nil
+        if let start = program?.startDate?.millisecondsSince1970, let end = program?.endDate?.millisecondsSince1970 {
+            return transformOffset(start: start, end: end, sliderValue: sliderValue)
         }
+        else {
+            let start = timestampNow - 6 * 60 * 60 * 1000
+            let end = timestampNow
+            return transformOffset(start: start, end: end, sliderValue: sliderValue)
+        }
+    }
+    
+    func transformOffset(start: Int64, end: Int64, sliderValue: Float) -> Int64? {
         let value = Double(sliderValue)
         let hour: Double = 60 * 60 * 1000
         if value < 0.2 {
@@ -129,6 +138,7 @@ class PlaybackPropertiesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        timestampNow = Date().millisecondsSince1970
         // Do any additional setup after loading the view.
         switch playbackProperties.playFrom {
         case .defaultBehaviour:
