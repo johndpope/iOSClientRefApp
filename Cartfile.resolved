@@ -4,7 +4,7 @@ github "EricssonBroadcastServices/iOSClientDownload" "f5e9ce36fded9adc2d3eb3beac
 github "EricssonBroadcastServices/iOSClientExposure" "a73bc9b63d53706f7c057cabcd3cdda819f0684f"
 github "EricssonBroadcastServices/iOSClientExposureDownload" "d94b20bb9498ffecef278bba89e8bb92bf87ed72"
 github "EricssonBroadcastServices/iOSClientExposurePlayback" "a605ea0fba8892b4127b9d9cb03d4a2713f5d082"
-github "EricssonBroadcastServices/iOSClientPlayer" "f97bc13c2920dcf58265d2630ee232c3b233be7e"
+github "EricssonBroadcastServices/iOSClientPlayer" "63e6f6cd09d2868dfe429fd4db4207830cef67f8"
 github "Quick/Nimble" "v7.0.1"
 github "Quick/Quick" "v1.1.0"
 github "onevcat/Kingfisher" "3.13.1"
