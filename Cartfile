@@ -1,6 +1,6 @@
-github "EricssonBroadcastServices/iOSClientExposurePlayback" "master"
-github "EricssonBroadcastServices/iOSClientExposureDownload" "master"
-github "EricssonBroadcastServices/iOSClientCast" "master"
+github "EricssonBroadcastServices/iOSClientExposurePlayback" == 0.77.0
+github "EricssonBroadcastServices/iOSClientExposureDownload" == 0.77.0
+github "EricssonBroadcastServices/iOSClientCast" == 0.77.0
 github "Quick/Nimble" "v7.0.1"
 github "Quick/Quick" "v1.1.0"
 github "onevcat/Kingfisher" "3.13.1"
