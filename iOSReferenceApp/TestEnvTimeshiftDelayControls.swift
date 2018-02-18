@@ -63,6 +63,10 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
         onStartOver()
     }
     
+    @IBAction func ccAction(_ sender: UIButton) {
+        onCC()
+    }
+    
     @IBAction func goLiveAction(_ sender: UIButton) {
         onGoLive()
     }
@@ -84,6 +88,7 @@ class TestEnvTimeshiftDelayControls: UITableViewController {
     var onReload: () -> Void = { _ in }
     var onGoLive: () -> Void = { _ in }
     var onStartOver: () -> Void = { _ in }
+    var onCC: () -> Void = { }
     
     /// Queue where `timer` runs
     fileprivate let queue = DispatchQueue(label: "com.emp.refapp.testEnv.timestamp",
