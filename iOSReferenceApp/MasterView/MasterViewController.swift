@@ -143,8 +143,8 @@ extension MasterViewController {
             .logout(sessionToken: sessionToken)
             .request()
             .validate()
-            .emptyResponse{
-                if let error = $0 {
+            .rawResponse { _,_,_, error in
+                if let error = error {
                     print(error)
                 }
         }
