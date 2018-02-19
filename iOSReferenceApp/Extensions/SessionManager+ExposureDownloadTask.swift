@@ -11,7 +11,7 @@ import Exposure
 import Download
 import ExposureDownload
 
-extension SessionManager where T == ExposureDownloadTask {
+extension Download.SessionManager where T == ExposureDownloadTask {
     func offlineAssetsWithMetaData() -> [(OfflineMediaAsset, Asset?)] {
         return offlineAssets().map{ return ($0, retrieveMetaData(for: $0.assetId)) }
     }

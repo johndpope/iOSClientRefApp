@@ -14,5 +14,5 @@ import ExposureDownload
 class ExposureSessionManager {
     static let shared = ExposureSessionManager()
     
-    let manager = SessionManager<ExposureDownloadTask>()
+    let manager = Download.SessionManager<ExposureDownloadTask>()
 }

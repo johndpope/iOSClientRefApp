@@ -96,8 +96,6 @@
 		76A8447D1EA7A23700BDAF2C /* Player.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8447B1EA7A23700BDAF2C /* Player.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76A844821EA7A23700BDAF2C /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844811EA7A23700BDAF2C /* Exposure.framework */; };
 		76A844831EA7A23700BDAF2C /* Exposure.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844811EA7A23700BDAF2C /* Exposure.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		76A844851EA7A23700BDAF2C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844841EA7A23700BDAF2C /* Alamofire.framework */; };
-		76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76A844841EA7A23700BDAF2C /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76AE64EB1F90217B0036933E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64EA1F90217B0036933E /* GradientView.swift */; };
 		76AE64F71F91498D0036933E /* DynamicCustomerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64F61F91498D0036933E /* DynamicCustomerConfig.swift */; };
 		76AF7FB51FA5DAB8008A893C /* BasicPromotionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 764392D21FA5C09C008DC1E8 /* BasicPromotionCell.xib */; };
@@ -206,7 +204,6 @@
 				76A844831EA7A23700BDAF2C /* Exposure.framework in Embed Frameworks */,
 				76A4171B1EDFEB2000677A46 /* Kingfisher.framework in Embed Frameworks */,
 				76A8447D1EA7A23700BDAF2C /* Player.framework in Embed Frameworks */,
-				76A844861EA7A23700BDAF2C /* Alamofire.framework in Embed Frameworks */,
 				76344F4A1F7AB3BC0034AEC0 /* Download.framework in Embed Frameworks */,
 				7628091F1FD021A7005610DF /* Cast.framework in Embed Frameworks */,
 			);
@@ -306,7 +303,6 @@
 		76A843F11EA7886400BDAF2C /* Notifications+KeyboardAnimationFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notifications+KeyboardAnimationFrame.swift"; sourceTree = "<group>"; };
 		76A8447B1EA7A23700BDAF2C /* Player.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Player.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A844811EA7A23700BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		76A844841EA7A23700BDAF2C /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76AE64EA1F90217B0036933E /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		76AE64F61F91498D0036933E /* DynamicCustomerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCustomerConfig.swift; sourceTree = "<group>"; };
 		76B0AFA91FA51B880085C837 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -397,7 +393,6 @@
 				76A844821EA7A23700BDAF2C /* Exposure.framework in Frameworks */,
 				76A4171A1EDFEB2000677A46 /* Kingfisher.framework in Frameworks */,
 				76A8447C1EA7A23700BDAF2C /* Player.framework in Frameworks */,
-				76A844851EA7A23700BDAF2C /* Alamofire.framework in Frameworks */,
 				76344F491F7AB3BC0034AEC0 /* Download.framework in Frameworks */,
 				7628091E1FD021A7005610DF /* Cast.framework in Frameworks */,
 			);
@@ -693,7 +688,6 @@
 			isa = PBXGroup;
 			children = (
 				76A417191EDFEB2000677A46 /* Kingfisher.framework */,
-				76A844841EA7A23700BDAF2C /* Alamofire.framework */,
 				76A844811EA7A23700BDAF2C /* Exposure.framework */,
 				76A8447B1EA7A23700BDAF2C /* Player.framework */,
 			);

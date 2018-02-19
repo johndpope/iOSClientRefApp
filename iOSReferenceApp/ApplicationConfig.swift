@@ -22,7 +22,6 @@ class ApplicationConfig {
       .request()
       .validate()
       .response { [weak self] response in
-        let t = response.value
         self?.customerConfig = response.value
         completion()
     }

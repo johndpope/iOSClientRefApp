@@ -95,9 +95,9 @@ extension AssetDetailsViewModel {
             .rate(assetId: asset.assetId, to: rating)
             .request()
             .validate()
-            .emptyResponse{ error in
-                if let error = error {
-                    print(error)
+            .emptyResponse {
+                if let error = $0 {
+                    print(error.code, error.message)
                 }
         }
     }
