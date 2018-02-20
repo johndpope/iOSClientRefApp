@@ -160,15 +160,15 @@ class TestEnvTimeshiftDelay: UIViewController {
                 guard let `self` = self else { return }
                 let storyBoard = UIStoryboard(name: "TestEnv", bundle: nil)
                 let ccViewController = storyBoard.instantiateViewController(withIdentifier: "TrackSelectionViewController") as! TrackSelectionViewController
-                ccViewController.assign(audio: self.player.tech.audioGroup)
-                ccViewController.assign(text: self.player.tech.textGroup)
+                ccViewController.assign(audio: self.player.audioGroup)
+                ccViewController.assign(text: self.player.textGroup)
                 ccViewController.onDidSelectAudio = { [weak self] track in
                     guard let `self` = self else { return }
-                    self.player.tech.selectAudio(track: track)
+                    self.player.selectAudio(track: track)
                 }
                 ccViewController.onDidSelectText = { [weak self] track in
                     guard let `self` = self else { return }
-                    self.player.tech.selectText(track: track)
+                    self.player.selectText(track: track)
                 }
                 ccViewController.onDismissed = { [weak ccViewController] in
                     ccViewController?.dismiss(animated: true)
