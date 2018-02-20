@@ -156,6 +156,26 @@ class TestEnvTimeshiftDelay: UIViewController {
                 }
             }
             
+            viewController.onCC = { [weak self] in
+                guard let `self` = self else { return }
+                let storyBoard = UIStoryboard(name: "TestEnv", bundle: nil)
+                let ccViewController = storyBoard.instantiateViewController(withIdentifier: "TrackSelectionViewController") as! TrackSelectionViewController
+                ccViewController.assign(audio: self.player.tech.audioGroup)
+                ccViewController.assign(text: self.player.tech.textGroup)
+                ccViewController.onDidSelectAudio = { [weak self] track in
+                    guard let `self` = self else { return }
+                    self.player.tech.selectAudio(track: track)
+                }
+                ccViewController.onDidSelectText = { [weak self] track in
+                    guard let `self` = self else { return }
+                    self.player.tech.selectText(track: track)
+                }
+                ccViewController.onDismissed = { [weak ccViewController] in
+                    ccViewController?.dismiss(animated: true)
+                }
+                self.present(ccViewController, animated: true)
+            }
+            
             viewController.onGoLive = { [weak self] in
                 guard let `self` = self else { return }
                 self.player.seekToLive()
