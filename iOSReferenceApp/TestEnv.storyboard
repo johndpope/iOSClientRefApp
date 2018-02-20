@@ -701,7 +701,6 @@
                                                             <state key="normal" title="RELOAD"/>
                                                             <connections>
                                                                 <action selector="reloadAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="sdL-Z8-lQw"/>
-                                                                <action selector="startOverAction:" destination="QLj-8N-sgo" eventType="touchUpInside" id="KVI-M4-bkq"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pd-OE-gVc">
