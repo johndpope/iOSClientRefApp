@@ -118,19 +118,21 @@ extension TrackSelectionViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        if let currentlySelected = selectedIndexPath(for: tableView) {
-            tableView.cellForRow(at: currentlySelected)?.accessoryType = .none
-        }
-        
-        
-        if tableView == audioTableView {
-            selectedAudio = indexPath
-            onDidSelectAudio(viewModels(for: tableView)[indexPath.row].mediaTrack)
-        }
-        else if tableView == textTableView {
-            selectedText = indexPath
-            onDidSelectText(viewModels(for: tableView)[indexPath.row].mediaTrack)
+        if let selected = selectedIndexPath(for: tableView), indexPath != selected {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            if let currentlySelected = selectedIndexPath(for: tableView) {
+                tableView.cellForRow(at: currentlySelected)?.accessoryType = .none
+            }
+            
+            
+            if tableView == audioTableView {
+                selectedAudio = indexPath
+                onDidSelectAudio(viewModels(for: tableView)[indexPath.row].mediaTrack)
+            }
+            else if tableView == textTableView {
+                selectedText = indexPath
+                onDidSelectText(viewModels(for: tableView)[indexPath.row].mediaTrack)
+            }
         }
     }
 }

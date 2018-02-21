@@ -47,9 +47,10 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.controls.wallclockTimeLabel.text = "n/a"
             }
             
-            #if DEBUG
-//            self.player.tech.logStuff()
-            #endif
+            let text = self.player.selectedTextTrack
+            print("TEXT",text?.name,"\n",text?.type,"\n",text?.extendedLanguageTag)
+            let audio = self.player.selectedAudioTrack
+            print("AUDI",audio?.name,"\n",audio?.type,"\n",audio?.extendedLanguageTag)
             
             let seekableRange = self.player.seekableRanges.map{ ($0.start.seconds, $0.end.seconds) }.first
             let bufferedRange = self.player.bufferedRanges.map{ ($0.start.seconds, $0.end.seconds) }.first

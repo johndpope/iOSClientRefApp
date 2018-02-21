@@ -12,13 +12,6 @@ import Exposure
 
 class PlaybackPropertiesViewController: UIViewController {
 
-    @IBOutlet weak var defaultBehaviourSwitch: UISwitch!
-    @IBOutlet weak var beginningSwitch: UISwitch!
-    @IBOutlet weak var useBookmarkSwitch: UISwitch!
-    
-    @IBOutlet weak var customOffsetLabel: UILabel!
-    @IBOutlet weak var customOffsetSlider: UISlider!
-    
     @IBOutlet weak var programLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var endTimeLabel: UILabel!
@@ -26,9 +19,16 @@ class PlaybackPropertiesViewController: UIViewController {
     
     var playbackProperties = PlaybackProperties()
     var program: Program?
-    var onDone: (PlaybackProperties) -> Void = { _ in }
-    var onCancel: () -> Void = { _ in }
     var timestampNow: Int64 = Date().millisecondsSince1970
+    
+    // MARK: - Start Time
+    @IBOutlet weak var defaultBehaviourSwitch: UISwitch!
+    @IBOutlet weak var beginningSwitch: UISwitch!
+    @IBOutlet weak var useBookmarkSwitch: UISwitch!
+    
+    @IBOutlet weak var customOffsetLabel: UILabel!
+    @IBOutlet weak var customOffsetSlider: UISlider!
+    
     
     @IBAction func defaultBehaviourAction(_ sender: UISwitch) {
         if sender.isOn {
@@ -128,13 +128,93 @@ class PlaybackPropertiesViewController: UIViewController {
         }
     }
     
+    // MARK: - Language
+    @IBOutlet weak var defaultLangSwitch: UISwitch!
+    @IBOutlet weak var userLocaleSwitch: UISwitch!
+    @IBOutlet weak var customLangSwitch: UISwitch!
+    @IBOutlet weak var customLangTextField: UITextField!
+    @IBOutlet weak var customLangAudioField: UITextField!
+    
+    @IBAction func defaultLangAction(_ sender: UISwitch) {
+        if sender.isOn {
+            userLocaleSwitch.isOn = false
+            customLangSwitch.isOn = false
+            customLangTextField.isEnabled = false
+            customLangAudioField.isEnabled = false
+        }
+        else {
+            userLocaleSwitch.isOn = true
+            customLangSwitch.isOn = false
+            customLangTextField.isEnabled = false
+            customLangAudioField.isEnabled = false
+        }
+    }
+    
+    @IBAction func userLocaleAction(_ sender: UISwitch) {
+        if sender.isOn {
+            defaultLangSwitch.isOn = false
+            customLangSwitch.isOn = false
+            customLangTextField.isEnabled = false
+            customLangAudioField.isEnabled = false
+        }
+        else {
+            defaultLangSwitch.isOn = true
+            userLocaleSwitch.isOn = false
+            customLangSwitch.isOn = false
+            customLangTextField.isEnabled = false
+            customLangAudioField.isEnabled = false
+        }
+    }
+    
+    @IBAction func customLangAction(_ sender: UISwitch) {
+        if sender.isOn {
+            defaultLangSwitch.isOn = false
+            userLocaleSwitch.isOn = false
+            customLangSwitch.isOn = true
+            customLangTextField.isEnabled = true
+            customLangAudioField.isEnabled = true
+        }
+        else {
+            defaultLangSwitch.isOn = true
+            userLocaleSwitch.isOn = false
+            customLangSwitch.isOn = false
+            customLangTextField.isEnabled = false
+            customLangAudioField.isEnabled = false
+        }
+    }
+    
+    func languageProperties() -> PlaybackProperties.LanguagePreferences {
+        if defaultLangSwitch.isOn {
+            return .defaultBehaviour
+        }
+        else if userLocaleSwitch.isOn {
+            return .userLocale
+        }
+        else if customLangSwitch.isOn {
+            return .custom(text: customLangTextField.text, audio: customLangAudioField.text)
+        }
+        else {
+            return .defaultBehaviour
+        }
+    }
+    
+    
+    // MAKR: - Execute
+    var onDone: (PlaybackProperties) -> Void = { _ in }
+    var onCancel: () -> Void = { _ in }
+    
     @IBAction func doneAction(_ sender: UIButton) {
-        onDone(playbackProperties)
+        let language = languageProperties()
+        let props = PlaybackProperties(autoplay: playbackProperties.autoplay,
+                                       playFrom: playbackProperties.playFrom,
+                                       language: language)
+        onDone(props)
     }
     @IBAction func cancelAction(_ sender: UIButton) {
         onCancel()
     }
     
+    // MARK: - Load
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -156,6 +236,23 @@ class PlaybackPropertiesViewController: UIViewController {
             }
         case .customPosition(position: _):
             return
+        }
+        
+        switch playbackProperties.language {
+        case .defaultBehaviour:
+            defaultLangSwitch.isOn = true
+            customLangTextField.isEnabled = false
+            customLangAudioField.isEnabled = false
+        case .userLocale:
+            userLocaleSwitch.isOn = true
+            customLangTextField.isEnabled = false
+            customLangAudioField.isEnabled = false
+        case let .custom(text: text, audio: audio):
+            customLangSwitch.isOn = true
+            customLangTextField.isEnabled = true
+            customLangTextField.text = text
+            customLangAudioField.isEnabled = true
+            customLangAudioField.text = audio
         }
         
         programLabel.text = program?.anyTitle(locale: "en") ?? "Channel"
