@@ -47,10 +47,15 @@ class TestEnvTimeshiftDelay: UIViewController {
                 self.controls.wallclockTimeLabel.text = "n/a"
             }
             
-            let text = self.player.selectedTextTrack
-            print("TEXT",text?.name,"\n",text?.type,"\n",text?.extendedLanguageTag)
-            let audio = self.player.selectedAudioTrack
-            print("AUDI",audio?.name,"\n",audio?.type,"\n",audio?.extendedLanguageTag)
+//            let text = self.player.selectedTextTrack
+//            print("TEXT",text?.name,"\n",text?.type,"\n",text?.extendedLanguageTag)
+//            let audio = self.player.selectedAudioTrack
+//            print("AUDI",audio?.name,"\n",audio?.type,"\n",audio?.extendedLanguageTag)
+//
+//            let defTExt = self.player.defaultTextTrack
+//            print("DEF-TEXT",defTExt?.name,"\n",defTExt?.type,"\n",defTExt?.extendedLanguageTag)
+//            let audioDef = self.player.defaultAudioTrack
+//            print("DEF-AUDI",audioDef?.name,"\n",audioDef?.type,"\n",audioDef?.extendedLanguageTag)
             
             let seekableRange = self.player.seekableRanges.map{ ($0.start.seconds, $0.end.seconds) }.first
             let bufferedRange = self.player.bufferedRanges.map{ ($0.start.seconds, $0.end.seconds) }.first
@@ -196,7 +201,9 @@ class TestEnvTimeshiftDelay: UIViewController {
                 propertiesViewController.onCancel = { [weak propertiesViewController] in
                     propertiesViewController?.dismiss(animated: true)
                 }
-                self.present(propertiesViewController, animated: true)
+                
+                let navController = UINavigationController(rootViewController: propertiesViewController)
+                self.present(navController, animated: true)
             }
         }
     }
