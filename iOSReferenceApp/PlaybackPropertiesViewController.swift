@@ -10,7 +10,7 @@ import UIKit
 import ExposurePlayback
 import Exposure
 
-class PlaybackPropertiesViewController: UIViewController {
+class PlaybackPropertiesViewController: UITableViewController {
 
     @IBOutlet weak var programLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
@@ -198,16 +198,31 @@ class PlaybackPropertiesViewController: UIViewController {
         }
     }
     
+    // MARK: - Max Bitrate
+    @IBOutlet weak var maxBitrateTextField: UITextField!
+    @IBOutlet weak var maxBitrateSwitch: UISwitch!
+    @IBAction func maxBitrateAction(_ sender: UISwitch) {
+        maxBitrateTextField.isEnabled = sender.isOn
+    }
     
-    // MAKR: - Execute
+    func maxBitrateProperties() -> Int64? {
+        if maxBitrateSwitch.isOn, let text = maxBitrateTextField.text, let value = Int64(text) {
+            return value * 1000
+        }
+        return nil
+    }
+    
+    // MARK: - Execute
     var onDone: (PlaybackProperties) -> Void = { _ in }
     var onCancel: () -> Void = { _ in }
     
     @IBAction func doneAction(_ sender: UIButton) {
         let language = languageProperties()
+        let maxBitrate = maxBitrateProperties()
         let props = PlaybackProperties(autoplay: playbackProperties.autoplay,
                                        playFrom: playbackProperties.playFrom,
-                                       language: language)
+                                       language: language,
+                                       maxBitrate: maxBitrate)
         onDone(props)
     }
     @IBAction func cancelAction(_ sender: UIButton) {
@@ -217,9 +232,12 @@ class PlaybackPropertiesViewController: UIViewController {
     // MARK: - Load
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        tableView.keyboardDismissMode = .onDrag
+        
         timestampNow = Date().millisecondsSince1970
-        // Do any additional setup after loading the view.
+        
+        // Start Time
         switch playbackProperties.playFrom {
         case .defaultBehaviour:
             defaultBehaviourSwitch.isOn = true
@@ -238,6 +256,7 @@ class PlaybackPropertiesViewController: UIViewController {
             return
         }
         
+        // Language
         switch playbackProperties.language {
         case .defaultBehaviour:
             defaultLangSwitch.isOn = true
@@ -255,11 +274,16 @@ class PlaybackPropertiesViewController: UIViewController {
             customLangAudioField.text = audio
         }
         
-        programLabel.text = program?.anyTitle(locale: "en") ?? "Channel"
+        // Program Data
+        programLabel.text = program?.programId ?? "Channel"
         startTimeLabel.text = program?.startDate?.dateString(format: "HH:mm") ?? "n/a"
         endTimeLabel.text = program?.endDate?.dateString(format: "HH:mm") ?? "n/a"
+        
+        // Bitrate Restrictions
+        maxBitrateTextField.isEnabled = playbackProperties.maxBitrate != nil
+        if let bitrate = playbackProperties.maxBitrate { maxBitrateTextField.text = String(bitrate/1000) }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
