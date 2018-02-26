@@ -12,6 +12,7 @@ import Exposure
 extension Program {
     static var exposureDateFormatter: DateFormatter {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_GB")
         formatter.timeZone = TimeZone(abbreviation: "UTC")
         return formatter
     }

@@ -104,6 +104,7 @@ extension PresentableViewModel where Model == Program {
         
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"
+        timeFormatter.locale = Locale(identifier: "en_GB")
         
         let startTime = timeFormatter.string(from: start)
         let endTime = timeFormatter.string(from: end)
@@ -120,6 +121,7 @@ extension PresentableViewModel where Model == Program {
         let currentComponents = Calendar.current.dateComponents([.day,.month], from: current)
         
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_GB")
         dateFormatter.dateFormat = "MMM d"
         
         if startComponents.day! == endComponents.day! {
