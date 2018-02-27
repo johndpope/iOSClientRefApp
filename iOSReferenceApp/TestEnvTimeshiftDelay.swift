@@ -59,11 +59,11 @@ class TestEnvTimeshiftDelay: UIViewController {
             
             let seekableRange = self.player.seekableRanges.map{ ($0.start.seconds, $0.end.seconds) }.first
             let bufferedRange = self.player.bufferedRanges.map{ ($0.start.seconds, $0.end.seconds) }.first
-            if let seekable = seekableRange {
+            if let seekable = seekableRange, !seekable.0.isNaN, !seekable.1.isNaN {
                 self.controls.seekableStartLabel.text = String(Int64(seekable.0))
                 self.controls.seekableEndLabel.text = String(Int64(seekable.1))
             }
-            if let buffered = bufferedRange {
+            if let buffered = bufferedRange, !buffered.0.isNaN, !buffered.1.isNaN {
                 self.controls.bufferedStartLabel.text = String(Int64(buffered.0))
                 self.controls.bufferedEndLabel.text = String(Int64(buffered.1))
             }
