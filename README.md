@@ -28,12 +28,13 @@
 * `iOS` 9.0+
 * `Swift` 4.0+
 * `Xcode` 9.0+
+
 * Framework dependencies
-    - [`Analytics`](https://github.com/EricssonBroadcastServices/iOSClientAnalytics)
     - [`Exposure`](https://github.com/EricssonBroadcastServices/iOSClientExposure)
     - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientPlayer)
+    - [`ExposurePlayback`](https://github.com/EricssonBroadcastServices/iOSClientExposurePlayback)
     - [`Download`](https://github.com/EricssonBroadcastServices/iOSClientDownload)
-    - [`Utilities`](https://github.com/EricssonBroadcastServices/iOSClientUtilities)
+    - [`ExposureDownload`](https://github.com/EricssonBroadcastServices/iOSClientExposureDownload)
     - [`Cast`](https://github.com/EricssonBroadcastServices/iOSClientCast)
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientRefApp/blob/master/Cartfile)
 
@@ -80,12 +81,11 @@ curl -O http://path.to.your/environment.json
 The *Reference App* uses  [Carthage](https://github.com/Carthage/Carthage) for dependency management. Carthage is a decentralized dependency manager that builds your dependency graph without interfering with your `Xcode` project setup. `CI` integration through [fastlane](https://github.com/fastlane/fastlane) is also available.
 
 ## Release Notes
-Release specific changes can be found in the [CHANGELOG](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/CHANGELOG.md).
+Release specific changes can be found in the [CHANGELOG](https://github.com/EricssonBroadcastServices/iOSClientRefApp/blob/master/CHANGELOG.md).
 
 ## Roadmap
 No formalised roadmap has yet been established but an extensive backlog of possible items exist. The following represent an unordered *wish list* and is subject to change.
 
-- [x] Carousel integration
 - [ ] Content search
 - [ ] User playback history
 - [ ] Better customization and loading of selected `Environment`s.
