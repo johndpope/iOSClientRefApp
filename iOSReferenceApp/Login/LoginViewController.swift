@@ -215,7 +215,7 @@ extension LoginViewController: UITextFieldDelegate {
     
     fileprivate func valid(textField: SkyFloatingLabelTextField) -> Bool {
         if let text = textField.text {
-            return text.count > 2
+            return !text.isEmpty
         }
         return false
     }

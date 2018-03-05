@@ -145,12 +145,7 @@ extension EnvironmentSelectionViewController: UITextFieldDelegate {
     
     fileprivate func valid(textField: SkyFloatingLabelTextField) -> Bool {
         if let text = textField.text {
-            if textField == exposureUrlField {
-                return text.contains("http")
-            }
-            else {
-                return text.count > 2
-            }
+            return !text.isEmpty
         }
         return false
     }
