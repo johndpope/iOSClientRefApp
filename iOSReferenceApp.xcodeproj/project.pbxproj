@@ -159,6 +159,8 @@
 		76EC8D781FA5154700F6FDB6 /* HeroItemPromotionEditorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D771FA5154700F6FDB6 /* HeroItemPromotionEditorial.swift */; };
 		76EC8D7C1FA5158B00F6FDB6 /* UICollectionViewLayoutPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D7B1FA5158B00F6FDB6 /* UICollectionViewLayoutPagination.swift */; };
 		76EC8D7E1FA515B200F6FDB6 /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC8D7D1FA515B200F6FDB6 /* CollectionViewLayout.swift */; };
+		76FAD48C204E95B6007FF025 /* ProgramBasedTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FAD48B204E95B6007FF025 /* ProgramBasedTimeline.swift */; };
+		76FAD48E204E95BF007FF025 /* ProgramBasedTimeline.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76FAD48D204E95BE007FF025 /* ProgramBasedTimeline.xib */; };
 		F7061C5F1EC5AF760041E271 /* McPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7061C5E1EC5AF760041E271 /* McPicker.swift */; };
 		F7061C691EC5BFAF0041E271 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7061C601EC5BFAF0041E271 /* Constants.swift */; };
 		F7061C6C1EC5BFAF0041E271 /* strings.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7061C681EC5BFAF0041E271 /* strings.plist */; };
@@ -367,6 +369,8 @@
 		76EC8D7B1FA5158B00F6FDB6 /* UICollectionViewLayoutPagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLayoutPagination.swift; sourceTree = "<group>"; };
 		76EC8D7D1FA515B200F6FDB6 /* CollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
 		76F5154A1F5EC18C00BA8B01 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		76FAD48B204E95B6007FF025 /* ProgramBasedTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramBasedTimeline.swift; sourceTree = "<group>"; };
+		76FAD48D204E95BE007FF025 /* ProgramBasedTimeline.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProgramBasedTimeline.xib; sourceTree = "<group>"; };
 		F7061C5E1EC5AF760041E271 /* McPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = McPicker.swift; sourceTree = "<group>"; };
 		F7061C601EC5BFAF0041E271 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F7061C681EC5BFAF0041E271 /* strings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = strings.plist; sourceTree = "<group>"; };
@@ -654,6 +658,8 @@
 				76391B3D1FAA6DAD0047447F /* EnvironmentSelection */,
 				3E6B3B451F84D5100071C10A /* ApplicationConfig.swift */,
 				7645C56620078C7D00133955 /* TestEnvTimeshiftDelay.swift */,
+				76FAD48B204E95B6007FF025 /* ProgramBasedTimeline.swift */,
+				76FAD48D204E95BE007FF025 /* ProgramBasedTimeline.xib */,
 				7645C579200BEC6500133955 /* TestEnvTimeshiftDelayControls.swift */,
 				7645C5752008EA7300133955 /* SimpleCarouselViewController.swift */,
 				7645C5762008EA7300133955 /* SimpleCarouselViewController.xib */,
@@ -1162,6 +1168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76AF7FB51FA5DAB8008A893C /* BasicPromotionCell.xib in Resources */,
+				76FAD48E204E95BF007FF025 /* ProgramBasedTimeline.xib in Resources */,
 				76EC8D701FA514F900F6FDB6 /* HeroPromotionCell.xib in Resources */,
 				F7061C6C1EC5BFAF0041E271 /* strings.plist in Resources */,
 				76EC8D6D1FA514F200F6FDB6 /* CarouselView.xib in Resources */,
@@ -1286,6 +1293,7 @@
 				F793A8531EC5289E00DF7626 /* SkyFloatingLabelTextField.swift in Sources */,
 				76B0AFC01FA524570085C837 /* BasicPromotionLayout.swift in Sources */,
 				769862271FA518C500A57213 /* AssetDetailsViewModel.swift in Sources */,
+				76FAD48C204E95B6007FF025 /* ProgramBasedTimeline.swift in Sources */,
 				76EC8D6F1FA514F900F6FDB6 /* HeroPromotionCell.swift in Sources */,
 				76EC8D311FA510A500F6FDB6 /* MainMenuItemType.swift in Sources */,
 				76EC8D751FA514F900F6FDB6 /* PortraitTrioPromotionEditorial.swift in Sources */,

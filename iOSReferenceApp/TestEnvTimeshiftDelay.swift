@@ -116,11 +116,12 @@ class TestEnvTimeshiftDelay: UIViewController {
     }
 
     func startPlayback(properties: PlaybackProperties) {
+        let props = properties//PlaybackProperties(playFrom: .defaultBehaviour)
         if let program = program {
-            player.startPlayback(playable: program.programPlayable, properties: properties)
+            player.startPlayback(playable: program.programPlayable, properties: props)
         }
         else {
-            player.startPlayback(playable: channel.channelPlayable, properties: properties)
+            player.startPlayback(playable: channel.channelPlayable, properties: props)
         }
     }
     
